@@ -7,15 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D757311A6C8CE3F6EA451F0 /* Pods_Celecare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */; };
 		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
 		9AB0676F1EFAE95100092BC6 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */; };
 		9AB067711EFAE95100092BC6 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB067701EFAE95100092BC6 /* SecondViewController.swift */; };
 		9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067721EFAE95100092BC6 /* Main.storyboard */; };
 		9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067751EFAE95100092BC6 /* Assets.xcassets */; };
 		9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */; };
+		9AB067811F02011100092BC6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067801F02011100092BC6 /* Login.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celecare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +27,9 @@
 		9AB067751EFAE95100092BC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9AB067781EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9AB0677A1EFAE95100092BC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9AB067801F02011100092BC6 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
+		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D757311A6C8CE3F6EA451F0 /* Pods_Celecare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +49,8 @@
 			children = (
 				9AB0676B1EFAE95100092BC6 /* Celecare */,
 				9AB0676A1EFAE95100092BC6 /* Products */,
+				CBB7995141C31F07B9987988 /* Pods */,
+				BB11ACFC45414FD68B7BA7A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +72,26 @@
 				9AB067751EFAE95100092BC6 /* Assets.xcassets */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
+				9AB067801F02011100092BC6 /* Login.storyboard */,
 			);
 			path = Celecare;
+			sourceTree = "<group>";
+		};
+		BB11ACFC45414FD68B7BA7A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CBB7995141C31F07B9987988 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */,
+				BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +101,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9AB0677D1EFAE95100092BC6 /* Build configuration list for PBXNativeTarget "Celecare" */;
 			buildPhases = (
+				877E42C20F83528BC2E53E22 /* [CP] Check Pods Manifest.lock */,
 				9AB067651EFAE95100092BC6 /* Sources */,
 				9AB067661EFAE95100092BC6 /* Frameworks */,
 				9AB067671EFAE95100092BC6 /* Resources */,
+				43D1B506F07E70A85283C8E9 /* [CP] Embed Pods Frameworks */,
+				D91E642DF339E3D8CFE6AC47 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,6 +157,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AB067811F02011100092BC6 /* Login.storyboard in Resources */,
 				9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */,
 				9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */,
 				9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */,
@@ -134,6 +165,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		43D1B506F07E70A85283C8E9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Celecare/Pods-Celecare-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		877E42C20F83528BC2E53E22 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D91E642DF339E3D8CFE6AC47 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Celecare/Pods-Celecare-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9AB067651EFAE95100092BC6 /* Sources */ = {
@@ -261,6 +340,7 @@
 		};
 		9AB0677E1EFAE95100092BC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = FK56654KPJ;
@@ -274,6 +354,7 @@
 		};
 		9AB0677F1EFAE95100092BC6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = FK56654KPJ;
@@ -304,6 +385,7 @@
 				9AB0677F1EFAE95100092BC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
