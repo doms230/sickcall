@@ -15,6 +15,8 @@ target 'Celecare' do
   
   pod 'Parse'
   
+  pod 'Firebase/Auth' , '~> 4.0.0'
+  
   #facebook ish
   pod 'FacebookCore'
   pod 'FacebookLogin'

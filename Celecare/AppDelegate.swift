@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Parse
+import FacebookCore
+import FacebookLogin
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,8 +19,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        FirebaseApp.configure()
+        
         // Override point for customization after application launch.
+        Parse.enableLocalDatastore()
+        
+        // Initialize Parse.
+        
+        //MARK - this is the real one below
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = "O9M9IE9aXxHHaKmA21FpQ1SR26EdP2rf4obYxzBF"
+            $0.clientKey = "LdoCUneRAIK9sJLFFhBFwz2YkW02wChG5yi2wkk2"
+            $0.server = "https://celecare.herokuapp.com/parse"
+            //$0.server = "http://192.168.1.66:3000/parse"
+        }
+        Parse.initialize(with: configuration)
+        
+        // [Optional] Track statistics around application opens.
+        PFAnalytics.trackAppOpened(launchOptions: launchOptions)
+        
+        //Notification Jaunts.. see: https://www.parse.com/docs/ios/guide#push-notifications-setting-up-push
+        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        UIApplication.shared.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
         return true
+        
+        
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -40,7 +71,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        // Store the deviceToken in the current Installation and save it to Parse
+        let installation = PFInstallation.current()
+        installation?.setDeviceTokenFrom(deviceToken)
+        //replace badge # when someone clicks on notification
+        installation?.badge = 0
+        installation?.saveInBackground()
+        
+        Auth.auth().setAPNSToken(deviceToken, type: AuthAPNSTokenType.prod)
 
+        
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        //parse stuff
+        if ( application.applicationState == UIApplicationState.background ){
+            PFPush.handle(userInfo)
+        }
+        
+        //firebase stuff
+        if Auth.auth().canHandleNotification(userInfo) {
+            completionHandler(UIBackgroundFetchResult.noData)
+            return
+        }
+
+        
+    }
 
 }
 

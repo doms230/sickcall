@@ -15,6 +15,7 @@
 		9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067751EFAE95100092BC6 /* Assets.xcassets */; };
 		9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */; };
 		9AB067811F02011100092BC6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067801F02011100092BC6 /* Login.storyboard */; };
+		9AB067851F04928100092BC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067841F04928100092BC6 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		9AB067781EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9AB0677A1EFAE95100092BC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9AB067801F02011100092BC6 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		9AB067831F0217DA00092BC6 /* Celecare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Celecare.entitlements; sourceTree = "<group>"; };
+		9AB067841F04928100092BC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,16 +68,26 @@
 		9AB0676B1EFAE95100092BC6 /* Celecare */ = {
 			isa = PBXGroup;
 			children = (
-				9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */,
-				9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */,
-				9AB067701EFAE95100092BC6 /* SecondViewController.swift */,
-				9AB067721EFAE95100092BC6 /* Main.storyboard */,
-				9AB067751EFAE95100092BC6 /* Assets.xcassets */,
+				9AB067841F04928100092BC6 /* GoogleService-Info.plist */,
+				9AB067831F0217DA00092BC6 /* Celecare.entitlements */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
+				9AB067751EFAE95100092BC6 /* Assets.xcassets */,
+				9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */,
+				9AB067821F0207A500092BC6 /* main */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
 				9AB067801F02011100092BC6 /* Login.storyboard */,
 			);
 			path = Celecare;
+			sourceTree = "<group>";
+		};
+		9AB067821F0207A500092BC6 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */,
+				9AB067701EFAE95100092BC6 /* SecondViewController.swift */,
+				9AB067721EFAE95100092BC6 /* Main.storyboard */,
+			);
+			name = main;
 			sourceTree = "<group>";
 		};
 		BB11ACFC45414FD68B7BA7A9 /* Frameworks */ = {
@@ -131,6 +144,11 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = FK56654KPJ;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -159,6 +177,7 @@
 			files = (
 				9AB067811F02011100092BC6 /* Login.storyboard in Resources */,
 				9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */,
+				9AB067851F04928100092BC6 /* GoogleService-Info.plist in Resources */,
 				9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */,
 				9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */,
 			);
@@ -343,10 +362,11 @@
 			baseConfigurationReference = E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Celecare/Celecare.entitlements;
 				DEVELOPMENT_TEAM = FK56654KPJ;
 				INFOPLIST_FILE = Celecare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.celecare.Celecare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.celecare.celecare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -357,10 +377,11 @@
 			baseConfigurationReference = BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Celecare/Celecare.entitlements;
 				DEVELOPMENT_TEAM = FK56654KPJ;
 				INFOPLIST_FILE = Celecare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.celecare.Celecare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.celecare.celecare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
