@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 import Parse
 import FacebookCore
 import FacebookLogin
@@ -40,9 +41,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PFAnalytics.trackAppOpened(launchOptions: launchOptions)
         
         //Notification Jaunts.. see: https://www.parse.com/docs/ios/guide#push-notifications-setting-up-push
-        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        /*let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         UIApplication.shared.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
+        application.registerForRemoteNotifications()*/
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+            (granted, error) in
+            //Parse errors and track state
+            print(granted)
+            
+            if !granted{
+                print(error!)
+
+            }
+            
+            
+        }
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "welcome")
+        self.window?.rootViewController = initialViewController
+        self.window?.makeKeyAndVisible()
         
         return true
         

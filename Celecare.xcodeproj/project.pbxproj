@@ -16,6 +16,10 @@
 		9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */; };
 		9AB067811F02011100092BC6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067801F02011100092BC6 /* Login.storyboard */; };
 		9AB067851F04928100092BC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067841F04928100092BC6 /* GoogleService-Info.plist */; };
+		9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37F91F05F10A005842CF /* LoginViewController.swift */; };
+		9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */; };
+		9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FD1F060001005842CF /* VerifyViewController.swift */; };
+		9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FF1F06177B005842CF /* EmailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +35,10 @@
 		9AB067801F02011100092BC6 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		9AB067831F0217DA00092BC6 /* Celecare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Celecare.entitlements; sourceTree = "<group>"; };
 		9AB067841F04928100092BC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9ACD37F91F05F10A005842CF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		9ACD37FD1F060001005842CF /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
+		9ACD37FF1F06177B005842CF /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +84,10 @@
 				9AB067821F0207A500092BC6 /* main */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
 				9AB067801F02011100092BC6 /* Login.storyboard */,
+				9ACD37F91F05F10A005842CF /* LoginViewController.swift */,
+				9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */,
+				9ACD37FD1F060001005842CF /* VerifyViewController.swift */,
+				9ACD37FF1F06177B005842CF /* EmailViewController.swift */,
 			);
 			path = Celecare;
 			sourceTree = "<group>";
@@ -238,8 +250,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
+				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
 				9AB067711EFAE95100092BC6 /* SecondViewController.swift in Sources */,
+				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
+				9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */,
 				9AB0676F1EFAE95100092BC6 /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
