@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Parse
 
 class EmailViewController: UIViewController {
 
     @IBOutlet weak var emailField: UITextField!
+    var phoneNumber: String! 
     
     
     override func viewDidLoad() {
@@ -18,25 +20,30 @@ class EmailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        
+        let desti = segue.destination as! NewProfileViewController
+        desti.phoneNumber = phoneNumber
+        desti.email = emailField.text! 
+        
+        
     }
     
     
     
     @IBAction func nextAction(_ sender: UIButton) {
+        //TODO: verify that email isn't already in use ***
+        self.performSegue(withIdentifier: "showNewProfile", sender: self)
+        
     }
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

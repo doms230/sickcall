@@ -13,7 +13,8 @@ import Parse
 class VerifyViewController: UIViewController {
     
     @IBOutlet weak var code: UITextField!
-    //var verificationID: String!
+    var phoneNumber: String! 
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,23 +22,23 @@ class VerifyViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         
-        
-
     }
 
-
-
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+        //send user's phone number to EmailViewController 
+        let desti = segue.destination as! EmailViewController
+        desti.phoneNumber = phoneNumber
+        
     }
-    */
+ 
     @IBAction func nextAction(_ sender: UIButton) {
         
+        //verify phone number with code send to user's phone
         let verificationID = UserDefaults.standard.string(forKey: "authVerificationID")
 
         
@@ -52,7 +53,9 @@ class VerifyViewController: UIViewController {
                 
             } else {
                 
+                //Verified, segue to EmailViewController
                 print("user signed in")
+                self.performSegue(withIdentifier: "showEmail", sender: self)
                 
                 //****************************************
                 //if already user, skip to Main.Storyboard
@@ -81,7 +84,6 @@ class VerifyViewController: UIViewController {
                         self.showAlert("Username already in use", message: "")
                     }
                 }*/
-                
                 
             }
             // User is signed in

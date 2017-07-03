@@ -21,28 +21,24 @@ class LoginViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-  /*  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+            //send user's phone number to Verify View Controller
             let desti = segue.destination as! VerifyViewController
-            
-            desti.verificationId = self.verificationId
+            desti.phoneNumber = "+1\(phoneNumber.text!)"
         
-    }*/
+    }
  
     
     
     @IBAction func nextAction(_ sender: UIButton) {
+        //Verify that user has access to phone number
         PhoneAuthProvider.provider().verifyPhoneNumber("+1\(phoneNumber.text!)") { (verificationID, error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -50,6 +46,8 @@ class LoginViewController: UIViewController {
                 return
                 
             } else {
+                //verification code sent to user's phone, segue to verifyViewController 
+                
                 //self.verificationId = verificationID
                 UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
                 self.performSegue(withIdentifier: "showVerifyPhone", sender: self)

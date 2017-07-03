@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1D757311A6C8CE3F6EA451F0 /* Pods_Celecare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */; };
+		9A2687201F09C24A00AF7A2B /* MedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26871F1F09C24A00AF7A2B /* MedTableViewCell.swift */; };
+		9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687211F09C45800AF7A2B /* MedViewController.swift */; };
 		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
 		9AB0676F1EFAE95100092BC6 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */; };
 		9AB067711EFAE95100092BC6 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB067701EFAE95100092BC6 /* SecondViewController.swift */; };
@@ -20,10 +22,13 @@
 		9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */; };
 		9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FD1F060001005842CF /* VerifyViewController.swift */; };
 		9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FF1F06177B005842CF /* EmailViewController.swift */; };
+		9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD38021F099556005842CF /* NewProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celecare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A26871F1F09C24A00AF7A2B /* MedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedTableViewCell.swift; sourceTree = "<group>"; };
+		9A2687211F09C45800AF7A2B /* MedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedViewController.swift; sourceTree = "<group>"; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +44,7 @@
 		9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		9ACD37FD1F060001005842CF /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		9ACD37FF1F06177B005842CF /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
+		9ACD38021F099556005842CF /* NewProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProfileViewController.swift; sourceTree = "<group>"; };
 		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +82,7 @@
 		9AB0676B1EFAE95100092BC6 /* Celecare */ = {
 			isa = PBXGroup;
 			children = (
+				9ACD38011F0992C2005842CF /* login */,
 				9AB067841F04928100092BC6 /* GoogleService-Info.plist */,
 				9AB067831F0217DA00092BC6 /* Celecare.entitlements */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
@@ -83,11 +90,6 @@
 				9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */,
 				9AB067821F0207A500092BC6 /* main */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
-				9AB067801F02011100092BC6 /* Login.storyboard */,
-				9ACD37F91F05F10A005842CF /* LoginViewController.swift */,
-				9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */,
-				9ACD37FD1F060001005842CF /* VerifyViewController.swift */,
-				9ACD37FF1F06177B005842CF /* EmailViewController.swift */,
 			);
 			path = Celecare;
 			sourceTree = "<group>";
@@ -100,6 +102,21 @@
 				9AB067721EFAE95100092BC6 /* Main.storyboard */,
 			);
 			name = main;
+			sourceTree = "<group>";
+		};
+		9ACD38011F0992C2005842CF /* login */ = {
+			isa = PBXGroup;
+			children = (
+				9AB067801F02011100092BC6 /* Login.storyboard */,
+				9ACD37F91F05F10A005842CF /* LoginViewController.swift */,
+				9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */,
+				9ACD37FD1F060001005842CF /* VerifyViewController.swift */,
+				9ACD37FF1F06177B005842CF /* EmailViewController.swift */,
+				9ACD38021F099556005842CF /* NewProfileViewController.swift */,
+				9A26871F1F09C24A00AF7A2B /* MedTableViewCell.swift */,
+				9A2687211F09C45800AF7A2B /* MedViewController.swift */,
+			);
+			name = login;
 			sourceTree = "<group>";
 		};
 		BB11ACFC45414FD68B7BA7A9 /* Frameworks */ = {
@@ -253,10 +270,13 @@
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
 				9AB067711EFAE95100092BC6 /* SecondViewController.swift in Sources */,
+				9A2687201F09C24A00AF7A2B /* MedTableViewCell.swift in Sources */,
+				9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */,
 				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
 				9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */,
 				9AB0676F1EFAE95100092BC6 /* FirstViewController.swift in Sources */,
+				9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
