@@ -15,7 +15,8 @@ import AVFoundation
 
 class QuestionViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var videoFile: PFFile!
+   // var videoFile: PFFile!
+    var videoFile: URL!
     
     var healthConcernDuration: String!
     var healthConcernSummary: String! 
@@ -40,6 +41,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         let desti = segue.destination as! SummaryViewController
         desti.healthConcernDuration = healthConcernDuration
         desti.healthConcernSummary = healthConcernSummary
+        desti.pickedFile = videoFile
     }
     
     
@@ -82,6 +84,11 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
             let dataPath = documentsDirectory.appendingPathComponent(saveFileName)
             try! videoData?.write(to: dataPath, options: [])
             print("Saved to " + dataPath.absoluteString)*/
+            
+            //compressAction(videoFile: pickedVideo)
+            videoFile = pickedVideo
+            self.performSegue(withIdentifier: "showCheckout", sender: self)
+            
         }
         
         imagePicker.dismiss(animated: true, completion: {
@@ -98,7 +105,6 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         })
     }
     
-    
     func postAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message,
                                       preferredStyle: UIAlertControllerStyle.alert)
@@ -106,9 +112,10 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         self.present(alert, animated: true, completion: nil)
     }
     
-    func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
+    //video compression
+    /*func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
         let urlAsset = AVURLAsset(url: inputURL, options: nil)
-        if let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetMediumQuality) {
+        if let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetHighestQuality) {
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileTypeQuickTimeMovie
             exportSession.shouldOptimizeForNetworkUse = true
@@ -118,7 +125,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    func compressAction(_ isPrivate: Bool, videoFile: URL){
+    func compressAction(videoFile: URL){
         let compressedURL = URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + ".mp4")
         compressVideo(videoFile, outputURL: compressedURL) { (session) in
             switch session.status {
@@ -129,21 +136,12 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
             case .exporting:
                 break
             case .completed:
+                
                 let data = try? Data(contentsOf: compressedURL)
                 self.videoFile = PFFile(name:"media.mp4", data:data!)!
-                self.videoFile.saveInBackground {
-                    (success: Bool, error: Error?) -> Void in
-                    if (success) {
-                        //self.messageFrame.removeFromSuperview()
-                        self.postIt()
-                        
-                    }else{
-                        // self.mapJaunt.removeAnnotation(tempPin)
-                        let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
-                        newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                        self.present(newTwitterHandlePrompt, animated: true, completion: nil)
-                    }
-                }
+
+                self.performSegue(withIdentifier: "showCheckout", sender: self)
+                
                 break
             case .failed:
                 //do something saying jaunt failed
@@ -152,28 +150,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
                 break
             }
         }
-    }
+    }*/
     
-    func postIt(){
-        
-        let newQuestion = PFObject(className: "Post")
-        
-        newQuestion["userId"] = PFUser.current()?.objectId
-        newQuestion["post"] = videoFile
-        newQuestion["isRemoved"] = false
-        newQuestion.saveEventually{
-            (success: Bool, error: Error?) -> Void in
-            if (success) {
-                
-                
-                
-            } else {
-                // self.mapJaunt.removeAnnotation(pin)
-                let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
-                newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                
-                self.present(newTwitterHandlePrompt, animated: true, completion: nil)
-            }
-        }
-    }
+
 }

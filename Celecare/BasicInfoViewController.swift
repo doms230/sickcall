@@ -13,7 +13,7 @@ class BasicInfoViewController: UIViewController {
     
     @IBOutlet weak var questionSubjectTextfield: UITextField!
     
-    var healthConcernDuration: String!
+    var healthConcernDuration = "Today"
     
     @IBOutlet weak var todaySwitch: UISwitch!
     @IBOutlet weak var yesterdaySwitch: UISwitch!
@@ -34,6 +34,7 @@ class BasicInfoViewController: UIViewController {
     }
     
     @IBAction func nextAction(_ sender: UIButton) {
+        performSegue(withIdentifier: "showQuestion", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -52,6 +53,9 @@ class BasicInfoViewController: UIViewController {
             pastYearSwitch.setOn(false, animated: true)
             moreThanYearSwitch.setOn(false, animated: true)
             healthConcernDuration = "Today"
+            
+        } else {
+            todaySwitch.setOn(true, animated: true)
         }
     }
     
@@ -63,6 +67,9 @@ class BasicInfoViewController: UIViewController {
             pastYearSwitch.setOn(false, animated: true)
             moreThanYearSwitch.setOn(false, animated: true)
             healthConcernDuration = "Yesterday"
+            
+        } else {
+            yesterdaySwitch.setOn(true, animated: true)
         }
         
     }
@@ -74,6 +81,9 @@ class BasicInfoViewController: UIViewController {
             pastYearSwitch.setOn(false, animated: true)
             moreThanYearSwitch.setOn(false, animated: true)
             healthConcernDuration = "This past week"
+            
+        } else {
+            pastWeekSwitch.setOn(true, animated: true)
         }
     }
     @IBAction func pastMonthSwitchAction(_ sender: UISwitch) {
@@ -84,6 +94,9 @@ class BasicInfoViewController: UIViewController {
             pastYearSwitch.setOn(false, animated: true)
             moreThanYearSwitch.setOn(false, animated: true)
             healthConcernDuration = "This past month"
+            
+        } else {
+            pastMonthSwitch.setOn(true, animated: true)
         }
     }
     @IBAction func pastYearSwitchAction(_ sender: UISwitch) {
@@ -94,6 +107,9 @@ class BasicInfoViewController: UIViewController {
             pastMonthSwitch.setOn(false, animated: true)
             moreThanYearSwitch.setOn(false, animated: true)
             healthConcernDuration = "This past year"
+            
+        } else {
+            pastYearSwitch.setOn(true, animated: true)
         }
     }
     @IBAction func moreThanYearSwitchAction(_ sender: UISwitch) {
@@ -104,6 +120,9 @@ class BasicInfoViewController: UIViewController {
             pastMonthSwitch.setOn(false, animated: true)
             pastYearSwitch.setOn(false, animated: true)
             healthConcernDuration = "More than a year"
+            
+        } else {
+            moreThanYearSwitch.setOn(true, animated: true)
         }
     }
     
