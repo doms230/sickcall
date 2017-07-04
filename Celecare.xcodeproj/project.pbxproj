@@ -10,9 +10,10 @@
 		1D757311A6C8CE3F6EA451F0 /* Pods_Celecare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */; };
 		9A2687201F09C24A00AF7A2B /* MedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26871F1F09C24A00AF7A2B /* MedTableViewCell.swift */; };
 		9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687211F09C45800AF7A2B /* MedViewController.swift */; };
+		9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */; };
+		9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */; };
+		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
 		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
-		9AB0676F1EFAE95100092BC6 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */; };
-		9AB067711EFAE95100092BC6 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB067701EFAE95100092BC6 /* SecondViewController.swift */; };
 		9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067721EFAE95100092BC6 /* Main.storyboard */; };
 		9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067751EFAE95100092BC6 /* Assets.xcassets */; };
 		9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */; };
@@ -29,10 +30,11 @@
 		3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celecare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A26871F1F09C24A00AF7A2B /* MedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedTableViewCell.swift; sourceTree = "<group>"; };
 		9A2687211F09C45800AF7A2B /* MedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedViewController.swift; sourceTree = "<group>"; };
+		9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicInfoViewController.swift; sourceTree = "<group>"; };
+		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		9AB067701EFAE95100092BC6 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		9AB067731EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9AB067751EFAE95100092BC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9AB067781EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -97,9 +99,10 @@
 		9AB067821F0207A500092BC6 /* main */ = {
 			isa = PBXGroup;
 			children = (
-				9AB0676E1EFAE95100092BC6 /* FirstViewController.swift */,
-				9AB067701EFAE95100092BC6 /* SecondViewController.swift */,
 				9AB067721EFAE95100092BC6 /* Main.storyboard */,
+				9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */,
+				9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */,
+				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -269,14 +272,15 @@
 			files = (
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
-				9AB067711EFAE95100092BC6 /* SecondViewController.swift in Sources */,
 				9A2687201F09C24A00AF7A2B /* MedTableViewCell.swift in Sources */,
 				9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */,
+				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
 				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
+				9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */,
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
 				9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */,
-				9AB0676F1EFAE95100092BC6 /* FirstViewController.swift in Sources */,
 				9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */,
+				9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

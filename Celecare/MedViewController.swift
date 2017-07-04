@@ -16,14 +16,14 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     var medNames = [String]()
     var medDuration = [String]()
     
+    var medNameTextField = [UITextField]()
+    var medDurationButton = [UIButton]()
+    
     var medRows = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        medNames.append("")
-        medDuration.append("")
     }
 
     
@@ -57,9 +57,11 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
            // medDuration.append((cell.medDurationButton.titleLabel?.text!)!)
             
             cell.medDurationButton.addTarget(self, action: #selector(MedViewController.chooseMedDuration(_:)), for: .touchUpInside)
+            medDurationButton.append(cell.medDurationButton)
             cell.tag = indexPath.row
             
-            cell.medTextField.addTarget(self, action: #selector(MedViewController.textFieldDidEndEditing(_:)), for: .touchUpInside)
+           /* cell.medTextField.addTarget(self, action: #selector(MedViewController.textFieldDidEndEditing(_:)), for: .touchUpInside)*/
+            medNameTextField.append(cell.medTextField)
             cell.tag = indexPath.row
             
             
@@ -116,51 +118,36 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     //actions
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        medNames[textField.tag] = textField.text!
-    }
-
     
-    //TODO: add something where user can't add new med if they haven't added on the previous
     func addMedRow(_ sender: UIButton){
-        if medNames[medRows - 1] != ""{
-            medRows += 1
-            self.tableJaunt.reloadData()
-            
-        } else {
-            let prompt = UIAlertController(title: "Blank Medication Field", message: "Use the blank medication field before adding another.", preferredStyle: .alert)
-            
-            prompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-            
-            present(prompt, animated: true, completion: nil)
-        }
-
-    }
+        medRows += 1
+        medDurationButton.removeAll()
+        medNameTextField.removeAll()
+        self.tableJaunt.reloadData()    }
     
     func chooseMedDuration(_ sender: UIButton){
         //show action pop up of med duration
         
         let chooseMed = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
-        chooseMed.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         
         let oneWeek = UIAlertAction(title: "1 Week", style: .default) { (action) in
             sender.setTitle("1 Week", for: .normal)
-            self.medDuration[sender.tag] = "1 week"
+           // self.medDuration[sender.tag] = "1 week"
         }
         
         let oneMonth = UIAlertAction(title: "1 month", style: .default) { (action) in
             sender.setTitle("1 Month", for: .normal)
-            self.medDuration[sender.tag] = "1 month"
+           // self.medDuration[sender.tag] = "1 month"
         }
         
         let threeMonth = UIAlertAction(title: "3 months", style: .default) { (action) in
             sender.setTitle("3 Months", for: .normal)
-            self.medDuration[sender.tag] = "3 months"
+            //self.medDuration[sender.tag] = "3 months"
         }
         
         let oneYear = UIAlertAction(title: "1 year", style: .default) { (action) in
             sender.setTitle("1 Year", for: .normal)
-            self.medDuration[sender.tag] = "1 year"
+            //self.medDuration[sender.tag] = "1 year"
         }
         
         chooseMed.addAction(oneWeek)
@@ -173,7 +160,16 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @IBAction func nextAction(_ sender: UIButton) {
         
-        
+        //loop through meds and add them to the medNames
+        var i = 0;
+        for med in medNameTextField{
+            if med.text! != ""{
+                medNames.append(med.text!)
+                medDuration.append(medDurationButton[i].titleLabel!.text!)
+            }
+            
+            i += 1
+        }
         
         let query = PFQuery(className:"_User")
         query.getObjectInBackground(withId: (PFUser.current()?.objectId)!) {

@@ -24,6 +24,10 @@
 	<string>Celecare</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Ask your question</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Hear your voice</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Upload Profile Picture</string>
 	<key>UILaunchStoryboardName</key>

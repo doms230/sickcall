@@ -79,11 +79,11 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                 installation?.saveEventually()
                 
                 //segue to main storyboard 
-                /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-                self.present(controller, animated: true, completion: nil)*/
+                self.present(controller, animated: true, completion: nil)
                 
-                self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+                //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
                 
             }
         }
