@@ -177,6 +177,9 @@
 						DevelopmentTeam = FK56654KPJ;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplePay = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};

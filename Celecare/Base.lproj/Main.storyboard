@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Questions-->
+        <!--First View Controller-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
                 <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,13 +21,81 @@
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="57Y-K9-JCh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="questionsReuse" id="Gnd-HF-Kc7">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gnd-HF-Kc7" id="xOj-fk-NkJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Questions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYI-pK-RQh">
+                                                    <rect key="frame" x="8" y="11" width="359" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="FYI-pK-RQh" firstAttribute="trailing" secondItem="xOj-fk-NkJ" secondAttribute="trailingMargin" id="jBl-AL-jEK"/>
+                                                <constraint firstItem="FYI-pK-RQh" firstAttribute="top" secondItem="xOj-fk-NkJ" secondAttribute="topMargin" constant="3" id="kK7-eH-rWh"/>
+                                                <constraint firstItem="FYI-pK-RQh" firstAttribute="centerY" secondItem="xOj-fk-NkJ" secondAttribute="centerY" id="kbd-mz-zPv"/>
+                                                <constraint firstItem="FYI-pK-RQh" firstAttribute="leading" secondItem="xOj-fk-NkJ" secondAttribute="leadingMargin" id="sa1-pz-UGh"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="3uK-Bd-LzZ">
+                                <rect key="frame" x="16" y="72" width="343" height="29"/>
+                                <segments>
+                                    <segment title="Un-Answered"/>
+                                    <segment title="Answered"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="57Y-K9-JCh" secondAttribute="trailing" id="Gwm-cu-t63"/>
+                            <constraint firstItem="3uK-Bd-LzZ" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="8" symbolic="YES" id="R9I-gH-S3V"/>
+                            <constraint firstItem="57Y-K9-JCh" firstAttribute="centerX" secondItem="3uK-Bd-LzZ" secondAttribute="centerX" id="S5A-2u-KND"/>
+                            <constraint firstItem="57Y-K9-JCh" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="eB4-SX-9gL"/>
+                            <constraint firstItem="57Y-K9-JCh" firstAttribute="bottom" secondItem="4ug-Mw-9AY" secondAttribute="top" id="hrB-3u-ne9"/>
+                            <constraint firstItem="57Y-K9-JCh" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="kbN-Vh-hRO"/>
+                            <constraint firstItem="3uK-Bd-LzZ" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" id="neK-Qe-HBX"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="My Questions" image="first" id="acW-dT-cKf"/>
+                    <navigationItem key="navigationItem" id="azf-OY-bwS"/>
+                    <connections>
+                        <segue destination="2JA-8v-aMO" kind="show" identifier="showAskedQuestion" id="OrO-SO-Ots"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1311" y="-257"/>
+            <point key="canvasLocation" x="2248.8000000000002" y="-257.72113943028489"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="PJO-Ob-6jf">
+            <objects>
+                <viewController id="2JA-8v-aMO" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WnR-ou-mnA"/>
+                        <viewControllerLayoutGuide type="bottom" id="aEy-FE-GoI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AdT-NK-5bh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="mbC-hC-M1e"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cuG-4t-iVo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3100" y="-258.62068965517244"/>
         </scene>
         <!--Ask a Question-->
         <scene sceneID="wg7-f3-ORb">
@@ -357,7 +425,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="LTG-VZ-RKo" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
+                        <segue destination="BuW-dw-pCC" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="Xub-Wg-CHO" kind="relationship" relationship="viewControllers" id="yrg-Qe-XGp"/>
                     </connections>
                 </tabBarController>
@@ -427,6 +495,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sSN-7q-PtM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1156" y="-969.26536731634189"/>
+        </scene>
+        <!--My Questions-->
+        <scene sceneID="78Q-bp-8Yl">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BuW-dw-pCC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Questions" image="first" id="acW-dT-cKf"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dWE-qx-t2O">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="rootViewController" id="X0q-Mi-RJg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zZA-XZ-9hr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1309.5999999999999" y="-257.72113943028489"/>
         </scene>
     </scenes>
     <resources>
