@@ -21,6 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        //change color of time/status jaunts to white
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:UIControlState())
+        
+        UITabBar.appearance().tintColor = uicolorFromHex(0x180d22)
+        
+        let navigationBarAppearace = UINavigationBar.appearance()
+        
+        navigationBarAppearace.barTintColor = uicolorFromHex(0xffffff)
+        navigationBarAppearace.tintColor = uicolorFromHex(0x180d22)
+        
+        
         FirebaseApp.configure()
         
         // Override point for customization after application launch.
@@ -134,6 +145,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         
+    }
+    
+    //define custom color jaunts..  see https://coderwall.com/p/dyqrfa/customize-navigation-bar-appearance-with-swift for reference
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
 
 }

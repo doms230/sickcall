@@ -25,7 +25,6 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
     let saveFileName = "/test.mp4"
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,12 +40,18 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         let desti = segue.destination as! SummaryViewController
         desti.healthConcernDuration = healthConcernDuration
         desti.healthConcernSummary = healthConcernSummary
-        desti.pickedFile = videoFile
+        
+        //TODO: uncomment later.. needed
+        //desti.pickedFile = videoFile
     }
     
     
     @IBAction func askQuestionAction(_ sender: UIButton) {
-        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+        
+         self.performSegue(withIdentifier: "showCheckout", sender: self)
+        
+        //TODO: uncomment later... needed 
+       /* if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
             if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 
                 imagePicker.sourceType = .camera
@@ -62,7 +67,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
             }
         } else {
             postAlert("Camera inaccessable", message: "Application cannot access the camera.")
-        }
+        }*/
     }
     
     
@@ -87,13 +92,16 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
             
             //compressAction(videoFile: pickedVideo)
             videoFile = pickedVideo
-            self.performSegue(withIdentifier: "showCheckout", sender: self)
             
+            imagePicker.dismiss(animated: true, completion: {
+                // Anything you want to happen when the user saves an video
+                self.performSegue(withIdentifier: "showCheckout", sender: self)
+            })
+            
+        } else {
+            //TODO: something happened
         }
-        
-        imagePicker.dismiss(animated: true, completion: {
-            // Anything you want to happen when the user saves an video
-        })
+
     }
     
     

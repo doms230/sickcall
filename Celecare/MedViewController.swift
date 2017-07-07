@@ -25,7 +25,6 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         super.viewDidLoad()
 
     }
-
     
     //mark - tableview
     

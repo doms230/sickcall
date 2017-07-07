@@ -55,41 +55,48 @@ class VerifyViewController: UIViewController {
                 
                 //Verified, segue to EmailViewController
                 print("user signed in")
-                self.performSegue(withIdentifier: "showEmail", sender: self)
                 
-                //****************************************
-                //if already user, skip to Main.Storyboard
-                
-                /*let usernameQuery = PFQuery(className: "_User")
-                usernameQuery.whereKey("username", equalTo: usernameField.text! )
-                // usernameQuery("email", equalTo: emailField.text!  )
-                usernameQuery.findObjectsInBackground{
-                    (objects: [PFObject]?, error: Error?) -> Void in
-                    
-                    if objects?.count == 0{
-                        //self.performSegue(withIdentifier: "showNewProfile", sender: self)
-                        let emailQuery = PFQuery(className: "_User")
-                        emailQuery.whereKey("email", equalTo: self.emailField.text!  )
-                        emailQuery.findObjectsInBackground{
-                            (objects: [PFObject]?, error: Error?) -> Void in
-                            if objects?.count == 0{
-                                self.performSegue(withIdentifier: "showNewProfile", sender: self)
-                                
-                            } else {
-                                
-                                self.showAlert("Email already in use", message: "")
-                            }
-                        }
+                let query = PFQuery(className: "_User")
+                query.whereKey("phoneNumber", equalTo: self.phoneNumber)
+                query.getFirstObjectInBackground {
+                    (object: PFObject?, error: Error?) -> Void in
+                    if error != nil || object == nil {
+                        print("The getFirstObject request failed.")
+                        self.performSegue(withIdentifier: "showEmail", sender: self)
                     } else {
-                        self.showAlert("Username already in use", message: "")
+                        // The find succeeded.
+                        print("Successfully retrieved the object.")
+                        let username = object?["username"] as! String
+                        self.login(username: username, password: self.phoneNumber)
                     }
-                }*/
-                
+                }                                
             }
-            // User is signed in
-            // ...
         }
-        
     }
+    
+    func login(username: String, password: String)  {
+        PFUser.logInWithUsername(inBackground: username, password: password) {
+            (user: PFUser?, error: Error?) -> Void in
+            if user != nil {
+                
+                //associate current user with device
+                let installation = PFInstallation.current()
+                installation?["user"] = PFUser.current()
+                installation?["userId"] = PFUser.current()?.objectId
+                //installation.setDeviceTokenFromData(deviceToken)
+                installation?.saveEventually()
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                //segue to home screen
+                self.present(controller, animated: true, completion: nil)
+                
+            } else {
+               // self.showAlert("Login Attempt Unsuccessful", message: "Check username and password combo.")
+                print("fail")
+            }
+        }
+    }
+    
 
 }
