@@ -51,8 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = ParseClientConfiguration {
             $0.applicationId = "O9M9IE9aXxHHaKmA21FpQ1SR26EdP2rf4obYxzBF"
             $0.clientKey = "LdoCUneRAIK9sJLFFhBFwz2YkW02wChG5yi2wkk2"
-            $0.server = "https://celecare.herokuapp.com/parse"
-            //$0.server = "http://192.168.1.66:3000/parse"
+            //$0.server = "https://celecare.herokuapp.com/parse"
+            $0.server = "http://192.168.1.75:5000/parse"
         }
         Parse.initialize(with: configuration)
         
@@ -84,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.shared.registerUserNotificationSettings(settings)
             application.registerForRemoteNotifications()
         }
+        
+        PFUser.logOut()
         
         if (PFUser.current() != nil){
             

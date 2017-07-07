@@ -112,11 +112,13 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         present(imagePicker, animated: true, completion: nil)
     }
     
-    func addStripeCustomer(email: String){
-        let parameters: Parameters = ["email": email]
-        Alamofire.request(self.baseURL.appending("/payments/addCustomer"), method: .post, parameters: parameters).validate().responseJSON { response in
+    func addStripeCustomer(email: String) -> String{
+        var customerId = ""
+        
+        Alamofire.request(self.baseURL.appending("/payments/addCustomer"), method: .post, parameters: [
+            "email": email], encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
-            case .success:
+            case .success(let value):
                 print("Validation Successful")
                 //associate current user with device
                 let installation = PFInstallation.current()
@@ -136,6 +138,8 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                 print(error)
             }
         }
+        
+        return customerId
     }
     
     
