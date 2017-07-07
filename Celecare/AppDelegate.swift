@@ -12,6 +12,7 @@ import Parse
 import FacebookCore
 import FacebookLogin
 import Firebase
+import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,8 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.barTintColor = uicolorFromHex(0xffffff)
         navigationBarAppearace.tintColor = uicolorFromHex(0x180d22)
         
+        //Stripe ***
+        STPPaymentConfiguration.shared().publishableKey = "pk_test_oP3znUobvO9fTRuYb6Qo7PYB"
+        STPPaymentConfiguration.shared().appleMerchantIdentifier = "merchant.com.socialgroupe.paymentsTest"
+        
+        //firebase ****
         
         FirebaseApp.configure()
+        
+        //Parse *****
         
         // Override point for customization after application launch.
         Parse.enableLocalDatastore()
@@ -56,17 +64,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()*/
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
-            //Parse errors and track state
-            print(granted)
-            
-            if !granted{
-                print(error!)
-
+        //notifications ****
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                (granted, error) in
+                //Parse errors and track state
+                print(granted)
+                
+                if !granted{
+                    print(error!)
+                    
+                }
+                
+                
             }
             
-            
+        } else {
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
         }
         
         if (PFUser.current() != nil){

@@ -4,16 +4,20 @@
 //
 //  Created by Mac Owner on 7/2/17.
 //  Copyright © 2017 Celecare LLC. All rights reserved.
-//
+//#F2F2F5 -type off white jaunt beige color
 
 import UIKit
 import Parse
+import Alamofire
+import SwiftyJSON
 
 class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var userImage: UIButton!
+    
+    var baseURL = "https://celecare.herokuapp.com"
     
     var email: String!
     var phoneNumber: String!
@@ -70,20 +74,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                 print(error!)
                 
             } else {
-                
-                //associate current user with device
-                let installation = PFInstallation.current()
-                installation?["user"] = PFUser.current()
-                installation?["userId"] = PFUser.current()?.objectId
-                //installation.setDeviceTokenFromData(deviceToken)
-                installation?.saveEventually()
-                
-                //segue to main storyboard 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-                self.present(controller, animated: true, completion: nil)
-                
-                //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+                self.addStripeCustomer(email: email)
                 
             }
         }
@@ -119,6 +110,32 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         imagePicker.sourceType =  .photoLibrary
         //imagePicker.cameraDevice = .front
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func addStripeCustomer(email: String){
+        let parameters: Parameters = ["email": email]
+        Alamofire.request(self.baseURL.appending("/payments/addCustomer"), method: .post, parameters: parameters).validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                print("Validation Successful")
+                //associate current user with device
+                let installation = PFInstallation.current()
+                installation?["user"] = PFUser.current()
+                installation?["userId"] = PFUser.current()?.objectId
+                //installation.setDeviceTokenFromData(deviceToken)
+                installation?.saveEventually()
+                
+                //segue to main storyboard
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                self.present(controller, animated: true, completion: nil)
+                
+                //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     

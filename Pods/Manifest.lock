@@ -58,6 +58,7 @@ PODS:
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
   - SnapKit (3.2.0)
+  - Stripe (10.2.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - Kingfisher
   - Parse
   - SnapKit
+  - Stripe
   - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -90,8 +92,9 @@ SPEC CHECKSUMS:
   Kingfisher: 12eeffeef42ea45b68c5e5acfe8ba9005b713ab4
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  Stripe: 5c5a49d750952b1801e4c1f5c4264a08e427c67d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: bb998783e209d4d2ad9fc1a5e0a43fc0cbcdb311
+PODFILE CHECKSUM: 8693b7eb6389587f92978a40c40d398d2e45c2e2
 
 COCOAPODS: 1.1.1

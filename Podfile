@@ -21,5 +21,9 @@ target 'Celecare' do
   pod 'FacebookCore'
   pod 'FacebookLogin'
   pod 'FacebookShare'
+  
+  
+  #stripe
+  pod 'Stripe'
 
 end
