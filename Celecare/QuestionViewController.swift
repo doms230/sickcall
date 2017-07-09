@@ -42,16 +42,16 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         desti.healthConcernSummary = healthConcernSummary
         
         //TODO: uncomment later.. needed
-        //desti.pickedFile = videoFile
+        desti.pickedFile = videoFile
     }
     
     
     @IBAction func askQuestionAction(_ sender: UIButton) {
         
-         self.performSegue(withIdentifier: "showCheckout", sender: self)
+         //self.performSegue(withIdentifier: "showCheckout", sender: self)
         
         //TODO: uncomment later... needed 
-       /* if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
             if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 
                 imagePicker.sourceType = .camera
@@ -67,7 +67,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
             }
         } else {
             postAlert("Camera inaccessable", message: "Application cannot access the camera.")
-        }*/
+        }
     }
     
     

@@ -74,9 +74,52 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                 print(error!)
                 
             } else {
-                self.addStripeCustomer(email: email)
-                
+                self.addStripeCustomer(email: email, user: user)
             }
+        }
+    }
+    
+    func addStripeCustomer(email: String, user: PFUser){
+        //var customerId = ""
+        
+        Alamofire.request(self.baseURL.appending("/payments/addCustomer"), method: .post, parameters: [
+            "email": "doms230@live.com"
+            ], encoding: JSONEncoding.default).validate().responseJSON { response in
+                switch response.result {
+                case .success(let data):
+                    let json = JSON(data)
+                   // print("JSON: \(json)")
+                    if let id = json["id"].string {
+                      //  print("customer Id: \(id)")
+                      //  customerId = id
+                        //create customer id, then save to database
+                        
+                        user["customerId"] = id
+                        user.saveInBackground {
+                            (success: Bool, error: Error?) -> Void in
+                            if (success) {
+                                //associate current user with device
+                                let installation = PFInstallation.current()
+                                installation?["user"] = PFUser.current()
+                                installation?["userId"] = PFUser.current()?.objectId
+                                //installation.setDeviceTokenFromData(deviceToken)
+                                installation?.saveEventually()
+                                
+                                //segue to main storyboard
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                                self.present(controller, animated: true, completion: nil)
+                            }
+                        }
+                        
+                    }
+                    print("Validation Successful")
+                    
+                    //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+                    
+                case .failure(let error):
+                    print(error)
+                }
         }
     }
     
@@ -112,36 +155,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         present(imagePicker, animated: true, completion: nil)
     }
     
-    func addStripeCustomer(email: String) -> String{
-        var customerId = ""
-        
-        Alamofire.request(self.baseURL.appending("/payments/addCustomer"), method: .post, parameters: [
-            "email": email], encoding: JSONEncoding.default).validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                print("Validation Successful")
-                //associate current user with device
-                let installation = PFInstallation.current()
-                installation?["user"] = PFUser.current()
-                installation?["userId"] = PFUser.current()?.objectId
-                //installation.setDeviceTokenFromData(deviceToken)
-                installation?.saveEventually()
-                
-                //segue to main storyboard
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-                self.present(controller, animated: true, completion: nil)
-                
-                //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
 
-            case .failure(let error):
-                print(error)
-            }
-        }
-        
-        return customerId
-    }
-    
     
     //
     /*func progressBarDisplayer() {

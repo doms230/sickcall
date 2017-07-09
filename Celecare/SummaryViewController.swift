@@ -21,22 +21,33 @@ class SummaryViewController: UIViewController {
     var videoFile: PFFile!
     var pickedFile: URL!
     
+    @IBOutlet weak var questionSummary: UILabel!
+    @IBOutlet weak var healthDurationLabel: UILabel!
+    @IBOutlet weak var questionVideoButton: UIButton!
+    
     //bools
     var isVideoCompressed = false
     var hasUserPaid = false
+    var isVideoSaved = false
     
     //progress bar
     var messageFrame: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        questionSummary.text = healthConcernSummary
+        healthDurationLabel.text = healthConcernDuration
+        questionVideoButton.setBackgroundImage(self.videoPreviewImage(), for: .normal)
+        questionVideoButton.layer.cornerRadius = 3
+        questionVideoButton.clipsToBounds = true 
+        
         // Do any additional setup after loading the view.
         
         /*self.videoFile.saveInBackground {
             (success: Bool, error: Error?) -> Void in
             if (success) {
-
+                self.isVideoSaved = true
                 print("video saved")
                 
             }else{
@@ -81,7 +92,6 @@ class SummaryViewController: UIViewController {
             (success: Bool, error: Error?) -> Void in
             if (success) {
 
-                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
                 self.present(controller, animated: true, completion: nil)
@@ -102,10 +112,10 @@ class SummaryViewController: UIViewController {
         //also do something where activity spinner shows up
         progressBarDisplayer("")
         hasUserPaid = true
+
         if isVideoCompressed{
             self.postIt()
         }
-        
     }
     
     func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
@@ -165,6 +175,23 @@ class SummaryViewController: UIViewController {
         }
     }
     
+    //
+    @IBAction func questionVideoAction(_ sender: UIButton) {
+        // Find the video in the app's document directory
+        
+       /* guard let path = Bundle.main.path(forResource: "video", ofType:"m4v") else {
+            debugPrint("video.m4v not found")
+            return
+        }*/
+        
+        let player = AVPlayer(url: pickedFile)
+        let playerController = AVPlayerViewController()
+        playerController.player = player
+        present(playerController, animated: true) {
+            player.play()
+        }
+    }
+    
     //mich 
     func progressBarDisplayer(_ message: String) {
         
@@ -178,5 +205,26 @@ class SummaryViewController: UIViewController {
         
         messageFrame.addSubview(activityIndicator)
         view.addSubview(messageFrame)
+    }
+    
+    func videoPreviewImage() -> UIImage? {
+        //let filePath = NSString(string: "~/").expandingTildeInPath.appending("/Documents/").appending(fileName)
+        
+        //let vidURL = NSURL(fileURLWithPath:filePath)
+        let asset = AVURLAsset(url: pickedFile)
+        let generator = AVAssetImageGenerator(asset: asset)
+        generator.appliesPreferredTrackTransform = true
+        
+        let timestamp = CMTime(seconds: 2, preferredTimescale: 60)
+        
+        do {
+            let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
+            return UIImage(cgImage: imageRef)
+        }
+        catch let error as NSError
+        {
+            print("Image generation failed with error \(error)")
+            return nil
+        }
     }
 }
