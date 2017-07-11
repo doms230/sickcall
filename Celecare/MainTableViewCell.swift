@@ -18,4 +18,9 @@ class MainTableViewCell: UITableViewCell {
     @IBOutlet weak var questionTitleLabel: UILabel!
     
 
+    //medViewController
+    
+    @IBOutlet weak var medLabel: UILabel!
+    @IBOutlet weak var medDuration: UILabel!
+    
 }

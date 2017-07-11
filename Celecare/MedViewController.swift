@@ -9,21 +9,18 @@
 import UIKit
 import Parse
 
-class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableJaunt: UITableView!
     
+    @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var medTableView: UITextField!
     var medNames = [String]()
     var medDuration = [String]()
     
-    var medNameTextField = [UITextField]()
-    var medDurationButton = [UIButton]()
-    
-    var medRows = 1
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        loadUserData()
     }
     
     //mark - tableview
@@ -33,44 +30,20 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     }*/
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if section == 0{
-            return medRows
-        } else {
-            return 1
-        }
+       return medNames.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell: MedTableViewCell!
+        let cell =  tableView.dequeueReusableCell(withIdentifier: "medReuse", for: indexPath) as! MainTableViewCell
         
-        if indexPath.section == 0{
-             cell = tableView.dequeueReusableCell(withIdentifier: "medication", for: indexPath) as! MedTableViewCell
-            
-            //medNames.append(cell.medTextField.text!)
-           // medDuration.append((cell.medDurationButton.titleLabel?.text!)!)
-            
-            cell.medDurationButton.addTarget(self, action: #selector(MedViewController.chooseMedDuration(_:)), for: .touchUpInside)
-            medDurationButton.append(cell.medDurationButton)
-            cell.tag = indexPath.row
-            
-           /* cell.medTextField.addTarget(self, action: #selector(MedViewController.textFieldDidEndEditing(_:)), for: .touchUpInside)*/
-            medNameTextField.append(cell.medTextField)
-            cell.tag = indexPath.row
-            
-            
-        } else {
-             cell = tableView.dequeueReusableCell(withIdentifier: "addMed", for: indexPath) as! MedTableViewCell
-            
-            cell.addMedButton.addTarget(self, action: #selector(MedViewController.addMedRow(_:)), for: .touchUpInside)
-            
-        }
-        
+            cell.medLabel.text = medNames[indexPath.row]
+            cell.medDuration.text = medDuration[indexPath.row]
         
         /*if eventObjectId.count == 0{
             
@@ -117,38 +90,39 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
     
     //actions
     
-    
-    func addMedRow(_ sender: UIButton){
-        medRows += 1
-        medDurationButton.removeAll()
-        medNameTextField.removeAll()
-        self.tableJaunt.reloadData()    }
-    
-    func chooseMedDuration(_ sender: UIButton){
+    func chooseMedDuration(medName:String){
         //show action pop up of med duration
         
-        let chooseMed = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        let chooseMed = UIAlertController(title: "How Long?", message: "", preferredStyle: .actionSheet)
         
         let oneWeek = UIAlertAction(title: "1 Week", style: .default) { (action) in
-            sender.setTitle("1 Week", for: .normal)
-           // self.medDuration[sender.tag] = "1 week"
+            self.medNames.insert(medName, at: 0)
+            self.medDuration.insert("1 week", at: 0)
+            self.tableJaunt.reloadData()
+            self.medTableView.text = " "
         }
         
         let oneMonth = UIAlertAction(title: "1 month", style: .default) { (action) in
-            sender.setTitle("1 Month", for: .normal)
-           // self.medDuration[sender.tag] = "1 month"
+            self.medNames.insert(medName, at: 0)
+            self.medDuration.insert("1 month", at: 0)
+            self.tableJaunt.reloadData()
+            self.medTableView.text = " "
         }
         
         let threeMonth = UIAlertAction(title: "3 months", style: .default) { (action) in
-            sender.setTitle("3 Months", for: .normal)
-            //self.medDuration[sender.tag] = "3 months"
+            self.medNames.insert(medName, at: 0)
+            self.medDuration.insert("3 months", at: 0)
+            self.tableJaunt.reloadData()
+            self.medTableView.text = " "
         }
         
         let oneYear = UIAlertAction(title: "1 year", style: .default) { (action) in
-            sender.setTitle("1 Year", for: .normal)
-            //self.medDuration[sender.tag] = "1 year"
+            self.medNames.insert(medName, at: 0)
+            self.medDuration.insert("1 year", at: 0)
+            self.tableJaunt.reloadData()
+            self.medTableView.text = " "
         }
-        
+        chooseMed.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         chooseMed.addAction(oneWeek)
         chooseMed.addAction(oneMonth)
         chooseMed.addAction(threeMonth)
@@ -157,28 +131,19 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
     }
     
-    @IBAction func nextAction(_ sender: UIButton) {
-        
-        //loop through meds and add them to the medNames
-        var i = 0;
-        for med in medNameTextField{
-            if med.text! != ""{
-                medNames.append(med.text!)
-                medDuration.append(medDurationButton[i].titleLabel!.text!)
-            }
-            
-            i += 1
-        }
-        
+    
+    
+    func loadUserData(){
         let query = PFQuery(className:"_User")
         query.getObjectInBackground(withId: (PFUser.current()?.objectId)!) {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil && object != nil {
                 
-                object?["medications"] = self.medNames
-                object?["medDurations"] = self.medDuration
-                object?.saveInBackground()
-                print("workded")
+               self.medNames = object?["medications"] as! Array<String>
+               self.medDuration = object?["medDurations"] as! Array<String>
+                self.tableJaunt.reloadData()
+               // object?.saveInBackground()
+                
                 
             } else {
                 print(error!)
@@ -186,6 +151,34 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         }
     }
     
+    @IBAction func doneAction(_ sender: UIBarButtonItem) {
+        let query = PFQuery(className:"_User")
+        query.getObjectInBackground(withId: (PFUser.current()?.objectId)!) {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil && object != nil {
+                
+                object?["medications"] = self.medNames
+                object?["medDurations"] = self.medDuration
+                object?.saveInBackground {
+                    (success: Bool, error: Error?) -> Void in
+                    if (success) {
+                        //segue to main storyboard
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                }
+                
+            } else {
+                print(error!)
+            }
+        }
+        
+    }
+    
+    @IBAction func addMedAction(_ sender: UIButton) {
+        chooseMedDuration(medName: medTableView.text!)
+    }
     
     /*
     // MARK: - Navigation
