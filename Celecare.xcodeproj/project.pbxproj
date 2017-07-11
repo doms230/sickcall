@@ -15,6 +15,7 @@
 		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
 		9A26872A1F0F023400AF7A2B /* PaymentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */; };
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
+		9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F62F1F14168300B2E55B /* AnswerViewController.swift */; };
 		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
 		9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067721EFAE95100092BC6 /* Main.storyboard */; };
 		9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067751EFAE95100092BC6 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfoViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
+		9A26F62F1F14168300B2E55B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AB067731EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,
 				9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */,
 				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
+				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
 				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
 				9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */,
+				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
 				9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */,
 				9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */,

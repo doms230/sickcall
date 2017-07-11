@@ -13,5 +13,9 @@ class MainTableViewCell: UITableViewCell {
     //PaymentInfoViewController
     @IBOutlet weak var paymentLabel: UILabel!
     @IBOutlet weak var paymentLogo: UIImageView!
+    
+    //question label 
+    @IBOutlet weak var questionTitleLabel: UILabel!
+    
 
 }

@@ -61,4 +61,31 @@ class LoginViewController: UIViewController {
 
     @IBAction func facebookAction(_ sender: UIButton) {
     }
+    
+    /*
+     func keyboardWillShow(_ notification: Notification) {
+     
+     if let keyboardSize = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+     if view.frame.origin.y == 0{
+     self.view.frame.origin.y -= keyboardSize.height
+     self.searchBar.frame.origin.y += keyboardSize.height
+     }
+     else {
+     
+     }
+     }
+     }
+     
+     func keyboardWillHide(_ notification: Notification) {
+     if let keyboardSize = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+     if view.frame.origin.y != 0 {
+     self.view.frame.origin.y += keyboardSize.height
+     self.searchBar.frame.origin.y -= keyboardSize.height
+     }
+     else {
+     
+     }
+     }
+     }
+ */
 }

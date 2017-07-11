@@ -20,6 +20,8 @@ class SummaryViewController: UIViewController {
     var healthConcernSummary: String!
     var videoFile: PFFile!
     var pickedFile: URL!
+    var screenshotImage: PFFile!
+    var image: UIImage!
     
     @IBOutlet weak var questionSummary: UILabel!
     @IBOutlet weak var healthDurationLabel: UILabel!
@@ -36,11 +38,29 @@ class SummaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        image = self.videoPreviewImage()
+        
         questionSummary.text = healthConcernSummary
         healthDurationLabel.text = healthConcernDuration
-        questionVideoButton.setBackgroundImage(self.videoPreviewImage(), for: .normal)
+        questionVideoButton.setBackgroundImage(image, for: .normal)
         questionVideoButton.layer.cornerRadius = 3
-        questionVideoButton.clipsToBounds = true 
+        questionVideoButton.clipsToBounds = true
+        
+        
+        let imageJaunt = UIImageJPEGRepresentation(image!, 0.5)
+        screenshotImage  = PFFile(name: "screenshot.jpeg", data: imageJaunt!)
+        self.screenshotImage.saveInBackground {
+            (success: Bool, error: Error?) -> Void in
+            if (success) {
+             
+                
+            }else{
+                // self.mapJaunt.removeAnnotation(tempPin)
+                /*let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
+                newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                self.present(newTwitterHandlePrompt, animated: true, completion: nil)*/
+            }
+        }
         
         // Do any additional setup after loading the view.
         
@@ -80,9 +100,9 @@ class SummaryViewController: UIViewController {
     func postIt(){
         
         let newQuestion = PFObject(className: "Post")
-        
         newQuestion["userId"] = PFUser.current()?.objectId
         newQuestion["video"] = videoFile
+        newQuestion["videoScreenShot"] = self.screenshotImage
         newQuestion["duration"] = healthConcernDuration
         newQuestion["summary"] = healthConcernSummary
         newQuestion["isAnswered"] = false
@@ -224,6 +244,7 @@ class SummaryViewController: UIViewController {
         catch let error as NSError
         {
             print("Image generation failed with error \(error)")
+            self.image = UIImage(named: "appy")
             return nil
         }
     }
