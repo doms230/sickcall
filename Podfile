@@ -25,5 +25,7 @@ target 'Celecare' do
   
   #stripe
   pod 'Stripe'
+  
+  pod 'SidebarOverlay'
 
 end

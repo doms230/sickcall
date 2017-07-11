@@ -107,7 +107,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                                 
                                 //segue to main storyboard
                                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                                let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
                                 self.present(controller, animated: true, completion: nil)
                             }
                         }

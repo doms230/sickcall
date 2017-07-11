@@ -87,7 +87,7 @@ class VerifyViewController: UIViewController {
                 installation?.saveEventually()
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
                 //segue to home screen
                 self.present(controller, animated: true, completion: nil)
                 

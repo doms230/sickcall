@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F5B0DCC6A737FFD6BA48FF5FFAFD4F2C'
-               BlueprintName = 'SnapKit'
+               BlueprintIdentifier = 'DD20054E2507C24D52642E0F663423C7'
+               BlueprintName = 'SidebarOverlay'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SnapKit.framework'>
+               BuildableName = 'SidebarOverlay.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

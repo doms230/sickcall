@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import Parse
+import Kingfisher
+import SidebarOverlay
 
 class BasicInfoViewController: UIViewController {
     
+    @IBOutlet weak var profileImage: UIButton!
     
+    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var questionSubjectTextfield: UITextField!
     
     var healthConcernDuration = "Today"
@@ -21,10 +26,33 @@ class BasicInfoViewController: UIViewController {
     @IBOutlet weak var pastMonthSwitch: UISwitch!
     @IBOutlet weak var pastYearSwitch: UISwitch!
     @IBOutlet weak var moreThanYearSwitch: UISwitch!
+    
+    
+    @IBOutlet weak var barJaunt: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error != nil || object == nil {
 
+                
+            } else {
+                let imageFile: PFFile = object!["Profile"] as! PFFile
+                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
+                self.profileImage.layer.cornerRadius = 30 / 2
+                self.profileImage.clipsToBounds = true
+                
+            }
+        }
+        
+        nextButton.layer.cornerRadius = 5
+        nextButton.clipsToBounds = true
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -127,6 +155,11 @@ class BasicInfoViewController: UIViewController {
     }
     
     
+    @IBAction func menuAction(_ sender: UIButton) {
+        if let container = self.so_containerViewController {
+            container.isSideViewControllerPresented = true
+        }
+    }
 
     /*
     // MARK: - Navigation

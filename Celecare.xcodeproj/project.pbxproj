@@ -16,12 +16,14 @@
 		9A26872A1F0F023400AF7A2B /* PaymentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */; };
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
 		9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F62F1F14168300B2E55B /* AnswerViewController.swift */; };
+		9A26F6321F146C6800B2E55B /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */; };
 		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
 		9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067721EFAE95100092BC6 /* Main.storyboard */; };
 		9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067751EFAE95100092BC6 /* Assets.xcassets */; };
 		9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */; };
 		9AB067811F02011100092BC6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067801F02011100092BC6 /* Login.storyboard */; };
 		9AB067851F04928100092BC6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067841F04928100092BC6 /* GoogleService-Info.plist */; };
+		9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB182171F147E6300678851 /* MainSidebarViewController.swift */; };
 		9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37F91F05F10A005842CF /* LoginViewController.swift */; };
 		9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */; };
 		9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FD1F060001005842CF /* VerifyViewController.swift */; };
@@ -39,6 +41,7 @@
 		9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfoViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		9A26F62F1F14168300B2E55B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
+		9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AB067731EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 		9AB067801F02011100092BC6 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		9AB067831F0217DA00092BC6 /* Celecare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Celecare.entitlements; sourceTree = "<group>"; };
 		9AB067841F04928100092BC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9AB182171F147E6300678851 /* MainSidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSidebarViewController.swift; sourceTree = "<group>"; };
 		9ACD37F91F05F10A005842CF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		9ACD37FD1F060001005842CF /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 				9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */,
 				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
 				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
+				9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */,
+				9AB182171F147E6300678851 /* MainSidebarViewController.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -290,8 +296,10 @@
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
 				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
 				9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */,
+				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
 				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
+				9A26F6321F146C6800B2E55B /* MainContainerViewController.swift in Sources */,
 				9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */,
 				9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */,
 				9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */,
