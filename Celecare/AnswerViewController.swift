@@ -92,7 +92,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.unAnsweredVideoFile.append(object["video"] as! PFFile)
                         self.unAnsweredQuestionTitle.append(object["summary"] as! String)
                     }
-                    print(self.unAnsweredQuestionTitle[0])
+                   // print(self.unAnsweredQuestionTitle[0])
                     self.tableJaunt.reloadData()
                 }
             } else {

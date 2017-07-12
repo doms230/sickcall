@@ -34,6 +34,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Questions"
+        
         let query = PFQuery(className: "_User")
         query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
@@ -59,6 +61,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         let desti = segue.destination as! AdvisorMedsViewController
         desti.userId = questionUserIds[selectedIndex]
         desti.videoFile = videoFile[selectedIndex]
+        desti.objectId = questionObjectIds[selectedIndex]
         
     }
 

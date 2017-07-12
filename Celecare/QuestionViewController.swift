@@ -120,6 +120,35 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         self.present(alert, animated: true, completion: nil)
     }
     
+    /*
+     func cleanup(outputFileURL: URL ) {
+     print("started clean up")
+     let path = outputFileURL.path
+     
+     if FileManager.default.fileExists(atPath: path) {
+     do {
+     try FileManager.default.removeItem(atPath: path)
+     print("removed temp file")
+     }
+     catch {
+     print("Could not remove file at url: \(outputFileURL)")
+     }
+     
+     } else {
+     print("couldn't find file")
+     }
+     
+     if let currentBackgroundRecordingID = backgroundRecordingID {
+     backgroundRecordingID = UIBackgroundTaskInvalid
+     
+     if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
+     UIApplication.shared.endBackgroundTask(currentBackgroundRecordingID)
+     }
+     }
+     }
+ 
+ */
+    
     //video compression
     /*func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
         let urlAsset = AVURLAsset(url: inputURL, options: nil)
