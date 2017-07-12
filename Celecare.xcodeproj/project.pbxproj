@@ -28,6 +28,7 @@
 		9AB182211F15884400678851 /* AdvisorQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */; };
 		9AB182231F15886000678851 /* AdvisorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB182221F15886000678851 /* AdvisorTableViewCell.swift */; };
 		9AB182251F158AB500678851 /* AdvisorSideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */; };
+		9AB182271F15BF0400678851 /* AdvisorMedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */; };
 		9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37F91F05F10A005842CF /* LoginViewController.swift */; };
 		9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */; };
 		9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FD1F060001005842CF /* VerifyViewController.swift */; };
@@ -60,6 +61,7 @@
 		9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisorQuestionsViewController.swift; sourceTree = "<group>"; };
 		9AB182221F15886000678851 /* AdvisorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisorTableViewCell.swift; sourceTree = "<group>"; };
 		9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisorSideBarViewController.swift; sourceTree = "<group>"; };
+		9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvisorMedsViewController.swift; sourceTree = "<group>"; };
 		9ACD37F91F05F10A005842CF /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		9ACD37FD1F060001005842CF /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
 				9AB182221F15886000678851 /* AdvisorTableViewCell.swift */,
 				9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */,
+				9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */,
 			);
 			name = advisor;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			files = (
 				9AB182251F158AB500678851 /* AdvisorSideBarViewController.swift in Sources */,
 				9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */,
+				9AB182271F15BF0400678851 /* AdvisorMedsViewController.swift in Sources */,
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
 				9AB182211F15884400678851 /* AdvisorQuestionsViewController.swift in Sources */,

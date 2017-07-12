@@ -1,8 +1,8 @@
 //
-//  AnswerViewController.swift
+//  AdvisorMedsViewController.swift
 //  Celecare
 //
-//  Created by Mac Owner on 7/10/17.
+//  Created by Mac Owner on 7/11/17.
 //  Copyright © 2017 Celecare LLC. All rights reserved.
 //
 
@@ -12,97 +12,65 @@ import MobileCoreServices
 import AVKit
 import AVFoundation
 
-class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource   {
+
+    var medLabel = [String]()
+    var medDuration = [String]()
+    var userId: String!
     
-    var unAnsweredObjectId = [String]()
-    var unAnsweredQuestionTitle = [String]()
-    var unAnsweredVideoFile = [PFFile]()
-    
-    @IBOutlet weak var segmentJaunt: UISegmentedControl!
+    var videoFile: PFFile! 
     
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
     
     let screenSize: CGRect = UIScreen.main.bounds
     
+    var selectedIndex = 0
+    
     @IBOutlet weak var tableJaunt: UITableView!
-
     override func viewDidLoad() {
         super.viewDidLoad()
+
         loadData()
     }
     
-    
-    @IBAction func segmentAction(_ sender: UISegmentedControl) {
-    }
-    
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if segmentJaunt.selectedSegmentIndex == 0{
-            return self.unAnsweredObjectId.count
-
+        if section == 0{
+            return 1
+            
         } else {
-            //TODO: answered questions... add proper
-            return 0
-        }        
+           return medLabel.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "questionsReuse", for: indexPath) as! MainTableViewCell
+        var cell: AdvisorTableViewCell!
         
-        if segmentJaunt.selectedSegmentIndex == 0{
-            cell.questionTitleLabel.text = unAnsweredQuestionTitle[indexPath.row]
-        } else {
-            //answerjaunts
+        if indexPath.section == 0{
+            cell = tableView.dequeueReusableCell(withIdentifier: "questionReuse", for: indexPath) as! AdvisorTableViewCell
+            
+        } else{
+            cell = tableView.dequeueReusableCell(withIdentifier: "medicationsReuse", for: indexPath) as! AdvisorTableViewCell
+            
+            cell.medDuration.text = medDuration[indexPath.row]
+            cell.medLabel.text = medLabel[indexPath.row]
         }
-        
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if segmentJaunt.selectedSegmentIndex == 0{
-            playVideo(videoJaunt: unAnsweredVideoFile[indexPath.row])
-        } else {
-            //answered jaunt
-        }
-        
+        //segue to question jautn
+        if indexPath.section == 0{
+            playVideo(videoJaunt: videoFile)
+            selectedIndex = indexPath.row
+        }        
     }
-    
-    //data
-    func loadData(){
-        let query = PFQuery(className:"Post")
-        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
-        query.whereKey("isRemoved", equalTo: false)
-        query.whereKey("isAnswered", equalTo: false)
-        query.findObjectsInBackground {
-            (objects: [PFObject]?, error: Error?) -> Void in
-            if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) scores.")
-                // Do something with the found objects
-                if let objects = objects {
-                    for object in objects {
-                        self.unAnsweredObjectId.append(object.objectId!)
-                        self.unAnsweredVideoFile.append(object["video"] as! PFFile)
-                        self.unAnsweredQuestionTitle.append(object["summary"] as! String)
-                    }
-                    print(self.unAnsweredQuestionTitle[0])
-                    self.tableJaunt.reloadData()
-                }
-            } else {
-                // Log details of the failure
-                print("Error: \(error!)")
-            }
-        }
-    }
-    
-    //video
 
     func playVideo(videoJaunt: PFFile){
         
@@ -110,33 +78,33 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         //exitButton.setTitle("X", for: .normal)
         //exitButton.setTitleColor(UIColor.black, for: .normal)
         exitButton.setImage(UIImage(named: "exit"), for: .normal)
-       // exitButton.backgroundColor = UIColor.white
+        // exitButton.backgroundColor = UIColor.white
         exitButton.layer.cornerRadius = 25/2
         exitButton.clipsToBounds = true
-        exitButton.addTarget(self, action: #selector(AnswerViewController.exitPost(_:)), for: .touchUpInside)
-                
+        exitButton.addTarget(self, action: #selector(AdvisorMedsViewController.exitPost(_:)), for: .touchUpInside)
+        
+        
         playerController = AVPlayerViewController()
         
         
         //add bring video player/UIComponents to to front
-       // self.addChildViewController(playerController)
-       // self.view.addSubview(playerController.view)
-       // self.playerController.view.layer.zPosition = 1
+        // self.addChildViewController(playerController)
+        // self.view.addSubview(playerController.view)
+        // self.playerController.view.layer.zPosition = 1
         
         //self.view.bringSubview(toFront: self.postTime)
         //self.view.addSubview(self.postTime)
         
         //load date
-       /* let formattedEnd = DateFormatter.localizedString(from: timeJaunt, dateStyle: .medium, timeStyle: .short)
-        self.postTime.setTitle(" \(formattedEnd) \(self.selectedicon!) \(self.selectedicon!)", for: UIControlState())
-        self.postTime.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 16)!
-        self.view.bringSubview(toFront: self.exitButton)
-        self.view.addSubview(self.exitButton)*/
-      //  self.view.bringSubview(toFront: exitButton)
+        /* let formattedEnd = DateFormatter.localizedString(from: timeJaunt, dateStyle: .medium, timeStyle: .short)
+         self.postTime.setTitle(" \(formattedEnd) \(self.selectedicon!) \(self.selectedicon!)", for: UIControlState())
+         self.postTime.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 16)!
+         self.view.bringSubview(toFront: self.exitButton)
+         self.view.addSubview(self.exitButton)*/
+        //  self.view.bringSubview(toFront: exitButton)
         //self.view.addSubview(exitButton)
         
         playerController.view.addSubview(exitButton)
-        
         playerController.view.frame = self.view.bounds
         playerController.showsPlaybackControls = false
         
@@ -180,11 +148,39 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             player.pause()
         }
         
-       self.playerController.dismiss(animated: true, completion: nil)
-       //playerController.view.removeFromSuperview()
+        self.playerController.dismiss(animated: true, completion: nil)
+        //playerController.view.removeFromSuperview()
         sender.removeFromSuperview()
-       // postTime.removeFromSuperview()
+        // postTime.removeFromSuperview()
     }
     
+    func loadData(){
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: userId)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error != nil || object == nil {
+                
+                
+            } else {
+                self.medLabel = object?["medications"] as! Array<String>
+                self.medDuration = object?["medDurations"] as! Array<String>
+                self.tableJaunt.reloadData()
+                
+            }
+        }
+
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }

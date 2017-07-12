@@ -12,4 +12,11 @@ class AdvisorTableViewCell: UITableViewCell {
 
     @IBOutlet weak var questionLabel: UILabel!
 
+    
+    //
+    @IBOutlet weak var medLabel: UILabel!
+    
+    @IBOutlet weak var medDuration: UILabel!
+    @IBOutlet weak var questionLable: UILabel!
+    
 }

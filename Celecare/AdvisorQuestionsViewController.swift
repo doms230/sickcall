@@ -9,6 +9,9 @@
 import UIKit
 import Parse
 import SidebarOverlay
+import MobileCoreServices
+import AVKit
+import AVFoundation
 
 class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -17,7 +20,16 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet weak var tableJaunt: UITableView!
     
     var questions = [String]()
+    var videoFile = [PFFile]()
     var questionObjectIds = [String]()
+    var questionUserIds = [String]()
+    
+    var player: AVPlayer!
+    var playerController: AVPlayerViewController!
+    
+    let screenSize: CGRect = UIScreen.main.bounds
+    
+    var selectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +52,15 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         
        loadData()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        //send user's phone number to Verify View Controller
+        let desti = segue.destination as! AdvisorMedsViewController
+        desti.userId = questionUserIds[selectedIndex]
+        desti.videoFile = videoFile[selectedIndex]
+        
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -60,7 +81,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //segue to question jautn
-        
+        selectedIndex = indexPath.row
+        self.performSegue(withIdentifier: "showVitals", sender: self)
     }
     
     @IBAction func menuAction(_ sender: UIButton) {
@@ -84,6 +106,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                     for object in objects {
                         self.questions.append(object["summary"] as! String)
                         self.questionObjectIds.append(object.objectId!)
+                        self.videoFile.append(object["video"] as! PFFile)
+                        self.questionUserIds.append(object["userId"] as! String)
                     }
                     self.tableJaunt.reloadData()
                 }
@@ -93,5 +117,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             }
         }
     }
+    
+    //video
+
 
 }
