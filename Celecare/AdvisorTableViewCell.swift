@@ -129,7 +129,7 @@ class AdvisorTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         label.textColor = UIColor.black
-        label.text = "Watch Question"
+        label.text = "View Question"
         label.numberOfLines = 0
         return label
     }()

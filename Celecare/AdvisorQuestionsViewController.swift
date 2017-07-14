@@ -39,6 +39,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
     
+    var vitalsController: AdvisorMedsViewController!
     let screenSize: CGRect = UIScreen.main.bounds
     
     var selectedIndex = 0
@@ -77,7 +78,6 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "patientReuse")
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "segmentReuse")
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "infoReuse")
-        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "statusReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
     }
@@ -94,7 +94,9 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBAction func statusAction(_ sender: UIBarButtonItem) {
         //here, there will be something that logs when user went online and that he/she is online
-        playVideo(videoJaunt: videoFile)
+        //playVideo(videoJaunt: videoFile)
+        vitalsController = AdvisorMedsViewController()
+        self.present(vitalsController, animated: true, completion: nil)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -337,7 +339,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     
     func vitalsAction(_ sender: UIButton){
         //playerController.present(AdvisorMedsViewController, animated: true, completion: nil)
-        performSegue(withIdentifier: "showVitals", sender: self)
+        //performSegue(withIdentifier: "showVitals", sender: self)
     }
     
     func playAction(_ sender: UIButton){
