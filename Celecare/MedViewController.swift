@@ -131,8 +131,6 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
     }
     
-    
-    
     func loadUserData(){
         let query = PFQuery(className:"_User")
         query.getObjectInBackground(withId: (PFUser.current()?.objectId)!) {
@@ -143,7 +141,6 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                self.medDuration = object?["medDurations"] as! Array<String>
                 self.tableJaunt.reloadData()
                // object?.saveInBackground()
-                
                 
             } else {
                 print(error!)
@@ -173,7 +170,6 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
                 print(error!)
             }
         }
-        
     }
     
     @IBAction func addMedAction(_ sender: UIButton) {

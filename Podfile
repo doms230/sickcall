@@ -27,5 +27,7 @@ target 'Celecare' do
   pod 'Stripe'
   
   pod 'SidebarOverlay'
+  
+  pod 'Persei', '~> 3.0'
 
 end

@@ -29,6 +29,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loadData()
     }
     
@@ -71,7 +72,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             //answered jaunt
         }
-        
     }
     
     //data
@@ -116,7 +116,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         exitButton.addTarget(self, action: #selector(AnswerViewController.exitPost(_:)), for: .touchUpInside)
                 
         playerController = AVPlayerViewController()
-        
         
         //add bring video player/UIComponents to to front
        // self.addChildViewController(playerController)

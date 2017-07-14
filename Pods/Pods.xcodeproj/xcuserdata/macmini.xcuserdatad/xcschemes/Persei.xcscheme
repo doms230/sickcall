@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '0A9AB21A1548183332999D5CCACEBC1A'
-               BlueprintName = 'Stripe'
+               BlueprintIdentifier = '37E9DC11DD5930F61F39665A9E2A0B08'
+               BlueprintName = 'Persei'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Stripe.framework'>
+               BuildableName = 'Persei.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

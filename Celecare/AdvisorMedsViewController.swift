@@ -43,44 +43,53 @@ class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
-            return 1
-            
-        } else {
-           return medLabel.count
-        }
+        return medLabel.count
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell: AdvisorTableViewCell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "medReuse", for: indexPath) as! AdvisorTableViewCell
         
-        if indexPath.section == 0{
-            cell = tableView.dequeueReusableCell(withIdentifier: "questionReuse", for: indexPath) as! AdvisorTableViewCell
-            
-        } else{
-            cell = tableView.dequeueReusableCell(withIdentifier: "medicationsReuse", for: indexPath) as! AdvisorTableViewCell
-            
-            cell.medDuration.text = medDuration[indexPath.row]
-            cell.medLabel.text = medLabel[indexPath.row]
-        }
+        cell.medicationLabel.text = medDuration[indexPath.row]
+        cell.durationLabel.text = medLabel[indexPath.row]
+        
 
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //segue to question jautn
-        if indexPath.section == 0{
+        /*if indexPath.section == 0{
             playVideo(videoJaunt: videoFile)
             selectedIndex = indexPath.row
-        }        
+        }        */
+    }
+    
+    //TODO: change userId to something proper
+    func loadData(){
+        let userId = PFUser.current()?.objectId
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: userId)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error != nil || object == nil {
+                
+                
+            } else {
+                self.medLabel = object?["medications"] as! Array<String>
+                self.medDuration = object?["medDurations"] as! Array<String>
+                self.tableJaunt.reloadData()
+                
+            }
+        }
     }
 
-    func playVideo(videoJaunt: PFFile){
+   /* func playVideo(videoJaunt: PFFile){
         
         let exitButton = UIButton(frame: CGRect(x: 10,y: 20,width: 25, height: 25))
         //exitButton.setTitle("X", for: .normal)
@@ -388,7 +397,7 @@ class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableV
                 break
             }
         }
-    }
+    }*/
     
 
     /*
