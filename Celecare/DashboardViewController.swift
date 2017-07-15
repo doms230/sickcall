@@ -25,7 +25,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var advisorRec = ""
     
-
+    var isOnline = false
     
     @IBOutlet weak var tableJaunt: UITableView!
     override func viewDidLoad() {
@@ -42,6 +42,12 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         // button.addTarget(self, action: #selector(ScheduleViewController.editProfileAction(_:)), for: UIControlEvents.touchUpInside)
         self.navigationItem.titleView = button
         
+        //let verificationID = UserDefaults.standard.string(forKey: "status")
+        if UserDefaults.standard.object(forKey: "status") != nil{
+            isOnline = UserDefaults.standard.bool(forKey: "status")
+            
+        }
+        
         loadData()
     }
     
@@ -57,8 +63,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "statusReuse", for: indexPath) as! AdvisorTableViewCell
-        
-        cell.statusLabel.text = "You're offline"
+    
         
         //do something to see if person is online or not 
         
@@ -72,6 +77,13 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
          playVideo(videoJaunt: videoFile)
          selectedIndex = indexPath.row
          }        */
+        
+        if isOnline{
+            UserDefaults.standard.set(true, forKey: "status")
+            
+        } else {
+            UserDefaults.standard.set(false, forKey: "status")
+        }
     }
     
     //TODO: change userId to something proper
@@ -90,6 +102,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
     }
+    
+
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

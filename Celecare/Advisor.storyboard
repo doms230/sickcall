@@ -107,13 +107,14 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZOo-wT-ee0">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="cfc-fa-eej" id="a6l-rT-XF2"/>
                                     <outlet property="delegate" destination="cfc-fa-eej" id="39Q-u9-UQS"/>
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                         <color key="tintColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstItem="ZOo-wT-ee0" firstAttribute="leading" secondItem="WS1-Lw-OyI" secondAttribute="leading" id="Gqr-5A-580"/>
@@ -132,12 +133,6 @@
                                     <action selector="menuAction:" destination="cfc-fa-eej" eventType="touchUpInside" id="EvH-HB-ZbV"/>
                                 </connections>
                             </button>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Online" id="ZNV-YB-Bp5">
-                            <color key="tintColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                            <connections>
-                                <action selector="statusAction:" destination="cfc-fa-eej" id="SQp-CI-Fcz"/>
-                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

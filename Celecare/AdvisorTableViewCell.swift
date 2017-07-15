@@ -54,7 +54,21 @@ class AdvisorTableViewCell: UITableViewCell {
     }*/
     
     
-    
+    //meds jaunt
+    lazy var medName: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    lazy var medDuration: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 14)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
 
     
     //status jaunt
@@ -162,13 +176,35 @@ class AdvisorTableViewCell: UITableViewCell {
                 make.right.equalTo(self).offset(-125)
                 make.bottom.equalTo(self).offset(-150)
             }
+        } else if reuseIdentifier == "medReuse"{
+            configureMedSubview()
         }
+        
     }
     
     // We won’t use this but it’s required for the class to compile
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+        func configureMedSubview(){
+            self.addSubview(medName)
+            self.addSubview(medDuration)
+            
+            medName.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(5)
+                make.left.equalTo(self).offset(5)
+                make.right.equalTo(self).offset(-5)
+                //make.bottom.equalTo(self).offset(-5)
+            }
+            
+            medDuration.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(medName.snp.bottom).offset(3)
+                make.left.equalTo(self).offset(5)
+                make.right.equalTo(self).offset(-5)
+                make.bottom.equalTo(self).offset(-5)
+            }
+    }
+    
     
     func configurePatientSubview(){
         self.addSubview(patientImage)

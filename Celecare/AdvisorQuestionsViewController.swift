@@ -35,6 +35,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     var patientUserImage: String!
     var patientUsername: String!
     var videoFile: PFFile!
+    var patientMedications = [String]()
+    var patientMedicationDuration = [String]()
     
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
@@ -78,6 +80,9 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "patientReuse")
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "segmentReuse")
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "infoReuse")
+        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "medReuse")
+        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "statusReuse")
+        
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
     }
@@ -104,7 +109,13 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        
+        if selectedIndex == 0{
+            return 3
+            
+        } else {
+            return patientMedications.count + 2
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,24 +125,39 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         
         var cell: AdvisorTableViewCell!
         if objectId != nil{
+            
             if indexPath.row == 0{
                 cell = tableView.dequeueReusableCell(withIdentifier: "patientReuse", for: indexPath) as! AdvisorTableViewCell
+                tableView.separatorStyle = .none
                 cell.backgroundColor = uicolorFromHex(0x180d22)
                 cell.patientImage.kf.setImage(with: URL(string: self.patientUserImage))
                 cell.patientName.text = self.patientUsername
                 
             } else if indexPath.row == 1{
                 cell = tableView.dequeueReusableCell(withIdentifier: "segmentReuse", for: indexPath) as! AdvisorTableViewCell
+                tableView.separatorStyle = .none
                 cell.segment.tintColor = uicolorFromHex(0x180d22)
+                cell.segment.addTarget(self, action: #selector(AdvisorQuestionsViewController.segmentAction(_:)), for: .valueChanged)
                 //add segment actions here
                 
-            } else if indexPath.row == 2{
-                cell = tableView.dequeueReusableCell(withIdentifier: "infoReuse", for: indexPath) as! AdvisorTableViewCell
-                cell.videoButton.setImage(UIImage(named:"appy"), for: .normal)
-                cell.healthConcern.text = self.healthConcern
-                cell.healthDuration.text = self.healthDuration
-                cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot), for: .normal)
-                //cell.videoButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.showQuestion(_:)), for: .touchUpInside)
+            } else {
+                if selectedIndex == 0{
+                    cell = tableView.dequeueReusableCell(withIdentifier: "infoReuse", for: indexPath) as! AdvisorTableViewCell
+                    tableView.separatorStyle = .none
+                    cell.videoButton.setImage(UIImage(named:"appy"), for: .normal)
+                    cell.healthConcern.text = self.healthConcern
+                    cell.healthDuration.text = self.healthDuration
+                    cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot), for: .normal)
+                    //cell.videoButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.showQuestion(_:)), for: .touchUpInside)
+                    
+                } else if selectedIndex == 1{
+                    cell = tableView.dequeueReusableCell(withIdentifier: "medReuse", for: indexPath) as! AdvisorTableViewCell
+                    
+                    
+                    tableView.separatorStyle = .singleLine
+                    cell.medName.text = patientMedications[indexPath.row - 2]
+                    cell.medDuration.text = patientMedicationDuration[indexPath.row - 2]
+                }
             }
             
         } else {
@@ -196,7 +222,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                 self.patientUserImage = imageFile.url
                 
                 self.patientUsername = object!["DisplayName"] as! String
-                
+                self.patientMedications = object!["medications"] as! Array<String>
+                self.patientMedicationDuration = object!["medDurations"] as! Array<String>
                 self.tableJaunt.reloadData()
             }
         }
@@ -210,6 +237,10 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
     
+    func segmentAction(_ sender: UISegmentedControl){
+        selectedIndex = sender.selectedSegmentIndex
+        tableJaunt.reloadData() 
+    }
     
     //video
     
