@@ -42,7 +42,7 @@
                                     <action selector="getStartedAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="bDg-5J-2e3"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Affordable Medical Advice" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wC3-cl-PfV">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Health Advice" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wC3-cl-PfV">
                                 <rect key="frame" x="16" y="363" width="343" height="128"/>
                                 <color key="backgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
