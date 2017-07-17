@@ -103,18 +103,18 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
                     cell = tableView.dequeueReusableCell(withIdentifier: "questionReuse", for: indexPath) as! MainTableViewCell
                     cell.selectionStyle = .none
                     tableView.separatorStyle = .none
-                    cell.videoButton.setImage(UIImage(named:"appy"), for: .normal)
+                   // cell.videoButton.image =
                     cell.healthConcern.text = self.healthConcern
                     cell.healthDuration.text = self.healthDuration
-                    cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot), for: .normal)
+                    cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot))
                     //cell.videoButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.showQuestion(_:)), for: .touchUpInside)
                 } else {
                     cell = tableView.dequeueReusableCell(withIdentifier: "answerReuse", for: indexPath) as! MainTableViewCell
                     cell.selectionStyle = .none
                     tableView.separatorStyle = .none
-                    cell.answerVideoButton.setImage(UIImage(named:"appy"), for: .normal)
+                    //cell.answerVideoButton.setImage(UIImage(named:"appy"))
                     cell.recommendation.text = self.recommendation
-                    cell.answerVideoButton.kf.setImage(with: URL(string: self.answerVideoScreenShot), for: .normal)
+                    cell.answerVideoButton.kf.setImage(with: URL(string: self.answerVideoScreenShot))
                     //cell.videoButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.showQuestion(_:)), for: .touchUpInside)
                 }
             }
@@ -136,7 +136,6 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
 
             } else {
                 playVideo(videoJaunt: answerVideoFile)
-
             }
         }
         //selectedIndex = indexPath.row

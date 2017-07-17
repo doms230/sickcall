@@ -68,6 +68,7 @@ class MainTableViewCell: UITableViewCell {
         let image = UIImageView()
         image.backgroundColor = UIColor.black
         image.contentMode = .scaleAspectFill
+        image.image = UIImage(named:"appy")
         image.layer.cornerRadius = 50
         image.clipsToBounds = true
         return image
@@ -115,11 +116,12 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var videoButton: UIButton = {
-        let image = UIButton()
+    lazy var videoButton: UIImageView = {
+        let image = UIImageView()
         image.layer.cornerRadius = 5
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
+        image.image = UIImage(named:"appy")
         return image
     }()
     
@@ -131,9 +133,7 @@ class MainTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
-    
-    
+        
     //answer tab
     
     lazy var recommendationTitle: UILabel = {
@@ -153,8 +153,8 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var answerVideoButton: UIButton = {
-        let image = UIButton()
+    lazy var answerVideoButton: UIImageView = {
+        let image = UIImageView()
         image.layer.cornerRadius = 5
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill

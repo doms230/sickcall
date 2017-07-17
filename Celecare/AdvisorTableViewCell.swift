@@ -131,11 +131,12 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var videoButton: UIButton = {
-        let image = UIButton()
+    lazy var videoButton: UIImageView = {
+        let image = UIImageView()
         image.layer.cornerRadius = 5
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
+        image.image = UIImage(named:"appy")
         return image
     }()
     

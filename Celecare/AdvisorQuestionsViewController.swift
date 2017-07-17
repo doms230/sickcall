@@ -156,10 +156,10 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                     cell = tableView.dequeueReusableCell(withIdentifier: "infoReuse", for: indexPath) as! AdvisorTableViewCell
                     cell.selectionStyle = .none
                     tableView.separatorStyle = .none
-                    cell.videoButton.setImage(UIImage(named:"appy"), for: .normal)
+                    cell.videoButton.image = UIImage(named:"appy")
                     cell.healthConcern.text = self.healthConcern
                     cell.healthDuration.text = self.healthDuration
-                    cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot), for: .normal)
+                    cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot))
                     //cell.videoButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.showQuestion(_:)), for: .touchUpInside)
                     
                 } else if selectedIndex == 1{
@@ -187,7 +187,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //segue to question jautn
-        if indexPath.row == 2{
+        if indexPath.row == 2 && selectedIndex == 0{
             playVideo(videoJaunt: videoFile)
         }
         //selectedIndex = indexPath.row
