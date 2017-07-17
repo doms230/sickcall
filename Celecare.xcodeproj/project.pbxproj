@@ -16,6 +16,7 @@
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
 		9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F62F1F14168300B2E55B /* AnswerViewController.swift */; };
 		9A26F6321F146C6800B2E55B /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */; };
+		9A7351891F1C8D8200A438C8 /* ViewAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */; };
 		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
 		9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067721EFAE95100092BC6 /* Main.storyboard */; };
 		9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067751EFAE95100092BC6 /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		9A26F62F1F14168300B2E55B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
 		9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
+		9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAnswerViewController.swift; sourceTree = "<group>"; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AB067731EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -122,16 +124,17 @@
 		9AB067821F0207A500092BC6 /* main */ = {
 			isa = PBXGroup;
 			children = (
+				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
 				9AB067721EFAE95100092BC6 /* Main.storyboard */,
 				9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */,
 				9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */,
 				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,
 				9A2687211F09C45800AF7A2B /* MedViewController.swift */,
 				9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */,
-				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
 				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
 				9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */,
 				9AB182171F147E6300678851 /* MainSidebarViewController.swift */,
+				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -139,10 +142,10 @@
 		9AB1821D1F15827800678851 /* advisor */ = {
 			isa = PBXGroup;
 			children = (
+				9AB182221F15886000678851 /* AdvisorTableViewCell.swift */,
 				9AB1821B1F15826D00678851 /* Advisor.storyboard */,
 				9AB1821E1F15836700678851 /* AdvisorContainerViewController.swift */,
 				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
-				9AB182221F15886000678851 /* AdvisorTableViewCell.swift */,
 				9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */,
 				9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */,
 				9AB182281F188FDC00678851 /* DashboardViewController.swift */,
@@ -318,6 +321,7 @@
 				9AB182251F158AB500678851 /* AdvisorSideBarViewController.swift in Sources */,
 				9AB182291F188FDC00678851 /* DashboardViewController.swift in Sources */,
 				9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */,
+				9A7351891F1C8D8200A438C8 /* ViewAnswerViewController.swift in Sources */,
 				9AB182271F15BF0400678851 /* AdvisorMedsViewController.swift in Sources */,
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,

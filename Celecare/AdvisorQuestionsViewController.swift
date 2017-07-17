@@ -38,10 +38,12 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     var patientMedications = [String]()
     var patientMedicationDuration = [String]()
     
+    var testMedications = ["Medicine A", "Medicine B", "Medicine C"]
+    var testMedicationDuration = ["1 month", "3 months", "1 year"]
+    
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
     
-    var vitalsController: AdvisorMedsViewController!
     let screenSize: CGRect = UIScreen.main.bounds
     
     var selectedIndex = 0
@@ -54,13 +56,15 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     let saveFileName = "/test.mp4"
     
+    var messageFrame: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Questions"
         
         let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        query.whereKey("objectId", equalTo: "D9W37sOaeR")
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error != nil || object == nil {
@@ -100,8 +104,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     @IBAction func statusAction(_ sender: UIBarButtonItem) {
         //here, there will be something that logs when user went online and that he/she is online
         //playVideo(videoJaunt: videoFile)
-        vitalsController = AdvisorMedsViewController()
-        self.present(vitalsController, animated: true, completion: nil)
+      //  vitalsController = AdvisorMedsViewController()
+      //  self.present(vitalsController, animated: true, completion: nil)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -110,11 +114,16 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if selectedIndex == 0{
-            return 3
-            
+        if objectId != nil{
+            if selectedIndex == 0{
+                return 3
+                
+            } else {
+               // return patientMedications.count + 2
+                return testMedications.count
+            }
         } else {
-            return patientMedications.count + 2
+            return 1
         }
     }
     
@@ -128,13 +137,15 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             
             if indexPath.row == 0{
                 cell = tableView.dequeueReusableCell(withIdentifier: "patientReuse", for: indexPath) as! AdvisorTableViewCell
+                cell.selectionStyle = .none
                 tableView.separatorStyle = .none
-                cell.backgroundColor = uicolorFromHex(0x180d22)
+                cell.backgroundColor = uicolorFromHex(0xe8e6df)
                 cell.patientImage.kf.setImage(with: URL(string: self.patientUserImage))
                 cell.patientName.text = self.patientUsername
                 
             } else if indexPath.row == 1{
                 cell = tableView.dequeueReusableCell(withIdentifier: "segmentReuse", for: indexPath) as! AdvisorTableViewCell
+                cell.selectionStyle = .none
                 tableView.separatorStyle = .none
                 cell.segment.tintColor = uicolorFromHex(0x180d22)
                 cell.segment.addTarget(self, action: #selector(AdvisorQuestionsViewController.segmentAction(_:)), for: .valueChanged)
@@ -143,6 +154,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             } else {
                 if selectedIndex == 0{
                     cell = tableView.dequeueReusableCell(withIdentifier: "infoReuse", for: indexPath) as! AdvisorTableViewCell
+                    cell.selectionStyle = .none
                     tableView.separatorStyle = .none
                     cell.videoButton.setImage(UIImage(named:"appy"), for: .normal)
                     cell.healthConcern.text = self.healthConcern
@@ -152,17 +164,20 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                     
                 } else if selectedIndex == 1{
                     cell = tableView.dequeueReusableCell(withIdentifier: "medReuse", for: indexPath) as! AdvisorTableViewCell
-                    
+                    cell.selectionStyle = .none
                     
                     tableView.separatorStyle = .singleLine
-                    cell.medName.text = patientMedications[indexPath.row - 2]
-                    cell.medDuration.text = patientMedicationDuration[indexPath.row - 2]
+                    //cell.medName.text = patientMedications[indexPath.row - 2]
+                  //  cell.medDuration.text = patientMedicationDuration[indexPath.row - 2]
+                    
+                    cell.medName.text = testMedications[indexPath.row - 2]
+                    cell.medDuration.text = testMedicationDuration[indexPath.row - 2]
                 }
             }
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "statusReuse", for: indexPath) as! AdvisorTableViewCell
-            cell.statusLabel.text = "You're in queue"
+            cell.statusLabel.text = "Loading"
         }
         
         //cell.questionLabel.text = questions[indexPath.row]
@@ -247,6 +262,8 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     
     func playVideo(videoJaunt: PFFile){
         
+        progressBarDisplayer("")
+        
         let exitButton = UIButton(frame: CGRect(x: 10,y: 20,width: 25, height: 25))
         //exitButton.setTitle("X", for: .normal)
         //exitButton.setTitleColor(UIColor.black, for: .normal)
@@ -324,11 +341,12 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                     //self.player.play()
                     
                     self.present(self.playerController, animated: true) {
+                        self.messageFrame.removeFromSuperview()
                         self.player.play()
                     }
                     
                     NotificationCenter.default.addObserver(self,
-                                                           selector: #selector(AnswerViewController.playerItemDidReachEnd(_:)),
+                                                           selector: #selector(AdvisorQuestionsViewController.playerItemDidReachEnd(_:)),
                                                            name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                            object: self.player.currentItem)
                 }
@@ -365,7 +383,11 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             player.pause()
         }
         self.playerController.dismiss(animated: true, completion: nil)
-        chooseRec()
+        
+        postAlert("Answer Question", message: "In full version, advisor chooses between E.R., doctor's visit, or OTC solution recommendation and then records a video up to 1 minute explaining their advise in detail")
+        
+        //TODO: needed
+        //chooseRec()
     }
     
     func vitalsAction(_ sender: UIButton){
@@ -560,6 +582,28 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                 break
             }
         }
+    }
+    
+    //asdf
+    func postAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message,
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func progressBarDisplayer(_ message: String) {
+        
+        messageFrame = UIView(frame: CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 50, height: 50))
+        messageFrame.layer.cornerRadius = 15
+        messageFrame.backgroundColor = UIColor(white: 0, alpha: 0.7)
+        
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        activityIndicator.startAnimating()
+        
+        messageFrame.addSubview(activityIndicator)
+        view.addSubview(messageFrame)
     }
 
 }

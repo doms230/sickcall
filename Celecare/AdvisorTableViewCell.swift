@@ -84,13 +84,13 @@ class AdvisorTableViewCell: UITableViewCell {
     lazy var patientName: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        label.textColor = UIColor.white 
+        label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
     }()
     
     lazy var segment: UISegmentedControl = {
-        let items = ["Info", "Medications", "allergies"]
+        let items = ["Info", "Medications"]
         let segment = UISegmentedControl(items: items)
         segment.tintColor = UIColor.black
         segment.selectedSegmentIndex = 0

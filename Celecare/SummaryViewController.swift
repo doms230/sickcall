@@ -26,7 +26,7 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var questionSummary: UILabel!
     @IBOutlet weak var healthDurationLabel: UILabel!
     @IBOutlet weak var questionVideoButton: UIButton!
-    
+        
     //bools
     var isVideoCompressed = false
     var hasUserPaid = false
@@ -85,7 +85,6 @@ class SummaryViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation

@@ -101,9 +101,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         } else {
             //TODO: something happened
         }
-
     }
-    
     
     // Called when the user selects cancel
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

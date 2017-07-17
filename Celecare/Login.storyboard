@@ -39,7 +39,7 @@
                                     <color key="titleColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="4tY-kM-3B9" kind="show" id="Gay-ce-bjM"/>
+                                    <action selector="getStartedAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="bDg-5J-2e3"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Affordable Medical Advice" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wC3-cl-PfV">

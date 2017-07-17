@@ -15,7 +15,6 @@ class BasicInfoViewController: UIViewController {
     
     @IBOutlet weak var profileImage: UIButton!
     
-    @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var questionSubjectTextfield: UITextField!
     
     var healthConcernDuration = "Today"
@@ -34,7 +33,7 @@ class BasicInfoViewController: UIViewController {
         super.viewDidLoad()
         
         let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        query.whereKey("objectId", equalTo: "D9W37sOaeR")
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error != nil || object == nil {
@@ -49,9 +48,6 @@ class BasicInfoViewController: UIViewController {
             }
         }
         
-        nextButton.layer.cornerRadius = 5
-        nextButton.clipsToBounds = true
-        
         
         // Do any additional setup after loading the view.
     }
@@ -61,8 +57,10 @@ class BasicInfoViewController: UIViewController {
         super.touchesBegan(touches, with: event)
     }
     
-    @IBAction func nextAction(_ sender: UIButton) {
-        performSegue(withIdentifier: "showQuestion", sender: self)
+
+    @IBAction func nexAction(_ sender: UIBarButtonItem) {
+              //  performSegue(withIdentifier: "showQuestion", sender: self)
+        postAlert("", message: "Next the user would have 1 minute to ask their question. After asking their question they would pay and that question would be sent to the next available advisor.")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -159,6 +157,13 @@ class BasicInfoViewController: UIViewController {
         if let container = self.so_containerViewController {
             container.isSideViewControllerPresented = true
         }
+    }
+    
+    func postAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message,
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     /*

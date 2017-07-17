@@ -8,20 +8,16 @@
 
 import UIKit
 import Parse
-import MobileCoreServices
-import AVKit
-import AVFoundation
+import SidebarOverlay
 
 class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var unAnsweredObjectId = [String]()
     var unAnsweredQuestionTitle = [String]()
-    var unAnsweredVideoFile = [PFFile]()
     
+    
+    @IBOutlet weak var profileImage: UIButton!
     @IBOutlet weak var segmentJaunt: UISegmentedControl!
-    
-    var player: AVPlayer!
-    var playerController: AVPlayerViewController!
     
     let screenSize: CGRect = UIScreen.main.bounds
     
@@ -29,10 +25,34 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "My Questions"
+        
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: "D9W37sOaeR")
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error != nil || object == nil {
+                
+                
+            } else {
+                let imageFile: PFFile = object!["Profile"] as! PFFile
+                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
+                self.profileImage.layer.cornerRadius = 30 / 2
+                self.profileImage.clipsToBounds = true
+                
+            }
+        }
         
         loadData()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let indexPath = tableJaunt.indexPathForSelectedRow{
+            let desti = segue.destination as! ViewAnswerViewController
+            desti.objectId = unAnsweredObjectId[indexPath.row]
+        }
+    }
     
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
     }
@@ -44,42 +64,53 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if segmentJaunt.selectedSegmentIndex == 0{
+        return self.unAnsweredObjectId.count
+
+       /* if segmentJaunt.selectedSegmentIndex == 0{
             return self.unAnsweredObjectId.count
 
         } else {
             //TODO: answered questions... add proper
             return 0
-        }        
+        }      */
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "questionsReuse", for: indexPath) as! MainTableViewCell
+        cell.questionTitleLabel.text = unAnsweredQuestionTitle[indexPath.row]
         
-        if segmentJaunt.selectedSegmentIndex == 0{
-            cell.questionTitleLabel.text = unAnsweredQuestionTitle[indexPath.row]
+       /* if segmentJaunt.selectedSegmentIndex == 0{
         } else {
             //answerjaunts
-        }
+        }*/
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if segmentJaunt.selectedSegmentIndex == 0{
+       /* if segmentJaunt.selectedSegmentIndex == 0{
             playVideo(videoJaunt: unAnsweredVideoFile[indexPath.row])
         } else {
             //answered jaunt
+        }*/
+        performSegue(withIdentifier: "showAnswer", sender: self)
+    }
+    
+    @IBAction func profileImageAction(_ sender: UIButton) {
+        
+        if let container = self.so_containerViewController {
+            container.isSideViewControllerPresented = true
         }
     }
+    
     
     //data
     func loadData(){
         let query = PFQuery(className:"Post")
-        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+        query.whereKey("userId", equalTo: "D9W37sOaeR")
         query.whereKey("isRemoved", equalTo: false)
-        query.whereKey("isAnswered", equalTo: false)
+        //query.whereKey("isAnswered", equalTo: false)
         query.findObjectsInBackground {
             (objects: [PFObject]?, error: Error?) -> Void in
             if error == nil {
@@ -89,7 +120,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if let objects = objects {
                     for object in objects {
                         self.unAnsweredObjectId.append(object.objectId!)
-                        self.unAnsweredVideoFile.append(object["video"] as! PFFile)
                         self.unAnsweredQuestionTitle.append(object["summary"] as! String)
                     }
                    // print(self.unAnsweredQuestionTitle[0])
@@ -101,89 +131,4 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-    
-    //video
-
-    func playVideo(videoJaunt: PFFile){
-        
-        let exitButton = UIButton(frame: CGRect(x: 10,y: 20,width: 25, height: 25))
-        //exitButton.setTitle("X", for: .normal)
-        //exitButton.setTitleColor(UIColor.black, for: .normal)
-        exitButton.setImage(UIImage(named: "exit"), for: .normal)
-       // exitButton.backgroundColor = UIColor.white
-        exitButton.layer.cornerRadius = 25/2
-        exitButton.clipsToBounds = true
-        exitButton.addTarget(self, action: #selector(AnswerViewController.exitPost(_:)), for: .touchUpInside)
-                
-        playerController = AVPlayerViewController()
-        
-        //add bring video player/UIComponents to to front
-       // self.addChildViewController(playerController)
-       // self.view.addSubview(playerController.view)
-       // self.playerController.view.layer.zPosition = 1
-        
-        //self.view.bringSubview(toFront: self.postTime)
-        //self.view.addSubview(self.postTime)
-        
-        //load date
-       /* let formattedEnd = DateFormatter.localizedString(from: timeJaunt, dateStyle: .medium, timeStyle: .short)
-        self.postTime.setTitle(" \(formattedEnd) \(self.selectedicon!) \(self.selectedicon!)", for: UIControlState())
-        self.postTime.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 16)!
-        self.view.bringSubview(toFront: self.exitButton)
-        self.view.addSubview(self.exitButton)*/
-      //  self.view.bringSubview(toFront: exitButton)
-        //self.view.addSubview(exitButton)
-        
-        playerController.view.addSubview(exitButton)
-        
-        playerController.view.frame = self.view.bounds
-        playerController.showsPlaybackControls = false
-        
-        //retrieve video file Mark - FIX THIS
-        videoJaunt.getDataInBackground {
-            (videoData: Data?, error: Error?) -> Void in
-            if error == nil {
-                if let videoData = videoData {
-                    //self.selectedVideoData = videoData
-                    //convert video file to playable format
-                    let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as AnyObject
-                    let destinationPath:String = documentsPath.appending("/file.mov")
-                    try? videoData.write ( to: URL(fileURLWithPath: destinationPath as String), options: [.atomic])
-                    let playerItem = AVPlayerItem(asset: AVAsset(url: URL(fileURLWithPath: destinationPath as String)))
-                    self.player = AVPlayer(playerItem: playerItem)
-                    
-                    // play video
-                    self.playerController.player = self.player
-                    //self.player.play()
-                    
-                    self.present(self.playerController, animated: true) {
-                        self.player.play()
-                    }
-                    
-                    NotificationCenter.default.addObserver(self,
-                                                           selector: #selector(AnswerViewController.playerItemDidReachEnd(_:)),
-                                                           name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
-                                                           object: self.player.currentItem)
-                }
-            }
-        }
-    }
-    
-    func playerItemDidReachEnd( _ notification: Notification) {
-        player.seek(to: kCMTimeZero)
-        player.play()
-    }
-    
-    func exitPost(_ sender: UIButton){
-        if player != nil{
-            player.pause()
-        }
-        
-       self.playerController.dismiss(animated: true, completion: nil)
-       //playerController.view.removeFromSuperview()
-        sender.removeFromSuperview()
-       // postTime.removeFromSuperview()
-    }
-    
-
 }

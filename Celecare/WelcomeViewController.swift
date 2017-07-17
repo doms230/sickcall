@@ -21,6 +21,12 @@ class WelcomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func getStartedAction(_ sender: UIButton) {
+        //segue to main storyboard
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+        self.present(controller, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
