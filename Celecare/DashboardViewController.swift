@@ -8,7 +8,7 @@
 
 import UIKit
 import Parse
-
+import SidebarOverlay
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var medLabel = [String]()
@@ -27,26 +27,43 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var isOnline = false
     
+    
+    @IBOutlet weak var profileImage: UIButton!
+    
     @IBOutlet weak var tableJaunt: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "statusReuse")
+        
+        self.title = "Dashboard"
+        
+        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "dashboardReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
+        self.tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
         
-        let button =  UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error != nil || object == nil {
+                
+                
+            } else {
+                let imageFile: PFFile = object!["Profile"] as! PFFile
+                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
+                self.profileImage.layer.cornerRadius = 30 / 2
+                self.profileImage.clipsToBounds = true
+                
+            }
+        }
+        
+       /* let button =  UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
         //button.backgroundColor = UIColor.redColor()
         button.setTitle("Offline", for: .normal)
         button.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         // button.addTarget(self, action: #selector(ScheduleViewController.editProfileAction(_:)), for: UIControlEvents.touchUpInside)
-        self.navigationItem.titleView = button
-        
-        //let verificationID = UserDefaults.standard.string(forKey: "status")
-        if UserDefaults.standard.object(forKey: "status") != nil{
-            isOnline = UserDefaults.standard.bool(forKey: "status")
-            
-        }
+        self.navigationItem.titleView = button*/
         
         loadData()
     }
@@ -57,15 +74,32 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "statusReuse", for: indexPath) as! AdvisorTableViewCell
-    
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dashboardReuse", for: indexPath) as! AdvisorTableViewCell
         
-        //do something to see if person is online or not 
+        cell.backgroundColor = uicolorFromHex(0xe8e6df)
+        
+        cell.getPaidButton.backgroundColor = uicolorFromHex(0x180d22)
+        
+        if isOnline{
+            cell.queueLabel.text = "You're in queue for a question"
+            cell.statusButton.setTitle("Online", for: .normal)
+            cell.statusButton.backgroundColor = uicolorFromHex(0x180d22)
+            cell.statusButton.setTitleColor(.white, for: .normal)
+            
+        } else {
+            cell.queueLabel.text = "Start answering questions to make money"
+            cell.statusButton.setTitle("Go Online", for: .normal)
+            cell.statusButton.backgroundColor = .white
+            cell.statusButton.setTitleColor(.black, for: .normal)
+        }
+        
+        cell.statusButton.addTarget(self, action: #selector(DashboardViewController.statusAction(_:)), for: .touchUpInside)
+        
+        //do something to see if person is online or not
         
         
         return cell
@@ -78,11 +112,47 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
          selectedIndex = indexPath.row
          }        */
         
+
+    }
+    
+    func statusAction(_ sender: UIButton){
         if isOnline{
-            UserDefaults.standard.set(true, forKey: "status")
+            isOnline = false
             
         } else {
-            UserDefaults.standard.set(false, forKey: "status")
+            isOnline = true
+        }
+        
+        let userId = PFUser.current()?.objectId
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: userId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                
+                object?["isOnline"] = self.isOnline
+                if self.isOnline{
+                    object?["questionQueque"] = Date()
+                }
+                
+                object?.saveInBackground {
+                    (success: Bool, error: Error?) -> Void in
+                    if (success) {
+                        //do something 
+                    }
+                }
+                
+                self.tableJaunt.reloadData()
+                
+            } else{
+                //your offline message
+            }
+        }
+    }
+    
+    @IBAction func menuAction(_ sender: UIButton) {
+        if let container = self.so_containerViewController {
+            container.isSideViewControllerPresented = true
         }
     }
     
@@ -93,17 +163,19 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         query.whereKey("objectId", equalTo: userId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
-            if error != nil || object == nil {
+            if error == nil || object != nil {
                 
+                if object?["isOnline"] as! Bool{
+                    self.isOnline = true
+                }
                 
-            } else {
                 self.tableJaunt.reloadData()
                 
+            } else{
+                //you're not connected to the internet message
             }
         }
     }
-    
-
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -535,6 +534,42 @@
             </objects>
             <point key="canvasLocation" x="364" y="-503"/>
         </scene>
+        <!--Edit Profile View Controller-->
+        <scene sceneID="eMm-mW-Rcd">
+            <objects>
+                <viewController id="8Bz-vl-1MO" customClass="EditProfileViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lSm-Ga-3I8"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZUU-pP-zk2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oST-aK-bB3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a91-n6-ITb">
+                                <rect key="frame" x="136" y="72" width="102" height="107"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="102" id="DqE-Lk-gT5"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="EditProfile:" destination="8Bz-vl-1MO" eventType="touchUpInside" id="Ld6-pv-6UF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="a91-n6-ITb" firstAttribute="top" secondItem="lSm-Ga-3I8" secondAttribute="bottom" constant="8" symbolic="YES" id="COz-u9-MOy"/>
+                            <constraint firstItem="a91-n6-ITb" firstAttribute="centerX" secondItem="oST-aK-bB3" secondAttribute="centerX" id="GFM-P2-R4h"/>
+                            <constraint firstItem="ZUU-pP-zk2" firstAttribute="top" secondItem="a91-n6-ITb" secondAttribute="bottom" constant="488" id="WMO-4m-FPI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="GHx-AA-taT"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Mn-m1-pLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1138.4000000000001" y="-1984.8575712143929"/>
+        </scene>
         <!--Stats-->
         <scene sceneID="h37-zj-4VU">
             <objects>
@@ -552,7 +587,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gNM-U5-29x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1202" y="-1863"/>
+            <point key="canvasLocation" x="2140" y="-1863.4182908545729"/>
         </scene>
         <!--Med View Controller-->
         <scene sceneID="N3R-tl-fjF">
@@ -574,7 +609,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FY9-2R-qRw" id="xI7-ET-6iW">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXB-lj-L7i">
@@ -665,7 +700,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sYL-nS-2Os" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1960.8" y="-1856.2218890554725"/>
+            <point key="canvasLocation" x="2900" y="-1856.2218890554725"/>
         </scene>
         <!--Main Sidebar View Controller-->
         <scene sceneID="Vrf-P8-X9R">
@@ -704,6 +739,9 @@
                                 <state key="normal" title="  Edit Profile" image="user">
                                     <color key="titleColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="aCl-Sj-kWF" kind="show" id="Mov-eV-qsv"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHp-FA-UHT">
                                 <rect key="frame" x="16" y="248" width="343" height="75"/>
@@ -813,6 +851,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zZA-XZ-9hr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1156" y="-258"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ahm-S5-Y6f">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aCl-Sj-kWF" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="O0l-RK-Pkv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8Bz-vl-1MO" kind="relationship" relationship="rootViewController" id="lRn-R9-O5x"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fhj-8Q-h6r" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="199.19999999999999" y="-1984.8575712143929"/>
         </scene>
     </scenes>
     <resources>

@@ -63,22 +63,6 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         
         self.title = "Questions"
         
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: "D9W37sOaeR")
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error != nil || object == nil {
-                
-                
-            } else {
-                let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
-                self.profileImage.layer.cornerRadius = 30 / 2
-                self.profileImage.clipsToBounds = true
-                
-            }
-        }
-        
        loadData()
         
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "patientReuse")
@@ -194,11 +178,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         //self.performSegue(withIdentifier: "showVitals", sender: self)
     }
     
-    @IBAction func menuAction(_ sender: UIButton) {
-        if let container = self.so_containerViewController {
-            container.isSideViewControllerPresented = true
-        }
-    }
+
     
     func loadData(){
       /*  var healthConcern: String!

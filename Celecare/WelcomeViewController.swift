@@ -23,9 +23,9 @@ class WelcomeViewController: UIViewController {
     
     @IBAction func getStartedAction(_ sender: UIButton) {
         //segue to main storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       /* let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
-        self.present(controller, animated: true, completion: nil)
+        self.present(controller, animated: true, completion: nil)*/
     }
 
     /*

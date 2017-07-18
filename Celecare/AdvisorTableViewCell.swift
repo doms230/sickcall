@@ -32,6 +32,7 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
+
     
     /*override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,6 +54,66 @@ class AdvisorTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }*/
     
+    //dashboard
+    
+    lazy var paymentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+       // view.layer.cornerRadius = 3
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    lazy var paymentsLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 25)
+        label.text = "Payments"
+        label.textAlignment = .center
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var paymentAmount: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 40)
+        label.text = "$500.00"
+        label.textAlignment = .center
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var getPaidButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        button.setTitle("Get Paid", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+      //  button.numberOfLines = 0
+        return button
+    }()
+    
+    lazy var statusButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        //button.setImage(UIImage(named: "exit"), for: .normal)
+        button.backgroundColor = UIColor.white
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    lazy var queueLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 14)
+        label.textColor = UIColor.black
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
     
     //meds jaunt
     lazy var medName: UILabel = {
@@ -179,6 +240,9 @@ class AdvisorTableViewCell: UITableViewCell {
             }
         } else if reuseIdentifier == "medReuse"{
             configureMedSubview()
+            
+        } else if reuseIdentifier == "dashboardReuse"{
+            configureDashboard()
         }
         
     }
@@ -187,6 +251,70 @@ class AdvisorTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    
+    //dashboard
+    
+    func configureDashboard(){
+        
+        //payments
+        self.addSubview(paymentView)
+        paymentView.addSubview(paymentsLabel)
+        paymentView.addSubview(paymentAmount)
+        paymentView.addSubview(getPaidButton)
+        
+        paymentView.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(200)
+            make.top.equalTo(self)
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+            // make.bottom.equalTo(self).offset(-50)
+        }
+        
+        paymentsLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(paymentView.snp.top).offset(20)
+            make.left.equalTo(paymentView.snp.left).offset(5)
+            make.right.equalTo(paymentView.snp.right).offset(-5)
+            // make.bottom.equalTo(self).offset(-50)
+        }
+        
+        paymentAmount.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(paymentsLabel.snp.bottom).offset(5)
+            make.left.equalTo(paymentView.snp.left).offset(5)
+            make.right.equalTo(paymentView.snp.right).offset(-5)
+           // make.bottom.equalTo(paymentView.snp.bottom).offset(-10)
+        }
+        
+        getPaidButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(50)
+            make.top.equalTo(paymentAmount.snp.bottom).offset(15)
+            make.left.equalTo(paymentView.snp.left).offset(10)
+            make.right.equalTo(paymentView.snp.right).offset(-10)
+            // make.bottom.equalTo(paymentView.snp.bottom).offset(-10)
+        }
+        
+        
+        //status
+       self.addSubview(statusButton)
+        self.addSubview(queueLabel)
+        
+        statusButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(50)
+            make.top.equalTo(paymentView.snp.bottom).offset(15)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+           // make.bottom.equalTo(self).offset(-50)
+        }
+        
+        queueLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(statusButton.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(5)
+            make.right.equalTo(self).offset(-5)
+            make.bottom.equalTo(self).offset(-10)
+        }
+    }
+    
+    //question
         func configureMedSubview(){
             self.addSubview(medName)
             self.addSubview(medDuration)

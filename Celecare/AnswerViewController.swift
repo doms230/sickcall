@@ -28,7 +28,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.title = "My Questions"
         
         let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: "D9W37sOaeR")
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error != nil || object == nil {
@@ -108,7 +108,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //data
     func loadData(){
         let query = PFQuery(className:"Post")
-        query.whereKey("userId", equalTo: "D9W37sOaeR")
+        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
         query.whereKey("isRemoved", equalTo: false)
         //query.whereKey("isAnswered", equalTo: false)
         query.findObjectsInBackground {

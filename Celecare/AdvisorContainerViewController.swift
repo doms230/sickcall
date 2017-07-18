@@ -15,7 +15,7 @@ class AdvisorContainerViewController: SOContainerViewController {
         super.viewDidLoad()
 
         self.menuSide = .left
-        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
+        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
         self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
     }
 }
