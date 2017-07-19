@@ -14,8 +14,9 @@ class AdvisorContainerViewController: SOContainerViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //dashboard --other controller
         self.menuSide = .left
-        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
+        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
         self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
     }
 }

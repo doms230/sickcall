@@ -12,6 +12,7 @@ import SidebarOverlay
 import MobileCoreServices
 import AVKit
 import AVFoundation
+import SnapKit
 
 class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -19,14 +20,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBOutlet weak var tableJaunt: UITableView!
     
-   /* var questions = [String]()
-    var videoFile = [PFFile]()
-    var questionObjectIds = [String]()
-    var questionUserIds = [String]()
-    var questionVideoShoot = [PFFile]()
-    var questionUserImage = [PFFile]()
-    var questionUserName = [String]()*/
-    
+    //question
     var healthConcern: String!
     var healthDuration: String!
     var objectId: String!
@@ -35,27 +29,52 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     var patientUserImage: String!
     var patientUsername: String!
     var videoFile: PFFile!
-    var patientMedications = [String]()
-    var patientMedicationDuration = [String]()
     
-    var testMedications = ["Medicine A", "Medicine B", "Medicine C"]
-    var testMedicationDuration = ["1 month", "3 months", "1 year"]
+    //answer 
+    var answerVideoScreenShot: PFFile! 
     
+    //video
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
-    
-    let screenSize: CGRect = UIScreen.main.bounds
-    
-    var selectedIndex = 0
-    var answerButton: UIButton!
-    var vitalsButton: UIButton!
     var playButton: UIButton!
-    
-    var advisorRec = ""
     
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     let saveFileName = "/test.mp4"
     
+    //view question UI
+    var answerButton : UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        //answerButton.isEnabled = false
+        button.setTitle("Answer", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        // exitButton.setImage(UIImage(named: "exit"), for: .normal)
+        button.backgroundColor = UIColor.white
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
+
+        
+        return button
+        
+    }()
+    
+    var exitButton: UIButton = {
+        let exitButton = UIButton()
+        //exitButton.setTitle("X", for: .normal)
+        //exitButton.setTitleColor(UIColor.black, for: .normal)
+        exitButton.setImage(UIImage(named: "exit"), for: .normal)
+        // exitButton.backgroundColor = UIColor.white
+        exitButton.layer.cornerRadius = 25/2
+        exitButton.clipsToBounds = true
+
+        
+        return exitButton
+    }()
+    
+
+    
+    //mich
+    let screenSize: CGRect = UIScreen.main.bounds
     var messageFrame: UIView!
     
     override func viewDidLoad() {
@@ -99,8 +118,14 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if objectId != nil{
+            return 2
+            
+        }else {
+            return 1
+        }
+        /*if objectId != nil{
             if selectedIndex == 0{
-                return 3
+                return 2
                 
             } else {
                // return patientMedications.count + 2
@@ -108,7 +133,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             }
         } else {
             return 1
-        }
+        }*/
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,66 +153,32 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                 cell.patientName.text = self.patientUsername
                 
             } else if indexPath.row == 1{
-                cell = tableView.dequeueReusableCell(withIdentifier: "segmentReuse", for: indexPath) as! AdvisorTableViewCell
+                cell = tableView.dequeueReusableCell(withIdentifier: "infoReuse", for: indexPath) as! AdvisorTableViewCell
                 cell.selectionStyle = .none
                 tableView.separatorStyle = .none
-                cell.segment.tintColor = uicolorFromHex(0x180d22)
-                cell.segment.addTarget(self, action: #selector(AdvisorQuestionsViewController.segmentAction(_:)), for: .valueChanged)
-                //add segment actions here
+                cell.videoButton.image = UIImage(named:"appy")
+                cell.healthConcern.text = self.healthConcern
+                cell.healthDuration.text = self.healthDuration
+                cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot))
                 
-            } else {
-                if selectedIndex == 0{
-                    cell = tableView.dequeueReusableCell(withIdentifier: "infoReuse", for: indexPath) as! AdvisorTableViewCell
-                    cell.selectionStyle = .none
-                    tableView.separatorStyle = .none
-                    cell.videoButton.image = UIImage(named:"appy")
-                    cell.healthConcern.text = self.healthConcern
-                    cell.healthDuration.text = self.healthDuration
-                    cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot))
-                    //cell.videoButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.showQuestion(_:)), for: .touchUpInside)
-                    
-                } else if selectedIndex == 1{
-                    cell = tableView.dequeueReusableCell(withIdentifier: "medReuse", for: indexPath) as! AdvisorTableViewCell
-                    cell.selectionStyle = .none
-                    
-                    tableView.separatorStyle = .singleLine
-                    //cell.medName.text = patientMedications[indexPath.row - 2]
-                  //  cell.medDuration.text = patientMedicationDuration[indexPath.row - 2]
-                    
-                    cell.medName.text = testMedications[indexPath.row - 2]
-                    cell.medDuration.text = testMedicationDuration[indexPath.row - 2]
-                }
+                
             }
+
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "statusReuse", for: indexPath) as! AdvisorTableViewCell
             cell.statusLabel.text = "Loading"
         }
         
-        //cell.questionLabel.text = questions[indexPath.row]
-
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //segue to question jautn
-        if indexPath.row == 2 && selectedIndex == 0{
-            playVideo(videoJaunt: videoFile)
-        }
-        //selectedIndex = indexPath.row
-        //self.performSegue(withIdentifier: "showVitals", sender: self)
+
+        playVideo(videoJaunt: videoFile)
     }
     
-
-    
     func loadData(){
-      /*  var healthConcern: String!
-        var HealthDuration: String!
-        var objectId: String!
-        var patientUserId: String!
-        var videoScreenShot: PFFile!
-        var patientUserImage: PFFile!
-        var patientUsername: String!*/
         
         let query = PFQuery(className: "Post")
         query.getFirstObjectInBackground {
@@ -217,8 +208,6 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                 self.patientUserImage = imageFile.url
                 
                 self.patientUsername = object!["DisplayName"] as! String
-                self.patientMedications = object!["medications"] as! Array<String>
-                self.patientMedicationDuration = object!["medDurations"] as! Array<String>
                 self.tableJaunt.reloadData()
             }
         }
@@ -233,75 +222,41 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func segmentAction(_ sender: UISegmentedControl){
-        selectedIndex = sender.selectedSegmentIndex
-        tableJaunt.reloadData() 
+        tableJaunt.reloadData()
     }
+    
+    
     
     //video
     
+    func setVideoUI(){
+        playerController.view.addSubview(answerButton)
+        answerButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(50)
+            make.left.equalTo(playerController.view).offset(10)
+            make.right.equalTo(playerController.view).offset(-10)
+            make.bottom.equalTo(playerController.view).offset(-5)
+        }
+        answerButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.answerAction(_:)), for: .touchUpInside)
+    }
     
     func playVideo(videoJaunt: PFFile){
         
         progressBarDisplayer("")
-        
-        let exitButton = UIButton(frame: CGRect(x: 10,y: 20,width: 25, height: 25))
-        //exitButton.setTitle("X", for: .normal)
-        //exitButton.setTitleColor(UIColor.black, for: .normal)
-        exitButton.setImage(UIImage(named: "exit"), for: .normal)
-        // exitButton.backgroundColor = UIColor.white
-        exitButton.layer.cornerRadius = 25/2
-        exitButton.clipsToBounds = true
-        exitButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.exitPost(_:)), for: .touchUpInside)
-        
-        answerButton = UIButton(frame: CGRect(x: 10,y: screenSize.height - 75,width: screenSize.width - 20, height: 50))
-        answerButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
-        //answerButton.isEnabled = false
-        answerButton.setTitle("Answer", for: .normal)
-        answerButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
-        // exitButton.setImage(UIImage(named: "exit"), for: .normal)
-        answerButton.backgroundColor = UIColor.white
-        answerButton.layer.cornerRadius = 3
-        answerButton.clipsToBounds = true
-        answerButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.answerAction(_:)), for: .touchUpInside)
-        
-        vitalsButton = UIButton(frame: CGRect(x: screenSize.width - 65,y: 15,width: 50, height: 50))
-        vitalsButton.setTitleColor(UIColor.black, for: .normal)
-        vitalsButton.setImage(UIImage(named: "vitals"), for: .normal)
-        vitalsButton.layer.cornerRadius = 25
-        vitalsButton.clipsToBounds = true
-        vitalsButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.vitalsAction(_:)), for: .touchUpInside)
-        
-        playButton = UIButton(frame: CGRect(x: screenSize.width / 2 - 50,y: screenSize.height / 2 - 50, width: 100, height: 100))
-        playButton.setTitleColor(UIColor.black, for: .normal)
-        playButton.setImage(UIImage(named: "play"), for: .normal)
-        playButton.layer.cornerRadius = 50
-        playButton.clipsToBounds = true
-        playButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.playAction(_:)), for: .touchUpInside)
-        
+    
         
         playerController = AVPlayerViewController()
         
-        //add bring video player/UIComponents to to front
-        // self.addChildViewController(playerController)
-        // self.view.addSubview(playerController.view)
-        // self.playerController.view.layer.zPosition = 1
-        
-        //self.view.bringSubview(toFront: self.postTime)
-        //self.view.addSubview(self.postTime)
-        
-        //load date
-        /* let formattedEnd = DateFormatter.localizedString(from: timeJaunt, dateStyle: .medium, timeStyle: .short)
-         self.postTime.setTitle(" \(formattedEnd) \(self.selectedicon!) \(self.selectedicon!)", for: UIControlState())
-         self.postTime.titleLabel?.font = UIFont(name: "Helvetica Neue", size: 16)!
-         self.view.bringSubview(toFront: self.exitButton)
-         self.view.addSubview(self.exitButton)*/
-        //  self.view.bringSubview(toFront: exitButton)
-        //self.view.addSubview(exitButton)
-        
-        playerController.view.addSubview(exitButton)
-
         playerController.view.frame = self.view.bounds
         playerController.showsPlaybackControls = false
+        
+        playerController.view.addSubview(exitButton)
+        exitButton.snp.makeConstraints { (make) -> Void in
+            make.height.width.equalTo(50)
+            make.top.equalTo(playerController.view).offset(15)
+            make.left.equalTo(playerController.view).offset(10)
+        }
+        exitButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.exitPost(_:)), for: .touchUpInside)
         
         //retrieve video file Mark - FIX THIS
         videoJaunt.getDataInBackground {
@@ -335,15 +290,10 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func playerItemDidReachEnd( _ notification: Notification) {
-        //player.seek(to: kCMTimeZero)
-        //player.play()
+        player.seek(to: kCMTimeZero)
+        player.play()
         
-        //enable because advisor has watched the whole video
-        
-       // answerButton.isEnabled = true
-        playerController.view.addSubview(answerButton)
-        playerController.view.addSubview(vitalsButton)
-        playerController.view.addSubview(playButton)
+        setVideoUI()
     }
     
     func exitPost(_ sender: UIButton){
@@ -363,54 +313,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             player.pause()
         }
         self.playerController.dismiss(animated: true, completion: nil)
-        
-        postAlert("Answer Question", message: "In full version, advisor chooses between E.R., doctor's visit, or OTC solution recommendation and then records a video up to 1 minute explaining their advise in detail")
-        
-        //TODO: needed
-        //chooseRec()
-    }
-    
-    func vitalsAction(_ sender: UIButton){
-        //playerController.present(AdvisorMedsViewController, animated: true, completion: nil)
-        //performSegue(withIdentifier: "showVitals", sender: self)
-    }
-    
-    func playAction(_ sender: UIButton){
-        answerButton.removeFromSuperview()
-        vitalsButton.removeFromSuperview()
-        playButton.removeFromSuperview()
-        player.seek(to: kCMTimeZero)
-        player.play()
-    }
-    
-    func chooseRec(){
-        //show action pop up of med duration
-        
-        let chooseMed = UIAlertController(title: "What's your recommendation?", message: "You'll explain your recommendation via video next", preferredStyle: .actionSheet)
-        
-        let otcSolution = UIAlertAction(title: "Over The Counter Solution", style: .default) { (action) in
-            self.recordAnswer()
-            self.advisorRec = "Over The Counter Solution"
-        }
-        
-        let doctorAppointment = UIAlertAction(title: "Doctor's Appointment", style: .default) { (action) in
-            self.recordAnswer()
-            self.advisorRec = "Doctor's Appointment"
-            
-        }
-        
-        let urgent = UIAlertAction(title: "E.R. or Urgent Care", style: .default) { (action) in
-            self.recordAnswer()
-            self.advisorRec = "Emergency Room or Urgent Care"
-            
-        }
-        
-        chooseMed.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        chooseMed.addAction(otcSolution)
-        chooseMed.addAction(doctorAppointment)
-        chooseMed.addAction(urgent)
-        present(chooseMed, animated: true, completion: nil)
-        
+        self.recordAnswer()
     }
     
     func recordAnswer(){
@@ -439,21 +342,11 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         print("Got a video")
         
         if let pickedVideo:URL = (info[UIImagePickerControllerMediaURL] as? URL) {
-            // Save video to the main photo album
-            /* let selectorToCall = #selector(QuestionViewController.videoWasSavedSuccessfully(_:didFinishSavingWithError:context:))
-             UISaveVideoAtPathToSavedPhotosAlbum(pickedVideo.relativePath, self, selectorToCall, nil)
-             
-             // Save the video to the app directory so we can play it later
-             let videoData = try? Data(contentsOf: pickedVideo)
-             let paths = NSSearchPathForDirectoriesInDomains(
-             FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-             let documentsDirectory: URL = URL(fileURLWithPath: paths[0])
-             let dataPath = documentsDirectory.appendingPathComponent(saveFileName)
-             try! videoData?.write(to: dataPath, options: [])
-             print("Saved to " + dataPath.absoluteString)*/
+
             
             compressAction(videoFile: pickedVideo)
-            //videoFile = pickedVideo
+            let proPic = UIImageJPEGRepresentation(self.videoPreviewImage(pickedFile: pickedVideo)!, 0.5)
+            self.answerVideoScreenShot = PFFile(name: "answerVideoScreenShot.jpeg", data: proPic!)
             
             imagePicker.dismiss(animated: true, completion: {
                 // Anything you want to happen when the user saves an video
@@ -463,7 +356,6 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         } else {
             //TODO: something happened
         }
-        
     }
     
     // Called when the user selects cancel
@@ -473,35 +365,6 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             // Anything you want to happen when the user selects cancel
         })
     }
-    
-    /*
-     func cleanup(outputFileURL: URL ) {
-     print("started clean up")
-     let path = outputFileURL.path
-     
-     if FileManager.default.fileExists(atPath: path) {
-     do {
-     try FileManager.default.removeItem(atPath: path)
-     print("removed temp file")
-     }
-     catch {
-     print("Could not remove file at url: \(outputFileURL)")
-     }
-     
-     } else {
-     print("couldn't find file")
-     }
-     
-     if let currentBackgroundRecordingID = backgroundRecordingID {
-     backgroundRecordingID = UIBackgroundTaskInvalid
-     
-     if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
-     UIApplication.shared.endBackgroundTask(currentBackgroundRecordingID)
-     }
-     }
-     }
-     
-     */
     
     //video compression
     func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
@@ -540,11 +403,14 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                         
                     } else {
                         object?["answer"] = self.videoFile
+                        object?["answerScreenShot"] = self.answerVideoScreenShot
                         object?["isAnswered"] = true
-                        object?["rec"] = self.advisorRec
+                        object?["advisorUserId"] = PFUser.current()?.objectId
                         object?.saveInBackground {
                             (success: Bool, error: Error?) -> Void in
                             if (success) {
+                                self.cleanup(outputFileURL: videoFile)
+                                self.cleanup(outputFileURL: compressedURL)
                                 //segue to main storyboard
                                 let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
                                 let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
@@ -564,7 +430,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    //asdf
+    //mich
     func postAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message,
                                       preferredStyle: UIAlertControllerStyle.alert)
@@ -584,6 +450,54 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         
         messageFrame.addSubview(activityIndicator)
         view.addSubview(messageFrame)
+    }
+    
+    func videoPreviewImage(pickedFile: URL) -> UIImage? {
+        //let filePath = NSString(string: "~/").expandingTildeInPath.appending("/Documents/").appending(fileName)
+        
+        //let vidURL = NSURL(fileURLWithPath:filePath)
+        let asset = AVURLAsset(url: pickedFile)
+        let generator = AVAssetImageGenerator(asset: asset)
+        generator.appliesPreferredTrackTransform = true
+        
+        let timestamp = CMTime(seconds: 2, preferredTimescale: 60)
+        
+        do {
+            let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
+            return UIImage(cgImage: imageRef)
+        }
+        catch let error as NSError
+        {
+            print("Image generation failed with error \(error)")
+            //self.image = UIImage(named: "appy")
+            return nil
+        }
+    }
+    
+    func cleanup(outputFileURL: URL ) {
+        print("started clean up")
+        let path = outputFileURL.path
+        
+        if FileManager.default.fileExists(atPath: path) {
+            do {
+                try FileManager.default.removeItem(atPath: path)
+                print("removed temp file")
+            }
+            catch {
+                print("Could not remove file at url: \(outputFileURL)")
+            }
+            
+        } else {
+            print("couldn't find file")
+        }
+        
+       /* if let currentBackgroundRecordingID = backgroundRecordingID {
+            backgroundRecordingID = UIBackgroundTaskInvalid
+            
+            if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
+                UIApplication.shared.endBackgroundTask(currentBackgroundRecordingID)
+            }
+        }*/
     }
 
 }
