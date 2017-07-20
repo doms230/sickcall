@@ -14,7 +14,7 @@ target 'Celecare' do
   pod 'SnapKit'
   
   pod 'Parse'
-  
+  pod 'ParseLiveQuery'
   pod 'Firebase/Auth' , '~> 4.0.0'
   
   #facebook ish

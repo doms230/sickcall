@@ -37,6 +37,7 @@
 		9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FD1F060001005842CF /* VerifyViewController.swift */; };
 		9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FF1F06177B005842CF /* EmailViewController.swift */; };
 		9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD38021F099556005842CF /* NewProfileViewController.swift */; };
+		9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF65FDA1F202D4E00C6E9CA /* Post.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,7 @@
 		9ACD37FD1F060001005842CF /* VerifyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyViewController.swift; sourceTree = "<group>"; };
 		9ACD37FF1F06177B005842CF /* EmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailViewController.swift; sourceTree = "<group>"; };
 		9ACD38021F099556005842CF /* NewProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProfileViewController.swift; sourceTree = "<group>"; };
+		9AF65FDA1F202D4E00C6E9CA /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +112,8 @@
 		9AB0676B1EFAE95100092BC6 /* Celecare */ = {
 			isa = PBXGroup;
 			children = (
+				9AF65FDC1F205CFA00C6E9CA /* mich */,
+				9AF65FDA1F202D4E00C6E9CA /* Post.swift */,
 				9AB067841F04928100092BC6 /* GoogleService-Info.plist */,
 				9AB067831F0217DA00092BC6 /* Celecare.entitlements */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
@@ -131,8 +135,6 @@
 				9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */,
 				9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */,
 				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,
-				9A2687211F09C45800AF7A2B /* MedViewController.swift */,
-				9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */,
 				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
 				9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */,
 				9AB182171F147E6300678851 /* MainSidebarViewController.swift */,
@@ -167,6 +169,15 @@
 				9ACD38021F099556005842CF /* NewProfileViewController.swift */,
 			);
 			name = login;
+			sourceTree = "<group>";
+		};
+		9AF65FDC1F205CFA00C6E9CA /* mich */ = {
+			isa = PBXGroup;
+			children = (
+				9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */,
+				9A2687211F09C45800AF7A2B /* MedViewController.swift */,
+			);
+			name = mich;
 			sourceTree = "<group>";
 		};
 		BB11ACFC45414FD68B7BA7A9 /* Frameworks */ = {
@@ -324,6 +335,7 @@
 				9AB182251F158AB500678851 /* AdvisorSideBarViewController.swift in Sources */,
 				9AB182291F188FDC00678851 /* DashboardViewController.swift in Sources */,
 				9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */,
+				9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */,
 				9A7351891F1C8D8200A438C8 /* ViewAnswerViewController.swift in Sources */,
 				9AB182271F15BF0400678851 /* AdvisorMedsViewController.swift in Sources */,
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,

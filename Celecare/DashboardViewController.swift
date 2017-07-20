@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 import SidebarOverlay
+import ParseLiveQuery
+
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var medLabel = [String]()
@@ -31,8 +33,18 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var profileImage: UIButton!
     
     @IBOutlet weak var tableJaunt: UITableView!
+    
+    let liveQueryClient = ParseLiveQuery.Client()
+    private var subscription: Subscription<Post>?
+    var questionsQuery: PFQuery<Post>{
+        return (Post.query()!
+            .whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        startQuestionSubscription()
         
         self.title = "Dashboard"
         
@@ -156,6 +168,24 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
+    //live query
+   /* */
+    
+    
+    func startQuestionSubscription(){
+        
+        self.subscription = self.liveQueryClient
+            .subscribe(self.questionsQuery)
+            .handle(Event.created) { _, object in
+                //loaduser info here
+                
+                //insert new message below the host's description message
+               // let createdAt = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .short)
+                
+                print(object.objectId!)
+        }
+    }
+     
     //TODO: change userId to something proper
     func loadData(){
         let userId = PFUser.current()?.objectId

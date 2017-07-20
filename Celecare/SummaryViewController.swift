@@ -13,7 +13,10 @@ import MobileCoreServices
 import AVKit
 import AVFoundation
 
-class SummaryViewController: UIViewController {
+import Stripe
+import Alamofire
+
+class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate {
     
     //post info
     var healthConcernDuration: String!
@@ -26,7 +29,11 @@ class SummaryViewController: UIViewController {
     @IBOutlet weak var questionSummary: UILabel!
     @IBOutlet weak var healthDurationLabel: UILabel!
     @IBOutlet weak var questionVideoButton: UIButton!
-        
+    
+    //payments 
+    var baseURL = "https://celecare.herokuapp.com/payments"
+    
+    
     //bools
     var isVideoCompressed = false
     var hasUserPaid = false
@@ -38,7 +45,11 @@ class SummaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        image = self.videoPreviewImage()
+        // MyAPIClient implements STPEphemeralKeyProvider (see above)
+        //let customerContext = STPCustomerContext(keyProvider: MyAPIClient.sharedClient)
+        
+        //TODO: Uncomment
+        /*image = self.videoPreviewImage()
         
         questionSummary.text = healthConcernSummary
         healthDurationLabel.text = healthConcernDuration
@@ -62,23 +73,8 @@ class SummaryViewController: UIViewController {
             }
         }
         
-        // Do any additional setup after loading the view.
         
-        /*self.videoFile.saveInBackground {
-            (success: Bool, error: Error?) -> Void in
-            if (success) {
-                self.isVideoSaved = true
-                print("video saved")
-                
-            }else{
-                // self.mapJaunt.removeAnnotation(tempPin)
-                let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
-                newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                self.present(newTwitterHandlePrompt, animated: true, completion: nil)
-            }
-        }*/
-        
-        compressAction(videoFile: pickedFile)
+        compressAction(videoFile: pickedFile)*/
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,34 +92,9 @@ class SummaryViewController: UIViewController {
     }
     */
     
-    func postIt(){
-        
-        let newQuestion = PFObject(className: "Post")
-        newQuestion["userId"] = PFUser.current()?.objectId
-        newQuestion["video"] = videoFile
-        newQuestion["videoScreenShot"] = self.screenshotImage
-        newQuestion["duration"] = healthConcernDuration
-        newQuestion["summary"] = healthConcernSummary
-        newQuestion["isAnswered"] = false
-        newQuestion["isReserved"] = false
-        newQuestion["isRemoved"] = false
-        newQuestion.saveEventually{
-            (success: Bool, error: Error?) -> Void in
-            if (success) {
 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-                self.present(controller, animated: true, completion: nil)
-                
-            } else {
-                // self.mapJaunt.removeAnnotation(pin)
-                let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
-                newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                
-                self.present(newTwitterHandlePrompt, animated: true, completion: nil)
-            }
-        }
-    }
+    
+    //UI Action
     
     @IBAction func askQuestionAction(_ sender: UIButton) {
         
@@ -136,6 +107,33 @@ class SummaryViewController: UIViewController {
             self.postIt()
         }
     }
+    
+    @IBAction func choosePaymentAction(_ sender: UIButton) {
+        let addCardViewController = STPAddCardViewController()
+        addCardViewController.delegate = self
+        // STPAddCardViewController must be shown inside a UINavigationController.
+        let navigationController = UINavigationController(rootViewController: addCardViewController)
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    //
+    @IBAction func questionVideoAction(_ sender: UIButton) {
+        // Find the video in the app's document directory
+        
+        /* guard let path = Bundle.main.path(forResource: "video", ofType:"m4v") else {
+         debugPrint("video.m4v not found")
+         return
+         }*/
+        
+        let player = AVPlayer(url: pickedFile)
+        let playerController = AVPlayerViewController()
+        playerController.player = player
+        present(playerController, animated: true) {
+            player.play()
+        }
+    }
+    
+    //video
     
     func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
         let urlAsset = AVURLAsset(url: inputURL, options: nil)
@@ -194,22 +192,54 @@ class SummaryViewController: UIViewController {
         }
     }
     
-    //
-    @IBAction func questionVideoAction(_ sender: UIButton) {
-        // Find the video in the app's document directory
+    //payments
+    func addCardViewControllerDidCancel(_ addCardViewController: STPAddCardViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
+        /*self.submitTokenToBackend(token, completion: { (error: Error?) in
+            if let error = error {
+                completion(error)
+            } else {
+                self.dismiss(animated: true, completion: {
+                    self.showReceiptPage()
+                    completion(nil)
+                })
+            }
+        })*/
+    }
+    
+    //data 
+    func postIt(){
         
-       /* guard let path = Bundle.main.path(forResource: "video", ofType:"m4v") else {
-            debugPrint("video.m4v not found")
-            return
-        }*/
-        
-        let player = AVPlayer(url: pickedFile)
-        let playerController = AVPlayerViewController()
-        playerController.player = player
-        present(playerController, animated: true) {
-            player.play()
+        let newQuestion = PFObject(className: "Post")
+        newQuestion["userId"] = PFUser.current()?.objectId
+        newQuestion["video"] = videoFile
+        newQuestion["videoScreenShot"] = self.screenshotImage
+        newQuestion["duration"] = healthConcernDuration
+        newQuestion["summary"] = healthConcernSummary
+        newQuestion["isAnswered"] = false
+        newQuestion["isReserved"] = false
+        newQuestion["isRemoved"] = false
+        newQuestion.saveEventually{
+            (success: Bool, error: Error?) -> Void in
+            if (success) {
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                self.present(controller, animated: true, completion: nil)
+                
+            } else {
+                // self.mapJaunt.removeAnnotation(pin)
+                let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
+                newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+                
+                self.present(newTwitterHandlePrompt, animated: true, completion: nil)
+            }
         }
     }
+    
     
     //mich 
     func progressBarDisplayer(_ message: String) {
