@@ -15,6 +15,7 @@ import AVFoundation
 
 import Stripe
 import Alamofire
+import SwiftyJSON
 
 class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate {
     
@@ -31,8 +32,8 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     @IBOutlet weak var questionVideoButton: UIButton!
     
     //payments 
-    var baseURL = "https://celecare.herokuapp.com/payments"
-    
+    //var baseURL = "https://celecare.herokuapp.com/payments"
+    var baseURL = "http://192.168.1.75:5000/payments/pay"
     
     //bools
     var isVideoCompressed = false
@@ -198,16 +199,33 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     }
     
     func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
-        /*self.submitTokenToBackend(token, completion: { (error: Error?) in
-            if let error = error {
-                completion(error)
-            } else {
-                self.dismiss(animated: true, completion: {
-                    self.showReceiptPage()
-                    completion(nil)
-                })
-            }
-        })*/
+        
+        let p: Parameters = [
+            
+            "amount": 1000,
+            "description": "Health Concern for",
+            "token":token.tokenId
+        ]
+        
+        Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
+                switch response.result {
+                case .success(let data):
+                    let json = JSON(data)
+                     print("JSON: \(json)")
+                   /* if let id = json["id"].string {
+                        
+                        
+
+                        
+                    }*/
+                    print("Validation Successful")
+                    
+                    //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+                    
+                case .failure(let error):
+                    print(error)
+                }
+        }
     }
     
     //data 
