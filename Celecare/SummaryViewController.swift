@@ -27,13 +27,20 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     var screenshotImage: PFFile!
     var image: UIImage!
     
+    //user 
+    var customerId: String!
+    
     @IBOutlet weak var questionSummary: UILabel!
     @IBOutlet weak var healthDurationLabel: UILabel!
     @IBOutlet weak var questionVideoButton: UIButton!
     
     //payments 
-    //var baseURL = "https://celecare.herokuapp.com/payments"
-    var baseURL = "http://192.168.1.75:5000/payments/pay"
+    var baseURL = "https://celecare.herokuapp.com/payments/pay"
+    //var baseURL = "http://192.168.1.75:5000/payments/pay"
+    var tokenId: String!
+    
+    @IBOutlet weak var paymentImage: UIImageView!
+    @IBOutlet weak var paymentCard: UIButton!
     
     //bools
     var isVideoCompressed = false
@@ -98,15 +105,9 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     //UI Action
     
     @IBAction func askQuestionAction(_ sender: UIButton) {
-        
-        //do pay checkout jaunts
-        //also do something where activity spinner shows up
         progressBarDisplayer("")
         hasUserPaid = true
-
-        if isVideoCompressed{
-            self.postIt()
-        }
+        createCharge()
     }
     
     @IBAction func choosePaymentAction(_ sender: UIButton) {
@@ -200,35 +201,58 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     
     func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
         
+        tokenId = token.tokenId;
+        paymentCard.setTitle(token.card?.last4(), for: .normal)
+        paymentImage.image = token.card?.image
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func createCharge(){
+        //TODO: add application charge and extra charge for stripe fee j
         let p: Parameters = [
             
             "amount": 1000,
-            "description": "Health Concern for",
-            "token":token.tokenId
+            "description": "Health Concern for \(PFUser.current()!.objectId!)",
+            "token": tokenId
         ]
         
         Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
-                switch response.result {
-                case .success(let data):
-                    let json = JSON(data)
-                     print("JSON: \(json)")
-                   /* if let id = json["id"].string {
-                        
-                        
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                print("JSON: \(json)")
+                /* if let id = json["id"].string {
+                 }*/
+                
 
+                if let status = json["raw"]["statusCode"].string{
+                    let message = json["raw"]["message"].string
+                    if status.hasPrefix("4"){
+                        self.postAlert("Something Went Wrong", message: message! )
                         
-                    }*/
-                    print("Validation Successful")
-                    
-                    //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
-                    
-                case .failure(let error):
-                    print(error)
+                    } else {
+                        //do pay checkout jaunts
+                        //also do something where activity spinner shows up
+                        /*
+                         if isVideoCompressed{
+                         self.postIt()
+                         }*/
+                    }
                 }
+                
+                print("Validation Successful")
+                
+                //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+                
+            case .failure(let error):
+                print(error)
+                self.messageFrame.removeFromSuperview()
+                self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+            }
         }
     }
     
-    //data 
+    //data
     func postIt(){
         
         let newQuestion = PFObject(className: "Post")
@@ -250,7 +274,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
                 
             } else {
                 // self.mapJaunt.removeAnnotation(pin)
-                let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
+                let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@celecareapp.com if the issue persists.", preferredStyle: .alert)
                 newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
                 
                 self.present(newTwitterHandlePrompt, animated: true, completion: nil)
@@ -258,11 +282,18 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
         }
     }
     
+    //mich
     
-    //mich 
+    func postAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message,
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func progressBarDisplayer(_ message: String) {
-        
-        messageFrame = UIView(frame: CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 50, height: 50))
+        //CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 50, height: 50)
+        messageFrame = UIView(frame: view.bounds )
         messageFrame.layer.cornerRadius = 15
         messageFrame.backgroundColor = UIColor(white: 0, alpha: 0.7)
         
