@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D757311A6C8CE3F6EA451F0 /* Pods_Celecare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */; };
+		590042E81F27D9240077083A /* NewAdvisorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590042E71F27D9240077083A /* NewAdvisorTableViewController.swift */; };
 		9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687211F09C45800AF7A2B /* MedViewController.swift */; };
 		9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */; };
 		9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celecare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		590042E71F27D9240077083A /* NewAdvisorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAdvisorTableViewController.swift; sourceTree = "<group>"; };
 		9A2687211F09C45800AF7A2B /* MedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedViewController.swift; sourceTree = "<group>"; };
 		9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicInfoViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */,
 				9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */,
 				9AB182281F188FDC00678851 /* DashboardViewController.swift */,
+				590042E71F27D9240077083A /* NewAdvisorTableViewController.swift */,
 			);
 			name = advisor;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				9AB182211F15884400678851 /* AdvisorQuestionsViewController.swift in Sources */,
 				9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */,
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
+				590042E81F27D9240077083A /* NewAdvisorTableViewController.swift in Sources */,
 				9A73518B1F1D3C5C00A438C8 /* EditProfileViewController.swift in Sources */,
 				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
 				9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */,

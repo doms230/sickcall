@@ -8,15 +8,32 @@
 
 import UIKit
 import SidebarOverlay
+import Parse
 
 class AdvisorContainerViewController: SOContainerViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.menuSide = .left
+
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                if object?["isAdvisor"] as! Bool{
+                    self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
+                    
+                } else{
+                    self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "new")
+
+                }
+                self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
+                
+            }
+        }
+        
 
         //dashboard --other controller
-        self.menuSide = .left
-        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
-        self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
     }
 }
