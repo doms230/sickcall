@@ -16,7 +16,7 @@ class AdvisorContainerViewController: SOContainerViewController {
         super.viewDidLoad()
         self.menuSide = .left
 
-        let query = PFQuery(className: "_User")
+       /* let query = PFQuery(className: "_User")
         query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
@@ -31,7 +31,11 @@ class AdvisorContainerViewController: SOContainerViewController {
                 self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
                 
             }
-        }
+        }*/
+        
+        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "new")
+        
+        self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
         
 
         //dashboard --other controller
