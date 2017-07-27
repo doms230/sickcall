@@ -52,12 +52,7 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
             }
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -67,18 +62,8 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 8
+        return 4
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }*/
-    
     
     @IBAction func chooseStateAction(_ sender: UIButton) {
             whichPicker = "state"
@@ -150,10 +135,6 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
     
     
     // data method to return the number of column shown in the picker.
-  /*  func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }*/
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -184,10 +165,12 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if whichPicker == "type"{
             licenseTypeButton.setTitle(types[row], for: .normal)
+            licenseTypeButton.setTitleColor(.black, for: .normal)
             licenseTypePrompt.dismiss(animated: true, completion: nil)
             
         }else {
             stateButton.setTitle(states[row], for: .normal)
+            stateButton.setTitleColor(.black, for: .normal)
             statePrompt.dismiss(animated: true, completion: nil)
         }
     }
@@ -195,7 +178,8 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
     //
     
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
-        let newAdvisor = PFObject(className: "Advisor")
+        self.performSegue(withIdentifier: "showPersonal", sender: self)
+      /*  let newAdvisor = PFObject(className: "Advisor")
         newAdvisor["userId"] = PFUser.current()?.objectId
         newAdvisor["first"] = nameField.text
         newAdvisor["last"] = lastNameField.text
@@ -218,7 +202,7 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
                 
                 self.present(newTwitterHandlePrompt, animated: true, completion: nil)
             }
-        }
+        }*/
     }
     
     @IBAction func profileAction(_ sender: UIButton) {
