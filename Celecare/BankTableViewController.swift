@@ -12,9 +12,26 @@ import Alamofire
 import SwiftyJSON
 
 class BankTableViewController: UITableViewController {
+    
+    //payments
+    //var baseURL = "https://celecare.herokuapp.com/payments/pay"
+    var baseURL = "http://192.168.1.75:5000/payments/newAccount"
 
     @IBOutlet weak var accountTextField: UITextField!
     @IBOutlet weak var routingTextField: UITextField!
+    
+    var firstName: String!
+    var lastName: String!
+    var ssn: String!
+    var birthday: String!
+    var line1: String!
+    var line2: String!
+    var state: String!
+    var city: String!
+    var postalCode: String!
+    var day: String!
+    var month: String!
+    var year: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,18 +54,60 @@ class BankTableViewController: UITableViewController {
     }
     
     func nextAction(_ sender: UIBarButtonItem){
+        let p: Parameters = [
+            "email": PFUser.current()!.email!,
+            "personal_id_number": ssn,
+            "ssn_last_4": ssn.substring(from:ssn.index(ssn.endIndex, offsetBy: -4)),
+            "city": city,
+            "line1": line1,
+            "line2": line2,
+            "postal_code": postalCode,
+            "state": state,
+            "day": day,
+            "month": month,
+            "year": year,
+            "first_name": firstName,
+            "last_name": lastName,
+            "account_number": accountTextField.text,
+            "routing_number": routingTextField.text
+        ]
         
+        Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                print("JSON: \(json)")
+                /* if let id = json["id"].string {
+                 }*/
+                
+                
+              /* if let status = json["raw"]["statusCode"].string{
+                    let message = json["raw"]["message"].string
+                    if status.hasPrefix("4"){
+                       // self.postAlert("Something Went Wrong", message: message! )
+                        
+                    } else {
+                        //do pay checkout jaunts
+                        //also do something where activity spinner shows up
+                        /*
+                         if isVideoCompressed{
+                         self.postIt()
+                         }*/
+                    }
+                }*/
+                
+                print("Validation Successful")
+                
+                //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+                
+            case .failure(let error):
+                print(error)
+               // self.messageFrame.removeFromSuperview()
+               // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+            }
+        }
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
+    
 
 }

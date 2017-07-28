@@ -53,6 +53,15 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
         }
     }
     
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! PersonalTableViewController
+        desti.firstName = nameField.text
+        desti.lastName = lastNameField.text
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -186,7 +195,7 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
         newAdvisor["licenseNumber"] = licenseNumberField.text
         newAdvisor["licenseType"] = licenseTypeButton.titleLabel?.text
         newAdvisor["state"] = stateButton.titleLabel?.text 
-
+        newAdvisor["status"] = "un-verified"
         newAdvisor.saveEventually{
             (success: Bool, error: Error?) -> Void in
             if (success) {
@@ -213,13 +222,7 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
  
     
     /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
     */
 
 }

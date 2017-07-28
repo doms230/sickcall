@@ -13,6 +13,12 @@ class PersonalTableViewController: UITableViewController {
     
     @IBOutlet weak var ssnTextField: UITextField!
     @IBOutlet weak var birthdayTextField: UIButton!
+    var day: String!
+    var month: String!
+    var year: String!
+    
+    var firstName: String!
+    var lastName: String! 
     
     var prompt : UIAlertController!
 
@@ -22,6 +28,21 @@ class PersonalTableViewController: UITableViewController {
 
         let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
+    }
+    
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! AddressTableViewController
+        desti.firstName = firstName
+        desti.lastName = lastName
+        desti.ssn = ssnTextField.text
+        desti.birthday = birthdayTextField.titleLabel?.text
+        desti.day = day
+        desti.month = month
+        desti.year = year
+        
     }
 
     // MARK: - Table view data source
@@ -82,16 +103,20 @@ class PersonalTableViewController: UITableViewController {
         
         birthdayTextField.setTitle(formattedDate, for: .normal)
         birthdayTextField.setTitleColor(.black, for: .normal)
+        
+        let calendar = Calendar.current
+        
+        year = "\(calendar.component(.year, from: sender.date))"
+        month = "\(calendar.component(.month, from: sender.date))"
+        day = "\(calendar.component(.day, from: sender.date))"
+        print(year)
+        print(month)
+        print("day: " + day)
+        
     }
 
     /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
     */
 
 }
