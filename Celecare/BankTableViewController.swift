@@ -33,12 +33,17 @@ class BankTableViewController: UITableViewController {
     var month: String!
     var year: String!
     
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "Bank 3/3"
         let nextButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
+        
+
     }
 
     // MARK: - Table view data source
@@ -54,26 +59,29 @@ class BankTableViewController: UITableViewController {
     }
     
     func nextAction(_ sender: UIBarButtonItem){
-        let p: Parameters = [
-            "email": PFUser.current()!.email!,
-            "personal_id_number": ssn,
-            "ssn_last_4": ssn.substring(from:ssn.index(ssn.endIndex, offsetBy: -4)),
-            "city": city,
-            "line1": line1,
-            "line2": line2,
-            "postal_code": postalCode,
-            "state": state,
-            "day": day,
-            "month": month,
-            "year": year,
-            "first_name": firstName,
-            "last_name": lastName,
-            "account_number": accountTextField.text,
-            "routing_number": routingTextField.text
-        ]
+        //class won't compile with textfield straight in parameters so has to be put to string first 
+        let accountString =  accountTextField.text!
+        let routingString = routingTextField.text!
         
-        Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
-            switch response.result {
+        let p: Parameters = [
+         "email": "",
+         "personal_id_number": ssn,
+         "ssn_last_4": ssn.substring(from:ssn.index(ssn.endIndex, offsetBy: -4)),
+         "city": city,
+         "line1": line1,
+         "line2": line2,
+         "postal_code": postalCode,
+         "state": state,
+         "day": day,
+         "month": month,
+         "year": year,
+         "first_name": firstName,
+         "last_name": lastName,
+         "account_number": accountString,
+        "routing_number": routingString
+         ]
+        
+        Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in switch response.result {
             case .success(let data):
                 let json = JSON(data)
                 print("JSON: \(json)")
@@ -95,17 +103,17 @@ class BankTableViewController: UITableViewController {
                          }*/
                     }
                 }*/
-                
                 print("Validation Successful")
-                
                 //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
                 
             case .failure(let error):
                 print(error)
                // self.messageFrame.removeFromSuperview()
                // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+
             }
         }
+        
     }
     
     

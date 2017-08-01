@@ -72,7 +72,7 @@ class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableV
     
     //TODO: change userId to something proper
     func loadData(){
-        let userId = PFUser.current()?.objectId
+        let userId = PFUser.current()!.objectId!
         let query = PFQuery(className: "_User")
         query.whereKey("objectId", equalTo: userId)
         query.getFirstObjectInBackground {

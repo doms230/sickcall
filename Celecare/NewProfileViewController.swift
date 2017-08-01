@@ -114,11 +114,12 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                         
                     }
                     print("Validation Successful")
-                    
+                    break
                     //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
                     
                 case .failure(let error):
                     print(error)
+                    break
                 }
         }
     }
