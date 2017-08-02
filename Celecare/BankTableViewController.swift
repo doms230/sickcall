@@ -64,7 +64,7 @@ class BankTableViewController: UITableViewController {
         let routingString = routingTextField.text!
         
         let p: Parameters = [
-         "email": "",
+         "email": PFUser.current()!.email!,
          "personal_id_number": ssn,
          "ssn_last_4": ssn.substring(from:ssn.index(ssn.endIndex, offsetBy: -4)),
          "city": city,
