@@ -31,6 +31,8 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
     var statePrompt: UIAlertController!
     var licenseTypePrompt: UIAlertController!
     
+    var isAdvisor = false 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Uncomment the following line to preserve selection between presentations
@@ -56,11 +58,11 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let desti = segue.destination as! PersonalTableViewController
         desti.firstName = nameField.text
         desti.lastName = lastNameField.text
-    }
+    }*/
     
     // MARK: - Table view data source
 
@@ -187,8 +189,7 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
     //
     
     @IBAction func doneAction(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "showPersonal", sender: self)
-      /*  let newAdvisor = PFObject(className: "Advisor")
+        let newAdvisor = PFObject(className: "Advisor")
         newAdvisor["userId"] = PFUser.current()?.objectId
         newAdvisor["first"] = nameField.text
         newAdvisor["last"] = lastNameField.text
@@ -211,7 +212,7 @@ class NewAdvisorTableViewController: UITableViewController, UIPickerViewDelegate
                 
                 self.present(newTwitterHandlePrompt, animated: true, completion: nil)
             }
-        }*/
+        }
     }
     
     @IBAction func profileAction(_ sender: UIButton) {

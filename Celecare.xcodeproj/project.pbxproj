@@ -102,9 +102,8 @@
 		590042EF1F2947B70077083A /* info */ = {
 			isa = PBXGroup;
 			children = (
-				590042E71F27D9240077083A /* NewAdvisorTableViewController.swift */,
-				590042EB1F293D670077083A /* PersonalTableViewController.swift */,
 				590042E91F293D540077083A /* AddressTableViewController.swift */,
+				590042EB1F293D670077083A /* PersonalTableViewController.swift */,
 				590042ED1F293D7E0077083A /* BankTableViewController.swift */,
 			);
 			name = info;
@@ -166,14 +165,15 @@
 		9AB1821D1F15827800678851 /* advisor */ = {
 			isa = PBXGroup;
 			children = (
+				9AB182281F188FDC00678851 /* DashboardViewController.swift */,
+				9AB182221F15886000678851 /* AdvisorTableViewCell.swift */,
 				9AB1821B1F15826D00678851 /* Advisor.storyboard */,
 				590042EF1F2947B70077083A /* info */,
-				9AB182221F15886000678851 /* AdvisorTableViewCell.swift */,
 				9AB1821E1F15836700678851 /* AdvisorContainerViewController.swift */,
 				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
 				9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */,
 				9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */,
-				9AB182281F188FDC00678851 /* DashboardViewController.swift */,
+				590042E71F27D9240077083A /* NewAdvisorTableViewController.swift */,
 			);
 			name = advisor;
 			sourceTree = "<group>";

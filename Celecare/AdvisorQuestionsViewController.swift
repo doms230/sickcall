@@ -71,8 +71,6 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         return exitButton
     }()
     
-
-    
     //mich
     let screenSize: CGRect = UIScreen.main.bounds
     var messageFrame: UIView!
@@ -160,10 +158,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                 cell.healthConcern.text = self.healthConcern
                 cell.healthDuration.text = self.healthDuration
                 cell.videoButton.kf.setImage(with: URL(string: self.videoScreenShot))
-                
-                
             }
-
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "statusReuse", for: indexPath) as! AdvisorTableViewCell
@@ -181,6 +176,9 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     func loadData(){
         
         let query = PFQuery(className: "Post")
+        query.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!)
+        query.whereKey("isAnswered", equalTo: false)
+        query.whereKey("isRemoved", equalTo: false)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
@@ -499,5 +497,4 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
             }
         }*/
     }
-
 }

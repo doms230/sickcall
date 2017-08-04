@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Parse
+import Alamofire
+import SwiftyJSON
 
 class PersonalTableViewController: UITableViewController {
     
@@ -17,32 +20,38 @@ class PersonalTableViewController: UITableViewController {
     var month: String!
     var year: String!
     
+    var line1: String!
+    var line2: String!
+    var state: String!
+    var city: String!
+    var postalCode: String!
+    
     var firstName: String!
-    var lastName: String! 
+    var lastName: String!
     
     var prompt : UIAlertController!
-
+    
+    //
+    var baseURL = "http://192.168.1.75:5000/payments/updatePersonalInfo"
+    var isActive = false
+    
+//ssn.substring(from:ssn.index(ssn.endIndex, offsetBy: -4))
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "ID 1/3"
+        self.title = "Identity Verification"
 
-        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
+        let nextButton = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
-    }
-    
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! AddressTableViewController
-        desti.firstName = firstName
-        desti.lastName = lastName
-        desti.ssn = ssnTextField.text
-        desti.birthday = birthdayTextField.titleLabel?.text
-        desti.day = day
-        desti.month = month
-        desti.year = year
         
+        let query = PFQuery(className: "Advisor")
+        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                self.firstName = object!["first"] as! String
+                self.lastName = object!["last"] as! String
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -58,11 +67,58 @@ class PersonalTableViewController: UITableViewController {
     }
     
     func nextAction(_ sender: UIBarButtonItem){
-        performSegue(withIdentifier: "showAddress", sender: self)
+       /* */
+        let ssn = ssnTextField.text!
+        
+        let p: Parameters = [
+            "personal_id_number": ssn,
+            "city": city,
+            "line1": line1,
+            "line2": line2,
+            "postal_code": postalCode,
+            "state": state,
+            "day": day,
+            "month": month,
+            "year": year,
+            "first_name": firstName,
+            "last_name": lastName,
+        ]
+        
+        Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in switch response.result {
+        case .success(let data):
+            let json = JSON(data)
+            print("JSON: \(json)")
+            /* if let id = json["id"].string {
+             }*/
+            
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+            self.present(controller, animated: true, completion: nil)
+            if let status = json["raw"]["statusCode"].string{
+                let message = json["raw"]["message"].string
+                if status.hasPrefix("4"){
+                     self.postAlert("Something Went Wrong", message: message! )
+                    
+                } else {
+                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                    let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+                    self.present(controller, animated: true, completion: nil)
+                }
+            }
+            print("Validation Successful")
+            //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
+            
+        case .failure(let error):
+            print(error)
+            // self.messageFrame.removeFromSuperview()
+            // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+            
+            }
+        }
     }
     
     @IBAction func birthdayAction(_ sender: UIButton) {
-        prompt = UIAlertController(title: "What's your birdat?", message: "", preferredStyle: .actionSheet)
+        prompt = UIAlertController(title: "What's your birthday?", message: "", preferredStyle: .actionSheet)
         
         //date jaunts
         let datePickerView  : UIDatePicker = UIDatePicker()
@@ -94,7 +150,6 @@ class PersonalTableViewController: UITableViewController {
         present(prompt, animated: true, completion: nil)
     }
     
-    
     func datePickerAction(_ sender: UIDatePicker){
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .short
@@ -112,7 +167,13 @@ class PersonalTableViewController: UITableViewController {
         print(year)
         print(month)
         print("day: " + day)
-        
+    }
+    
+    func postAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message,
+                                      preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     /*

@@ -30,7 +30,7 @@ class AddressTableViewController: UITableViewController, UIPickerViewDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "Address 2/3"
+        self.title = "Address"
         let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
@@ -40,19 +40,12 @@ class AddressTableViewController: UITableViewController, UIPickerViewDelegate, U
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! BankTableViewController
-        desti.firstName = firstName
-        desti.lastName = lastName
-        desti.ssn = ssn
-        desti.birthday = birthday
+        let desti = segue.destination as! PersonalTableViewController
         desti.line1 = line1TextField.text
         desti.line2 = line2TextField.text
         desti.state = stateTextField.titleLabel?.text 
         desti.city = cityTextField.text
         desti.postalCode = postalCodeTextfield.text
-        desti.year = year
-        desti.month = month
-        desti.day = day
     }
 
     // MARK: - Table view data source
@@ -68,7 +61,7 @@ class AddressTableViewController: UITableViewController, UIPickerViewDelegate, U
     }
     
     func nextAction(_ sender: UIBarButtonItem){
-        performSegue(withIdentifier: "showBank", sender: self)
+        performSegue(withIdentifier: "showId", sender: self)
     }
     
     //

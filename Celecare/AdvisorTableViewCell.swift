@@ -77,14 +77,24 @@ class AdvisorTableViewCell: UITableViewCell {
     lazy var paymentAmount: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue", size: 40)
-        label.text = "$500.00"
+        label.text = "$0.00"
         label.textAlignment = .center
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
     }()
     
-    lazy var getPaidButton: UIButton = {
+    lazy var getPaidLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 15)
+        label.text = "Payments are deposited to your bank account every Wednesday"
+        label.textAlignment = .center
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    /*lazy var getPaidButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         button.setTitle("Get Paid", for: .normal)
@@ -93,7 +103,7 @@ class AdvisorTableViewCell: UITableViewCell {
         button.clipsToBounds = true
       //  button.numberOfLines = 0
         return button
-    }()
+    }()*/
     
     lazy var statusButton: UIButton = {
         let button = UIButton()
@@ -261,7 +271,7 @@ class AdvisorTableViewCell: UITableViewCell {
         self.addSubview(paymentView)
         paymentView.addSubview(paymentsLabel)
         paymentView.addSubview(paymentAmount)
-        paymentView.addSubview(getPaidButton)
+        paymentView.addSubview(getPaidLabel)
         
         paymentView.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(200)
@@ -285,8 +295,7 @@ class AdvisorTableViewCell: UITableViewCell {
            // make.bottom.equalTo(paymentView.snp.bottom).offset(-10)
         }
         
-        getPaidButton.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(50)
+        getPaidLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(paymentAmount.snp.bottom).offset(15)
             make.left.equalTo(paymentView.snp.left).offset(10)
             make.right.equalTo(paymentView.snp.right).offset(-10)

@@ -40,4 +40,13 @@ class AdvisorSideBarViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
     }
     
+    
+    @IBAction func bankInfoAction(_ sender: UIButton) {
+                self.performSegue(withIdentifier: "showBankInfo", sender: self)
+    }
+    
+    @IBAction func personalInfoAction(_ sender: UIButton) {
+                self.performSegue(withIdentifier: "showPersonalInfo", sender: self)
+    }
+        
 }

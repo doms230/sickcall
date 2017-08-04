@@ -10,6 +10,7 @@ import UIKit
 import Parse
 import SidebarOverlay
 import ParseLiveQuery
+import SnapKit
 
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -29,7 +30,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var isOnline = false
     
-    
     @IBOutlet weak var profileImage: UIButton!
     
     @IBOutlet weak var tableJaunt: UITableView!
@@ -40,6 +40,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         return (Post.query()!
             .whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +95,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell.backgroundColor = uicolorFromHex(0xe8e6df)
         
-        cell.getPaidButton.backgroundColor = uicolorFromHex(0x180d22)
+        //cell.getPaidButton.backgroundColor = uicolorFromHex(0x180d22)
         
         if isOnline{
             cell.queueLabel.text = "You're in queue for a question"
@@ -113,7 +114,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         //do something to see if person is online or not
         
-        
         return cell
     }
     
@@ -123,8 +123,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
          playVideo(videoJaunt: videoFile)
          selectedIndex = indexPath.row
          }        */
-        
-
     }
     
     func statusAction(_ sender: UIButton){
@@ -171,18 +169,19 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     //live query
    /* */
     
-    
     func startQuestionSubscription(){
-        
         self.subscription = self.liveQueryClient
             .subscribe(self.questionsQuery)
-            .handle(Event.created) { _, object in
+            .handle(Event.updated) { _, object in
                 //loaduser info here
                 
                 //insert new message below the host's description message
                // let createdAt = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .short)
                 
-                print(object.objectId!)
+                //print(object.objectId!)
+                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                let controller = storyboard.instantiateViewController(withIdentifier: "question") as UIViewController
+                self.present(controller, animated: true, completion: nil)
         }
     }
      
@@ -194,7 +193,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
-                
                 if object?["isOnline"] as! Bool{
                     self.isOnline = true
                 }
