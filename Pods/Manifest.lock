@@ -56,6 +56,9 @@ PODS:
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.10)
   - Kingfisher (3.5.1)
+  - NVActivityIndicatorView (3.7.0):
+    - NVActivityIndicatorView/Presenter (= 3.7.0)
+  - NVActivityIndicatorView/Presenter (3.7.0)
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
   - ParseLiveQuery (2.0.0):
@@ -76,6 +79,7 @@ DEPENDENCIES:
   - FacebookShare
   - Firebase/Auth (~> 4.0.0)
   - Kingfisher
+  - NVActivityIndicatorView
   - Parse
   - ParseLiveQuery
   - Persei (~> 3.0)
@@ -102,6 +106,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   Kingfisher: 12eeffeef42ea45b68c5e5acfe8ba9005b713ab4
+  NVActivityIndicatorView: d3738df7e2e476aca0ba6bf32a8c9fbcfc33d64b
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseLiveQuery: 38fb42e4b8611ecfcb199d47e48aeaf6879f8560
   Persei: 2fa633362b1686ec53f8d2d1368ee523b8630742
@@ -111,6 +116,6 @@ SPEC CHECKSUMS:
   Stripe: 5c5a49d750952b1801e4c1f5c4264a08e427c67d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 3af83e1d8fb880e76c5514c1c3490b91c1655318
+PODFILE CHECKSUM: 5cee3763cbcfbfc68be90e8d08fe21a6723c23f4
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

@@ -40,12 +40,12 @@ class AddressTableViewController: UITableViewController, UIPickerViewDelegate, U
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! PersonalTableViewController
+        /*let desti = segue.destination as! PersonalTableViewController
         desti.line1 = line1TextField.text
         desti.line2 = line2TextField.text
         desti.state = stateTextField.titleLabel?.text 
         desti.city = cityTextField.text
-        desti.postalCode = postalCodeTextfield.text
+        desti.postalCode = postalCodeTextfield.text*/
     }
 
     // MARK: - Table view data source

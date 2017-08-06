@@ -29,5 +29,7 @@ target 'Celecare' do
   pod 'SidebarOverlay'
   
   pod 'Persei', '~> 3.0'
+  
+  pod 'NVActivityIndicatorView'
 
 end

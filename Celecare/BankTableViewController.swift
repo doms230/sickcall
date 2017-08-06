@@ -10,8 +10,9 @@ import UIKit
 import Parse
 import Alamofire
 import SwiftyJSON
+import NVActivityIndicatorView
 
-class BankTableViewController: UITableViewController {
+class BankTableViewController: UITableViewController, NVActivityIndicatorViewable {
     
     //payments
     var baseURL = "https://celecare.herokuapp.com/payments/updateBankInfo"
@@ -23,7 +24,11 @@ class BankTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
         self.title = "Bank Info"
         let nextButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
@@ -52,6 +57,11 @@ class BankTableViewController: UITableViewController {
     }
     
     func nextAction(_ sender: UIBarButtonItem){
+        //loading view
+        accountTextField.resignFirstResponder()
+        routingTextField.resignFirstResponder()
+        startAnimating()
+        
         //class won't compile with textfield straight in parameters so has to be put to string first 
         let accountString =  accountTextField.text!
         let routingString = routingTextField.text!
@@ -68,18 +78,18 @@ class BankTableViewController: UITableViewController {
                 print("JSON: \(json)")
                 /* if let id = json["id"].string {
                  }*/
-                
 
                 //can't get status code for some reason
-               if let status = json["JSON"]["statusCode"].string{
+                self.stopAnimating()
+               if let status = json["statusCode"].int{
                 print(status)
-                    let message = json["JSON"]["message"].string
-                    if status.hasPrefix("4"){
-                        self.errorMessage("Something Went Wrong", message: message! )
-                    }
+                let message = json["message"].string
+                
+                self.errorMessage("Something Went Wrong", message: message! )
+
                } else {
-                    let bankName = json["external_accounts"]["data"]["bank_name"].string
-                    let bankLast4 = json["external_accounts"]["data"]["last4"].string
+                    let bankName = json["external_accounts"]["data"][0]["bank_name"].string
+                    let bankLast4 = json["external_accounts"]["data"][0]["last4"].string
                     self.successMessage(bankName!, bankLast4: bankLast4!)
                 }
                 print("Validation Successful")
@@ -102,7 +112,7 @@ class BankTableViewController: UITableViewController {
     }
     
     func successMessage(_ bankName: String, bankLast4: String) {
-        let alert = UIAlertController(title: "Your bank account was successfully added", message: "Your funds will be deposited to your \(bankName) \\(bankLast4) from now on.",
+        let alert = UIAlertController(title: "Your bank account was successfully added", message: "Your funds will be deposited to \(bankName) ****\(bankLast4) from now on.",
                                       preferredStyle: UIAlertControllerStyle.alert)
         let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
             UIAlertAction in
@@ -114,6 +124,14 @@ class BankTableViewController: UITableViewController {
         alert.addAction(okayJaunt)
 
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
     
     
