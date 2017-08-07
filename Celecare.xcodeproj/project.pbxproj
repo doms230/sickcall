@@ -41,6 +41,8 @@
 		9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD38021F099556005842CF /* NewProfileViewController.swift */; };
 		9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF65FDA1F202D4E00C6E9CA /* Post.swift */; };
 		F2FCEDCA1F36A6FC006D8FAD /* NameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FCEDC91F36A6FC006D8FAD /* NameViewController.swift */; };
+		F2FCEDCC1F37F923006D8FAD /* QualificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FCEDCB1F37F923006D8FAD /* QualificationsViewController.swift */; };
+		F2FCEDCE1F381C96006D8FAD /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2FCEDCD1F381C96006D8FAD /* IDViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +85,8 @@
 		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
 		F2FCEDC91F36A6FC006D8FAD /* NameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameViewController.swift; sourceTree = "<group>"; };
+		F2FCEDCB1F37F923006D8FAD /* QualificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QualificationsViewController.swift; sourceTree = "<group>"; };
+		F2FCEDCD1F381C96006D8FAD /* IDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				F2FCEDC91F36A6FC006D8FAD /* NameViewController.swift */,
+				F2FCEDCB1F37F923006D8FAD /* QualificationsViewController.swift */,
+				F2FCEDCD1F381C96006D8FAD /* IDViewController.swift */,
 			);
 			name = NewAdvisor;
 			sourceTree = "<group>";
@@ -365,6 +371,7 @@
 				9AB182271F15BF0400678851 /* AdvisorMedsViewController.swift in Sources */,
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
 				590042EE1F293D7E0077083A /* BankTableViewController.swift in Sources */,
+				F2FCEDCC1F37F923006D8FAD /* QualificationsViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
 				590042EA1F293D540077083A /* AddressTableViewController.swift in Sources */,
 				9AB182211F15884400678851 /* AdvisorQuestionsViewController.swift in Sources */,
@@ -380,6 +387,7 @@
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
 				9A26F6321F146C6800B2E55B /* MainContainerViewController.swift in Sources */,
 				9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */,
+				F2FCEDCE1F381C96006D8FAD /* IDViewController.swift in Sources */,
 				9A2687221F09C45800AF7A2B /* MedViewController.swift in Sources */,
 				9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */,
 				9AB182231F15886000678851 /* AdvisorTableViewCell.swift in Sources */,
