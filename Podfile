@@ -26,10 +26,10 @@ target 'Celecare' do
   #stripe
   pod 'Stripe'
   
+  #
   pod 'SidebarOverlay'
-  
-  pod 'Persei', '~> 3.0'
-  
+  pod 'SCLAlertView'
+  pod 'DateTimePicker'
   pod 'NVActivityIndicatorView'
 
 end

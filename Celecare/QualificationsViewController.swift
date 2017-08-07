@@ -50,17 +50,17 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         desti.firstName = firstName
         desti.lastName = lastName
         desti.licenseNumber = licenseNumberText.text!
-        desti.licenseType = licenseTypeButton.titleLabel.text!
-        desti.state = stateButton.titleLabel.text!
+        desti.licenseType = licenseTypeButton.titleLabel?.text!
+        desti.state = stateButton.titleLabel?.text!
     }
  
     func nextAction(_ sender: UIBarButtonItem){
-        startAnimating()
+        //startAnimating()
         if validateLicenseNumber() && validateLicenseTypeButton() && validateStateButton(){
             performSegue(withIdentifier: "showId", sender: self)
             
         } else {
-            stopAnimating()
+            //stopAnimating()
         }
     }
     
@@ -161,11 +161,13 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if whichPicker == "type"{
             licenseTypeButton.setTitle(types[row], for: .normal)
+            licenseTypeButton.setTitleColor(.black, for: .normal)
             licenseTypePrompt.dismiss(animated: true, completion: nil)
             didSelectLicenseType = true
             
         }else {
             stateButton.setTitle(states[row], for: .normal)
+            stateButton.setTitleColor(.black, for: .normal)
             statePrompt.dismiss(animated: true, completion: nil)
             didSelectState = true
         }
@@ -213,5 +215,14 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
             isValidated = true
         }
         return isValidated
+    }
+    
+    //mich.
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
 }

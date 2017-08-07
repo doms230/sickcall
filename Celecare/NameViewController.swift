@@ -10,8 +10,9 @@ import UIKit
 import Parse
 import SidebarOverlay
 import Kingfisher
+import NVActivityIndicatorView
 
-class NameViewController: UIViewController {
+class NameViewController: UIViewController, NVActivityIndicatorViewable {
 
     @IBOutlet weak var lastNameText: UITextField!
     @IBOutlet weak var firstNameText: UITextField!
@@ -49,16 +50,14 @@ class NameViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let desti = segue.destination as! QualificationsViewController
         desti.firstName = firstNameText.text
-        desti.lastName = firstNameText.text
+        desti.lastName = lastNameText.text
     }
     
     @IBAction func nextAction(_ sender: UIBarButtonItem) {
-        startAnimating()
+        //startAnimating()
         if validateFirstName() && validateLastName(){
             performSegue(withIdentifier: "showLicense", sender: self)
             
-        } else {
-            stopAnimating()
         }
     }
     
@@ -97,5 +96,13 @@ class NameViewController: UIViewController {
             isValidated = true
         }
         return isValidated
+    }
+    
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
 }

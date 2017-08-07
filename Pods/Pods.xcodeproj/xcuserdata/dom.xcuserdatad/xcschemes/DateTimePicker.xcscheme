@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '223160E059935E48883B02E995C8A264'
-               BlueprintName = 'SidebarOverlay'
+               BlueprintIdentifier = '9FA73695D1E57996C128686ADB24DCC2'
+               BlueprintName = 'DateTimePicker'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SidebarOverlay.framework'>
+               BuildableName = 'DateTimePicker.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
