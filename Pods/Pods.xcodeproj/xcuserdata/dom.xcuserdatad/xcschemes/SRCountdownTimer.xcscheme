@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '37E9DC11DD5930F61F39665A9E2A0B08'
-               BlueprintName = 'Persei'
+               BlueprintIdentifier = 'C276197ACA58F3D62B32F65240E7048C'
+               BlueprintName = 'SRCountdownTimer'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Persei.framework'>
+               BuildableName = 'SRCountdownTimer.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

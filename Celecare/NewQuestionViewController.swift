@@ -15,7 +15,8 @@ class NewQuestionViewController: UIViewController {
     }
     
     @IBAction func continueAction(_ sender: UIButton) {
-        performSegue(withIdentifier: "showBasicInfo", sender: self)
+        //performSegue(withIdentifier: "showBasicInfo", sender: self)
+        performSegue(withIdentifier: "showVitals", sender: self)
     }
     
     

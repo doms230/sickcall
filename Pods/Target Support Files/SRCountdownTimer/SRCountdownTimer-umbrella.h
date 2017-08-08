@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double PerseiVersionNumber;
-FOUNDATION_EXPORT const unsigned char PerseiVersionString[];
+FOUNDATION_EXPORT double SRCountdownTimerVersionNumber;
+FOUNDATION_EXPORT const unsigned char SRCountdownTimerVersionString[];
 

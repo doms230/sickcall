@@ -21,7 +21,41 @@ class AllergyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Info 2/3"
+        
+        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
+        self.navigationItem.setRightBarButton(nextButton, animated: true)
 
+    }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! MedHistoryTableViewController
+        desti.gender = gender
+        desti.height = height
+        desti.weight = weight
+        desti.birthday = birthday
+        
+        if medAllergies.count == 0{
+            desti.medAllergies = ["none"]
+            
+        } else {
+            desti.medAllergies = medAllergies
+        }
+        
+        if foodAllergies.count == 0{
+            desti.foodAllergies = ["none"]
+            
+        } else {
+            desti.foodAllergies = foodAllergies
+
+        }
+        
+    }
+    
+    func nextAction(_ sender: UIBarButtonItem){
+        // Do any additional setup after loading the view.
+        performSegue(withIdentifier: "showHistory", sender: self)
+        
     }
     
     //med allergy actions
@@ -98,14 +132,5 @@ class AllergyViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

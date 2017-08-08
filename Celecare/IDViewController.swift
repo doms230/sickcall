@@ -11,7 +11,6 @@ import Parse
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
-import DateTimePicker
 import SCLAlertView
 
 class IDViewController: UIViewController, NVActivityIndicatorViewable {
