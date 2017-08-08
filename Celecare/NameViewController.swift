@@ -53,6 +53,12 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
         desti.lastName = lastNameText.text
     }
     
+    //make keyboard go away 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+    
     @IBAction func nextAction(_ sender: UIBarButtonItem) {
         //startAnimating()
         if validateFirstName() && validateLastName(){

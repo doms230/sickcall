@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import NVActivityIndicatorView
 
-class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, NVActivityIndicatorViewable {
+class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     //Name Values from NameViewController
     var firstName: String!
@@ -24,11 +23,9 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     var whichPicker = "type"
     var statePrompt: UIAlertController!
     var licenseTypePrompt: UIAlertController!
-    var didSelectState = false
-    var didSelectLicenseType = false
     
-    let states = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho"," Illinois","Indiana","Iowa","Kansas","Kentucky", "Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
-    let types = ["RN", "PN", "APRN-CNP", "APRN-CRNA", "APRN-CNS", "APRN-CNM"]
+    let states = ["","Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho"," Illinois","Indiana","Iowa","Kansas","Kentucky", "Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
+    let types = ["", "RN", "PN", "APRN-CNP", "APRN-CRNA", "APRN-CNS", "APRN-CNM"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +34,12 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
-        NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
-        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
-        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        licenseTypeButton.layer.cornerRadius = 3
+        licenseTypeButton.clipsToBounds = true
+        
+        stateButton.layer.cornerRadius = 3
+        stateButton.clipsToBounds = true
+        
     }
 
     // MARK: - Navigation
@@ -55,12 +54,8 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
  
     func nextAction(_ sender: UIBarButtonItem){
-        //startAnimating()
         if validateLicenseNumber() && validateLicenseTypeButton() && validateStateButton(){
             performSegue(withIdentifier: "showId", sender: self)
-            
-        } else {
-            //stopAnimating()
         }
     }
     
@@ -106,13 +101,13 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         statePickerView.dataSource = self
         statePrompt.view.addSubview(statePickerView)
         
-        let datePicker = UIAlertAction(title: "", style: UIAlertActionStyle.default) {
+        let space = UIAlertAction(title: "", style: UIAlertActionStyle.default) {
             UIAlertAction in
         }
         
-        datePicker.isEnabled = false
+        space.isEnabled = false
         
-        statePrompt.addAction(datePicker)
+        statePrompt.addAction(space)
         //prompt.addAction(okay)
         
         let height:NSLayoutConstraint = NSLayoutConstraint(item: statePrompt.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.6)
@@ -160,16 +155,14 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     // delegate method called when the row was selected.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if whichPicker == "type"{
-            licenseTypeButton.setTitle(types[row], for: .normal)
+            licenseTypeButton.setTitle(" \(types[row])", for: .normal)
             licenseTypeButton.setTitleColor(.black, for: .normal)
-            licenseTypePrompt.dismiss(animated: true, completion: nil)
-            didSelectLicenseType = true
+            //licenseTypePrompt.dismiss(animated: true, completion: nil)
             
         }else {
-            stateButton.setTitle(states[row], for: .normal)
+            stateButton.setTitle(" \(states[row])", for: .normal)
             stateButton.setTitleColor(.black, for: .normal)
-            statePrompt.dismiss(animated: true, completion: nil)
-            didSelectState = true
+            //statePrompt.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -180,7 +173,7 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         if licenseNumberText.text!.isEmpty{
             
-            licenseNumberText.attributedPlaceholder = NSAttributedString(string:"Field required",
+            licenseNumberText.attributedPlaceholder = NSAttributedString(string:" Field required",
                                                                     attributes:[NSForegroundColorAttributeName: UIColor.red])
             
         } else{
@@ -193,8 +186,8 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         var isValidated = false
         //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
-        if !didSelectLicenseType{
-            licenseTypeButton.setTitle("Field Required", for: .normal)
+        if licenseTypeButton.titleLabel?.text == " "{
+            licenseTypeButton.setTitle(" Field Required", for: .normal)
             licenseTypeButton.setTitleColor(.red, for: .normal)
             
         } else{
@@ -207,8 +200,8 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         var isValidated = false
         //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
-        if !didSelectState{
-            stateButton.setTitle("Field Required", for: .normal)
+        if stateButton.titleLabel?.text == " "{
+            stateButton.setTitle(" Field Required", for: .normal)
             stateButton.setTitleColor(.red, for: .normal)
             
         } else{
