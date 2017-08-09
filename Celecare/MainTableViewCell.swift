@@ -11,17 +11,75 @@ import SnapKit
 
 class MainTableViewCell: UITableViewCell {
 
-    //PaymentInfoViewController
-    @IBOutlet weak var paymentLabel: UILabel!
-    @IBOutlet weak var paymentLogo: UIImageView!
     
-    //question label 
-    @IBOutlet weak var questionTitleLabel: UILabel!
+    ///////////Patient Info for new question/////////////////
     
-
-    //medViewController
-    @IBOutlet weak var medLabel: UILabel!
-    @IBOutlet weak var medDuration: UILabel!
+    lazy var basicInfoLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        label.text = "Basic Information"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    /////////////
+    
+    lazy var noQuestionsLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = "You haven't asked any questions yet"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    //question views
+    lazy var questionImage: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = UIColor.black
+        image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 5
+        image.clipsToBounds = true
+        return image
+    }()
+    
+    //what the question is about
+    lazy var questionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    //how long problem has gone one
+    lazy var durationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 18)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+        
+    //status of the question.. either answer or pending answer
+    lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    //date question was asked
+    lazy var dateUploadedLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 14)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
     
     ////////////////////////////
     
@@ -194,6 +252,19 @@ class MainTableViewCell: UITableViewCell {
                  make.right.equalTo(self).offset(-5)
                 make.bottom.equalTo(self).offset(-25)
             }
+         
+            //Main - patients
+        } else if reuseIdentifier == "myQuestionsReuse"{
+            configureOverSubview()
+            
+        } else if reuseIdentifier == "noQuestionsReuse"{
+            self.addSubview(noQuestionsLabel)
+            noQuestionsLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(25)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-5)
+                make.bottom.equalTo(self).offset(-25)
+            }
         }
     }
     
@@ -201,6 +272,54 @@ class MainTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    //overview question view 
+    
+    func configureOverSubview(){
+        self.addSubview(questionImage)
+        self.addSubview(questionLabel)
+        self.addSubview(durationLabel)
+        self.addSubview(statusLabel)
+        self.addSubview(dateUploadedLabel)
+        
+        questionImage.snp.makeConstraints { (make) -> Void in
+            make.width.height.equalTo(100)
+            make.top.equalTo(self).offset(25)
+            make.left.equalTo(self).offset(10)
+            // make.right.equalTo(self).offset(-10)
+            //make.bottom.equalTo(self).offset(-5)
+        }
+        
+        questionLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(questionImage.snp.top).offset(5)
+            make.left.equalTo(questionImage.snp.right).offset(10)
+            make.right.equalTo(self).offset(-5)
+            //make.bottom.equalTo(self).offset(-25)
+        }
+        
+        durationLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(questionLabel.snp.bottom).offset(5)
+            make.left.equalTo(questionImage.snp.right).offset(10)
+            make.right.equalTo(self).offset(-5)
+            //make.bottom.equalTo(self).offset(-25)
+        }
+        
+        statusLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(questionImage.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-5)
+            //make.bottom.equalTo(self).offset(-25)
+        }
+        
+        dateUploadedLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(statusLabel.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-5)
+            make.bottom.equalTo(self).offset(-15)
+        }
+    }
+    
+    //detail question view
     
     func configureAdvisorSubview(){
         self.addSubview(advisorImage)

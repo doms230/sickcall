@@ -37,12 +37,11 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      /*  let desti = segue.destination as! SummaryViewController
+        let desti = segue.destination as! SummaryViewController
         desti.healthConcernDuration = healthConcernDuration
         desti.healthConcernSummary = healthConcernSummary
-        
         //TODO: uncomment later.. needed
-        desti.pickedFile = videoFile*/
+        //desti.pickedFile = videoFile
     }
     
     

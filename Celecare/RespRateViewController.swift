@@ -8,8 +8,10 @@
 
 import UIKit
 import SCLAlertView
+import Parse
+import NVActivityIndicatorView
 
-class RespRateViewController: UIViewController {
+class RespRateViewController: UIViewController, NVActivityIndicatorViewable {
     
     //vitals from heartRateViewController
     var beatsPM: String! 
@@ -19,7 +21,7 @@ class RespRateViewController: UIViewController {
     @IBOutlet weak var bpmLabel: UILabel!
     var didPressStart = false
     //used to record the amount of times user taps button
-    var taps = 0
+    var respsPM = 0
     
     //timer jaunts FF8781
     var countdownTimer: Timer!
@@ -33,24 +35,50 @@ class RespRateViewController: UIViewController {
         
         nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
+        
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-    }
-    
+
     func nextAction(_ sender: UIBarButtonItem){
         if didPressStart{
             endTimer()
         } else {
-            // performSegue(withIdentifier: "showRespRate", sender: self)
+            
+            startAnimating()
+            let query = PFQuery(className: "_User")
+            query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+            query.getFirstObjectInBackground {
+                (object: PFObject?, error: Error?) -> Void in
+                if error != nil || object == nil {
+                    self.stopAnimating()
+                    SCLAlertView().showError("Medical Info Update Failed", subTitle: "Check internet connection and try again. Contact help@sickcallhealth.com if the issue persists.")
+                    
+                } else {
+                    object?["beatsPM"] = self.beatsPM!
+                    object?["respsPM"] = self.respsPM
+                    object?.saveInBackground {
+                        (success: Bool, error: Error?) -> Void in
+                        self.stopAnimating()
+                        if (success) {
+                            self.performSegue(withIdentifier: "showBasicInfo", sender: self)
+                            
+                        } else {
+                            SCLAlertView().showError("Medical Info Update Failed", subTitle: "Check internet connection and try again. Contact help@sickcallhealth.com if the issue persists.")
+                        }
+                    }
+                }
+            }
         }
     }
     
     @IBAction func startAction(_ sender: UIButton) {
         if !didPressStart{
-            taps = 0
+            respsPM = 0
             didPressStart = true
             sender.setTitle("0", for: .normal)
             sender.backgroundColor = uicolorFromHex(0xFF8781)
@@ -60,8 +88,8 @@ class RespRateViewController: UIViewController {
             countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
             
         } else {
-            taps += 1
-            sender.setTitle("\(taps)", for: .normal)
+            respsPM += 1
+            sender.setTitle("\(respsPM)", for: .normal)
         }
     }
     
@@ -77,8 +105,8 @@ class RespRateViewController: UIViewController {
     
     func endTimer() {
         if totalTime == 0{
-            SCLAlertView().showSuccess("Your BPM is \(taps)", subTitle: "")
-            bpmLabel.text = "\(taps) Breathes per Minute (BPM)"
+            SCLAlertView().showSuccess("Your BPM is \(respsPM)", subTitle: "")
+            bpmLabel.text = "\(respsPM) Breathes per Minute (BPM)"
             bpmLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
         }
         

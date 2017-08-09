@@ -42,8 +42,8 @@ class MedViewController: UIViewController, UITableViewDelegate, UITableViewDataS
         
         let cell =  tableView.dequeueReusableCell(withIdentifier: "medReuse", for: indexPath) as! MainTableViewCell
         
-            cell.medLabel.text = medNames[indexPath.row]
-            cell.medDuration.text = medDuration[indexPath.row]
+            //cell.medLabel.text = medNames[indexPath.row]
+            //cell.medDuration.text = medDuration[indexPath.row]
         
         /*if eventObjectId.count == 0{
             

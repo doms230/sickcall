@@ -56,7 +56,7 @@ class PaymentInfoViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "cardReuse", for: indexPath) as! MainTableViewCell
         
         //payment methods
-        if indexPath.section == 0{
+     /*   if indexPath.section == 0{
             
             
             
@@ -71,7 +71,7 @@ class PaymentInfoViewController: UIViewController, UITableViewDelegate, UITableV
             cell.paymentLogo.image = UIImage(named: "add")
             cell.paymentLabel.text = "Add credit card"
             
-        }
+        }*/
         
         
         /*if eventObjectId.count == 0{

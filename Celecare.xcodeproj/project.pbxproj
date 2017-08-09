@@ -161,16 +161,11 @@
 		9AB067821F0207A500092BC6 /* main */ = {
 			isa = PBXGroup;
 			children = (
-				F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */,
+				9AB067721EFAE95100092BC6 /* Main.storyboard */,
+				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
 				9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */,
 				9AB182171F147E6300678851 /* MainSidebarViewController.swift */,
-				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
-				9AB067721EFAE95100092BC6 /* Main.storyboard */,
-				F2E86B411F3A430900F4703C /* medInfo */,
 				F2E86B3C1F396BF200F4703C /* newQuestion */,
-				9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */,
-				9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */,
-				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,
 				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
 				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
 				9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */,
@@ -236,20 +231,17 @@
 		F2E86B3C1F396BF200F4703C /* newQuestion */ = {
 			isa = PBXGroup;
 			children = (
-				F2E86B421F3A433700F4703C /* HeartRateViewController.swift */,
-				F2E86B461F3A652400F4703C /* RespRateViewController.swift */,
-			);
-			name = newQuestion;
-			sourceTree = "<group>";
-		};
-		F2E86B411F3A430900F4703C /* medInfo */ = {
-			isa = PBXGroup;
-			children = (
+				F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */,
 				F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */,
 				F2E86B3D1F398BF300F4703C /* AllergyViewController.swift */,
 				F2E86B441F3A460300F4703C /* MedHistoryTableViewController.swift */,
+				F2E86B421F3A433700F4703C /* HeartRateViewController.swift */,
+				F2E86B461F3A652400F4703C /* RespRateViewController.swift */,
+				9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */,
+				9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */,
+				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,
 			);
-			name = medInfo;
+			name = newQuestion;
 			sourceTree = "<group>";
 		};
 		F2FCEDC61F36A51E006D8FAD /* NewAdvisor */ = {

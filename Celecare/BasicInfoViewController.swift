@@ -13,7 +13,7 @@ import SidebarOverlay
 
 class BasicInfoViewController: UIViewController {
     
-    @IBOutlet weak var profileImage: UIButton!
+    
     
     @IBOutlet weak var questionSubjectTextfield: UITextField!
     
@@ -28,25 +28,11 @@ class BasicInfoViewController: UIViewController {
     
     
     @IBOutlet weak var barJaunt: UIBarButtonItem!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error != nil || object == nil {
 
-                
-            } else {
-                let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
-                self.profileImage.layer.cornerRadius = 30 / 2
-                self.profileImage.clipsToBounds = true
-                
-            }
-        }
         
         
         // Do any additional setup after loading the view.
@@ -153,11 +139,7 @@ class BasicInfoViewController: UIViewController {
     }
     
     
-    @IBAction func menuAction(_ sender: UIButton) {
-        if let container = self.so_containerViewController {
-            container.isSideViewControllerPresented = true
-        }
-    }
+
     
     func postAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message,

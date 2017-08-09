@@ -81,8 +81,8 @@ class HeartRateViewController: UIViewController {
     func endTimer() {
         if totalTime == 0{
             beatsPM = taps * 4
-            SCLAlertView().showSuccess("Your BPM is \(beatsPM)", subTitle: "")
-            bpmLabel.text = "\(beatsPM) Beats per Minute (BPM)"
+            SCLAlertView().showSuccess("Your BPM is \(beatsPM!)", subTitle: "")
+            bpmLabel.text = "\(beatsPM!) Beats per Minute (BPM)"
             bpmLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
         }
 
