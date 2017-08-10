@@ -20,6 +20,11 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var questionStatus = [String]()
     var dateUploaded = [String]()
     var objectId = [String]()
+    var comments = [String]()
+    var level = [String]()
+    var isAnswered = [Bool]()
+    var advisorUserId = [String]()
+    var questionVideos = [PFFile]()
     
     @IBOutlet weak var profileImage: UIButton!
     
@@ -62,10 +67,14 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if let indexPath = tableJaunt.indexPathForSelectedRow{
             let desti = segue.destination as! ViewAnswerViewController
             desti.objectId = objectId[indexPath.row]
+            desti.comments = comments[indexPath.row]
+            desti.level = level[indexPath.row]
+            desti.isAnswered = isAnswered[indexPath.row]
+            desti.advisorUserId = advisorUserId[indexPath.row]
+            desti.videoJaunt = questionVideos[indexPath.row]
         }
     }
     
@@ -106,7 +115,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.backgroundColor = uicolorFromHex(0xe8e6df)
             cell.selectionStyle = .none
             self.tableJaunt.separatorStyle = .none
-            
         }
         
         //let
@@ -145,11 +153,13 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.questions.append(object["summary"] as! String)
                         
                         let isAnswered = object["isAnswered"] as! Bool
+                        self.isAnswered.append(isAnswered)
                         if isAnswered{
                             self.questionStatus.append("Answered")
-                            
+                            self.advisorUserId.append(object["advisorUserId"] as! String)
                         } else {
                             self.questionStatus.append("Pending Answer")
+                            self.advisorUserId.append("nil")
                         }
                         
                         self.questionDurations.append(object["duration"] as! String)
@@ -158,6 +168,12 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         let createdAt = DateFormatter.localizedString(from: rawCreatedAt!, dateStyle: .short, timeStyle: .short)
                         
                         self.dateUploaded.append(createdAt)
+                        
+                        //
+                        self.level.append(object["level"] as! String)
+                        self.comments.append(object["comment"] as! String)
+                        self.questionVideos.append(object["video"] as! PFFile)
+                        
                     }
                    // print(self.unAnsweredQuestionTitle[0])
                     

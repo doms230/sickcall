@@ -165,10 +165,10 @@
 				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
 				9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */,
 				9AB182171F147E6300678851 /* MainSidebarViewController.swift */,
+				9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */,
 				F2E86B3C1F396BF200F4703C /* newQuestion */,
 				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
 				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
-				9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";

@@ -16,6 +16,7 @@ class MedHistoryTableViewController: UITableViewController, NVActivityIndicatorV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Info 3/3"
         let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
