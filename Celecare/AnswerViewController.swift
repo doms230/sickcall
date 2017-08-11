@@ -40,7 +40,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "noQuestionsReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
-        self.tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
+       // self.tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
@@ -98,7 +98,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if objectId.count > 0{
             cell = tableView.dequeueReusableCell(withIdentifier: "myQuestionsReuse", for: indexPath) as! MainTableViewCell
             
-            cell.backgroundColor = uicolorFromHex(0xe8e6df)
+          //  cell.backgroundColor = uicolorFromHex(0xe8e6df)
             cell.selectionStyle = .none
             self.tableJaunt.separatorStyle = .singleLine
             
@@ -112,7 +112,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.dateUploadedLabel.text = dateUploaded[indexPath.row]
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "noQuestionsReuse", for: indexPath) as! MainTableViewCell
-            cell.backgroundColor = uicolorFromHex(0xe8e6df)
+            //cell.backgroundColor = uicolorFromHex(0xe8e6df)
             cell.selectionStyle = .none
             self.tableJaunt.separatorStyle = .none
         }

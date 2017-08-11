@@ -53,7 +53,7 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
         tableJaunt.separatorStyle = .none
-        tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
+        //tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
@@ -102,7 +102,7 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
             if advisorUsername != nil{
                 cell = tableView.dequeueReusableCell(withIdentifier: "answerReuse", for: indexPath) as! MainTableViewCell
                 cell.selectionStyle = .none
-                cell.backgroundColor = uicolorFromHex(0xe8e6df)
+                //cell.backgroundColor = uicolorFromHex(0xe8e6df)
                 cell.advisorImage.kf.setImage(with: URL(string: self.advisorUserImage))
                 cell.advisorName.text = self.advisorUsername
                 cell.advisorName.textColor = uicolorFromHex(0x180d22)
@@ -117,14 +117,14 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "pendingReuse", for: indexPath) as! MainTableViewCell
                 cell.selectionStyle = .none
-                cell.backgroundColor = uicolorFromHex(0xe8e6df)
+                //cell.backgroundColor = uicolorFromHex(0xe8e6df)
                 cell.pendingLabel.isHidden = true
             }
             
         } else{
             cell = tableView.dequeueReusableCell(withIdentifier: "pendingReuse", for: indexPath) as! MainTableViewCell
             cell.selectionStyle = .none
-            cell.backgroundColor = uicolorFromHex(0xe8e6df)
+            //cell.backgroundColor = uicolorFromHex(0xe8e6df)
             cell.pendingLabel.textColor = uicolorFromHex(0x180d22)
             cell.pendingLabel.isHidden = false
         }

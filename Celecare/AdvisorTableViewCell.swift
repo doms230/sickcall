@@ -32,8 +32,6 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
-
-    
     /*override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -125,29 +123,12 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
-    //meds jaunt
-    lazy var medName: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        return label
-    }()
-    lazy var medDuration: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        return label
-    }()
-
-    
     //status jaunt
     lazy var patientImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = UIColor.black
         image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 50
+        image.layer.cornerRadius = 25
         image.clipsToBounds = true
         return image
     }()
@@ -160,73 +141,22 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var segment: UISegmentedControl = {
-        let items = ["Info", "Medications"]
-        let segment = UISegmentedControl(items: items)
-        segment.tintColor = UIColor.black
-        segment.selectedSegmentIndex = 0
-        return segment
-    }()
-    
-    lazy var healthConcernTitle: UILabel = {
+    lazy var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
         label.text = "Health Concern"
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
     }()
     
-    lazy var healthConcern: UILabel = {
+    lazy var content: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
     }()
-    
-    lazy var healthDuration: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    lazy var healthDurationTitle: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 14)
-        label.textColor = UIColor.black
-        label.text = "Duration"
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    lazy var videoButton: UIImageView = {
-        let image = UIImageView()
-        image.layer.cornerRadius = 5
-        image.clipsToBounds = true
-        image.contentMode = .scaleAspectFill
-        image.image = UIImage(named:"appy")
-        return image
-    }()
-    
-    lazy var watchVideoLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-        label.textColor = UIColor.black
-        label.text = "View Question"
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    /*lazy var questionAmount: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        return label
-    }()*/    
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -234,11 +164,24 @@ class AdvisorTableViewCell: UITableViewCell {
         if reuseIdentifier == "patientReuse"{
             configurePatientSubview()
 
-        } else if reuseIdentifier == "segmentReuse"{
-            configureSegmentSubview()
+        } else if reuseIdentifier == "titleReuse"{
+            self.addSubview(title)
             
-        } else if reuseIdentifier == "infoReuse"{
-            configureInfoSubview()
+            title.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.left.equalTo(self).offset(5)
+                make.right.equalTo(self).offset(-5)
+                make.bottom.equalTo(self).offset(-5)
+            }
+            
+        } else if reuseIdentifier == "contentReuse"{
+            self.addSubview(content)
+
+            content.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(5)
+                make.left.equalTo(self).offset(5)
+                make.right.equalTo(self).offset(-5)
+            }
             
         } else if reuseIdentifier == "statusReuse"{
             self.addSubview(statusLabel)
@@ -248,13 +191,10 @@ class AdvisorTableViewCell: UITableViewCell {
                 make.right.equalTo(self).offset(-125)
                 make.bottom.equalTo(self).offset(-150)
             }
-        } else if reuseIdentifier == "medReuse"{
-            configureMedSubview()
             
         } else if reuseIdentifier == "dashboardReuse"{
             configureDashboard()
         }
-        
     }
     
     // We won’t use this but it’s required for the class to compile
@@ -302,7 +242,6 @@ class AdvisorTableViewCell: UITableViewCell {
             // make.bottom.equalTo(paymentView.snp.bottom).offset(-10)
         }
         
-        
         //status
        self.addSubview(statusButton)
         self.addSubview(queueLabel)
@@ -324,106 +263,24 @@ class AdvisorTableViewCell: UITableViewCell {
     }
     
     //question
-        func configureMedSubview(){
-            self.addSubview(medName)
-            self.addSubview(medDuration)
-            
-            medName.snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(self).offset(5)
-                make.left.equalTo(self).offset(5)
-                make.right.equalTo(self).offset(-5)
-                //make.bottom.equalTo(self).offset(-5)
-            }
-            
-            medDuration.snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(medName.snp.bottom).offset(3)
-                make.left.equalTo(self).offset(5)
-                make.right.equalTo(self).offset(-5)
-                make.bottom.equalTo(self).offset(-5)
-            }
-    }
     
-    
-    func configurePatientSubview(){
+   func configurePatientSubview(){
         self.addSubview(patientImage)
         self.addSubview(patientName)
 
         patientImage.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(100)
+            make.width.height.equalTo(50)
             make.top.equalTo(self).offset(25)
-            make.left.equalTo(self).offset(125)
-           // make.right.equalTo(self).offset(-10)
-           //make.bottom.equalTo(self).offset(-5)
+            make.left.equalTo(self).offset(10)
+            // make.right.equalTo(self).offset(-10)
+            //make.bottom.equalTo(self).offset(-5)
         }
         
         patientName.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(patientImage.snp.bottom).offset(10)
-            make.left.equalTo(self).offset(125)
-            make.right.equalTo(self).offset(-10)
-            make.bottom.equalTo(self).offset(-25)
-        }
-    }
-    
-    func configureSegmentSubview(){
-        self.addSubview(segment)
-        
-        segment.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self).offset(5)
-            make.left.equalTo(self).offset(5)
+            make.top.equalTo(patientImage.snp.top).offset(10)
+            make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-5)
-            make.bottom.equalTo(self).offset(-5)
+            //make.bottom.equalTo(self).offset(-25)
         }
-    }
-    
-    func configureInfoSubview(){
-        self.addSubview(healthConcernTitle)
-        self.addSubview(healthConcern)
-        self.addSubview(healthDurationTitle)
-        self.addSubview(healthDuration)
-        self.addSubview(videoButton)
-        self.addSubview(watchVideoLabel)
-        
-        healthConcernTitle.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self).offset(25)
-            make.left.equalTo(self).offset(5)
-            make.right.equalTo(self).offset(-5)
-            
-        }
-
-        healthConcern.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(healthConcernTitle.snp.bottom).offset(5)
-            make.left.equalTo(self).offset(5)
-            make.right.equalTo(self).offset(-5)
-        
-        }
-        
-        healthDurationTitle.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(healthConcern.snp.bottom).offset(10)
-            make.left.equalTo(self).offset(5)
-            make.right.equalTo(self).offset(-5)
-        }
-        
-        healthDuration.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(healthDurationTitle.snp.bottom).offset(5)
-            make.left.equalTo(self).offset(5)
-            make.right.equalTo(self).offset(-5)
-        }
-        
-        videoButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(100)
-            make.height.equalTo(150)
-            make.top.equalTo(healthDuration.snp.bottom).offset(10)
-            make.left.equalTo(self).offset(5)
-            make.bottom.equalTo(self).offset(-5)
-        }
-        
-        watchVideoLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(videoButton.snp.top).offset(75)
-            make.left.equalTo(videoButton.snp.right).offset(5)
-            make.right.equalTo(self).offset(-5)
-        }
-        
-
-        
     }
 }

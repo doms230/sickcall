@@ -137,7 +137,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZOo-wT-ee0">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="584"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
@@ -145,14 +145,28 @@
                                     <outlet property="delegate" destination="cfc-fa-eej" id="39Q-u9-UQS"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LP4-Hi-hh6">
+                                <rect key="frame" x="0.0" y="592" width="375" height="75"/>
+                                <color key="backgroundColor" red="0.95686274510000002" green="1" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="6tf-vH-EGG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="View Question">
+                                    <color key="titleColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="leading" secondItem="WS1-Lw-OyI" secondAttribute="leading" id="Gqr-5A-580"/>
-                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="bottom" secondItem="ecr-ql-8Nq" secondAttribute="top" id="ODm-WN-s78"/>
-                            <constraint firstAttribute="trailing" secondItem="ZOo-wT-ee0" secondAttribute="trailing" id="lXe-a8-cvO"/>
-                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="top" secondItem="WS1-Lw-OyI" secondAttribute="top" id="odJ-C4-qK4"/>
+                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="top" secondItem="WS1-Lw-OyI" secondAttribute="top" id="CDc-D3-6R8"/>
+                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="trailing" secondItem="LP4-Hi-hh6" secondAttribute="trailing" id="JUA-VY-R3t"/>
+                            <constraint firstItem="LP4-Hi-hh6" firstAttribute="bottom" secondItem="ecr-ql-8Nq" secondAttribute="top" id="dQs-vo-qkh"/>
+                            <constraint firstItem="LP4-Hi-hh6" firstAttribute="top" secondItem="ZOo-wT-ee0" secondAttribute="bottom" constant="8" symbolic="YES" id="hJ4-uT-vnj"/>
+                            <constraint firstAttribute="trailing" secondItem="ZOo-wT-ee0" secondAttribute="trailing" id="tKC-AL-nc8"/>
+                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="leading" secondItem="WS1-Lw-OyI" secondAttribute="leading" id="u2N-Kh-0XL"/>
+                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="leading" secondItem="LP4-Hi-hh6" secondAttribute="leading" id="yIm-v7-Q2i"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1n4-Vi-H9g">
@@ -170,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rjf-5C-WmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2310" y="-278"/>
+            <point key="canvasLocation" x="2309.5999999999999" y="-278.41079460269867"/>
         </scene>
         <!--Dashboard View Controller-->
         <scene sceneID="Kgv-GI-duV">
