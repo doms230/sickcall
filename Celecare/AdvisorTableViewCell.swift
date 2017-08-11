@@ -141,7 +141,7 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var title: UILabel = {
+    lazy var questionTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
         label.text = "Health Concern"
@@ -150,7 +150,7 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var content: UILabel = {
+    lazy var questionContent: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue", size: 20)
         label.textColor = UIColor.black
@@ -164,24 +164,26 @@ class AdvisorTableViewCell: UITableViewCell {
         if reuseIdentifier == "patientReuse"{
             configurePatientSubview()
 
-        } else if reuseIdentifier == "titleReuse"{
-            self.addSubview(title)
+        } else if reuseIdentifier == "infoReuse"{
+            self.addSubview(questionContent)
+            self.addSubview(questionTitle)
             
-            title.snp.makeConstraints { (make) -> Void in
+            questionTitle.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self).offset(10)
-                make.left.equalTo(self).offset(5)
-                make.right.equalTo(self).offset(-5)
-                make.bottom.equalTo(self).offset(-5)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+               // make.bottom.equalTo(self).offset(-5)
+            }
+            questionContent.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(questionTitle.snp.bottom).offset(5)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self).offset(-10)
             }
             
         } else if reuseIdentifier == "contentReuse"{
-            self.addSubview(content)
 
-            content.snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(self).offset(5)
-                make.left.equalTo(self).offset(5)
-                make.right.equalTo(self).offset(-5)
-            }
+
             
         } else if reuseIdentifier == "statusReuse"{
             self.addSubview(statusLabel)
@@ -273,7 +275,7 @@ class AdvisorTableViewCell: UITableViewCell {
             make.top.equalTo(self).offset(25)
             make.left.equalTo(self).offset(10)
             // make.right.equalTo(self).offset(-10)
-            //make.bottom.equalTo(self).offset(-5)
+            make.bottom.equalTo(self).offset(-25)
         }
         
         patientName.snp.makeConstraints { (make) -> Void in

@@ -13,8 +13,10 @@ import MobileCoreServices
 import AVKit
 import AVFoundation
 import SnapKit
+import NVActivityIndicatorView
+import SCLAlertView
 
-class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
 
     @IBOutlet weak var profileImage: UIButton!
     
@@ -29,11 +31,15 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     var patientUsername: String!
     var videoFile: PFFile!
     
+    var questionTitles = [String]()
+    var questionContent = [String]()
+    
     //video
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
     var playButton: UIButton!
     
+    var didPressPlay = false
     
     //view question UI
     var answerButton : UIButton = {
@@ -60,7 +66,6 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         exitButton.layer.cornerRadius = 25/2
         exitButton.clipsToBounds = true
 
-        
         return exitButton
     }()
     
@@ -71,15 +76,20 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Questions"
+       // self.title = "Questions"
         
        loadData()
         
         self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "patientReuse")
-        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "titleReuse")
-        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "contentReuse")
+        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "infoReuse")
+        self.tableJaunt.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "statusReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
+        
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
    /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -97,14 +107,12 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if objectId != nil{
-            return 2
-            
-        }else {
+            return questionTitles.count + 1
+
+        } else {
             return 1
         }
-
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,13 +124,16 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                 cell = tableView.dequeueReusableCell(withIdentifier: "patientReuse", for: indexPath) as! AdvisorTableViewCell
                 cell.selectionStyle = .none
                 tableView.separatorStyle = .none
-                cell.backgroundColor = uicolorFromHex(0xe8e6df)
+               // cell.backgroundColor = uicolorFromHex(0xe8e6df)
                 cell.patientImage.kf.setImage(with: URL(string: self.patientUserImage))
                 cell.patientName.text = self.patientUsername
                 
-            } else if indexPath.row == 1{
-                cell = tableView.dequeueReusableCell(withIdentifier: "contentReuse", for: indexPath) as! AdvisorTableViewCell
-
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "infoReuse", for: indexPath) as! AdvisorTableViewCell
+                cell.selectionStyle = .none
+                tableView.separatorStyle = .none
+                cell.questionTitle.text = questionTitles[indexPath.row - 1]
+                cell.questionContent.text = questionContent[indexPath.row - 1]
             }
             
         } else {
@@ -142,10 +153,20 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
-                self.healthConcern = object?["summary"] as! String
-                self.healthDuration = object?["duration"] as! String
+               // self.healthConcern = object?["summary"] as! String
+                //self.healthDuration = object?["duration"] as! String
+                self.questionTitles.append("Health Concern")
+                self.questionContent.append(object?["summary"] as! String)
+                self.questionTitles.append("Duration")
+                self.questionContent.append(object?["duration"] as! String)
+                /*self.questionTitles.append("Heart BPM")
+                self.questionContent.append(object?["beatsPM"] as! String)
+                self.questionTitles.append("Breates PM")
+                self.questionContent.append(object?["respsPM"] as! String)*/
+                
                 self.objectId = object?.objectId
-                self.videoFile = object!["video"] as! PFFile
+                let videoFile = object!["video"] as! PFFile
+                self.getVideo(videoJaunt: videoFile)
                 self.patientUserId = object!["userId"] as! String
                 
                 self.loadUser()
@@ -164,13 +185,37 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                 self.patientUserImage = imageFile.url
                 
                 self.patientUsername = object!["DisplayName"] as! String
+                
+                self.questionTitles.append("Heart Beats Per Minute")
+                self.questionContent.append(object?["beatsPM"] as! String)
+                self.questionTitles.append("Breates Per Minute")
+                self.questionContent.append(object?["respsPM"] as! String)
+                
+                self.questionTitles.append("Medical History")
+                self.questionContent.append(object?["medHistory"] as! String)
+                self.questionTitles.append("Ongoing Health Issues")
+                self.questionContent.append(object?["healthIssues"] as! String)
+                
                 self.tableJaunt.reloadData()
             }
         }
     }
     
-
     //video
+    
+    @IBAction func playVideoAction(_ sender: UIButton) {
+        startAnimating()
+        
+        if player != nil{
+            stopAnimating()
+            self.present(self.playerController, animated: true) {
+               // self.messageFrame.removeFromSuperview()
+                self.player.play()
+            }
+        } else {
+            didPressPlay = true
+        }
+    }
     
     func setVideoUI(){
         playerController.view.addSubview(answerButton)
@@ -183,8 +228,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         //answerButton.addTarget(self, action: #selector(AdvisorQuestionsViewController.answerAction(_:)), for: .touchUpInside)
     }
     
-    func playVideo(videoJaunt: PFFile){
-        
+    func getVideo(videoJaunt: PFFile){
         
         playerController = AVPlayerViewController()
         
@@ -214,12 +258,14 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
                     
                     // play video
                     self.playerController.player = self.player
-                    //self.player.play()
-                    
-                    self.present(self.playerController, animated: true) {
-                        self.messageFrame.removeFromSuperview()
-                        self.player.play()
+                    if self.didPressPlay{
+                        self.stopAnimating()
+                        self.present(self.playerController, animated: true) {
+                            self.messageFrame.removeFromSuperview()
+                            self.player.play()
+                        }
                     }
+                    //self.player.play()
                     
                     NotificationCenter.default.addObserver(self,
                                                            selector: #selector(AdvisorQuestionsViewController.playerItemDidReachEnd(_:)),
@@ -244,7 +290,7 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         
         self.playerController.dismiss(animated: true, completion: nil)
         //playerController.view.removeFromSuperview()
-        sender.removeFromSuperview()
+        //sender.removeFromSuperview()
         // postTime.removeFromSuperview()
     }
     
@@ -256,5 +302,4 @@ class AdvisorQuestionsViewController: UIViewController, UITableViewDelegate, UIT
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-    
 }

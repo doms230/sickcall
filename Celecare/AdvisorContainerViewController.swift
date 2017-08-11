@@ -33,7 +33,7 @@ class AdvisorContainerViewController: SOContainerViewController {
             }
         }*/
         
-        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "newAdvisor")
+        self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
         
         self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
         

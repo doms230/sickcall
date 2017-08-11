@@ -129,6 +129,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="I have a headache that won't go away" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="G3D-6w-zO8">
                                 <rect key="frame" x="17" y="140" width="343" height="30"/>
+                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ba0-mY-OoI"/>
                                 </constraints>
@@ -215,7 +216,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="bda-gy-jCS" firstAttribute="leading" secondItem="Qmu-pj-HFG" secondAttribute="leading" id="0gE-Zt-BhE"/>
                             <constraint firstItem="nhx-kt-R5K" firstAttribute="leading" secondItem="K9I-me-WGv" secondAttribute="leading" id="3n3-fY-c9V"/>
@@ -325,7 +326,7 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZQ1-rE-eZK">
                                 <rect key="frame" x="16" y="140" width="343" height="128"/>
-                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="3sR-Mo-iEa"/>
                                 </constraints>
@@ -335,7 +336,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Rvq-Af-cGw" secondAttribute="trailing" id="4Nq-9X-gmy"/>
                             <constraint firstItem="Rvq-Af-cGw" firstAttribute="leading" secondItem="GcQ-TX-hcC" secondAttribute="leading" id="8hi-pe-HfT"/>
@@ -1339,7 +1340,7 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Place your index and middle fingers on your neck to the side of your windpipe.                     " textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MfA-M2-SrH">
                                 <rect key="frame" x="0.0" y="306" width="375" height="60"/>
-                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="uTV-E0-lTB"/>
                                 </constraints>
@@ -1385,7 +1386,7 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="When you have found your heart beat, press START and tap the START button everytime your feel your heart beat." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6T-cN-7qH">
                                 <rect key="frame" x="0.0" y="374" width="375" height="80"/>
-                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="XqI-Hr-lUs"/>
                                 </constraints>
@@ -1394,7 +1395,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ApK-r7-E0n" firstAttribute="leading" secondItem="x3J-cy-TPZ" secondAttribute="leading" id="35P-o6-igR"/>
                             <constraint firstItem="MfA-M2-SrH" firstAttribute="leading" secondItem="PCo-xb-qHz" secondAttribute="leading" id="7Ad-q6-5Hq"/>
@@ -1477,7 +1478,7 @@
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Breathe regularly and count your exhales." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6mA-JA-zCY">
                                 <rect key="frame" x="16" y="233" width="343" height="55"/>
-                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="IkE-ft-0Tz"/>
                                 </constraints>
@@ -1487,7 +1488,7 @@
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Press START and tap the START button everytime your exhale." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dcU-I4-lU5">
                                 <rect key="frame" x="16" y="296" width="343" height="75"/>
-                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1499,7 +1500,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="KqW-Cv-jcQ" firstAttribute="leading" secondItem="glJ-xx-lX0" secondAttribute="leading" id="18Z-qw-b1u"/>
                             <constraint firstItem="glJ-xx-lX0" firstAttribute="leading" secondItem="6mA-JA-zCY" secondAttribute="leading" id="2ca-lU-iQH"/>
