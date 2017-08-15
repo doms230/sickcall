@@ -32,25 +32,6 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
-    /*override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        if reuseIdentifier == "statusReuse"{
-            self.addSubview(statusLabel)
-            statusLabel.snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(self).offset(150)
-                make.left.equalTo(self).offset(125)
-                make.right.equalTo(self).offset(-125)
-                make.bottom.equalTo(self).offset(-150)
-            }
-            
-        } 
-    }
-    
-    // We won’t use this but it’s required for the class to compile
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }*/
     
     //dashboard
     
@@ -91,17 +72,6 @@ class AdvisorTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
-    /*lazy var getPaidButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        button.setTitle("Get Paid", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 5
-        button.clipsToBounds = true
-      //  button.numberOfLines = 0
-        return button
-    }()*/
     
     lazy var statusButton: UIButton = {
         let button = UIButton()
@@ -168,6 +138,69 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
+    //response 
+    lazy var seriousLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        label.text = "How serious is this?"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var concernLevelSegment: UISegmentedControl = {
+       let segment = UISegmentedControl(items: ["Low", "Medium", "High"])
+        return segment
+    }()
+    
+    lazy var optionsLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        label.text = "Potential Options"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var optionsBody: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 18)
+        label.text = "Options"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var commentLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        label.text = "Comments"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var commentBody: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 18)
+        label.text = ""
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var commentButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
+        button.setTitle("Add comment that supports your opinion", for: .normal)
+        //button.setImage(UIImage(named: "exit"), for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
+        return button
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -213,8 +246,11 @@ class AdvisorTableViewCell: UITableViewCell {
                 make.top.equalTo(self).offset(25)
                 make.left.equalTo(self).offset(10)
                 make.right.equalTo(self).offset(-10)
-               // make.bottom.equalTo(self).offset(-150)
+                make.bottom.equalTo(self).offset(-25)
             }
+            
+        } else if reuseIdentifier == "respondReuse"{
+            configureRespondSubview()
         }
     }
     
@@ -304,4 +340,61 @@ class AdvisorTableViewCell: UITableViewCell {
             //make.bottom.equalTo(self).offset(-25)
         }
     }
+    
+    //respond 
+    
+    func configureRespondSubview(){
+        self.addSubview(seriousLabel)
+        self.addSubview(concernLevelSegment)
+        self.addSubview(optionsLabel)
+        self.addSubview(optionsBody)
+        self.addSubview(commentLabel)
+        self.addSubview(commentBody)
+        self.addSubview(commentButton)
+        
+        seriousLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self).offset(25)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        concernLevelSegment.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(seriousLabel.snp.bottom).offset(10)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        optionsLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(concernLevelSegment.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        optionsBody.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(optionsLabel.snp.bottom)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        commentLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(optionsBody.snp.bottom).offset(10)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        commentBody.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(commentLabel.snp.bottom)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        commentButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(commentBody.snp.bottom).offset(10)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+            make.bottom.equalTo(self).offset(-25)
+        }
+    }
+    
+    //
 }

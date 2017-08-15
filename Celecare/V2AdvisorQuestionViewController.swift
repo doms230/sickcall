@@ -13,6 +13,7 @@ import NVActivityIndicatorView
 import MobileCoreServices
 import AVKit
 import AVFoundation
+import SCLAlertView
 
 class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicatorViewable {
     
@@ -31,8 +32,12 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     
     //answer info
     var level: String!
-    var comments: String!
+    var comments = ""
+    var commentButton = "Add a comment that supports your opinion"
     var objectId: String!
+    var optionBody = ""
+    var didPressRightButton = false
+    var didChooseConcernLevel = false
     
     //question
     var summary: String!
@@ -47,10 +52,12 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     
     /*** In case user presses play before video is loaded */
     var didPressPlay = false
+    var didWatchVideo = false
     
     //mich
     let screenSize: CGRect = UIScreen.main.bounds
     var viewQuestionButton: UIButton!
+    var respondButton: UIButton!
     
     var isAnswered = false
 
@@ -61,12 +68,16 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         
         self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
         self.tableView?.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "noWatchVideoReuse")
-        
+        self.tableView?.register(AdvisorTableViewCell.self, forCellReuseIdentifier: "respondReuse")
         self.tableView?.estimatedRowHeight = 50
         self.tableView?.rowHeight = UITableViewAutomaticDimension
         self.tableView?.separatorStyle = .none
+        
         self.isInverted = false
         self.textView.isHidden = true
+        self.textView.placeholder = "Comment required to respond"
+        self.rightButton.setTitle("Add", for: .normal)
+        self.shouldScrollToBottomAfterKeyboardShows = true
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
@@ -83,8 +94,17 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         //button.setImage(UIImage(named: "exit"), for: .normal)
         viewQuestionButton.backgroundColor = uicolorFromHex(0xf4ff81)
         viewQuestionButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
-        
         self.textView.superview?.addSubview(viewQuestionButton)
+
+        respondButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
+        respondButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
+        respondButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        respondButton.titleLabel?.textAlignment = .center
+        respondButton.setTitle("Respond", for: .normal)
+        //button.setImage(UIImage(named: "exit"), for: .normal)
+        respondButton.backgroundColor = uicolorFromHex(0x81ff96)
+        respondButton.addTarget(self, action: #selector(self.respondAction(_:)), for: .touchUpInside)
+        
         self.loadPost()
     }
     
@@ -97,13 +117,14 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             return 0
             
         } else {
-            return 1
+            return 2
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
         var cell: ViewAnswerTableViewCell!
+        var adCell: AdvisorTableViewCell!
         
         if self.patientUsername != nil{
             tableView.separatorStyle = .singleLine
@@ -129,39 +150,28 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             //cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
             cell.videoButton.backgroundColor = .blue
+            return cell
+        } else if didWatchVideo {
+            adCell = tableView.dequeueReusableCell(withIdentifier: "respondReuse", for: indexPath) as! AdvisorTableViewCell
+            adCell.selectionStyle = .none
             
+            adCell.concernLevelSegment.addTarget(self, action: #selector(self.didPressSegment(_:)), for: .valueChanged)
+            
+            adCell.optionsBody.text = optionBody
+            
+            adCell.commentBody.text = comments
+            
+            adCell.commentButton.setTitle(commentButton, for: .normal)
+            adCell.commentButton.addTarget(self, action: #selector(self.addCommentAction(_:)), for: .touchUpInside)
+            
+            return adCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "noWatchVideoReuse", for: indexPath) as! ViewAnswerTableViewCell
+            adCell = tableView.dequeueReusableCell(withIdentifier: "noWatchVideoReuse", for: indexPath) as! AdvisorTableViewCell
+            adCell.selectionStyle = .none
+            return adCell
             
-            
-            cell.selectionStyle = .none
-           /* cell.advisorImage.image = UIImage(named: "appy")
-            //cell.advisorImage.kf.setImage(with: URL(string: self.advisorUserImage))
-            cell.advisorName.text = self.advisorUsername
-            
-            cell.levelLabel.text = self.level
-            
-            var optionsBody = ""
-            
-            if self.level == "low"{
-                optionsBody = "- Over the counter solution \n - Doctors Appointment"
-                cell.levelLabel.backgroundColor = uicolorFromHex(0x81ff96)
-                
-            } else if self.level == "medium"{
-                optionsBody = "- Doctor's appointment \n - Urgent Care"
-                cell.levelLabel.backgroundColor = uicolorFromHex(0xf4ff81)
-                
-            } else if self.level == "high"{
-                optionsBody = "- Emergency Room \n - Urgent Care \n - Same Day Doctor's Appointment"
-                cell.levelLabel.backgroundColor = uicolorFromHex(0xff8781)
-            }
-            
-            cell.optionsBody.text = optionsBody
-            
-            cell.commentBody.text = self.comments*/
         }
         
-        return cell
     }
     
     func loadPlayJaunt(_ sender: UIButton){
@@ -190,6 +200,10 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                     self.player = AVPlayer(playerItem: self.playerItem)
                     self.playerController = AVPlayerViewController()
                     self.playerController.player = self.player
+                    
+                    NotificationCenter.default.addObserver(self,
+                    selector: #selector(AdvisorQuestionsViewController.playerItemDidReachEnd(_:)),
+                    name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player.currentItem)
                     
                     if self.didPressPlay{
                         self.player.seek(to: kCMTimeZero)
@@ -245,10 +259,99 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     func playerItemDidReachEnd( _ notification: Notification) {
         player.seek(to: kCMTimeZero)
         viewQuestionButton.isHidden = true
-        self.textView.isHidden = false 
+        self.textView.isHidden = false
+        didWatchVideo = true
+        self.tableView?.reloadData()
 
     }
     
+    func didPressSegment(_ sender: UISegmentedControl){
+        switch sender.selectedSegmentIndex{
+        case 0:
+            optionBody = "- Over the counter solution \n - Doctors Appointment"
+            self.level = "low"
+            break
+        case 1:
+            optionBody = "- Doctor's appointment \n - Urgent Care"
+            self.level = "Medium"
+            break
+        case 2:
+            optionBody = "- Emergency Room \n - Urgent Care \n - Same Day Doctor's Appointment"
+            self.level = "High"
+            break
+        default:
+            optionBody = "- Emergency Room \n - Urgent Care \n - Same Day Doctor's Appointment"
+            self.level = "High"
+            break
+        }
+        didChooseConcernLevel = true
+        self.tableView?.reloadData()
+    }
+    
+    func addCommentAction(_ sender: UIButton){
+        if didPressRightButton{
+            self.textView.becomeFirstResponder()
+            self.textView.text = comments
+            self.textView.isHidden = false
+            self.respondButton.removeFromSuperview()
+        } else {
+            self.textView.becomeFirstResponder()
+        }
+    }
+    
+    override func didPressRightButton(_ sender: Any?) {
+        
+        //add comment and change comment button to Edit comment
+        comments = self.textView.text
+        commentButton = "Edit Comment"
+        
+        //clear and hide input text box
+        self.textView.text = ""
+        self.textView.isHidden = true
+        
+        //comment exists
+        didPressRightButton = true
+        
+        self.tableView?.reloadData()
+        
+        //so user can post response
+        self.textView.superview?.addSubview(respondButton)
+        
+        self.textView.resignFirstResponder()
+    }
+    
+    func respondAction(_ sender: UIButton){
+        //postResponse
+        if didChooseConcernLevel{
+            let query = PFQuery(className: "Post")
+            query.whereKey("objectId", equalTo: "VvVjmIvgbv")
+            query.getFirstObjectInBackground {
+                (object: PFObject?, error: Error?) -> Void in
+                if error == nil || object != nil {
+                    object?["isAnswered"] = true
+                    object?["comment"] = self.comments
+                    object?["level"] = self.level
+                    self.startAnimating()
+                    object?.saveEventually{
+                        (success: Bool, error: Error?) -> Void in
+                        self.stopAnimating()
+                        if (success) {
+                            /*let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                            self.present(controller, animated: true, completion: nil)*/
+                            print("saved")
+                            
+                        } else {
+                           SCLAlertView().showError("Issue with Responding", subTitle: "Check internet connection and try again")
+                        }
+                    }
+                }
+            }
+            
+        } else {
+            SCLAlertView().showNotice("Concern Level?", subTitle: "Choose from Low, Medium, or High")
+        }
+    }
     
    /* func loadAdvisor(){
         let query = PFQuery(className: "_User")
@@ -266,10 +369,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             }
         }
     }*/
-    
-    
-
-    
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
