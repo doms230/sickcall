@@ -235,12 +235,12 @@ class ViewAnswerTableViewCell: UITableViewCell {
         return button
     }()
     
-    lazy var videoPreview: UIImageView = {
+    /*lazy var videoPreview: UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 3
         view.clipsToBounds = true
         return view
-    }()
+    }()*/
     
     
     func configureQuestionSubviews(){
@@ -256,55 +256,41 @@ class ViewAnswerTableViewCell: UITableViewCell {
         self.addSubview(summaryBody)
         self.addSubview(durationLabel)
         self.addSubview(durationBody)
-        //self.addSubview(videoPreview)
-        
-        /*videoPreview.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(50)
-            make.top.equalTo(videoButton).offset(5)
-            make.left.equalTo(videoButton).offset(5)
-            //make.right.equalTo(self).offset(-20)
-            //make.bottom.equalTo(self).offset(-20)
-        }*/
         
         durationLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(videoPreview)
-            make.left.equalTo(videoPreview.snp.right).offset(5)
+            make.top.equalTo(patientName.snp.bottom).offset(5)
+            make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-5)
         }
         
         durationBody.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(durationLabel.snp.bottom).offset(1)
-            make.left.equalTo(videoPreview.snp.right).offset(5)
+            make.top.equalTo(durationLabel.snp.bottom)
+            make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-5)
         }
         
         summaryLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(durationBody.snp.bottom).offset(1)
-            make.left.equalTo(videoPreview.snp.right).offset(5)
+            make.top.equalTo(durationBody.snp.bottom).offset(5)
+            make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-5)
         }
         
         summaryBody.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(summaryLabel.snp.bottom)
-            make.left.equalTo(videoPreview.snp.right).offset(5)
+            make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-5)
-            make.bottom.equalTo(self).offset(-20)
+            //make.bottom.equalTo(self).offset(-20)
         }
         
         videoButton.snp.makeConstraints { (make) -> Void in
-            //make.height.equalTo(150)
-            make.top.equalTo(patientImage.snp.bottom).offset(5)
-            make.left.equalTo(patientName)
-            make.right.equalTo(self).offset(-10)
-            make.bottom.equalTo(summaryBody).offset(-20)
+            make.height.equalTo(75)
+            make.width.equalTo(50)
+            make.top.equalTo(summaryBody.snp.bottom).offset(5)
+            make.left.equalTo(patientImage.snp.right).offset(5)
+            //make.right.equalTo(self).offset(-10)
+            make.bottom.equalTo(self).offset(-20)
         }
     }
-    
-    
-    
-    
-    
-    
     
     ////
     
@@ -407,6 +393,4 @@ class ViewAnswerTableViewCell: UITableViewCell {
             make.bottom.equalTo(self).offset(-20)
         }
     }
-    
-    
 }
