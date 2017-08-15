@@ -124,10 +124,10 @@
             </objects>
             <point key="canvasLocation" x="725.60000000000002" y="157.87106446776613"/>
         </scene>
-        <!--Advisor Questions View Controller-->
+        <!--Advisor Question View Controller-->
         <scene sceneID="9nb-2t-lm1">
             <objects>
-                <viewController id="cfc-fa-eej" customClass="AdvisorQuestionsViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cfc-fa-eej" customClass="V2AdvisorQuestionViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u7f-k8-Its"/>
                         <viewControllerLayoutGuide type="bottom" id="ecr-ql-8Nq"/>
@@ -135,40 +135,8 @@
                     <view key="view" contentMode="scaleToFill" id="WS1-Lw-OyI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZOo-wT-ee0">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="595"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexBackgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="cfc-fa-eej" id="a6l-rT-XF2"/>
-                                    <outlet property="delegate" destination="cfc-fa-eej" id="39Q-u9-UQS"/>
-                                </connections>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LP4-Hi-hh6">
-                                <rect key="frame" x="0.0" y="592" width="375" height="75"/>
-                                <color key="backgroundColor" red="0.95686274510000002" green="1" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                <state key="normal" title="View Question">
-                                    <color key="titleColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="playVideoAction:" destination="cfc-fa-eej" eventType="touchUpInside" id="nqB-aP-AKR"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
-                        <constraints>
-                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="top" secondItem="WS1-Lw-OyI" secondAttribute="top" id="2Vc-vt-V7n"/>
-                            <constraint firstAttribute="trailing" secondItem="ZOo-wT-ee0" secondAttribute="trailing" id="66D-Ju-Mtq"/>
-                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="trailing" secondItem="LP4-Hi-hh6" secondAttribute="trailing" id="AnI-uL-2rr"/>
-                            <constraint firstItem="ecr-ql-8Nq" firstAttribute="top" secondItem="ZOo-wT-ee0" secondAttribute="bottom" constant="72" id="CK5-id-eCE"/>
-                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="leading" secondItem="WS1-Lw-OyI" secondAttribute="leading" id="F0E-RC-yuY"/>
-                            <constraint firstItem="LP4-Hi-hh6" firstAttribute="bottom" secondItem="ecr-ql-8Nq" secondAttribute="top" id="G0j-hZ-xo5"/>
-                            <constraint firstItem="LP4-Hi-hh6" firstAttribute="top" secondItem="u7f-k8-Its" secondAttribute="bottom" constant="528" id="Mcj-ms-KJW"/>
-                            <constraint firstItem="ZOo-wT-ee0" firstAttribute="leading" secondItem="LP4-Hi-hh6" secondAttribute="leading" id="PP2-NE-1gW"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1n4-Vi-H9g">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="fvN-RS-wH4">
@@ -180,8 +148,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableJaunt" destination="ZOo-wT-ee0" id="I1c-Az-Cb9"/>
-                        <segue destination="NQ0-zL-oWD" kind="show" identifier="showAnswer" id="AFk-9B-6bw"/>
+                        <segue destination="NQ0-zL-oWD" kind="show" identifier="showVitals" id="AFk-9B-6bw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rjf-5C-WmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -199,7 +166,24 @@
                     <view key="view" contentMode="scaleToFill" id="zeN-Eu-xEV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7k9-ZT-rfY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="cfc-fa-eej" id="8ar-rM-ViY"/>
+                                    <outlet property="delegate" destination="cfc-fa-eej" id="Mir-Vn-zo0"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7k9-ZT-rfY" firstAttribute="leading" secondItem="zeN-Eu-xEV" secondAttribute="leading" id="GUp-XS-OU0"/>
+                            <constraint firstItem="7k9-ZT-rfY" firstAttribute="bottom" secondItem="nQt-Cd-VGM" secondAttribute="top" id="PKh-Tw-n3N"/>
+                            <constraint firstAttribute="trailing" secondItem="7k9-ZT-rfY" secondAttribute="trailing" id="X1J-qW-L5Y"/>
+                            <constraint firstItem="7k9-ZT-rfY" firstAttribute="top" secondItem="zeN-Eu-xEV" secondAttribute="top" id="a2q-9q-t5t"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cha-yK-uxa" userLabel="First Responder" sceneMemberID="firstResponder"/>

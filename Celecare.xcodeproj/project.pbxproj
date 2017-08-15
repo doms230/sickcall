@@ -42,6 +42,7 @@
 		9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF65FDA1F202D4E00C6E9CA /* Post.swift */; };
 		F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */; };
 		F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */; };
+		F24710781F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710771F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift */; };
 		F2E86B391F396A7600F4703C /* NewQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */; };
 		F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */; };
 		F2E86B3E1F398BF300F4703C /* AllergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B3D1F398BF300F4703C /* AllergyViewController.swift */; };
@@ -94,6 +95,7 @@
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
 		F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V2ViewAnswerViewController.swift; sourceTree = "<group>"; };
 		F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAnswerTableViewCell.swift; sourceTree = "<group>"; };
+		F24710771F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V2AdvisorQuestionViewController.swift; sourceTree = "<group>"; };
 		F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewQuestionViewController.swift; sourceTree = "<group>"; };
 		F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientInfoViewController.swift; sourceTree = "<group>"; };
 		F2E86B3D1F398BF300F4703C /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
 				9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */,
 				9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */,
+				F24710771F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift */,
 			);
 			name = advisor;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				F2E86B471F3A652400F4703C /* RespRateViewController.swift in Sources */,
 				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
 				9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */,
+				F24710781F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift in Sources */,
 				F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */,
 				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
 				F2FCEDCA1F36A6FC006D8FAD /* NameViewController.swift in Sources */,

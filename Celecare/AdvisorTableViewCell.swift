@@ -158,6 +158,16 @@ class AdvisorTableViewCell: UITableViewCell {
         return label
     }()
     
+    //haven't watch video label
+    lazy var watchVideoLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = "View Question to Respond"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -196,6 +206,15 @@ class AdvisorTableViewCell: UITableViewCell {
             
         } else if reuseIdentifier == "dashboardReuse"{
             configureDashboard()
+            
+        } else if reuseIdentifier == "noWatchVideoReuse"{
+            self.addSubview(watchVideoLabel)
+            watchVideoLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(25)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+               // make.bottom.equalTo(self).offset(-150)
+            }
         }
     }
     
