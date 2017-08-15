@@ -66,7 +66,7 @@
         <!--View Answer View Controller-->
         <scene sceneID="8kl-bW-IwK">
             <objects>
-                <viewController id="jYE-s4-s8T" customClass="ViewAnswerViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jYE-s4-s8T" customClass="V2ViewAnswerViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3ON-bG-aTP"/>
                         <viewControllerLayoutGuide type="bottom" id="Gh9-GH-Fhw"/>
@@ -74,27 +74,8 @@
                     <view key="view" contentMode="scaleToFill" id="7wa-ZE-mH9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="F4X-4a-NCE">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="jYE-s4-s8T" id="GE0-DH-ciK"/>
-                                    <outlet property="delegate" destination="jYE-s4-s8T" id="kFN-Lt-HJ6"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="F4X-4a-NCE" firstAttribute="top" secondItem="7wa-ZE-mH9" secondAttribute="top" id="20O-Mf-xhj"/>
-                            <constraint firstItem="F4X-4a-NCE" firstAttribute="bottom" secondItem="Gh9-GH-Fhw" secondAttribute="top" id="5K5-92-OtH"/>
-                            <constraint firstItem="F4X-4a-NCE" firstAttribute="leading" secondItem="7wa-ZE-mH9" secondAttribute="leading" id="NFZ-Zn-0nu"/>
-                            <constraint firstAttribute="trailing" secondItem="F4X-4a-NCE" secondAttribute="trailing" id="zsa-wl-LXd"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="tableJaunt" destination="F4X-4a-NCE" id="WVK-fm-8bb"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RLN-BZ-7Dl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

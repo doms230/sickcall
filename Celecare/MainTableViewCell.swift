@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 
 class MainTableViewCell: UITableViewCell {
+    
+    ///view answer v2 ////
+    
+    
 
     
     ///////////Patient Info for new question/////////////////

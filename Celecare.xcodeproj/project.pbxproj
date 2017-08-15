@@ -40,6 +40,8 @@
 		9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FF1F06177B005842CF /* EmailViewController.swift */; };
 		9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD38021F099556005842CF /* NewProfileViewController.swift */; };
 		9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF65FDA1F202D4E00C6E9CA /* Post.swift */; };
+		F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */; };
+		F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */; };
 		F2E86B391F396A7600F4703C /* NewQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */; };
 		F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */; };
 		F2E86B3E1F398BF300F4703C /* AllergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B3D1F398BF300F4703C /* AllergyViewController.swift */; };
@@ -90,6 +92,8 @@
 		9AF65FDA1F202D4E00C6E9CA /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
+		F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V2ViewAnswerViewController.swift; sourceTree = "<group>"; };
+		F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAnswerTableViewCell.swift; sourceTree = "<group>"; };
 		F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewQuestionViewController.swift; sourceTree = "<group>"; };
 		F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientInfoViewController.swift; sourceTree = "<group>"; };
 		F2E86B3D1F398BF300F4703C /* AllergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllergyViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 				F2E86B3C1F396BF200F4703C /* newQuestion */,
 				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
 				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
+				F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */,
+				F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */,
 			);
 			name = main;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 				590042EA1F293D540077083A /* AddressTableViewController.swift in Sources */,
 				F2E86B431F3A433700F4703C /* HeartRateViewController.swift in Sources */,
 				9AB182211F15884400678851 /* AdvisorQuestionsViewController.swift in Sources */,
+				F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */,
 				9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */,
 				F2E86B391F396A7600F4703C /* NewQuestionViewController.swift in Sources */,
 				F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */,
@@ -411,6 +418,7 @@
 				F2E86B471F3A652400F4703C /* RespRateViewController.swift in Sources */,
 				9ACD37FE1F060001005842CF /* VerifyViewController.swift in Sources */,
 				9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */,
+				F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */,
 				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
 				F2FCEDCA1F36A6FC006D8FAD /* NameViewController.swift in Sources */,
 				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,

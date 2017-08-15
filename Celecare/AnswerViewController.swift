@@ -68,13 +68,16 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = tableJaunt.indexPathForSelectedRow{
-            let desti = segue.destination as! ViewAnswerViewController
+            let desti = segue.destination as! V2ViewAnswerViewController
             desti.objectId = objectId[indexPath.row]
             desti.comments = comments[indexPath.row]
             desti.level = level[indexPath.row]
             desti.isAnswered = isAnswered[indexPath.row]
             desti.advisorUserId = advisorUserId[indexPath.row]
             desti.videoJaunt = questionVideos[indexPath.row]
+            desti.summary = questions[indexPath.row]
+            desti.duration = questionDurations[indexPath.row]
+            desti.videoPreview = questionImages[indexPath.row]
         }
     }
     

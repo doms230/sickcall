@@ -68,6 +68,7 @@ PODS:
     - Starscream (= 2.0.3)
   - SCLAlertView (0.7.0)
   - SidebarOverlay (4.1)
+  - SlackTextViewController (1.9.5)
   - SnapKit (3.2.0)
   - SRCountdownTimer (1.0.1)
   - Starscream (2.0.3)
@@ -87,6 +88,7 @@ DEPENDENCIES:
   - ParseLiveQuery
   - SCLAlertView
   - SidebarOverlay
+  - SlackTextViewController
   - SnapKit
   - SRCountdownTimer
   - Stripe
@@ -116,12 +118,13 @@ SPEC CHECKSUMS:
   ParseLiveQuery: 38fb42e4b8611ecfcb199d47e48aeaf6879f8560
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SidebarOverlay: b65f0a1d9331ce4bf81f82eea202b21cc8655c5a
+  SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SRCountdownTimer: 187458addb1e88cae62eb5aa57f48d7888f8c18c
   Starscream: 3fdd5c277e57cca6b5c406d274e3f34a7c88f2ce
   Stripe: 5c5a49d750952b1801e4c1f5c4264a08e427c67d
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: be1164734216128612b61de70371bf64e244f797
+PODFILE CHECKSUM: 763120cdb6964032da2b7f1523ad316cd57d2d04
 
 COCOAPODS: 1.2.1

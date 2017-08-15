@@ -85,7 +85,6 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
                 }
             }
         }
-        
     }
         
     func numberOfSections(in tableView: UITableView) -> Int {
