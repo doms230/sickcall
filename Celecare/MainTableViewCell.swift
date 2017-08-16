@@ -96,9 +96,49 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
+    //profile 
+   /* lazy var userImage: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = UIColor.black
+        image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 50
+        image.clipsToBounds = true
+        return image
+    }()
+    
+    lazy var userName: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()*/
+    
+    lazy var editProfileButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.titleLabel?.textAlignment = .left
+        button.setTitle("Edit Profile", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
+    
+    lazy var advisorButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.titleLabel?.textAlignment = .left
+        button.setTitle("Become Advisor", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
+    
+
+    
     //status
     
-    lazy var advisorImage: UIImageView = {
+    /*lazy var advisorImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = UIColor.black
         image.contentMode = .scaleAspectFill
@@ -148,13 +188,47 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
-    }()
+    }()*/
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        if reuseIdentifier == "answerReuse"{
-            configureAnswerSubview()
+        if reuseIdentifier == "profileReuse"{
+           // self.addSubview(userImage)
+           // self.addSubview(userName)
+            self.addSubview(editProfileButton)
+            self.addSubview(advisorButton)
+            
+           /* userImage.snp.makeConstraints { (make) -> Void in
+                make.height.width.equalTo(50)
+                make.top.equalTo(self).offset(25)
+                make.center.equalTo(self)
+               // make.left.equalTo(self).offset(100)
+               //// make.right.equalTo(self).offset(-100)
+                //make.bottom.equalTo(self).offset(-25)
+            }
+            
+            userName.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(userImage.snp.bottom)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                //make.bottom.equalTo(self).offset(-25)
+            }*/
+            
+            
+            editProfileButton.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(25)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                //make.bottom.equalTo(self).offset(-25)
+            }
+            
+            advisorButton.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(editProfileButton.snp.bottom).offset(10)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self).offset(-25)
+            }
             
         } else if reuseIdentifier == "pendingReuse"{
             self.addSubview(pendingLabel)
@@ -232,7 +306,7 @@ class MainTableViewCell: UITableViewCell {
     
     //detail question view
     
-    func configureAnswerSubview(){
+    /*func configureAnswerSubview(){
         
         self.addSubview(advisorImage)
         self.addSubview(advisorName)
@@ -280,5 +354,5 @@ class MainTableViewCell: UITableViewCell {
             make.right.equalTo(self).offset(-5)
             make.bottom.equalTo(self).offset(-25)
         }
-    }
+    }*/
 }

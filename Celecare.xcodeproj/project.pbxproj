@@ -17,7 +17,6 @@
 		9A26872A1F0F023400AF7A2B /* PaymentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */; };
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
 		9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F62F1F14168300B2E55B /* AnswerViewController.swift */; };
-		9A26F6321F146C6800B2E55B /* MainContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */; };
 		9A7351891F1C8D8200A438C8 /* ViewAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */; };
 		9A73518B1F1D3C5C00A438C8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */; };
 		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
@@ -65,7 +64,6 @@
 		9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentInfoViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		9A26F62F1F14168300B2E55B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
-		9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainContainerViewController.swift; sourceTree = "<group>"; };
 		9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAnswerViewController.swift; sourceTree = "<group>"; };
 		9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,7 +167,6 @@
 			children = (
 				9AB067721EFAE95100092BC6 /* Main.storyboard */,
 				9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */,
-				9A26F6311F146C6800B2E55B /* MainContainerViewController.swift */,
 				9AB182171F147E6300678851 /* MainSidebarViewController.swift */,
 				9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */,
 				F2E86B3C1F396BF200F4703C /* newQuestion */,
@@ -428,7 +425,6 @@
 				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,
 				9AB1821F1F15836700678851 /* AdvisorContainerViewController.swift in Sources */,
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
-				9A26F6321F146C6800B2E55B /* MainContainerViewController.swift in Sources */,
 				9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */,
 				F2FCEDCE1F381C96006D8FAD /* IDViewController.swift in Sources */,
 				F2E86B451F3A460300F4703C /* MedHistoryTableViewController.swift in Sources */,

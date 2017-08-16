@@ -88,13 +88,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //PFUser.logOut()
         
         if (PFUser.current() != nil){
-            
             self.window = UIWindow(frame: UIScreen.main.bounds)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
-            
             
         } else {
             //usealy "welcome" for storyboard id.. replaced with meds for testing
@@ -105,13 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
         }
         
-        
-
-        
         return true
-        
-        
-        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

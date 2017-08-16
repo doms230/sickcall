@@ -142,7 +142,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 object?["isOnline"] = self.isOnline
                 if self.isOnline{
-                    object?["questionQueque"] = Date()
+                    object?["questionQueue"] = Date()
                 }
                 
                 object?.saveInBackground {

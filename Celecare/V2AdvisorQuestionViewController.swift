@@ -34,12 +34,12 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     var level: String!
     var comments = ""
     var commentButton = "Add a comment that supports your opinion"
-    var objectId: String!
     var optionBody = ""
     var didPressRightButton = false
     var didChooseConcernLevel = false
     
     //question
+    var objectId: String!
     var summary: String!
     var duration: String!
     //var videoJaunt: PFFile!
@@ -105,7 +105,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         respondButton.backgroundColor = uicolorFromHex(0x81ff96)
         respondButton.addTarget(self, action: #selector(self.respondAction(_:)), for: .touchUpInside)
         
-        self.loadPost()
+        self.loadAdvisor()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -217,45 +217,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         }
     }
     
-    func loadPost(){
-        let query = PFQuery(className: "Post")
-        query.whereKey("objectId", equalTo: "VvVjmIvgbv")
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
-                self.summary = object?["summary"] as! String
-                self.duration = object?["duration"] as! String
-                let videoJaunt = object?["video"] as! PFFile
-                self.loadvideo(videoJaunt: videoJaunt)
-                let videoPreview = object?["videoScreenShot"] as! PFFile
-                self.videoPreview = videoPreview.url
-                self.loadPatient()
-            }
-        }
-    }
-    
-    func loadPatient(){
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
-                
-                let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.patientUserImage = imageFile.url
-                
-                self.patientUsername = object!["DisplayName"] as! String
-                self.patientHeight = object!["height"] as! String
-                self.patientWeight = object!["weight"] as! String
-                self.patientAge = object!["birthday"] as! String
-                self.patientGender = object!["gender"] as! String
-                
-                self.tableView?.reloadData()
-                self.stopAnimating()
-            }
-        }
-    }
-    
     func playerItemDidReachEnd( _ notification: Notification) {
         player.seek(to: kCMTimeZero)
         viewQuestionButton.isHidden = true
@@ -273,15 +234,15 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             break
         case 1:
             optionBody = "- Doctor's appointment \n - Urgent Care"
-            self.level = "Medium"
+            self.level = "medium"
             break
         case 2:
             optionBody = "- Emergency Room \n - Urgent Care \n - Same Day Doctor's Appointment"
-            self.level = "High"
+            self.level = "high"
             break
         default:
             optionBody = "- Emergency Room \n - Urgent Care \n - Same Day Doctor's Appointment"
-            self.level = "High"
+            self.level = "high"
             break
         }
         didChooseConcernLevel = true
@@ -324,7 +285,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         //postResponse
         if didChooseConcernLevel{
             let query = PFQuery(className: "Post")
-            query.whereKey("objectId", equalTo: "VvVjmIvgbv")
+            query.whereKey("objectId", equalTo: objectId)
             query.getFirstObjectInBackground {
                 (object: PFObject?, error: Error?) -> Void in
                 if error == nil || object != nil {
@@ -336,10 +297,10 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                         (success: Bool, error: Error?) -> Void in
                         self.stopAnimating()
                         if (success) {
-                            /*let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-                            self.present(controller, animated: true, completion: nil)*/
-                            print("saved")
+                            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                            controller.didAnswer = true
+                            self.present(controller, animated: true, completion: nil)
                             
                         } else {
                            SCLAlertView().showError("Issue with Responding", subTitle: "Check internet connection and try again")
@@ -353,22 +314,62 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         }
     }
     
-   /* func loadAdvisor(){
+   func loadAdvisor(){
         let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()?.objectId)
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                self.objectId = object?["questionId"] as! String
+                self.loadPost()
+               /* let imageFile: PFFile = object!["Profile"] as! PFFile
+                self.advisorUserImage = imageFile.url
+                
+                self.advisorUsername = object!["DisplayName"] as! String*/
+                //self.tableView?.reloadData()
+                //self.stopAnimating()
+            }
+        }
+    }
+    
+    func loadPost(){
+        let query = PFQuery(className: "Post")
+        query.whereKey("objectId", equalTo: objectId)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                self.summary = object?["summary"] as! String
+                self.duration = object?["duration"] as! String
+                let videoJaunt = object?["video"] as! PFFile
+                self.loadvideo(videoJaunt: videoJaunt)
+                let videoPreview = object?["videoScreenShot"] as! PFFile
+                self.videoPreview = videoPreview.url
+                self.loadPatient()
+            }
+        }
+    }
+    
+    func loadPatient(){
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
                 
                 let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.advisorUserImage = imageFile.url
+                self.patientUserImage = imageFile.url
                 
-                self.advisorUsername = object!["DisplayName"] as! String
+                self.patientUsername = object!["DisplayName"] as! String
+                self.patientHeight = object!["height"] as! String
+                self.patientWeight = object!["weight"] as! String
+                self.patientAge = object!["birthday"] as! String
+                self.patientGender = object!["gender"] as! String
+                
                 self.tableView?.reloadData()
                 self.stopAnimating()
             }
         }
-    }*/
+    }
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
@@ -377,8 +378,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-
-    
 
     /*
     // MARK: - Navigation

@@ -102,7 +102,7 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell = tableView.dequeueReusableCell(withIdentifier: "answerReuse", for: indexPath) as! MainTableViewCell
                 cell.selectionStyle = .none
                 //cell.backgroundColor = uicolorFromHex(0xe8e6df)
-                cell.advisorImage.kf.setImage(with: URL(string: self.advisorUserImage))
+                /*cell.advisorImage.kf.setImage(with: URL(string: self.advisorUserImage))
                 cell.advisorName.text = self.advisorUsername
                 cell.advisorName.textColor = uicolorFromHex(0x180d22)
                 
@@ -111,7 +111,7 @@ class ViewAnswerViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.comments.textColor = uicolorFromHex(0x190d22)
                 cell.recommendationTitle.textColor = uicolorFromHex(0x190d22)
                 cell.recommendation.text = self.level
-                cell.recommendation.textColor = uicolorFromHex(0x190d22)
+                cell.recommendation.textColor = uicolorFromHex(0x190d22)*/
                 
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: "pendingReuse", for: indexPath) as! MainTableViewCell
