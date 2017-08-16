@@ -171,7 +171,6 @@
 				9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */,
 				F2E86B3C1F396BF200F4703C /* newQuestion */,
 				9A26F62F1F14168300B2E55B /* AnswerViewController.swift */,
-				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
 				F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */,
 				F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */,
 			);
@@ -187,7 +186,6 @@
 				9AB1821B1F15826D00678851 /* Advisor.storyboard */,
 				F2FCEDC61F36A51E006D8FAD /* NewAdvisor */,
 				590042EF1F2947B70077083A /* info */,
-				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
 				9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */,
 				9AB182261F15BF0400678851 /* AdvisorMedsViewController.swift */,
 				F24710771F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift */,
@@ -211,6 +209,8 @@
 		9AF65FDC1F205CFA00C6E9CA /* mich */ = {
 			isa = PBXGroup;
 			children = (
+				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
+				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
 				9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */,
 				9A2687211F09C45800AF7A2B /* MedViewController.swift */,
 			);

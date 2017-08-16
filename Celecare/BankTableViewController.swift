@@ -6,21 +6,26 @@
 //  Copyright © 2017 Celecare LLC. All rights reserved.
 //
 
+//get bank info and post it above
+
 import UIKit
 import Parse
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
+import SCLAlertView
 
 class BankTableViewController: UITableViewController, NVActivityIndicatorViewable {
     
     //payments
-    var baseURL = "https://celecare.herokuapp.com/payments/updateBankInfo"
+    var baseURL = "https://celecare.herokuapp.com/payments/bank"
     //var baseURL = "http://192.168.1.75:5000/payments/updateBankInfo"
 
     @IBOutlet weak var accountTextField: UITextField!
     @IBOutlet weak var routingTextField: UITextField!
     var connectId: String!
+    
+    var successView: SCLAlertView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +35,15 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         self.title = "Bank Info"
-        let nextButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(nextAction(_:)))
+        let nextButton = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
+        nextButton.tag = 0
         
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(nextAction(_:)))
+        self.navigationItem.setLeftBarButton(cancelButton, animated: true)
+        cancelButton.tag = 1
+        
+        startAnimating()
         let query = PFQuery(className: "_User")
         query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
@@ -41,6 +52,20 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
                 self.connectId = object!["connectId"] as! String
                 
             }
+        }
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: false
+        )
+        
+        successView = SCLAlertView(appearance: appearance)
+        successView.addButton("Okay") {
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+            self.present(controller, animated: true, completion: nil)
         }
     }
 
@@ -58,49 +83,59 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
     
     func nextAction(_ sender: UIBarButtonItem){
         //loading view
-        accountTextField.resignFirstResponder()
-        routingTextField.resignFirstResponder()
-        startAnimating()
         
-        //class won't compile with textfield straight in parameters so has to be put to string first 
-        let accountString =  accountTextField.text!
-        let routingString = routingTextField.text!
-        
-        let p: Parameters = [
-            "account_Id": connectId,
-            "account_number": accountString,
-            "routing_number": routingString
-         ]
-        
-        Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in switch response.result {
+        if sender.tag == 0{
+            accountTextField.resignFirstResponder()
+            routingTextField.resignFirstResponder()
+            startAnimating()
+            
+            //class won't compile with textfield straight in parameters so has to be put to string first
+            let accountString =  accountTextField.text!
+            let routingString = routingTextField.text!
+            
+            let p: Parameters = [
+                "account_Id": connectId,
+                "account_number": accountString,
+                "routing_number": routingString
+            ]
+            
+            Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in switch response.result {
             case .success(let data):
                 let json = JSON(data)
                 print("JSON: \(json)")
                 /* if let id = json["id"].string {
                  }*/
-
+                
                 //can't get status code for some reason
                 self.stopAnimating()
-               if let status = json["statusCode"].int{
-                print(status)
-                let message = json["message"].string
-                
-                self.errorMessage("Something Went Wrong", message: message! )
-
-               } else {
+                if let status = json["statusCode"].int{
+                    print(status)
+                    let message = json["message"].string
+                    
+                    self.errorMessage("Something Went Wrong", message: message! )
+                    
+                } else {
                     let bankName = json["external_accounts"]["data"][0]["bank_name"].string
                     let bankLast4 = json["external_accounts"]["data"][0]["last4"].string
-                    self.successMessage(bankName!, bankLast4: bankLast4!)
+                    //self.successMessage(bankName!, bankLast4: bankLast4!)
+                    self.successView.showSuccess("Success", subTitle: "Your funds will be deposited to \(bankName) ****\(bankLast4) from now on.")
                 }
                 print("Validation Successful")
                 //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
                 
             case .failure(let error):
                 print(error)
-               // self.messageFrame.removeFromSuperview()
-               // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
-
+                // self.messageFrame.removeFromSuperview()
+                // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+                SCLAlertView().showError("Error", subTitle: error as! String)
+                }
             }
+            
+        } else {
+            //cancel
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+            self.present(controller, animated: true, completion: nil)
         }
     }
     
