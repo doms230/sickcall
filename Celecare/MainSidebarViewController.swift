@@ -16,11 +16,19 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet weak var tableJaunt: UITableView!
     
-    lazy var userView: UIButton = {
-        let button =  UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
+    lazy var titleButton: UIButton = {
+        let button =  UIButton(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
+        button.setTitle("", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 16)
         button.isEnabled = false
+        return button
+    }()
+    
+    lazy var titleImage: UIImageView = {
+        let button =  UIImageView(frame: CGRect(x: -10, y: 5, width: 30, height: 30))
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = true
         return button
     }()
     
@@ -38,13 +46,12 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
                 let imageFile: PFFile = object!["Profile"] as! PFFile
-              //  self.imageJaunt = imageFile.url!
-               // self.nameJaunt = object!["DisplayName"] as? String
                 
-                self.userView.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
-                self.userView.setTitle(object!["DisplayName"] as? String, for: .normal)
+                self.titleButton.setTitle("\(object!["DisplayName"] as! String)", for: .normal)
+                self.titleImage.kf.setImage(with: URL(string: imageFile.url!))
+                self.titleButton.addSubview(self.titleImage)
                 
-                let leftItem = UIBarButtonItem(customView: self.userView)
+                let leftItem = UIBarButtonItem(customView: self.titleButton)
                 
                 self.navigationItem.setLeftBarButton(leftItem, animated: true)
                 self.tableJaunt.reloadData()

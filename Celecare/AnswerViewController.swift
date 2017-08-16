@@ -8,7 +8,6 @@
 
 import UIKit
 import Parse
-import SidebarOverlay
 import Kingfisher
 import NVActivityIndicatorView
 
@@ -25,8 +24,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var isAnswered = [Bool]()
     var advisorUserId = [String]()
     var questionVideos = [PFFile]()
-    
-    @IBOutlet weak var profileImage: UIButton!
     
     let screenSize: CGRect = UIScreen.main.bounds
     
@@ -46,22 +43,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error != nil || object == nil {
-                
-                
-            } else {
-                let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
-                self.profileImage.layer.cornerRadius = 30 / 2
-                self.profileImage.clipsToBounds = true
-                
-            }
-        }
         
         loadData()
     }
@@ -108,11 +89,11 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.questionImage.kf.setImage(with: URL(string: questionImages[indexPath.row]), placeholder: UIImage(named: "appy"))
             cell.questionLabel.text = questions[indexPath.row]
             cell.questionLabel.textColor = uicolorFromHex(0x180d22)
-            cell.durationLabel.text = questionDurations[indexPath.row]
-            cell.durationLabel.textColor = uicolorFromHex(0x180d22)
+            //cell.durationLabel.text = questionDurations[indexPath.row]
+            //cell.durationLabel.textColor = uicolorFromHex(0x180d22)
             cell.statusLabel.text = questionStatus[indexPath.row]
             cell.statusLabel.textColor = uicolorFromHex(0x180d22)
-            cell.dateUploadedLabel.text = dateUploaded[indexPath.row]
+            //cell.dateUploadedLabel.text = dateUploaded[indexPath.row]
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "noQuestionsReuse", for: indexPath) as! MainTableViewCell
             //cell.backgroundColor = uicolorFromHex(0xe8e6df)
@@ -127,12 +108,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showAnswer", sender: self)
-    }
-    
-    @IBAction func profileImageAction(_ sender: UIButton) {
-        if let container = self.so_containerViewController {
-            container.isSideViewControllerPresented = true
-        }
     }
     
     //data

@@ -43,7 +43,7 @@ class MainTableViewCell: UITableViewCell {
         let image = UIImageView()
         image.backgroundColor = UIColor.black
         image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 5
+        image.layer.cornerRadius = 25
         image.clipsToBounds = true
         return image
     }()
@@ -53,9 +53,20 @@ class MainTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue", size: 20)
         label.textColor = UIColor.black
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    //status of the question.. either answer or pending answer
+    lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
     }()
+    
+    /*
     
     //how long problem has gone one
     lazy var durationLabel: UILabel = {
@@ -82,7 +93,7 @@ class MainTableViewCell: UITableViewCell {
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
-    }()
+    }()*/
     
     
     ////////////detail////////////////
@@ -118,7 +129,8 @@ class MainTableViewCell: UITableViewCell {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.titleLabel?.textAlignment = .left
-        button.setTitle("Edit Profile", for: .normal)
+        button.setTitle(" Edit Profile", for: .normal)
+        button.setImage(UIImage(named: "user"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         //label.numberOfLines = 0
         return button
@@ -128,14 +140,13 @@ class MainTableViewCell: UITableViewCell {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.titleLabel?.textAlignment = .left
-        button.setTitle("Become Advisor", for: .normal)
+        button.setTitle(" Become Advisor", for: .normal)
+        button.setImage(UIImage(named: "medication"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         //label.numberOfLines = 0
         return button
     }()
-    
 
-    
     //status
     
     /*lazy var advisorImage: UIImageView = {
@@ -199,34 +210,17 @@ class MainTableViewCell: UITableViewCell {
             self.addSubview(editProfileButton)
             self.addSubview(advisorButton)
             
-           /* userImage.snp.makeConstraints { (make) -> Void in
-                make.height.width.equalTo(50)
-                make.top.equalTo(self).offset(25)
-                make.center.equalTo(self)
-               // make.left.equalTo(self).offset(100)
-               //// make.right.equalTo(self).offset(-100)
-                //make.bottom.equalTo(self).offset(-25)
-            }
-            
-            userName.snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(userImage.snp.bottom)
-                make.left.equalTo(self).offset(10)
-                make.right.equalTo(self).offset(-10)
-                //make.bottom.equalTo(self).offset(-25)
-            }*/
-            
-            
             editProfileButton.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self).offset(25)
                 make.left.equalTo(self).offset(10)
-                make.right.equalTo(self).offset(-10)
+                //make.right.equalTo(self).offset(-10)
                 //make.bottom.equalTo(self).offset(-25)
             }
             
             advisorButton.snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(editProfileButton.snp.bottom).offset(10)
+                make.top.equalTo(editProfileButton.snp.bottom).offset(25)
                 make.left.equalTo(self).offset(10)
-                make.right.equalTo(self).offset(-10)
+                //make.right.equalTo(self).offset(-10)
                 make.bottom.equalTo(self).offset(-25)
             }
             
@@ -263,12 +257,12 @@ class MainTableViewCell: UITableViewCell {
     func configureOverSubview(){
         self.addSubview(questionImage)
         self.addSubview(questionLabel)
-        self.addSubview(durationLabel)
+       // self.addSubview(durationLabel)
         self.addSubview(statusLabel)
-        self.addSubview(dateUploadedLabel)
+        //self.addSubview(dateUploadedLabel)
         
         questionImage.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(100)
+            make.width.height.equalTo(50)
             make.top.equalTo(self).offset(25)
             make.left.equalTo(self).offset(10)
             // make.right.equalTo(self).offset(-10)
@@ -279,29 +273,31 @@ class MainTableViewCell: UITableViewCell {
             make.top.equalTo(questionImage.snp.top).offset(5)
             make.left.equalTo(questionImage.snp.right).offset(10)
             make.right.equalTo(self).offset(-5)
-            //make.bottom.equalTo(self).offset(-25)
+            //make.bottom.equalTo(self)
         }
         
-        durationLabel.snp.makeConstraints { (make) -> Void in
+        statusLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(questionLabel.snp.bottom).offset(5)
+            make.left.equalTo(questionImage.snp.right).offset(10)
+            make.right.equalTo(self).offset(-5)
+            make.bottom.equalTo(self).offset(-25)
+        }
+        
+       /* durationLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(questionLabel.snp.bottom).offset(5)
             make.left.equalTo(questionImage.snp.right).offset(10)
             make.right.equalTo(self).offset(-5)
             //make.bottom.equalTo(self).offset(-25)
         }
         
-        statusLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(questionImage.snp.bottom).offset(5)
-            make.left.equalTo(self).offset(10)
-            make.right.equalTo(self).offset(-5)
-            //make.bottom.equalTo(self).offset(-25)
-        }
+
         
         dateUploadedLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(statusLabel.snp.bottom).offset(5)
+        make.top.equalTo(statusLabel.snp.bottom).offset(5)
             make.left.equalTo(self).offset(10)
             make.right.equalTo(self).offset(-5)
             make.bottom.equalTo(self).offset(-15)
-        }
+        }*/
     }
     
     //detail question view
