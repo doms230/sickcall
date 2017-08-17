@@ -123,13 +123,14 @@
                         <color key="tintColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="1n4-Vi-H9g">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="fvN-RS-wH4">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="fvN-RS-wH4">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="dpd-oZ-6VN">
-                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <rect key="frame" x="16" y="7" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="5:00"/>
                             </button>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="qDd-nh-5hQ"/>
                     </navigationItem>
                     <connections>
                         <segue destination="NQ0-zL-oWD" kind="show" identifier="showVitals" id="AFk-9B-6bw"/>
@@ -139,10 +140,10 @@
             </objects>
             <point key="canvasLocation" x="2309.5999999999999" y="-278.41079460269867"/>
         </scene>
-        <!--View Controller-->
+        <!--Advisor Meds View Controller-->
         <scene sceneID="SMk-xz-A77">
             <objects>
-                <viewController id="NQ0-zL-oWD" sceneMemberID="viewController">
+                <viewController id="NQ0-zL-oWD" customClass="AdvisorMedsViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dtr-Fb-9Of"/>
                         <viewControllerLayoutGuide type="bottom" id="nQt-Cd-VGM"/>
@@ -156,8 +157,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="cfc-fa-eej" id="8ar-rM-ViY"/>
-                                    <outlet property="delegate" destination="cfc-fa-eej" id="Mir-Vn-zo0"/>
+                                    <outlet property="dataSource" destination="NQ0-zL-oWD" id="AsE-qZ-ib8"/>
+                                    <outlet property="delegate" destination="NQ0-zL-oWD" id="Cep-Qw-MZ8"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -169,6 +170,9 @@
                             <constraint firstItem="7k9-ZT-rfY" firstAttribute="top" secondItem="zeN-Eu-xEV" secondAttribute="top" id="a2q-9q-t5t"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableJaunt" destination="7k9-ZT-rfY" id="eRK-P7-fTl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cha-yK-uxa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

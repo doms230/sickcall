@@ -114,19 +114,23 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             cell.patientName.textColor = uicolorFromHex(0x180d22)
             cell.patientName.text = self.patientUsername
             
-            cell.videoButton.backgroundColor = uicolorFromHex(0xe8e6df)
+            
             cell.summaryBody.text = self.summary
             cell.summaryBody.textColor = uicolorFromHex(0x180d22)
             cell.durationBody.text = self.duration
             cell.durationBody.textColor = uicolorFromHex(0x180d22)
             //cell.videoPreview.image = UIImage(named: "appy")
+            cell.vitalsButton.backgroundColor = uicolorFromHex(0x8c81ff)
             
             
             //TODO: Uncomment
             //cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
-            cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
-            cell.videoButton.backgroundColor = .blue 
             
+            cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
+            //cell.videoButton.backgroundColor = uicolorFromHex(0xE8E6DF)
+            
+            //cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
+            cell.videoImage.image = UIImage(named: "appy")
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "advisorReuse", for: indexPath) as! ViewAnswerTableViewCell
             cell.selectionStyle = .none

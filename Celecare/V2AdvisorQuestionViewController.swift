@@ -25,10 +25,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     //patient
     var patientUserImage: String!
     var patientUsername: String!
-    var patientGender: String!
-    var patientAge: String!
-    var patientWeight: String!
-    var patientHeight: String!
+    var patientUserId: String!
     
     //answer info
     var level: String!
@@ -108,6 +105,12 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.loadAdvisor()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! AdvisorMedsViewController
+        desti.patientUserId = patientUserId
+        
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -138,18 +141,18 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             cell.patientName.textColor = uicolorFromHex(0x180d22)
             cell.patientName.text = self.patientUsername
             
-            cell.videoButton.backgroundColor = uicolorFromHex(0xe8e6df)
             cell.summaryBody.text = self.summary
             cell.summaryBody.textColor = uicolorFromHex(0x180d22)
             cell.durationBody.text = self.duration
             cell.durationBody.textColor = uicolorFromHex(0x180d22)
-            //cell.videoPreview.image = UIImage(named: "appy")
             
+            cell.vitalsButton.backgroundColor = uicolorFromHex(0x8c81ff)
+            cell.vitalsButton.addTarget(self, action: #selector(self.showVitals(_:)), for: .touchUpInside)
             
             //TODO: Uncomment
-            //cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
-            cell.videoButton.backgroundColor = .blue
+            cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
+            
             return cell
         } else if didWatchVideo {
             adCell = tableView.dequeueReusableCell(withIdentifier: "respondReuse", for: indexPath) as! AdvisorTableViewCell
@@ -344,6 +347,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                 self.loadvideo(videoJaunt: videoJaunt)
                 let videoPreview = object?["videoScreenShot"] as! PFFile
                 self.videoPreview = videoPreview.url
+                self.patientUserId = object?["userId"] as! String
                 self.loadPatient()
             }
         }
@@ -360,16 +364,17 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                 self.patientUserImage = imageFile.url
                 
                 self.patientUsername = object!["DisplayName"] as! String
-                self.patientHeight = object!["height"] as! String
-                self.patientWeight = object!["weight"] as! String
-                self.patientAge = object!["birthday"] as! String
-                self.patientGender = object!["gender"] as! String
                 
                 self.tableView?.reloadData()
                 self.stopAnimating()
             }
         }
     }
+    
+    func showVitals(_ sender: UIButton){
+        self.performSegue(withIdentifier: "showVitals", sender: self)
+    }
+    
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
@@ -383,10 +388,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+
     */
 
 }

@@ -146,7 +146,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
         }
         
         concernLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(advisorName.snp.bottom).offset(15)
+            make.top.equalTo(advisorName.snp.bottom).offset(10)
             make.left.equalTo(advisorName)
             make.right.equalTo(self).offset(-20)
             //make.bottom.equalTo(self).offset(-20)
@@ -242,10 +242,28 @@ class ViewAnswerTableViewCell: UITableViewCell {
         return label
     }()
     
+    lazy var vitalsButton: UIButton = {
+        let button = UIButton()
+        //button.setImage(UIImage(named: "people"), for: .normal)
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 18)
+        button.setTitle("Vitals", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        return button
+    }()
+    
+    lazy var videoImage: UIImageView = {
+        let image = UIImageView()
+        image.layer.cornerRadius = 25
+        image.clipsToBounds = true
+        return image
+    }()
+    
     lazy var videoLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
-        label.text = "Video Question"
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        label.text = "Watch Video"
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
@@ -253,11 +271,8 @@ class ViewAnswerTableViewCell: UITableViewCell {
     
     lazy var videoButton: UIButton = {
         let button = UIButton()
-        //button.setImage(UIImage(named: "people"), for: .normal)
-        button.contentHorizontalAlignment = .left
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
-        button.backgroundColor = UIColor.white
         return button
     }()
     
@@ -268,18 +283,20 @@ class ViewAnswerTableViewCell: UITableViewCell {
         return view
     }()*/
     
-    
     func configureQuestionSubviews(){
         
         self.addSubview(summaryLabel)
         self.addSubview(summaryBody)
         self.addSubview(durationLabel)
         self.addSubview(durationBody)
-        self.addSubview(videoLabel)
-        self.addSubview(videoButton)
+        self.addSubview(vitalsButton)
         
+        self.addSubview(videoButton)
+        self.videoButton.addSubview(videoImage)
+        self.videoButton.addSubview(videoLabel)
+
         durationLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(patientName.snp.bottom).offset(15)
+            make.top.equalTo(patientName.snp.bottom).offset(10)
             make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-5)
         }
@@ -303,20 +320,37 @@ class ViewAnswerTableViewCell: UITableViewCell {
             //make.bottom.equalTo(self).offset(-20)
         }
         
-        videoLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(summaryBody.snp.bottom).offset(5)
+        
+        vitalsButton.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(125)
+            //make.height.equalTo(50)
+            make.top.equalTo(summaryBody.snp.bottom).offset(10)
             make.left.equalTo(patientImage.snp.right).offset(5)
-            make.right.equalTo(self).offset(-5)
+            //make.right.equalTo(self).offset(-5)
             //make.bottom.equalTo(self).offset(-20)
         }
         
+        //video view
         videoButton.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(75)
-            make.width.equalTo(50)
-            make.top.equalTo(videoLabel.snp.bottom).offset(5)
+            make.top.equalTo(vitalsButton.snp.bottom).offset(10)
             make.left.equalTo(patientImage.snp.right).offset(5)
-            //make.right.equalTo(self).offset(-10)
+            make.right.equalTo(self).offset(-10)
             make.bottom.equalTo(self).offset(-20)
+        }
+        
+        videoImage.snp.makeConstraints { (make) -> Void in
+            make.height.width.equalTo(50)
+            make.top.equalTo(vitalsButton.snp.bottom).offset(25)
+            make.left.equalTo(videoButton)
+            //make.right.equalTo(videoButton).offset(-3)
+            make.bottom.equalTo(videoButton).offset(-20)
+        }
+        
+        videoLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(videoImage).offset(15)
+            make.left.equalTo(videoImage.snp.right)
+            //make.right.equalTo(videoButton)
+           // make.bottom.equalTo(videoButton).offset(-3)
         }
     }
     
