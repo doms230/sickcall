@@ -11,9 +11,16 @@ import Parse
 import SidebarOverlay
 import ParseLiveQuery
 import SnapKit
+import Alamofire
+import SwiftyJSON
+import NVActivityIndicatorView
+import SCLAlertView
 
-class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
 
+    //field needed
+    //external account 
+    
     var medLabel = [String]()
     var medDuration = [String]()
     var userId: String!
@@ -29,6 +36,11 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     var advisorRec = ""
     
     var isOnline = false
+    
+    var connectId: String!
+    
+    var needBankInfo = false
+    var didLoad = false
     
     @IBOutlet weak var profileImage: UIButton!
     
@@ -54,6 +66,13 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
         self.tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
         
+        super.viewDidLoad()
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
+        startAnimating()
         let query = PFQuery(className: "_User")
         query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
@@ -66,7 +85,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
                 self.profileImage.layer.cornerRadius = 30 / 2
                 self.profileImage.clipsToBounds = true
-                
+                self.connectId = object!["connectId"] as! String
+                self.getAccountInfo()
             }
         }
         
@@ -86,7 +106,12 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if didLoad{
+            return 1
+            
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,7 +122,14 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         //cell.getPaidButton.backgroundColor = uicolorFromHex(0x180d22)
         
-        if isOnline{
+        if needBankInfo{
+            cell.queueLabel.text = "Link your bank account to start taking questions"
+            cell.statusButton.setTitle("Link Your Bank", for: .normal)
+            cell.statusButton.backgroundColor = uicolorFromHex(0xff8781)
+            cell.statusButton.setTitleColor(.white, for: .normal)
+            cell.statusButton.tag = 1
+            
+        } else if isOnline{
             cell.queueLabel.text = "You're in queue for a question"
             cell.statusButton.setTitle("Online", for: .normal)
             cell.statusButton.backgroundColor = uicolorFromHex(0x180d22)
@@ -126,36 +158,41 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func statusAction(_ sender: UIButton){
-        if isOnline{
-            isOnline = false
+        if sender.tag == 1{
+            self.performSegue(withIdentifier: "showBank", sender: self)
             
         } else {
-            isOnline = true
-        }
-        
-        let userId = PFUser.current()?.objectId
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: userId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
+            if isOnline{
+                isOnline = false
                 
-                object?["isOnline"] = self.isOnline
-                if self.isOnline{
-                    object?["questionQueue"] = Date()
-                }
-                
-                object?.saveInBackground {
-                    (success: Bool, error: Error?) -> Void in
-                    if (success) {
-                        //do something 
+            } else {
+                isOnline = true
+            }
+            
+            let userId = PFUser.current()?.objectId
+            let query = PFQuery(className: "_User")
+            query.whereKey("objectId", equalTo: userId!)
+            query.getFirstObjectInBackground {
+                (object: PFObject?, error: Error?) -> Void in
+                if error == nil || object != nil {
+                    
+                    object?["isOnline"] = self.isOnline
+                    if self.isOnline{
+                        object?["questionQueue"] = Date()
                     }
+                    
+                    object?.saveInBackground {
+                        (success: Bool, error: Error?) -> Void in
+                        if (success) {
+                            //do something
+                        }
+                    }
+                    
+                    self.tableJaunt.reloadData()
+                    
+                } else{
+                    //your offline message
                 }
-                
-                self.tableJaunt.reloadData()
-                
-            } else{
-                //your offline message
             }
         }
     }
@@ -201,6 +238,54 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 
             } else{
                 //you're not connected to the internet message
+            }
+        }
+    }
+    
+    func getAccountInfo(){
+        
+        //class won't compile with textfield straight in parameters so has to be put to string first
+        let p: Parameters = [
+            "account_Id": connectId,
+            ]
+        let url = "https://celecare.herokuapp.com/payments/account"
+        Alamofire.request(url, parameters: p, encoding: URLEncoding.default).validate().responseJSON { response in switch response.result {
+        case .success(let data):
+            let json = JSON(data)
+            print("JSON: \(json)")
+            self.stopAnimating()
+            self.didLoad = true
+            //can't get status code for some reason
+            if let status = json["statusCode"].int{
+                print(status)
+                let message = json["message"].string
+                SCLAlertView().showError("Something Went Wrong", subTitle: message!)
+                
+            } else {
+                
+                //self.successView.showSuccess("Success", subTitle: "You've updated your address.")
+                //let bankName = json["external_accounts"]["data"][0]["bank_name"].string
+                for object in json["verification"]["fields_needed"].arrayObject! {
+                    print(object as! String)
+                    if object as! String == "external_account"{
+                     self.needBankInfo = true
+                    }
+                }
+                
+                /*if json["verification"]["fields_needed"][0].string != nil{
+                    self.needBankInfo = true
+                   // self.tableJaunt.reloadData()
+                }*/
+                self.tableJaunt.reloadData()
+            }
+            
+        case .failure(let error):
+            self.stopAnimating()
+            print(error)
+            SCLAlertView().showError("Something Went Wrong", subTitle: "")
+            // self.messageFrame.removeFromSuperview()
+            // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+            
             }
         }
     }

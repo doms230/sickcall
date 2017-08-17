@@ -44,7 +44,7 @@
                                 <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                                 <color key="backgroundColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="V0j-jS-oaF"/>
+                                    <constraint firstAttribute="height" constant="50" id="zgI-oP-kxL"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Switch to Patient">
@@ -57,36 +57,23 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vAG-hs-wID">
                                 <rect key="frame" x="16" y="28" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="aC1-Sg-Nil"/>
-                                    <constraint firstAttribute="height" constant="100" id="o6o-iA-Ke7"/>
+                                    <constraint firstAttribute="height" constant="100" id="SLe-8i-GC8"/>
+                                    <constraint firstAttribute="width" constant="100" id="fZw-2N-Bvb"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTz-er-IZd">
                                 <rect key="frame" x="16" y="136" width="53" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="OnL-nD-Dnz"/>
+                                    <constraint firstAttribute="height" constant="21" id="L18-Kp-cRZ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xa2-5F-09D">
-                                <rect key="frame" x="16" y="165" width="343" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="RVh-hb-rPp"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Address" image="user">
-                                    <color key="titleColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="personalInfoAction:" destination="Si7-hA-4d1" eventType="touchUpInside" id="ouA-Jx-h1f"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GCz-nQ-l4Z">
-                                <rect key="frame" x="16" y="223" width="343" height="60"/>
+                                <rect key="frame" x="16" y="165" width="343" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="dne-aW-n15"/>
+                                    <constraint firstAttribute="height" constant="60" id="u81-I3-CDG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title=" Payments" image="money">
@@ -99,26 +86,22 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="BZa-JO-v6V" firstAttribute="bottom" secondItem="E4u-nI-mnB" secondAttribute="top" id="0Mc-rQ-7VT"/>
-                            <constraint firstItem="vAG-hs-wID" firstAttribute="top" secondItem="qGc-Sy-mjG" secondAttribute="bottom" constant="8" symbolic="YES" id="0tL-7i-071"/>
-                            <constraint firstItem="vAG-hs-wID" firstAttribute="leading" secondItem="RTz-er-IZd" secondAttribute="leading" id="3wz-Xr-b3X"/>
-                            <constraint firstItem="xa2-5F-09D" firstAttribute="leading" secondItem="GCz-nQ-l4Z" secondAttribute="leading" id="84g-WG-DcF"/>
-                            <constraint firstItem="GCz-nQ-l4Z" firstAttribute="centerX" secondItem="BZa-JO-v6V" secondAttribute="centerX" id="AsR-Qf-VHl"/>
-                            <constraint firstItem="GCz-nQ-l4Z" firstAttribute="top" secondItem="xa2-5F-09D" secondAttribute="bottom" constant="8" symbolic="YES" id="CpW-fs-l2C"/>
-                            <constraint firstItem="BZa-JO-v6V" firstAttribute="leading" secondItem="9QJ-So-xnI" secondAttribute="leading" id="DzF-3q-fZQ"/>
-                            <constraint firstItem="RTz-er-IZd" firstAttribute="leading" secondItem="xa2-5F-09D" secondAttribute="leading" id="Gnw-vx-shW"/>
-                            <constraint firstAttribute="trailing" secondItem="BZa-JO-v6V" secondAttribute="trailing" id="JBB-xB-IZg"/>
-                            <constraint firstItem="xa2-5F-09D" firstAttribute="top" secondItem="RTz-er-IZd" secondAttribute="bottom" constant="8" symbolic="YES" id="MRT-O2-yfG"/>
-                            <constraint firstItem="vAG-hs-wID" firstAttribute="leading" secondItem="9QJ-So-xnI" secondAttribute="leadingMargin" id="Yml-TW-klB"/>
-                            <constraint firstItem="xa2-5F-09D" firstAttribute="trailing" secondItem="GCz-nQ-l4Z" secondAttribute="trailing" id="ZyA-Dr-J0h"/>
-                            <constraint firstItem="RTz-er-IZd" firstAttribute="top" secondItem="vAG-hs-wID" secondAttribute="bottom" constant="8" symbolic="YES" id="wyw-6p-3Jv"/>
+                            <constraint firstAttribute="trailing" secondItem="BZa-JO-v6V" secondAttribute="trailing" id="14L-wM-zew"/>
+                            <constraint firstItem="GCz-nQ-l4Z" firstAttribute="top" secondItem="RTz-er-IZd" secondAttribute="bottom" constant="8" symbolic="YES" id="Igy-ar-nAv"/>
+                            <constraint firstItem="vAG-hs-wID" firstAttribute="top" secondItem="qGc-Sy-mjG" secondAttribute="bottom" constant="8" symbolic="YES" id="MAo-AI-Ck3"/>
+                            <constraint firstItem="BZa-JO-v6V" firstAttribute="bottom" secondItem="E4u-nI-mnB" secondAttribute="top" id="QM3-MV-zU6"/>
+                            <constraint firstItem="vAG-hs-wID" firstAttribute="leading" secondItem="RTz-er-IZd" secondAttribute="leading" id="Qau-8o-Y0l"/>
+                            <constraint firstItem="vAG-hs-wID" firstAttribute="leading" secondItem="9QJ-So-xnI" secondAttribute="leadingMargin" id="WLH-8F-ZTb"/>
+                            <constraint firstItem="BZa-JO-v6V" firstAttribute="leading" secondItem="9QJ-So-xnI" secondAttribute="leading" id="bsC-bT-1Pr"/>
+                            <constraint firstItem="RTz-er-IZd" firstAttribute="leading" secondItem="GCz-nQ-l4Z" secondAttribute="leading" id="jdP-hv-0Cp"/>
+                            <constraint firstItem="RTz-er-IZd" firstAttribute="top" secondItem="vAG-hs-wID" secondAttribute="bottom" constant="8" symbolic="YES" id="jv5-FY-5xX"/>
+                            <constraint firstItem="GCz-nQ-l4Z" firstAttribute="centerX" secondItem="BZa-JO-v6V" secondAttribute="centerX" id="y4B-0t-IDa"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageJaunt" destination="vAG-hs-wID" id="Mmv-Ed-0ab"/>
                         <outlet property="nameJaunt" destination="RTz-er-IZd" id="tBN-6J-SCj"/>
                         <segue destination="XHJ-ea-DOd" kind="show" identifier="showBankInfo" id="KPf-z6-hmc"/>
-                        <segue destination="L0f-bw-YYO" kind="show" identifier="showPersonalInfo" id="c5H-3z-bTi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fCJ-iD-H46" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -235,6 +218,7 @@
                     <connections>
                         <outlet property="profileImage" destination="ygo-I6-dSE" id="brt-q5-X9g"/>
                         <outlet property="tableJaunt" destination="WW5-k0-Nbr" id="a2c-5E-yGy"/>
+                        <segue destination="XHJ-ea-DOd" kind="show" identifier="showBank" id="Myq-JJ-c64"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hYg-r1-CVZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -964,6 +948,8 @@
         <image name="appy" width="16" height="16"/>
         <image name="askQuestion" width="25" height="25"/>
         <image name="money" width="25" height="25"/>
-        <image name="user" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Myq-JJ-c64"/>
+    </inferredMetricsTieBreakers>
 </document>

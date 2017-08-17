@@ -120,7 +120,6 @@
 		590042EF1F2947B70077083A /* info */ = {
 			isa = PBXGroup;
 			children = (
-				590042E91F293D540077083A /* AddressTableViewController.swift */,
 				590042ED1F293D7E0077083A /* BankTableViewController.swift */,
 			);
 			name = info;
@@ -209,6 +208,7 @@
 		9AF65FDC1F205CFA00C6E9CA /* mich */ = {
 			isa = PBXGroup;
 			children = (
+				590042E91F293D540077083A /* AddressTableViewController.swift */,
 				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
 				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
 				9A2687291F0F023400AF7A2B /* PaymentInfoViewController.swift */,

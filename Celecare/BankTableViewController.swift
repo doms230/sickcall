@@ -50,7 +50,7 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
                 self.connectId = object!["connectId"] as! String
-                
+                self.getAccountInfo()
             }
         }
         
@@ -112,7 +112,8 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
                     print(status)
                     let message = json["message"].string
                     
-                    self.errorMessage("Something Went Wrong", message: message! )
+                    //self.errorMessage("Something Went Wrong", message: message! )
+                    SCLAlertView().showError("Something Went Wrong", subTitle: message!)
                     
                 } else {
                     let bankName = json["external_accounts"]["data"][0]["bank_name"].string
@@ -139,26 +140,45 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
         }
     }
     
-    func errorMessage(_ title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message,
-                                      preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
     
-    func successMessage(_ bankName: String, bankLast4: String) {
-        let alert = UIAlertController(title: "Your bank account was successfully added", message: "Your funds will be deposited to \(bankName) ****\(bankLast4) from now on.",
-                                      preferredStyle: UIAlertControllerStyle.alert)
-        let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
-            UIAlertAction in
-            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
-            self.present(controller, animated: true, completion: nil)
-        }
+    func getAccountInfo(){
         
-        alert.addAction(okayJaunt)
-
-        self.present(alert, animated: true, completion: nil)
+        //class won't compile with textfield straight in parameters so has to be put to string first
+        let p: Parameters = [
+            "account_Id": connectId,
+            ]
+        let url = "https://celecare.herokuapp.com/payments/account"
+        Alamofire.request(url, parameters: p, encoding: URLEncoding.default).validate().responseJSON { response in switch response.result {
+        case .success(let data):
+            let json = JSON(data)
+            print("JSON: \(json)")
+            self.stopAnimating()
+            
+            //can't get status code for some reason
+            if let status = json["statusCode"].int{
+                print(status)
+                let message = json["message"].string
+                SCLAlertView().showError("Something Went Wrong", subTitle: message!)
+                
+            } else {
+                
+                //self.successView.showSuccess("Success", subTitle: "You've updated your address.")
+                //let bankName = json["external_accounts"]["data"][0]["bank_name"].string
+                let last4 = json["external_accounts"]["data"][0]["last4"].string
+                
+                self.accountTextField.text = "****\(last4!)"
+                self.routingTextField.text = json["external_accounts"]["data"][0]["routing_number"].string
+            }
+            
+        case .failure(let error):
+            self.stopAnimating()
+            print(error)
+            SCLAlertView().showError("Something Went Wrong", subTitle: "")
+            // self.messageFrame.removeFromSuperview()
+            // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+            
+            }
+        }
     }
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
