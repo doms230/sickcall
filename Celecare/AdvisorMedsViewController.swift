@@ -32,7 +32,7 @@ class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vitalTitles.count
+        return vitalContent.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,10 +67,25 @@ class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableV
                 self.vitalTitles.append("Weight")
                 self.vitalContent.append(object?["weight"] as! String)
                 
+                self.vitalTitles.append("Medication Allergies")
+                self.vitalContent.append("")
+                let medAllergy = object?["medAllergies"] as! Array<String>
+                for object in medAllergy{
+                    self.vitalTitles.append("")
+                    self.vitalContent.append(object)
+                }
                 
-                self.vitalTitles.append("Heart Beats Per Minute")
+                self.vitalTitles.append("Food Allergies")
+                self.vitalContent.append("")
+                let foodAllergy = object?["foodAllergies"] as! Array<String>
+                for object in foodAllergy{
+                    self.vitalTitles.append("")
+                    self.vitalContent.append(object)
+                }
+                
+                self.vitalTitles.append("Heart Rate")
                 self.vitalContent.append(object?["beatsPM"] as! String)
-                self.vitalTitles.append("Breates Per Minute")
+                self.vitalTitles.append("Breate Rate")
                 self.vitalContent.append(object?["respsPM"] as! String)
                 
                 self.vitalTitles.append("Medical History")
@@ -82,7 +97,6 @@ class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
     }
-    
 
     /*
     // MARK: - Navigation

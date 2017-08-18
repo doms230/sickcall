@@ -12,7 +12,7 @@ import NVActivityIndicatorView
 import SCLAlertView
 
 class MedHistoryTableViewController: UITableViewController, NVActivityIndicatorViewable {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +24,9 @@ class MedHistoryTableViewController: UITableViewController, NVActivityIndicatorV
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
+        medHistoryText.text = medHistory
+        healthIssuesText.text = ongoingMedIssues
         
         // Do any additional setup after loading the view.
     }
@@ -48,9 +51,11 @@ class MedHistoryTableViewController: UITableViewController, NVActivityIndicatorV
     var medAllergies = [String]()
     var foodAllergies = [String]()
     
+    var medHistory: String!
+    var ongoingMedIssues: String!
+    
     @IBOutlet weak var medHistoryText: UITextView!
     @IBOutlet weak var healthIssuesText: UITextView!
-    
     
     func nextAction(_ sender: UIBarButtonItem){
         // Do any additional setup after loading the view.

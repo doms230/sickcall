@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -34,6 +35,11 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var whichPicker = "gender"
     var prompt : UIAlertController!
     var pickerPrompt: UIAlertController!
+    
+    var medAllergy = [String]()
+    var foodAllergy = [String]()
+    var medHistory: String!
+    var ongoingMedIssues: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +72,28 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
         birthdayButton.setTitle(" ", for: .normal)
         heightButton.setTitle(" ", for: .normal)
         weightButton.setTitle(" ", for: .normal)
+        
+        let query = PFQuery(className: "_User")
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                self.genderButton.setTitle(object?["gender"] as? String, for: .normal)
+                self.birthdayButton.setTitle(object?["birthday"] as? String, for: .normal)
+                self.heightButton.setTitle(object?["height"] as? String, for: .normal)
+                self.weightButton.setTitle(object?["weight"] as? String, for: .normal)
+                self.medAllergy = object?["medAllergies"] as! Array<String>
+                self.foodAllergy = object?["foodAllergies"] as! Array<String>
+                self.medHistory = object?["medHistory"] as! String
+                self.ongoingMedIssues = object?["healthIssues"] as! String
+                
+            } else {
+                self.genderButton.setTitle("", for: .normal)
+                self.birthdayButton.setTitle(" ", for: .normal)
+                self.heightButton.setTitle(" ", for: .normal)
+                self.weightButton.setTitle(" ", for: .normal)
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -74,6 +102,11 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
         desti.birthday = birthdayButton.titleLabel?.text!
         desti.height = heightButton.titleLabel?.text!
         desti.weight = weightButton.titleLabel?.text!
+        desti.foodAllergies = foodAllergy
+        desti.medAllergies = medAllergy
+        desti.medHistory = self.medHistory
+        desti.ongoingMedIssues = self.ongoingMedIssues
+        
     }
     
     // button actions

@@ -1065,6 +1065,16 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="dairySwitch" destination="bEe-Am-dma" id="NBE-dZ-pB4"/>
+                        <outlet property="eggSwitch" destination="ulJ-DJ-U5G" id="3aj-KJ-0LX"/>
+                        <outlet property="foodOtherSwitch" destination="ZyJ-1A-yZk" id="van-gl-sFD"/>
+                        <outlet property="medOtherSwitch" destination="Ggg-zo-k6y" id="iDL-di-Ap2"/>
+                        <outlet property="nutSwitch" destination="qBq-B5-j2f" id="lys-az-47f"/>
+                        <outlet property="penSwitch" destination="6Gn-O6-adn" id="lfW-Kt-WbR"/>
+                        <outlet property="shelfishSwitch" destination="M2O-Y1-DaP" id="r5L-Yf-au4"/>
+                        <outlet property="soySwitch" destination="daf-kC-1yT" id="V36-wC-4NT"/>
+                        <outlet property="sulfaSwitch" destination="Gt4-66-9Oj" id="NjS-hW-1Ob"/>
+                        <outlet property="wheatSwitch" destination="chn-NW-x6w" id="rCY-Qx-usz"/>
                         <segue destination="nGU-ZH-yiy" kind="show" identifier="showHistory" id="AJK-aZ-IOM"/>
                     </connections>
                 </viewController>
