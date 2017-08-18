@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         //change color of time/status jaunts to white
@@ -74,9 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if !granted{
                     print(error!)
                     
-                }
-                
-                
+                }                
             }
             
         } else {
@@ -88,11 +85,74 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //PFUser.logOut()
         
         if (PFUser.current() != nil){
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-            self.window?.rootViewController = initialViewController
-            self.window?.makeKeyAndVisible()
+            let query = PFQuery(className: "_User")
+            query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+            query.getFirstObjectInBackground {
+                (object: PFObject?, error: Error?) -> Void in
+                if error == nil || object != nil {
+                    if object!["isActive"] as! Bool{
+                        if object?["isOnline"] as! Bool{
+                            
+                            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
+                            self.window?.rootViewController = initialViewController
+                            self.window?.makeKeyAndVisible()
+                            
+                        } else {
+                            
+                            if let side = UserDefaults.standard.string(forKey: "side"){
+                                if side == "patient"{
+                                    self.window = UIWindow(frame: UIScreen.main.bounds)
+                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                                    self.window?.rootViewController = initialViewController
+                                    self.window?.makeKeyAndVisible()
+                                    
+                                } else {
+                                    self.window = UIWindow(frame: UIScreen.main.bounds)
+                                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
+                                    self.window?.rootViewController = initialViewController
+                                    self.window?.makeKeyAndVisible()
+                                }
+                                
+                            }else {
+                                self.window = UIWindow(frame: UIScreen.main.bounds)
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                                self.window?.rootViewController = initialViewController
+                                self.window?.makeKeyAndVisible()
+                            }
+                        }
+                        
+                    } else {
+                        
+                        if let side = UserDefaults.standard.string(forKey: "side"){
+                            if side == "patient"{
+                                self.window = UIWindow(frame: UIScreen.main.bounds)
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                                self.window?.rootViewController = initialViewController
+                                self.window?.makeKeyAndVisible()
+                                
+                            } else {
+                                self.window = UIWindow(frame: UIScreen.main.bounds)
+                                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
+                                self.window?.rootViewController = initialViewController
+                                self.window?.makeKeyAndVisible()
+                            }
+                            
+                        } else {
+                            self.window = UIWindow(frame: UIScreen.main.bounds)
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                            self.window?.rootViewController = initialViewController
+                            self.window?.makeKeyAndVisible()
+                        }
+                    }
+                }
+            }
             
         } else {
             //usealy "welcome" for storyboard id.. replaced with meds for testing
@@ -137,8 +197,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         installation?.saveInBackground()
         
         Auth.auth().setAPNSToken(deviceToken, type: AuthAPNSTokenType.prod)
-
-        
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -153,8 +211,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             completionHandler(UIBackgroundFetchResult.noData)
             return
         }
-
-        
     }
     
     //define custom color jaunts..  see https://coderwall.com/p/dyqrfa/customize-navigation-bar-appearance-with-swift for reference

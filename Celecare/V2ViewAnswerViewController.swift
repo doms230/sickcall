@@ -24,10 +24,6 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     //patient
     var patientUserImage: String!
     var patientUsername: String!
-    var patientGender: String!
-    var patientAge: String!
-    var patientWeight: String!
-    var patientHeight: String!
     
     //answer info
     var level: String!
@@ -39,6 +35,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     var duration: String!
     var videoJaunt: PFFile!
     var videoPreview: String!
+    
     var playerItem: AVPlayerItem!
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
@@ -74,13 +71,38 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         // Do any additional setup after loading the view.
         
         startAnimating()
-        /*if isAnswered{
-            loadAdvisor()
-        }*/
-        
         loadPatient()
         
-        //retrieve video file Mark - FIX THIS
+        videoJaunt.getDataInBackground {
+            (videoData: Data?, error: Error?) -> Void in
+            if error == nil {
+                if let videoData = videoData {
+                    //self.selectedVideoData = videoData
+                    //convert video file to playable format
+                    let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as AnyObject
+                    let destinationPath:String = documentsPath.appending("/file.mov")
+                    try? videoData.write ( to: URL(fileURLWithPath: destinationPath as String), options: [.atomic])
+                    self.playerItem = AVPlayerItem(asset: AVAsset(url: URL(fileURLWithPath: destinationPath as String)))
+                    self.player = AVPlayer(playerItem: self.playerItem)
+                    self.playerController = AVPlayerViewController()
+                    self.playerController.player = self.player
+                    
+                    if self.didPressPlay{
+                        self.player.seek(to: kCMTimeZero)
+                        self.stopAnimating()
+                        self.present(self.playerController, animated: true) {
+                            self.player.play()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! AdvisorMedsViewController
+        desti.patientUserId = PFUser.current()?.objectId
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,14 +136,13 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             cell.patientName.textColor = uicolorFromHex(0x180d22)
             cell.patientName.text = self.patientUsername
             
-            
             cell.summaryBody.text = self.summary
             cell.summaryBody.textColor = uicolorFromHex(0x180d22)
             cell.durationBody.text = self.duration
             cell.durationBody.textColor = uicolorFromHex(0x180d22)
             //cell.videoPreview.image = UIImage(named: "appy")
             cell.vitalsButton.backgroundColor = uicolorFromHex(0x8c81ff)
-            
+            cell.vitalsButton.addTarget(self, action: #selector(self.vitalsAction(_:)), for: .touchUpInside)
             
             //TODO: Uncomment
             //cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
@@ -164,6 +185,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     }
     
     func loadPlayJaunt(_ sender: UIButton){
+        startAnimating()
         if playerItem != nil{
             player.seek(to: kCMTimeZero)
             stopAnimating()
@@ -184,12 +206,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
                 
                 let imageFile: PFFile = object!["Profile"] as! PFFile
                 self.patientUserImage = imageFile.url
-                
                 self.patientUsername = object!["DisplayName"] as! String
-                self.patientHeight = object!["height"] as! String
-                self.patientWeight = object!["weight"] as! String
-                self.patientAge = object!["birthday"] as! String
-                self.patientGender = object!["gender"] as! String
                 
                 self.tableView?.reloadData()
                 //self.stopAnimating()
@@ -223,6 +240,10 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     func cancelQuestion(_ sender: UIBarButtonItem){
         
     }
+    
+    func vitalsAction(_ sender: UIButton){
+        self.performSegue(withIdentifier: "showVitals", sender: self)
+    }
 
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
@@ -231,15 +252,5 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

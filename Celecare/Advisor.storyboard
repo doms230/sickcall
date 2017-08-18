@@ -101,6 +101,7 @@
                     <connections>
                         <outlet property="imageJaunt" destination="vAG-hs-wID" id="Mmv-Ed-0ab"/>
                         <outlet property="nameJaunt" destination="RTz-er-IZd" id="tBN-6J-SCj"/>
+                        <outlet property="paymentsButton" destination="GCz-nQ-l4Z" id="kEV-O9-RF4"/>
                         <segue destination="XHJ-ea-DOd" kind="show" identifier="showBankInfo" id="KPf-z6-hmc"/>
                     </connections>
                 </viewController>
@@ -954,6 +955,6 @@
         <image name="money" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Myq-JJ-c64"/>
+        <segue reference="KPf-z6-hmc"/>
     </inferredMetricsTieBreakers>
 </document>

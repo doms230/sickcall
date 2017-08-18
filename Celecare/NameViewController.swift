@@ -11,6 +11,7 @@ import Parse
 import SidebarOverlay
 import Kingfisher
 import NVActivityIndicatorView
+import SCLAlertView
 
 class NameViewController: UIViewController, NVActivityIndicatorViewable {
 
@@ -40,8 +41,34 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: false
+        )
+        
+        let successView = SCLAlertView(appearance: appearance)
+        successView.addButton("Okay") {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+            self.present(controller, animated: true, completion: nil)
+        }
 
         // Do any additional setup after loading the view.
+        startAnimating()
+        let adQuery = PFQuery(className: "Advisor")
+        adQuery.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+        adQuery.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            self.stopAnimating()
+            if error == nil || object != nil {
+                if object?["status"] as! String == "un-verified"{
+                    successView.showNotice("In Review", subTitle: "We're still reviewing your information. We'll email you at \(PFUser.current()!.email!) when we have finished.")
+                }
+            }
+        }
     }
     
     // MARK: - Navigation

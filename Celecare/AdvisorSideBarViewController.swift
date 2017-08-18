@@ -12,6 +12,7 @@ import Parse
 class AdvisorSideBarViewController: UIViewController {
     @IBOutlet weak var imageJaunt: UIImageView!
     @IBOutlet weak var nameJaunt: UILabel!
+    @IBOutlet weak var paymentsButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,17 +25,24 @@ class AdvisorSideBarViewController: UIViewController {
                 
                 
             } else {
+                let isActive =  object!["isActive"] as! Bool
+                if !isActive{
+                    self.paymentsButton.isHidden = true
+                }
+                
                 let imageFile: PFFile = object!["Profile"] as! PFFile
                 self.imageJaunt.kf.setImage(with: URL(string: imageFile.url!))
                 self.imageJaunt.layer.cornerRadius = 50
                 self.imageJaunt.clipsToBounds = true
                 
                 self.nameJaunt.text = object!["DisplayName"] as? String
+                
             }
         }
     }
     
     @IBAction func switchAction(_ sender: UIButton) {
+        UserDefaults.standard.set("patient", forKey: "side")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
         self.present(controller, animated: true, completion: nil)

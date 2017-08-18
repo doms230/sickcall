@@ -81,6 +81,10 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func switchAction(_ sender: UIButton) {
+        //to determine which side to put advisor on when they get on the app
+        UserDefaults.standard.set("advisor", forKey: "side")
+
+        
         let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
         self.present(controller, animated: true, completion: nil)
