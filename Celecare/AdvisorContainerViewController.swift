@@ -27,49 +27,24 @@ class AdvisorContainerViewController: SOContainerViewController,NVActivityIndica
         
         self.menuSide = .left
 
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        let query = PFQuery(className: "Post")
+        query.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!)
+        query.whereKey("isAnswered", equalTo: false)
+        query.whereKey("isRemoved", equalTo: false)
+        query.addAscendingOrder("createdAt")
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             self.stopAnimating()
-            if error == nil || object != nil {
-                if object?["isActive"] as! Bool{
-                    if self.didAnswer{
-                        object?["hasQuestion"] = false
-                        object?["questionQueue"] = Date()
-                        object?.saveEventually{
-                            (success: Bool, error: Error?) -> Void in
-                            self.stopAnimating()
-                            if (success) {
-                            self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
-                            }
-                        }
-                        
-                    } else {
-                        if object?["hasQuestion"] as! Bool{
-                            //show question to answer
-                            self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
-                            
-                        } else {
-                            //show dashboard, doesn't have question
-                            self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
-                        }
-                    }
-                    
-                } else{
-                    //isn't advisor, give them to signup
-                    self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "new")
-                }
+            
+            if error != nil{
+                self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
                 
-                self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
+            } else {
+                self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
             }
+            
+            self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
         }
-        
-       // self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
-        
-       // self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
-        
-        //dashboard --other controller
     }
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{

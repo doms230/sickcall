@@ -13,6 +13,8 @@ import NVActivityIndicatorView
 import MobileCoreServices
 import AVKit
 import AVFoundation
+import SCLAlertView
+import ParseLiveQuery
 
 class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewable {
     
@@ -40,6 +42,8 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     var player: AVPlayer!
     var playerController: AVPlayerViewController!
     
+    var cancelQuestionView: SCLAlertView!
+    
     /*** In case user presses play before video is loaded */
     var didPressPlay = false
     
@@ -47,6 +51,15 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     let screenSize: CGRect = UIScreen.main.bounds
     
     var isAnswered = false
+    
+    var cancelQuestionButton: UIBarButtonItem!
+    
+    let liveQueryClient = ParseLiveQuery.Client()
+    private var subscription: Subscription<Post>?
+    var questionsQuery: PFQuery<Post>{
+        return (Post.query()!
+            .whereKey("userId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,44 +72,26 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         self.isInverted = false
         self.textView.isHidden = true
         
-        let cancelQuestionButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(cancelQuestion(_:)))
-        
-        self.navigationItem.setRightBarButton(cancelQuestionButton, animated: true)
-        
-
+        //set up indicator view
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        // Do any additional setup after loading the view.
         
-        startAnimating()
-        loadPatient()
-        
-        videoJaunt.getDataInBackground {
-            (videoData: Data?, error: Error?) -> Void in
-            if error == nil {
-                if let videoData = videoData {
-                    //self.selectedVideoData = videoData
-                    //convert video file to playable format
-                    let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as AnyObject
-                    let destinationPath:String = documentsPath.appending("/file.mov")
-                    try? videoData.write ( to: URL(fileURLWithPath: destinationPath as String), options: [.atomic])
-                    self.playerItem = AVPlayerItem(asset: AVAsset(url: URL(fileURLWithPath: destinationPath as String)))
-                    self.player = AVPlayer(playerItem: self.playerItem)
-                    self.playerController = AVPlayerViewController()
-                    self.playerController.player = self.player
-                    
-                    if self.didPressPlay{
-                        self.player.seek(to: kCMTimeZero)
-                        self.stopAnimating()
-                        self.present(self.playerController, animated: true) {
-                            self.player.play()
-                        }
-                    }
-                }
-            }
+        //don't let person cancel question if answered because they can't get money back
+        if !isAnswered {
+            cancelQuestionButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(cancelQuestion(_:)))
+            
+            self.navigationItem.setRightBarButton(cancelQuestionButton, animated: true)
         }
+        
+        //loading indicatior
+        startAnimating()
+        
+        loadPatient()
+        setUpAlertView()
+        getVideo()
+        subscribeToUpdates()
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -238,11 +233,99 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     }
     
     func cancelQuestion(_ sender: UIBarButtonItem){
-        
+        cancelQuestionView.showNotice("Cancel Question?", subTitle: "")
     }
     
     func vitalsAction(_ sender: UIButton){
         self.performSegue(withIdentifier: "showVitals", sender: self)
+    }
+    
+    func setUpAlertView(){
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: false
+        )
+        
+        cancelQuestionView = SCLAlertView(appearance: appearance)
+        cancelQuestionView.addButton("YES") {
+            self.startAnimating()
+            let query = PFQuery(className: "Post")
+            query.whereKey("objectId", equalTo: self.objectId)
+            query.getFirstObjectInBackground {
+                (object: PFObject?, error: Error?) -> Void in
+                if error == nil || object != nil {
+                    object?["isRemoved"] = true
+                    object?.saveEventually{
+                        (success: Bool, error: Error?) -> Void in
+                        self.stopAnimating()
+                        if (success) {
+                            //send notification to advisor that person canceled
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+                            self.present(controller, animated: true, completion: nil)
+                            
+                        } else {
+                            SCLAlertView().showError("Error", subTitle: "Unable to cancel question. Check internet connection and try again.")
+                        }
+                    }
+                }
+            }
+        }
+        cancelQuestionView.addButton("NO"){
+            
+        }
+    }
+    
+    func getVideo(){
+        videoJaunt.getDataInBackground {
+            (videoData: Data?, error: Error?) -> Void in
+            if error == nil {
+                if let videoData = videoData {
+                    //self.selectedVideoData = videoData
+                    //convert video file to playable format
+                    let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as AnyObject
+                    let destinationPath:String = documentsPath.appending("/file.mov")
+                    try? videoData.write ( to: URL(fileURLWithPath: destinationPath as String), options: [.atomic])
+                    self.playerItem = AVPlayerItem(asset: AVAsset(url: URL(fileURLWithPath: destinationPath as String)))
+                    self.player = AVPlayer(playerItem: self.playerItem)
+                    self.playerController = AVPlayerViewController()
+                    self.playerController.player = self.player
+                    
+                    if self.didPressPlay{
+                        self.player.seek(to: kCMTimeZero)
+                        self.stopAnimating()
+                        self.present(self.playerController, animated: true) {
+                            self.player.play()
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    
+    func subscribeToUpdates(){
+        //if question is answered while user is looking at screen, update info
+        self.subscription = self.liveQueryClient
+            .subscribe(self.questionsQuery)
+            .handle(Event.updated) { _, object in
+                
+                let isAnswered = object["isAnswered"] as! Bool
+                
+                //if question isn't answered
+                if isAnswered{
+                    self.isAnswered = true
+                    self.loadAdvisor()
+                    self.level = object["level"] as! String
+                    self.comments = object["comment"] as! String
+                    self.advisorUserId = object["advisorUserId"] as! String
+                    //person can't cancel question once question is answered
+                    self.cancelQuestionButton.isEnabled = false
+                    self.tableView?.reloadData()
+                }
+        }
     }
 
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{

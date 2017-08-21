@@ -263,7 +263,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
     lazy var videoLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        label.text = "Watch Video"
+        label.text = "View Question"
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
@@ -340,7 +340,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
         
         videoImage.snp.makeConstraints { (make) -> Void in
             make.height.width.equalTo(50)
-            make.top.equalTo(vitalsButton.snp.bottom).offset(25)
+            make.top.equalTo(vitalsButton.snp.bottom).offset(10)
             make.left.equalTo(videoButton)
             //make.right.equalTo(videoButton).offset(-3)
             make.bottom.equalTo(videoButton).offset(-20)
@@ -348,7 +348,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
         
         videoLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(videoImage).offset(15)
-            make.left.equalTo(videoImage.snp.right)
+            make.left.equalTo(videoImage.snp.right).offset(5)
             //make.right.equalTo(videoButton)
            // make.bottom.equalTo(videoButton).offset(-3)
         }

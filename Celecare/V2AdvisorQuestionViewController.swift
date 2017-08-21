@@ -14,6 +14,7 @@ import MobileCoreServices
 import AVKit
 import AVFoundation
 import SCLAlertView
+import ParseLiveQuery
 
 class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicatorViewable {
     
@@ -57,6 +58,15 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     var respondButton: UIButton!
     
     var isAnswered = false
+    
+    var cancelQuestionView: SCLAlertView!
+    
+    let liveQueryClient = ParseLiveQuery.Client()
+    private var subscription: Subscription<Post>?
+    var questionsQuery: PFQuery<Post>{
+        return (Post.query()!
+            .whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,26 +93,11 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         
         startAnimating()
         
-        viewQuestionButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
-        viewQuestionButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
-        viewQuestionButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        viewQuestionButton.titleLabel?.textAlignment = .center
-        viewQuestionButton.setTitle("View Question", for: .normal)
-        //button.setImage(UIImage(named: "exit"), for: .normal)
-        viewQuestionButton.backgroundColor = uicolorFromHex(0xf4ff81)
-        viewQuestionButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
-        self.textView.superview?.addSubview(viewQuestionButton)
+        UIElements()
+        self.loadPost()
+        setUpAlertView()
+        subscribeToUpdates()
 
-        respondButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
-        respondButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
-        respondButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        respondButton.titleLabel?.textAlignment = .center
-        respondButton.setTitle("Respond", for: .normal)
-        //button.setImage(UIImage(named: "exit"), for: .normal)
-        respondButton.backgroundColor = uicolorFromHex(0x81ff96)
-        respondButton.addTarget(self, action: #selector(self.respondAction(_:)), for: .touchUpInside)
-        
-        self.loadAdvisor()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -317,27 +312,12 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         }
     }
     
-   func loadAdvisor(){
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
-                self.objectId = object?["questionId"] as! String
-                self.loadPost()
-               /* let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.advisorUserImage = imageFile.url
-                
-                self.advisorUsername = object!["DisplayName"] as! String*/
-                //self.tableView?.reloadData()
-                //self.stopAnimating()
-            }
-        }
-    }
-    
     func loadPost(){
         let query = PFQuery(className: "Post")
-        query.whereKey("objectId", equalTo: objectId)
+        query.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!)
+        query.whereKey("isAnswered", equalTo: false)
+        query.whereKey("isRemoved", equalTo: false)
+        query.addAscendingOrder("createdAt")
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
@@ -375,6 +355,74 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.performSegue(withIdentifier: "showVitals", sender: self)
     }
     
+    //mich 
+    
+    func subscribeToUpdates(){
+        self.subscription = self.liveQueryClient
+            .subscribe(self.questionsQuery)
+            .handle(Event.updated) { _, object in
+                //loaduser info here
+                
+                //insert new message below the host's description message
+                // let createdAt = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .short)
+                
+                //print(object.objectId!)
+                let isRemoved = object["isRemoved"] as! Bool
+                
+                if isRemoved{
+                    let prompt = UIAlertController(title: "Canceled", message: "Your patient canceled their question.", preferredStyle: .alert)
+                    
+                    let search = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
+                        UIAlertAction in
+                        let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                        let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+                        self.present(controller, animated: true, completion: nil)
+                    }
+                    
+                    prompt.addAction(search)
+                    self.present(prompt, animated: true, completion: nil)
+                }
+        }
+    }
+    
+    func UIElements(){
+        viewQuestionButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
+        viewQuestionButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
+        viewQuestionButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        viewQuestionButton.titleLabel?.textAlignment = .center
+        viewQuestionButton.setTitle("View Question", for: .normal)
+        //button.setImage(UIImage(named: "exit"), for: .normal)
+        viewQuestionButton.backgroundColor = uicolorFromHex(0xf4ff81)
+        viewQuestionButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
+        self.textView.superview?.addSubview(viewQuestionButton)
+        
+        respondButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
+        respondButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
+        respondButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
+        respondButton.titleLabel?.textAlignment = .center
+        respondButton.setTitle("Respond", for: .normal)
+        //button.setImage(UIImage(named: "exit"), for: .normal)
+        respondButton.backgroundColor = uicolorFromHex(0x81ff96)
+        respondButton.addTarget(self, action: #selector(self.respondAction(_:)), for: .touchUpInside)
+    }
+    
+    func setUpAlertView(){
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: false
+        )
+        
+        cancelQuestionView = SCLAlertView(appearance: appearance)
+        cancelQuestionView.addButton("Okay"){
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.didAnswer = true
+            self.present(controller, animated: true, completion: nil)
+            
+        }
+    }
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

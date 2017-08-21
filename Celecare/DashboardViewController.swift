@@ -53,7 +53,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             .whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,6 +86,14 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.profileImage.clipsToBounds = true
                 self.connectId = object!["connectId"] as! String
                 self.getAccountInfo()
+                
+                /*object?["questionQueue"] = Date()
+                object?.saveEventually{
+                    (success: Bool, error: Error?) -> Void in
+                    if (success) {
+                        
+                    }
+                }*/
             }
         }
         
