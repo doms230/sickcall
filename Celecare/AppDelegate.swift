@@ -85,8 +85,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //PFUser.logOut()
         
         if (PFUser.current() != nil){
-            let query = PFQuery(className: "_User")
-            query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+            let query = PFQuery(className: "Advisor")
+            query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
             query.getFirstObjectInBackground {
                 (object: PFObject?, error: Error?) -> Void in
                 if error == nil || object != nil {
@@ -94,7 +94,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         if object?["isOnline"] as! Bool{
                             
                             let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
+                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                            initialViewController.isAdvisor = true
                             self.window?.rootViewController = initialViewController
                             self.window?.makeKeyAndVisible()
                             
@@ -111,7 +112,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 } else {
                                     self.window = UIWindow(frame: UIScreen.main.bounds)
                                     let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
+                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                                    initialViewController.isAdvisor = true
                                     self.window?.rootViewController = initialViewController
                                     self.window?.makeKeyAndVisible()
                                 }

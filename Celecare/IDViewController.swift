@@ -82,6 +82,9 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
             newAdvisor["birthdayyear"] = yearText.text!
             newAdvisor["ssn"] = ssnButton.text
             newAdvisor["status"] = "un-verified"
+            newAdvisor["connectId"] = ""
+            newAdvisor["isActive"] = false
+            newAdvisor["isOnline"] = false 
             newAdvisor.saveEventually{
                 (success: Bool, error: Error?) -> Void in
                 self.stopAnimating()

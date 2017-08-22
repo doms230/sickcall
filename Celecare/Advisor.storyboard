@@ -102,6 +102,7 @@
                         <outlet property="imageJaunt" destination="vAG-hs-wID" id="Mmv-Ed-0ab"/>
                         <outlet property="nameJaunt" destination="RTz-er-IZd" id="tBN-6J-SCj"/>
                         <outlet property="paymentsButton" destination="GCz-nQ-l4Z" id="kEV-O9-RF4"/>
+                        <outlet property="switchButton" destination="BZa-JO-v6V" id="gxp-RX-dTL"/>
                         <segue destination="XHJ-ea-DOd" kind="show" identifier="showBankInfo" id="KPf-z6-hmc"/>
                     </connections>
                 </viewController>
@@ -131,7 +132,11 @@
                                 <state key="normal" title="5:00"/>
                             </button>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="qDd-nh-5hQ"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="qDd-nh-5hQ">
+                            <connections>
+                                <action selector="cancelQuestionAction:" destination="cfc-fa-eej" id="Khi-n8-YER"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="NQ0-zL-oWD" kind="show" identifier="showVitals" id="AFk-9B-6bw"/>
@@ -946,7 +951,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LnW-lB-7OK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1552.8" y="1036.7316341829087"/>
+            <point key="canvasLocation" x="1583" y="1050"/>
         </scene>
     </scenes>
     <resources>

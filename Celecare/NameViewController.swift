@@ -64,7 +64,8 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
             (object: PFObject?, error: Error?) -> Void in
             self.stopAnimating()
             if error == nil || object != nil {
-                if object?["status"] as! String == "un-verified"{
+                let isActive = object?["isActive"] as! Bool
+                if !isActive {
                     successView.showNotice("In Review", subTitle: "We're still reviewing your information. We'll email you at \(PFUser.current()!.email!) when we have finished.")
                 }
             }

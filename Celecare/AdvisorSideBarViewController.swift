@@ -13,23 +13,16 @@ class AdvisorSideBarViewController: UIViewController {
     @IBOutlet weak var imageJaunt: UIImageView!
     @IBOutlet weak var nameJaunt: UILabel!
     @IBOutlet weak var paymentsButton: UIButton!
+    @IBOutlet weak var switchButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()?.objectId)
+        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error != nil || object == nil {
-                
-                
-            } else {
-                let isActive =  object!["isActive"] as! Bool
-                if !isActive{
-                    self.paymentsButton.isHidden = true
-                }
-                
                 let imageFile: PFFile = object!["Profile"] as! PFFile
                 self.imageJaunt.kf.setImage(with: URL(string: imageFile.url!))
                 self.imageJaunt.layer.cornerRadius = 50
@@ -37,6 +30,21 @@ class AdvisorSideBarViewController: UIViewController {
                 
                 self.nameJaunt.text = object!["DisplayName"] as? String
                 
+                let adQuery = PFQuery(className: "Advisor")
+                adQuery.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+                adQuery.getFirstObjectInBackground {
+                    (object: PFObject?, error: Error?) -> Void in
+                    if error == nil || object != nil {
+                        let isActive = object?["isActive"] as! Bool
+                        
+                        if isActive{
+                            self.paymentsButton.isHidden = true
+                        }
+                        
+                    } else {
+                        self.paymentsButton.isHidden = true
+                    }
+                }
             }
         }
     }
@@ -48,13 +56,7 @@ class AdvisorSideBarViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
     }
     
-    
     @IBAction func bankInfoAction(_ sender: UIButton) {
                 self.performSegue(withIdentifier: "showBankInfo", sender: self)
     }
-    
-    @IBAction func personalInfoAction(_ sender: UIButton) {
-                self.performSegue(withIdentifier: "showPersonalInfo", sender: self)
-    }
-        
 }

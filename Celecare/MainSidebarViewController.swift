@@ -16,6 +16,8 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet weak var tableJaunt: UITableView!
     
+    var isAdvisor = false
+    
     lazy var titleButton: UIButton = {
         let button =  UIButton(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
         button.setTitle("", for: .normal)
@@ -54,12 +56,14 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
                 let leftItem = UIBarButtonItem(customView: self.titleButton)
                 
                 self.navigationItem.setLeftBarButton(leftItem, animated: true)
-                self.tableJaunt.reloadData()
+                //self.tableJaunt.reloadData()
+                self.loadAdvisor()
                 
             } else {
                 
             }
         }
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -76,21 +80,43 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
        // cell.userImage.kf.setImage(with: URL(string: self.imageJaunt))
         cell.editProfileButton.addTarget(self, action: #selector(self.editProfile(_:)), for: .touchUpInside)
         cell.advisorButton.addTarget(self, action: #selector(self.switchAction(_:)), for: .touchUpInside)
-        
+        if isAdvisor{
+            cell.advisorButton.setTitle("Switch To Advisor", for: .normal)            
+        }
         return cell
     }
     
     func switchAction(_ sender: UIButton) {
         //to determine which side to put advisor on when they get on the app
         UserDefaults.standard.set("advisor", forKey: "side")
-
         
         let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+        controller.isAdvisor = isAdvisor
         self.present(controller, animated: true, completion: nil)
+        
     }
     
     func editProfile(_ sender: UIButton){
         
+    }
+    
+    func loadAdvisor(){
+        let query = PFQuery(className: "Advisor")
+        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                let isActive = object?["isActive"] as! Bool
+                
+                if isActive{
+                    self.isAdvisor = true
+                }
+                self.tableJaunt.reloadData()
+                
+            } else {
+                self.tableJaunt.reloadData()
+            }
+        }
     }
 }

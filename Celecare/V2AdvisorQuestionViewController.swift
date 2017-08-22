@@ -15,8 +15,11 @@ import AVKit
 import AVFoundation
 import SCLAlertView
 import ParseLiveQuery
+import Alamofire
+import SwiftyJSON
 
 class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicatorViewable {
+    var baseURL = "https://celecare.herokuapp.com/posts/assignQuestion"
     
     //advisor
     var advisorUserImage: String!
@@ -60,6 +63,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     var isAnswered = false
     
     var cancelQuestionView: SCLAlertView!
+    var skipQuestionView: SCLAlertView!
     
     let liveQueryClient = ParseLiveQuery.Client()
     private var subscription: Subscription<Post>?
@@ -328,6 +332,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                 let videoPreview = object?["videoScreenShot"] as! PFFile
                 self.videoPreview = videoPreview.url
                 self.patientUserId = object?["userId"] as! String
+                self.objectId = object?.objectId
                 self.loadPatient()
             }
         }
@@ -423,6 +428,63 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             
         }
     }
+    
+    @IBAction func cancelQuestionAction(_ sender: UIBarButtonItem) {
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: false
+        )
+        
+        skipQuestionView = SCLAlertView(appearance: appearance)
+        skipQuestionView.addButton("YES"){
+            /*let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.didAnswer = true
+            self.present(controller, animated: true, completion: nil)*/
+            self.backEndIsh()
+        }
+        
+        skipQuestionView.addButton("NO"){
+            
+        }
+        
+        skipQuestionView.showNotice("Skip this Question?", subTitle: "")
+    }
+    
+    func backEndIsh(){
+        startAnimating()
+        Alamofire.request(self.baseURL, method: .post, parameters: ["id": objectId], encoding: JSONEncoding.default).validate().response{response in
+            self.stopAnimating()
+            print(response)
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
+            self.present(controller, animated: true, completion: nil)
+        }
+        
+            /*response in switch response.result {
+        case .success(let data):
+            let json = JSON(data)
+            print("JSON: \(json)")
+
+            self.stopAnimating()
+
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
+            self.present(controller, animated: true, completion: nil)
+            
+        case .failure(let error):
+            print(error)
+            // self.messageFrame.removeFromSuperview()
+            // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+            //SCLAlertView().showError("Error", subTitle: error as! String)
+            }*/
+       // }
+    }
+
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

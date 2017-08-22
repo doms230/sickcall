@@ -14,6 +14,7 @@ import NVActivityIndicatorView
 class AdvisorContainerViewController: SOContainerViewController,NVActivityIndicatorViewable {
 
     var didAnswer = false
+    var isAdvisor = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,24 +27,31 @@ class AdvisorContainerViewController: SOContainerViewController,NVActivityIndica
         startAnimating()
         
         self.menuSide = .left
-
-        let query = PFQuery(className: "Post")
-        query.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!)
-        query.whereKey("isAnswered", equalTo: false)
-        query.whereKey("isRemoved", equalTo: false)
-        query.addAscendingOrder("createdAt")
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            self.stopAnimating()
-            
-            if error != nil{
-                self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
+        
+        if isAdvisor{
+            let query = PFQuery(className: "Post")
+            query.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!)
+            query.whereKey("isAnswered", equalTo: false)
+            query.whereKey("isRemoved", equalTo: false)
+            query.addAscendingOrder("createdAt")
+            query.getFirstObjectInBackground {
+                (object: PFObject?, error: Error?) -> Void in
+                self.stopAnimating()
                 
-            } else {
-                self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
+                if error != nil{
+                    self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
+                    
+                } else {
+                    self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
+                }
+                
+                self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
             }
             
+        } else {
+            self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "new")
             self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
+            
         }
     }
     

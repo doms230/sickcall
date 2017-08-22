@@ -17,9 +17,6 @@ import NVActivityIndicatorView
 import SCLAlertView
 
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
-
-    //field needed
-    //external account 
     
     var medLabel = [String]()
     var medDuration = [String]()
@@ -76,34 +73,14 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
-            if error != nil || object == nil {
-                
-                
-            } else {
+            if error == nil || object != nil {
                 let imageFile: PFFile = object!["Profile"] as! PFFile
                 self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
                 self.profileImage.layer.cornerRadius = 30 / 2
                 self.profileImage.clipsToBounds = true
-                self.connectId = object!["connectId"] as! String
                 self.getAccountInfo()
-                
-                /*object?["questionQueue"] = Date()
-                object?.saveEventually{
-                    (success: Bool, error: Error?) -> Void in
-                    if (success) {
-                        
-                    }
-                }*/
             }
         }
-        
-       /* let button =  UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 40))
-        //button.backgroundColor = UIColor.redColor()
-        button.setTitle("Offline", for: .normal)
-        button.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        // button.addTarget(self, action: #selector(ScheduleViewController.editProfileAction(_:)), for: UIControlEvents.touchUpInside)
-        self.navigationItem.titleView = button*/
         
         loadData()
     }
@@ -151,17 +128,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell.statusButton.addTarget(self, action: #selector(DashboardViewController.statusAction(_:)), for: .touchUpInside)
         
-        //do something to see if person is online or not
-        
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //segue to question jautn
-        /*if indexPath.section == 0{
-         playVideo(videoJaunt: videoFile)
-         selectedIndex = indexPath.row
-         }        */
     }
     
     func statusAction(_ sender: UIButton){
@@ -177,8 +144,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             
             let userId = PFUser.current()?.objectId
-            let query = PFQuery(className: "_User")
-            query.whereKey("objectId", equalTo: userId!)
+            let query = PFQuery(className: "Advisor")
+            query.whereKey("userId", equalTo: userId!)
             query.getFirstObjectInBackground {
                 (object: PFObject?, error: Error?) -> Void in
                 if error == nil || object != nil {
@@ -210,19 +177,10 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    //live query
-   /* */
-    
     func startQuestionSubscription(){
         self.subscription = self.liveQueryClient
             .subscribe(self.questionsQuery)
             .handle(Event.updated) { _, object in
-                //loaduser info here
-                
-                //insert new message below the host's description message
-               // let createdAt = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .short)
-                
-                //print(object.objectId!)
                 let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
                 let controller = storyboard.instantiateViewController(withIdentifier: "question") as UIViewController
                 self.present(controller, animated: true, completion: nil)
@@ -232,14 +190,16 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     //TODO: change userId to something proper
     func loadData(){
         let userId = PFUser.current()?.objectId
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: userId!)
+        let query = PFQuery(className: "Advisor")
+        query.whereKey("userId", equalTo: userId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
                 if object?["isOnline"] as! Bool{
                     self.isOnline = true
                 }
+                
+                self.connectId = object!["connectId"] as! String
                 
                 self.tableJaunt.reloadData()
                 
@@ -269,20 +229,12 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 SCLAlertView().showError("Something Went Wrong", subTitle: message!)
                 
             } else {
-                
-                //self.successView.showSuccess("Success", subTitle: "You've updated your address.")
-                //let bankName = json["external_accounts"]["data"][0]["bank_name"].string
                 for object in json["verification"]["fields_needed"].arrayObject! {
                     print(object as! String)
                     if object as! String == "external_account"{
                      self.needBankInfo = true
                     }
                 }
-                
-                /*if json["verification"]["fields_needed"][0].string != nil{
-                    self.needBankInfo = true
-                   // self.tableJaunt.reloadData()
-                }*/
                 self.tableJaunt.reloadData()
             }
             
@@ -290,8 +242,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             self.stopAnimating()
             print(error)
             SCLAlertView().showError("Something Went Wrong", subTitle: "")
-            // self.messageFrame.removeFromSuperview()
-            // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
             
             }
         }
@@ -304,5 +254,4 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-
 }
