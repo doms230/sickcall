@@ -171,9 +171,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             adCell = tableView.dequeueReusableCell(withIdentifier: "noWatchVideoReuse", for: indexPath) as! AdvisorTableViewCell
             adCell.selectionStyle = .none
             return adCell
-            
         }
-        
     }
     
     func loadPlayJaunt(_ sender: UIButton){
@@ -366,12 +364,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.subscription = self.liveQueryClient
             .subscribe(self.questionsQuery)
             .handle(Event.updated) { _, object in
-                //loaduser info here
                 
-                //insert new message below the host's description message
-                // let createdAt = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .short)
-                
-                //print(object.objectId!)
                 let isRemoved = object["isRemoved"] as! Bool
                 
                 if isRemoved{
@@ -425,7 +418,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
             controller.didAnswer = true
             self.present(controller, animated: true, completion: nil)
-            
         }
     }
     
@@ -439,10 +431,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         
         skipQuestionView = SCLAlertView(appearance: appearance)
         skipQuestionView.addButton("YES"){
-            /*let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-            controller.didAnswer = true
-            self.present(controller, animated: true, completion: nil)*/
             self.backEndIsh()
         }
         
@@ -463,28 +451,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             controller.isAdvisor = true
             self.present(controller, animated: true, completion: nil)
         }
-        
-            /*response in switch response.result {
-        case .success(let data):
-            let json = JSON(data)
-            print("JSON: \(json)")
-
-            self.stopAnimating()
-
-            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-            controller.isAdvisor = true
-            self.present(controller, animated: true, completion: nil)
-            
-        case .failure(let error):
-            print(error)
-            // self.messageFrame.removeFromSuperview()
-            // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
-            //SCLAlertView().showError("Error", subTitle: error as! String)
-            }*/
-       // }
     }
-
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

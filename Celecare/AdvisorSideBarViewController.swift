@@ -22,7 +22,7 @@ class AdvisorSideBarViewController: UIViewController {
         query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
-            if error != nil || object == nil {
+            if error == nil || object != nil {
                 let imageFile: PFFile = object!["Profile"] as! PFFile
                 self.imageJaunt.kf.setImage(with: URL(string: imageFile.url!))
                 self.imageJaunt.layer.cornerRadius = 50

@@ -78,7 +78,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
                 self.profileImage.layer.cornerRadius = 30 / 2
                 self.profileImage.clipsToBounds = true
-                self.getAccountInfo()
             }
         }
         
@@ -200,7 +199,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 
                 self.connectId = object!["connectId"] as! String
-                
+                self.getAccountInfo()
                 self.tableJaunt.reloadData()
                 
             } else{
