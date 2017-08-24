@@ -8,20 +8,19 @@
 
 import UIKit
 import Parse
-import Alamofire
-import SwiftyJSON
+import NVActivityIndicatorView
+import SCLAlertView
 
-class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
+class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegate, UINavigationControllerDelegate,NVActivityIndicatorViewable{
     
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var userImage: UIButton!
     
     var baseURL = "https://celecare.herokuapp.com"
     
-    var email: String!
-    var phoneNumber: String!
-    
+    var userNameString: String!
+    var emailString: String!
+    var passwordString: String!
     //image picker stuff
     
     var uploadedImage: PFFile!
@@ -31,30 +30,28 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "2/2"
+        let doneItem = UIBarButtonItem(title: "Sign up", style: .plain, target: self, action: #selector(NewProfileViewController.signUpAction(_:)))
+        self.navigationItem.rightBarButtonItem = doneItem
+        
         let proPic = UIImageJPEGRepresentation(UIImage(named: "appy")!, 0.5)
         uploadedImage = PFFile(name: "defaultProfile_ios.jpeg", data: proPic!)
         
+        userImage.layer.cornerRadius = 50
+        userImage.clipsToBounds = true 
+        
         imagePicker.delegate = self
         
-
-        // Do any additional setup after loading the view.
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
+        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    @IBAction func nextAction(_ sender: UIButton) {
+    func signUpAction(_ sender: UIBarButtonItem) {
         //create new Profile.. send to med info
-        
-        newUser(displayName: userName.text!, username: email!, password: phoneNumber, email: email!, imageFile: uploadedImage)
+        startAnimating()
+        newUser(displayName: userName.text!, username: emailString!, password: passwordString, email: emailString!, imageFile: uploadedImage)
         
     }
     
@@ -66,61 +63,29 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         user.email = email
         user["DisplayName"] = displayName
         user["Profile"] = imageFile
-        user["phoneNumber"] = phoneNumber
+        user["foodAllergies"] = []
+        user["gender"] = " "
+        user["height"] = " "
+        user["medAllergies"] = []
+        user["weight"] = " "
+        user["birthday"] = " "
+        user["beatsPM"] = " "
+        user["healthIssues"] = " "
+        user["respsPM"] = " "
+        user["medHistory"] = " "
         user.signUpInBackground{ (succeeded: Bool, error: Error?) -> Void in
+            self.stopAnimating()
             if error != nil {
                 // let errorString = erro_userInfofo["error"] as? NSString
                 //
                 print(error!)
+                SCLAlertView().showError("Oops", subTitle: "We couldn't sign you up. Check internet connection and try again")
                 
             } else {
-                self.addStripeCustomer(email: email, user: user)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                self.present(initialViewController, animated: true, completion: nil)
             }
-        }
-    }
-    
-    func addStripeCustomer(email: String, user: PFUser){
-        //var customerId = ""
-        
-        Alamofire.request(self.baseURL.appending("/payments/addCustomer"), method: .post, parameters: [
-            "email": "doms230@live.com"
-            ], encoding: JSONEncoding.default).validate().responseJSON { response in
-                switch response.result {
-                case .success(let data):
-                    let json = JSON(data)
-                   // print("JSON: \(json)")
-                    if let id = json["id"].string {
-                      //  print("customer Id: \(id)")
-                      //  customerId = id
-                        //create customer id, then save to database
-                        
-                        user["customerId"] = id
-                        user.saveInBackground {
-                            (success: Bool, error: Error?) -> Void in
-                            if (success) {
-                                //associate current user with device
-                                let installation = PFInstallation.current()
-                                installation?["user"] = PFUser.current()
-                                installation?["userId"] = PFUser.current()?.objectId
-                                //installation.setDeviceTokenFromData(deviceToken)
-                                installation?.saveEventually()
-                                
-                                //segue to main storyboard
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
-                                self.present(controller, animated: true, completion: nil)
-                            }
-                        }
-                        
-                    }
-                    print("Validation Successful")
-                    break
-                    //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
-                    
-                case .failure(let error):
-                    print(error)
-                    break
-                }
         }
     }
     
@@ -130,7 +95,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         
         dismiss(animated: true, completion: nil)
         
-        userImage.setTitle("", for: .normal)
+        //userImage.setTitle("", for: .normal)
         userImage.setBackgroundImage(chosenImage, for: .normal)
         //tableJaunt.reloadData()
         
@@ -148,7 +113,6 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
     }
     
-    
     @IBAction func uploadProfilePicAction(_ sender: UIButton) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType =  .photoLibrary
@@ -156,23 +120,11 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         present(imagePicker, animated: true, completion: nil)
     }
     
-
-    
-    //
-    /*func progressBarDisplayer() {
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
         
-        let messageFrame = UIView(frame: CGRect(x: view.frame.midX, y: view.frame.midY - 25 , width: 50, height: 50))
-        messageFrame.layer.cornerRadius = 15
-        messageFrame.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        activityIndicator.startAnimating()
-        
-        messageFrame.addSubview(activityIndicator)
-        view.addSubview(messageFrame)
-    }*/
-    
-    
-
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
+    }
 }

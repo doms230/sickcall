@@ -30,8 +30,8 @@ class EmailViewController: UIViewController {
         // Pass the selected object to the new view controller.
         
         let desti = segue.destination as! NewProfileViewController
-        desti.phoneNumber = phoneNumber
-        desti.email = emailField.text! 
+        //desti.phoneNumber = phoneNumber
+        //desti.email = emailField.text!
         
         
     }

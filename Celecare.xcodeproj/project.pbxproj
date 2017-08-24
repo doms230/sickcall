@@ -39,6 +39,7 @@
 		9ACD38001F06177B005842CF /* EmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD37FF1F06177B005842CF /* EmailViewController.swift */; };
 		9ACD38031F099556005842CF /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD38021F099556005842CF /* NewProfileViewController.swift */; };
 		9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF65FDA1F202D4E00C6E9CA /* Post.swift */; };
+		F22656171F4E364C001D2ED7 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22656161F4E364C001D2ED7 /* SignupViewController.swift */; };
 		F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */; };
 		F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */; };
 		F24710781F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710771F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift */; };
@@ -91,6 +92,7 @@
 		9AF65FDA1F202D4E00C6E9CA /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		BB503F71087DB2199AB6225D /* Pods-Celecare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.release.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.release.xcconfig"; sourceTree = "<group>"; };
 		E6092048BA7E81399689728E /* Pods-Celecare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Celecare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Celecare/Pods-Celecare.debug.xcconfig"; sourceTree = "<group>"; };
+		F22656161F4E364C001D2ED7 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V2ViewAnswerViewController.swift; sourceTree = "<group>"; };
 		F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAnswerTableViewCell.swift; sourceTree = "<group>"; };
 		F24710771F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V2AdvisorQuestionViewController.swift; sourceTree = "<group>"; };
@@ -196,10 +198,9 @@
 			isa = PBXGroup;
 			children = (
 				9AB067801F02011100092BC6 /* Login.storyboard */,
-				9ACD37F91F05F10A005842CF /* LoginViewController.swift */,
 				9ACD37FB1F05F9A5005842CF /* WelcomeViewController.swift */,
-				9ACD37FD1F060001005842CF /* VerifyViewController.swift */,
-				9ACD37FF1F06177B005842CF /* EmailViewController.swift */,
+				9ACD37F91F05F10A005842CF /* LoginViewController.swift */,
+				F22656161F4E364C001D2ED7 /* SignupViewController.swift */,
 				9ACD38021F099556005842CF /* NewProfileViewController.swift */,
 			);
 			name = login;
@@ -208,6 +209,8 @@
 		9AF65FDC1F205CFA00C6E9CA /* mich */ = {
 			isa = PBXGroup;
 			children = (
+				9ACD37FD1F060001005842CF /* VerifyViewController.swift */,
+				9ACD37FF1F06177B005842CF /* EmailViewController.swift */,
 				590042E91F293D540077083A /* AddressTableViewController.swift */,
 				9A7351881F1C8D8200A438C8 /* ViewAnswerViewController.swift */,
 				9AB182201F15884400678851 /* AdvisorQuestionsViewController.swift */,
@@ -403,6 +406,7 @@
 				F2E86B3E1F398BF300F4703C /* AllergyViewController.swift in Sources */,
 				9AB182271F15BF0400678851 /* AdvisorMedsViewController.swift in Sources */,
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
+				F22656171F4E364C001D2ED7 /* SignupViewController.swift in Sources */,
 				590042EE1F293D7E0077083A /* BankTableViewController.swift in Sources */,
 				F2FCEDCC1F37F923006D8FAD /* QualificationsViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
@@ -558,7 +562,7 @@
 				DEVELOPMENT_TEAM = FK56654KPJ;
 				INFOPLIST_FILE = Celecare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.celecare.celecare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sickcall.sickcall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -575,7 +579,7 @@
 				DEVELOPMENT_TEAM = FK56654KPJ;
 				INFOPLIST_FILE = Celecare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.celecare.celecare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sickcall.sickcall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -15,6 +15,7 @@ target 'Celecare' do
   
   pod 'Parse'
   pod 'ParseLiveQuery'
+  pod 'ParseFacebookUtilsV4'
   pod 'Firebase/Auth' , '~> 4.0.0'
   
   #facebook ish
@@ -29,9 +30,9 @@ target 'Celecare' do
   #
   pod 'SidebarOverlay'
   pod 'SCLAlertView'
-  pod 'DateTimePicker'
+  #pod 'DateTimePicker'
   pod 'NVActivityIndicatorView'
-  pod 'SRCountdownTimer'
+  #pod 'SRCountdownTimer'
   
   pod "SlackTextViewController"
 end

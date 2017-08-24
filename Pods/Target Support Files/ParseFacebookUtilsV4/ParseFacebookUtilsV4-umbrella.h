@@ -10,7 +10,9 @@
 #endif
 #endif
 
+#import "ParseFacebookUtilsV4.h"
+#import "PFFacebookUtils.h"
 
-FOUNDATION_EXPORT double DateTimePickerVersionNumber;
-FOUNDATION_EXPORT const unsigned char DateTimePickerVersionString[];
+FOUNDATION_EXPORT double ParseFacebookUtilsV4VersionNumber;
+FOUNDATION_EXPORT const unsigned char ParseFacebookUtilsV4VersionString[];
 

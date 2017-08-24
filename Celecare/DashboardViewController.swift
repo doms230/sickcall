@@ -200,6 +200,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 self.connectId = object!["connectId"] as! String
                 self.getAccountInfo()
+ 
                 self.tableJaunt.reloadData()
                 
             } else{

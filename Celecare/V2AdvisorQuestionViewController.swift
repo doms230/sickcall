@@ -75,6 +75,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
         // Do any additional setup after loading the view.
         
         self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
