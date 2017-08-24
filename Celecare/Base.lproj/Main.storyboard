@@ -283,7 +283,7 @@
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZQ1-rE-eZK">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQ1-rE-eZK">
                                 <rect key="frame" x="16" y="140" width="343" height="128"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -501,7 +501,7 @@
             </objects>
             <point key="canvasLocation" x="-1529" y="-829"/>
         </scene>
-        <!--Edit Profile View Controller-->
+        <!--Edit Profile-->
         <scene sceneID="eMm-mW-Rcd">
             <objects>
                 <viewController id="8Bz-vl-1MO" customClass="EditProfileViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
@@ -514,28 +514,54 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a91-n6-ITb">
-                                <rect key="frame" x="136" y="72" width="102" height="107"/>
+                                <rect key="frame" x="137" y="72" width="100" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="102" id="DqE-Lk-gT5"/>
+                                    <constraint firstAttribute="width" constant="100" id="gZ3-dZ-FA3"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="40"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.93333333330000001" green="0.094117647060000004" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="EditProfile:" destination="8Bz-vl-1MO" eventType="touchUpInside" id="Ld6-pv-6UF"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z5r-2c-JnK">
+                                <rect key="frame" x="16" y="180" width="343" height="30"/>
+                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="bha-JK-7Wn"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="a91-n6-ITb" firstAttribute="top" secondItem="lSm-Ga-3I8" secondAttribute="bottom" constant="8" symbolic="YES" id="COz-u9-MOy"/>
-                            <constraint firstItem="a91-n6-ITb" firstAttribute="centerX" secondItem="oST-aK-bB3" secondAttribute="centerX" id="GFM-P2-R4h"/>
-                            <constraint firstItem="ZUU-pP-zk2" firstAttribute="top" secondItem="a91-n6-ITb" secondAttribute="bottom" constant="488" id="WMO-4m-FPI"/>
+                            <constraint firstItem="Z5r-2c-JnK" firstAttribute="top" secondItem="a91-n6-ITb" secondAttribute="bottom" constant="8" symbolic="YES" id="8PJ-ZL-N3C"/>
+                            <constraint firstItem="ZUU-pP-zk2" firstAttribute="top" secondItem="Z5r-2c-JnK" secondAttribute="bottom" constant="408" id="AdC-yu-bgF"/>
+                            <constraint firstItem="a91-n6-ITb" firstAttribute="centerX" secondItem="Z5r-2c-JnK" secondAttribute="centerX" id="cye-y5-I4q"/>
+                            <constraint firstItem="Z5r-2c-JnK" firstAttribute="leading" secondItem="oST-aK-bB3" secondAttribute="leadingMargin" id="h9E-Za-fO3"/>
+                            <constraint firstItem="a91-n6-ITb" firstAttribute="top" secondItem="lSm-Ga-3I8" secondAttribute="bottom" constant="8" symbolic="YES" id="r63-rV-CLq"/>
+                            <constraint firstItem="Z5r-2c-JnK" firstAttribute="trailing" secondItem="oST-aK-bB3" secondAttribute="trailingMargin" id="zUK-ph-k4h"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="GHx-AA-taT"/>
+                    <navigationItem key="navigationItem" title="Edit Profile" id="GHx-AA-taT">
+                        <barButtonItem key="rightBarButtonItem" title="Update" id="Mfv-nO-NUE">
+                            <connections>
+                                <action selector="updateAction:" destination="8Bz-vl-1MO" id="6cL-St-efW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="image" destination="a91-n6-ITb" id="Kut-sq-HXu"/>
+                        <outlet property="username" destination="Z5r-2c-JnK" id="7a4-Ca-iOo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Mn-m1-pLf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2094" y="-1985"/>
+            <point key="canvasLocation" x="1366" y="-1294"/>
         </scene>
         <!--Main Sidebar View Controller-->
         <scene sceneID="Vrf-P8-X9R">
@@ -566,9 +592,16 @@
                             <constraint firstItem="sgQ-mi-gee" firstAttribute="top" secondItem="y1Y-YQ-QS8" secondAttribute="top" id="zh4-mz-ZnV"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="n3c-GL-dct"/>
+                    <navigationItem key="navigationItem" id="n3c-GL-dct">
+                        <barButtonItem key="rightBarButtonItem" title="Sign Out" id="Pne-v2-Plu">
+                            <connections>
+                                <action selector="signoutAction:" destination="YmV-QH-sgw" id="5LI-aa-qK8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableJaunt" destination="sgQ-mi-gee" id="9FB-eR-rhv"/>
+                        <segue destination="8Bz-vl-1MO" kind="show" identifier="showEditProfile" id="iAX-An-tgz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YqW-2e-Hkc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1381,7 +1414,7 @@
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Breathe regularly and count your exhales." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6mA-JA-zCY">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Breathe regularly and count your exhales." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6mA-JA-zCY">
                                 <rect key="frame" x="16" y="233" width="343" height="55"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -1391,7 +1424,7 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Press START and tap the START button everytime your exhale." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dcU-I4-lU5">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Press START and tap the START button everytime your exhale." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcU-I4-lU5">
                                 <rect key="frame" x="16" y="296" width="343" height="75"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
@@ -1472,24 +1505,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zZA-XZ-9hr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-564" y="264"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Ahm-S5-Y6f">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aCl-Sj-kWF" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="O0l-RK-Pkv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="8Bz-vl-1MO" kind="relationship" relationship="rootViewController" id="lRn-R9-O5x"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Fhj-8Q-h6r" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1250" y="-1949"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NCA-7R-LML">

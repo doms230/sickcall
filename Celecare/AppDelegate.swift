@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.registerForRemoteNotifications()
         }
         
-        PFUser.logOut()
+        //PFUser.logOut()
         
         if (PFUser.current() != nil){
             let query = PFQuery(className: "Advisor")

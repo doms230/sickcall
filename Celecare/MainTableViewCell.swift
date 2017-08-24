@@ -140,7 +140,7 @@ class MainTableViewCell: UITableViewCell {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.titleLabel?.textAlignment = .left
-        button.setTitle(" Become Advisor", for: .normal)
+        button.setTitle("", for: .normal)
         button.setImage(UIImage(named: "medication"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         //label.numberOfLines = 0

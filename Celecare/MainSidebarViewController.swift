@@ -11,12 +11,14 @@ import Parse
 import Kingfisher
 
 class MainSidebarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    //var nameJaunt: String!
-    //var imageJaunt: String!
+    var nameJaunt: String!
+    var imageJaunt: String!
     
     @IBOutlet weak var tableJaunt: UITableView!
     
     var isAdvisor = false
+    //profile info is sent to edit profile... so if user taps before loaded, will crash
+    var hasProfileLoaded = false
     
     lazy var titleButton: UIButton = {
         let button =  UIButton(frame: CGRect(x: 0, y: 0, width: 150, height: 40))
@@ -49,21 +51,32 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
             if error == nil || object != nil {
                 let imageFile: PFFile = object!["Profile"] as! PFFile
                 
-                self.titleButton.setTitle("\(object!["DisplayName"] as! String)", for: .normal)
-                self.titleImage.kf.setImage(with: URL(string: imageFile.url!))
+                let name = object!["DisplayName"] as! String
+                self.titleButton.setTitle("\(name)", for: .normal)
+                self.nameJaunt = name
+                
+                let image = imageFile.url!
+                self.imageJaunt = image 
+                self.titleImage.kf.setImage(with: URL(string: image ))
                 self.titleButton.addSubview(self.titleImage)
+                
                 
                 let leftItem = UIBarButtonItem(customView: self.titleButton)
                 
                 self.navigationItem.setLeftBarButton(leftItem, animated: true)
-                //self.tableJaunt.reloadData()
+                self.tableJaunt.reloadData()
                 self.loadAdvisor()
                 
             } else {
                 
             }
         }
-        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! EditProfileViewController
+        desti.nameJaunt = nameJaunt
+        desti.imageJaunt = imageJaunt
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -71,17 +84,24 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if hasProfileLoaded{
+            return 1
+            
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileReuse", for: indexPath) as! MainTableViewCell
-       // cell.userName.text = nameJaunt
-       // cell.userImage.kf.setImage(with: URL(string: self.imageJaunt))
+
         cell.editProfileButton.addTarget(self, action: #selector(self.editProfile(_:)), for: .touchUpInside)
         cell.advisorButton.addTarget(self, action: #selector(self.switchAction(_:)), for: .touchUpInside)
         if isAdvisor{
-            cell.advisorButton.setTitle("Switch To Advisor", for: .normal)            
+            cell.advisorButton.setTitle(" Switch To Advisor", for: .normal)
+            
+        } else {
+            cell.advisorButton.setTitle(" Become Advisor", for: .normal)
         }
         return cell
     }
@@ -98,7 +118,7 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func editProfile(_ sender: UIButton){
-        
+        self.performSegue(withIdentifier: "showEditProfile", sender: self)
     }
     
     func loadAdvisor(){
@@ -106,6 +126,7 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
         query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
+            self.hasProfileLoaded = true
             if error == nil || object != nil {
                 let isActive = object?["isActive"] as! Bool
                 
@@ -119,4 +140,12 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
             }
         }
     }
+    
+    @IBAction func signoutAction(_ sender: UIBarButtonItem) {
+        PFUser.logOut()
+        let storyboard = UIStoryboard(name: "Login", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "welcome")
+        self.present(controller, animated: true, completion: nil)
+    }
+    
 }

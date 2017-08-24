@@ -98,7 +98,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                     self.present(initialViewController, animated: true, completion: nil)
                 }
             } else {
-                print("Uh oh. The user cancelled the Facebook login.")
+                self.stopAnimating()
             }
         }
     }
