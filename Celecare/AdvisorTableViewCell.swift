@@ -10,11 +10,6 @@ import UIKit
 import SnapKit
 
 class AdvisorTableViewCell: UITableViewCell {
-
-   
-  //  @IBOutlet weak var statusLabel: UILabel!
-
-   // @IBOutlet weak var statusButton: UIButton!
     
     //vitals
     

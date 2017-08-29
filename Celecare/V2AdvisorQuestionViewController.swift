@@ -77,8 +77,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
         // Do any additional setup after loading the view.
         
         self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
@@ -121,7 +119,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let desti = segue.destination as! AdvisorMedsViewController
         desti.patientUserId = patientUserId
-        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -205,7 +202,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             (videoData: Data?, error: Error?) -> Void in
             if error == nil {
                 if let videoData = videoData {
-                    //self.selectedVideoData = videoData
                     //convert video file to playable format
                     let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as AnyObject
                     let destinationPath:String = documentsPath.appending("/file.mov")
@@ -275,7 +271,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     }
     
     override func didPressRightButton(_ sender: Any?) {
-        
         //add comment and change comment button to Edit comment
         comments = self.textView.text
         commentButton = "Edit Comment"
@@ -400,7 +395,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         viewQuestionButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         viewQuestionButton.titleLabel?.textAlignment = .center
         viewQuestionButton.setTitle("View Question", for: .normal)
-        //button.setImage(UIImage(named: "exit"), for: .normal)
         viewQuestionButton.backgroundColor = uicolorFromHex(0xf4ff81)
         viewQuestionButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
         self.textView.superview?.addSubview(viewQuestionButton)
@@ -410,7 +404,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         respondButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         respondButton.titleLabel?.textAlignment = .center
         respondButton.setTitle("Respond", for: .normal)
-        //button.setImage(UIImage(named: "exit"), for: .normal)
         respondButton.backgroundColor = uicolorFromHex(0x81ff96)
         respondButton.addTarget(self, action: #selector(self.respondAction(_:)), for: .touchUpInside)
     }
@@ -482,12 +475,4 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-
-    */
-
 }

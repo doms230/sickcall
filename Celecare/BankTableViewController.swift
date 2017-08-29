@@ -19,7 +19,6 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
     
     //payments
     var baseURL = "https://celecare.herokuapp.com/payments/bank"
-    //var baseURL = "http://192.168.1.75:5000/payments/updateBankInfo"
 
     @IBOutlet weak var accountTextField: UITextField!
     @IBOutlet weak var routingTextField: UITextField!
@@ -44,8 +43,8 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
         cancelButton.tag = 1
         
         startAnimating()
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+        let query = PFQuery(className: "Advisor")
+        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
@@ -64,7 +63,8 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
         successView = SCLAlertView(appearance: appearance)
         successView.addButton("Okay") {
             let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
             self.present(controller, animated: true, completion: nil)
         }
     }
@@ -103,8 +103,6 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
             case .success(let data):
                 let json = JSON(data)
                 print("JSON: \(json)")
-                /* if let id = json["id"].string {
-                 }*/
                 
                 //can't get status code for some reason
                 self.stopAnimating()
@@ -126,8 +124,6 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
                 
             case .failure(let error):
                 print(error)
-                // self.messageFrame.removeFromSuperview()
-                // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
                 SCLAlertView().showError("Error", subTitle: error as! String)
                 }
             }
@@ -135,14 +131,14 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
         } else {
             //cancel
             let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
             self.present(controller, animated: true, completion: nil)
         }
     }
     
     
     func getAccountInfo(){
-        
         //class won't compile with textfield straight in parameters so has to be put to string first
         let p: Parameters = [
             "account_Id": connectId,
@@ -160,9 +156,6 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
                 SCLAlertView().showError("Something Went Wrong", subTitle: message!)
                 
             } else {
-                
-                //self.successView.showSuccess("Success", subTitle: "You've updated your address.")
-                //let bankName = json["external_accounts"]["data"][0]["bank_name"].string
                 let last4 = json["external_accounts"]["data"][0]["last4"].string
                 
                 self.accountTextField.text = "****\(last4!)"
@@ -173,8 +166,6 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
             self.stopAnimating()
             print(error)
             SCLAlertView().showError("Something Went Wrong", subTitle: "")
-            // self.messageFrame.removeFromSuperview()
-            // self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
             
             }
         }
@@ -187,6 +178,5 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-    
     
 }

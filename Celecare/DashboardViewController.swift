@@ -39,6 +39,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     var needBankInfo = false
     var didLoad = false
     
+    var payments = 0.00
+    
     @IBOutlet weak var profileImage: UIButton!
     
     @IBOutlet weak var tableJaunt: UITableView!
@@ -82,6 +84,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         loadData()
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -104,6 +107,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.backgroundColor = uicolorFromHex(0xe8e6df)
         
         //cell.getPaidButton.backgroundColor = uicolorFromHex(0x180d22)
+        
+        cell.paymentAmount.text = "$\(payments)0"
         
         if needBankInfo{
             cell.queueLabel.text = "Link your bank account to start taking questions"
@@ -202,7 +207,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.connectId = object?["connectId"] as! String
 
                 self.getAccountInfo()
- 
+                self.getTransfers()
                 self.tableJaunt.reloadData()
                 
             } else{
@@ -237,6 +242,42 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                      self.needBankInfo = true
                     }
                 }
+                self.tableJaunt.reloadData()
+            }
+            
+        case .failure(let error):
+            self.stopAnimating()
+            print(error)
+            SCLAlertView().showError("Something Went Wrong", subTitle: "")
+            
+            }
+        }
+    }
+    
+    func getTransfers(){
+        let p: Parameters = [
+            "account": connectId,
+            ]
+        let url = "https://celecare.herokuapp.com/payments/transfers"
+        Alamofire.request(url, parameters: p, encoding: URLEncoding.default).validate().responseJSON { response in switch response.result {
+        case .success(let data):
+            let json = JSON(data)
+            //print("JSON: \(json)")
+            self.stopAnimating()
+            self.didLoad = true
+            //can't get status code for some reason
+            if let status = json["statusCode"].int{
+                print(status)
+                let message = json["message"].string
+                SCLAlertView().showError("Something Went Wrong", subTitle: message!)
+                
+            } else {
+                for object in json["data"].arrayValue.map({$0["amount"].double}) {
+                    let amount = object!
+                    
+                    self.payments = self.payments + amount
+                }
+                self.payments = self.payments * 0.01
                 self.tableJaunt.reloadData()
             }
             

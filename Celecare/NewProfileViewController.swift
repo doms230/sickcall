@@ -114,7 +114,6 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
     @IBAction func uploadProfilePicAction(_ sender: UIButton) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType =  .photoLibrary
-        //imagePicker.cameraDevice = .front
         present(imagePicker, animated: true, completion: nil)
     }
     

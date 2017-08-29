@@ -93,11 +93,6 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
 
                 } else {
                     SCLAlertView().showError("Post Failed", subTitle: "Check internet connection and try again. Contact help@sickcallhealth.com if the issue persists.")
-                    // self.mapJaunt.removeAnnotation(pin)
-                    /*let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@celecareapp.com if the issue persists.", preferredStyle: .alert)
-                    newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                    
-                    self.present(newTwitterHandlePrompt, animated: true, completion: nil)*/
                 }
             }
         } else {
@@ -127,8 +122,6 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
     
     func validateMonth() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
-        
         if monthText.text!.isEmpty{
             monthText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.red])
@@ -145,8 +138,6 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
     
     func validateYear() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
-        
         if yearText.text!.isEmpty{
             yearText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.red])
@@ -162,9 +153,7 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     func validateSSN() ->Bool{
-        var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
-        
+        var isValidated = false        
         if ssnButton.text!.isEmpty{
             
             ssnButton.attributedPlaceholder = NSAttributedString(string:"Field required",

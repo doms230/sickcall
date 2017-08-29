@@ -50,8 +50,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         
         //Validate username
         
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
-        
         if email.text!.isEmpty{
             
             email.attributedPlaceholder = NSAttributedString(string:"Field required",
@@ -94,7 +92,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
                 let installation = PFInstallation.current()
                 installation?["user"] = PFUser.current()
                 installation?["userId"] = PFUser.current()?.objectId
-                //installation.setDeviceTokenFromData(deviceToken)
                 installation?.saveEventually()
                 
                 self.determineNextScreen()
