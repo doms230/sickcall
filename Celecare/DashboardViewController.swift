@@ -64,7 +64,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         super.viewDidLoad()
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -180,8 +180,9 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         self.subscription = self.liveQueryClient
             .subscribe(self.questionsQuery)
             .handle(Event.updated) { _, object in
+                
                 let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "question") as UIViewController
+                let controller = storyboard.instantiateViewController(withIdentifier: "question")
                 self.present(controller, animated: true, completion: nil)
         }
     }
@@ -198,7 +199,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                     self.isOnline = true
                 }
                 
-                self.connectId = object!["connectId"] as! String
+                self.connectId = object?["connectId"] as! String
+
                 self.getAccountInfo()
  
                 self.tableJaunt.reloadData()

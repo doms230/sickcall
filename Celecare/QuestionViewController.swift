@@ -41,16 +41,16 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         desti.healthConcernDuration = healthConcernDuration
         desti.healthConcernSummary = healthConcernSummary
         //TODO: uncomment later.. needed
-        //desti.pickedFile = videoFile
+        desti.pickedFile = videoFile
     }
     
     
     @IBAction func askQuestionAction(_ sender: UIButton) {
         
-         self.performSegue(withIdentifier: "showCheckout", sender: self)
+        // self.performSegue(withIdentifier: "showCheckout", sender: self)
         
         //TODO: uncomment later... needed 
-        /*if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
             if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 
                 imagePicker.sourceType = .camera
@@ -66,7 +66,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
             }
         } else {
             postAlert("Camera inaccessable", message: "Application cannot access the camera.")
-        }*/
+        }
     }
     
     
@@ -76,22 +76,9 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         print("Got a video")
         
         if let pickedVideo:URL = (info[UIImagePickerControllerMediaURL] as? URL) {
-            // Save video to the main photo album
-           /* let selectorToCall = #selector(QuestionViewController.videoWasSavedSuccessfully(_:didFinishSavingWithError:context:))
-            UISaveVideoAtPathToSavedPhotosAlbum(pickedVideo.relativePath, self, selectorToCall, nil)
             
-            // Save the video to the app directory so we can play it later
-            let videoData = try? Data(contentsOf: pickedVideo)
-            let paths = NSSearchPathForDirectoriesInDomains(
-                FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-            let documentsDirectory: URL = URL(fileURLWithPath: paths[0])
-            let dataPath = documentsDirectory.appendingPathComponent(saveFileName)
-            try! videoData?.write(to: dataPath, options: [])
-            print("Saved to " + dataPath.absoluteString)*/
-            
-            //compressAction(videoFile: pickedVideo)
             videoFile = pickedVideo
-            
+                        
             imagePicker.dismiss(animated: true, completion: {
                 // Anything you want to happen when the user saves an video
                 self.performSegue(withIdentifier: "showCheckout", sender: self)
@@ -117,74 +104,21 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         self.present(alert, animated: true, completion: nil)
     }
     
-    /*
-     func cleanup(outputFileURL: URL ) {
-     print("started clean up")
-     let path = outputFileURL.path
-     
-     if FileManager.default.fileExists(atPath: path) {
-     do {
-     try FileManager.default.removeItem(atPath: path)
-     print("removed temp file")
-     }
-     catch {
-     print("Could not remove file at url: \(outputFileURL)")
-     }
-     
-     } else {
-     print("couldn't find file")
-     }
-     
-     if let currentBackgroundRecordingID = backgroundRecordingID {
-     backgroundRecordingID = UIBackgroundTaskInvalid
-     
-     if currentBackgroundRecordingID != UIBackgroundTaskInvalid {
-     UIApplication.shared.endBackgroundTask(currentBackgroundRecordingID)
-     }
-     }
-     }
- 
- */
-    
-    //video compression
-    /*func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
-        let urlAsset = AVURLAsset(url: inputURL, options: nil)
-        if let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetHighestQuality) {
-            exportSession.outputURL = outputURL
-            exportSession.outputFileType = AVFileTypeQuickTimeMovie
-            exportSession.shouldOptimizeForNetworkUse = true
-            exportSession.exportAsynchronously { () -> Void in
-                handler(exportSession)
+    func cleanup(outputFileURL: URL ) {
+        print("started clean up")
+        let path = outputFileURL.path
+        
+        if FileManager.default.fileExists(atPath: path) {
+            do {
+                try FileManager.default.removeItem(atPath: path)
+                print("removed temp file")
             }
+            catch {
+                print("Could not remove file at url: \(outputFileURL)")
+            }
+            
+        } else {
+            print("couldn't find file")
         }
     }
-    
-    func compressAction(videoFile: URL){
-        let compressedURL = URL(fileURLWithPath: NSTemporaryDirectory() + UUID().uuidString + ".mp4")
-        compressVideo(videoFile, outputURL: compressedURL) { (session) in
-            switch session.status {
-            case .unknown:
-                break
-            case .waiting:
-                break
-            case .exporting:
-                break
-            case .completed:
-                
-                let data = try? Data(contentsOf: compressedURL)
-                self.videoFile = PFFile(name:"media.mp4", data:data!)!
-
-                self.performSegue(withIdentifier: "showCheckout", sender: self)
-                
-                break
-            case .failed:
-                //do something saying jaunt failed
-                break
-            case .cancelled:
-                break
-            }
-        }
-    }*/
-    
-
 }

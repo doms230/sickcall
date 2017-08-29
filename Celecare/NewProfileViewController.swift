@@ -15,9 +15,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
     
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var userImage: UIButton!
-    
-    var baseURL = "https://celecare.herokuapp.com"
-    
+        
     var userNameString: String!
     var emailString: String!
     var passwordString: String!

@@ -25,12 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //change color of time/status jaunts to white
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:UIControlState())
         
-        UITabBar.appearance().tintColor = uicolorFromHex(0x180d22)
+        UITabBar.appearance().tintColor = uicolorFromHex(0xee1848)
         
         let navigationBarAppearace = UINavigationBar.appearance()
         
         navigationBarAppearace.barTintColor = uicolorFromHex(0xffffff)
-        navigationBarAppearace.tintColor = uicolorFromHex(0x180d22)
+        navigationBarAppearace.tintColor = uicolorFromHex(0xee1848)
         
         //Stripe ***
         STPPaymentConfiguration.shared().publishableKey = "pk_test_oP3znUobvO9fTRuYb6Qo7PYB"

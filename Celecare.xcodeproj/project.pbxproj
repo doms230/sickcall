@@ -209,6 +209,7 @@
 		9AF65FDC1F205CFA00C6E9CA /* mich */ = {
 			isa = PBXGroup;
 			children = (
+				F2E86B461F3A652400F4703C /* RespRateViewController.swift */,
 				9ACD37FD1F060001005842CF /* VerifyViewController.swift */,
 				9ACD37FF1F06177B005842CF /* EmailViewController.swift */,
 				590042E91F293D540077083A /* AddressTableViewController.swift */,
@@ -245,7 +246,6 @@
 				F2E86B3D1F398BF300F4703C /* AllergyViewController.swift */,
 				F2E86B441F3A460300F4703C /* MedHistoryTableViewController.swift */,
 				F2E86B421F3A433700F4703C /* HeartRateViewController.swift */,
-				F2E86B461F3A652400F4703C /* RespRateViewController.swift */,
 				9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */,
 				9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */,
 				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,

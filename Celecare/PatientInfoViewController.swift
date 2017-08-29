@@ -12,8 +12,8 @@ import Parse
 class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
     @IBOutlet weak var genderButton: UIButton!
-    var genders = ["", "Female", "Male", "Other"]
-    var selectedGender: String!
+    var genders = ["", "Female", "Male", "Non-Conforming"]
+    var selectedGender = ""
     
     @IBOutlet weak var birthdayButton: UIButton!
     var day: String!
@@ -22,10 +22,10 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var selectedBirthday: String!
     
     @IBOutlet weak var heightButton: UIButton!
-    var heightFt = ["", "0'", "1'", "2'", "3'", "4'", "5'", "6'", "7'", "8'" ]
-    var heightIn = ["", "0\"", "1\"", "2\"", "3\"", "4\"", "5\"", "6\"", "7\"", "8\"", "9\"", "10\"", "11\""]
-    var selectedHeightFt: String!
-    var selectedHeightIn: String!
+    var heightFt = [ "0'", "1'", "2'", "3'", "4'", "5'", "6'", "7'", "8'" ]
+    var heightIn = [ "0\"", "1\"", "2\"", "3\"", "4\"", "5\"", "6\"", "7\"", "8\"", "9\"", "10\"", "11\""]
+    var selectedHeightFt = "0'"
+    var selectedHeightIn = "0\""
     
     @IBOutlet weak var weightButton: UIButton!
     var weight = [String]()
@@ -304,11 +304,11 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
             UIAlertAction in
             switch type{
             case "gender":
-                self.genderButton.setTitle(" \(self.selectedGender!)", for: .normal)
+                self.genderButton.setTitle(" \(self.selectedGender)", for: .normal)
                 break
                 
             case "height":
-                self.heightButton.setTitle(" \(self.selectedHeightFt!) \(self.selectedHeightIn!)", for: .normal)
+                self.heightButton.setTitle(" \(self.selectedHeightFt) \(self.selectedHeightIn)", for: .normal)
                 break
                 
             case "weight":

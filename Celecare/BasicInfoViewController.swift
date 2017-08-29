@@ -45,8 +45,9 @@ class BasicInfoViewController: UIViewController {
     
 
     @IBAction func nexAction(_ sender: UIBarButtonItem) {
-                performSegue(withIdentifier: "showQuestion", sender: self)
-       // postAlert("", message: "Next the user would have 1 minute to ask their question. After asking their question they would pay and that question would be sent to the next available advisor.")
+        if validateTitle(){
+            performSegue(withIdentifier: "showQuestion", sender: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -136,6 +137,22 @@ class BasicInfoViewController: UIViewController {
         } else {
             moreThanYearSwitch.setOn(true, animated: true)
         }
+    }
+    
+    func validateTitle() -> Bool{
+        var isValidated = false
+        
+        if questionSubjectTextfield.text!.isEmpty{
+            questionSubjectTextfield.attributedPlaceholder = NSAttributedString(string:"Field required",
+                                                                     attributes:[NSForegroundColorAttributeName: UIColor.red])
+            isValidated = false
+            
+        } else{
+            print("true")
+            isValidated = true
+        }
+        
+        return isValidated
     }
     
     

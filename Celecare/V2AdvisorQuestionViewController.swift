@@ -20,11 +20,13 @@ import SwiftyJSON
 
 class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicatorViewable {
     var baseURL = "https://celecare.herokuapp.com/posts/assignQuestion"
+    var chargeURL = "https://celecare.herokuapp.com/payments/captureCharge"
     
     //advisor
     var advisorUserImage: String!
     var advisorUsername: String!
     var advisorUserId: String!
+    var connectId: String!
     
     //patient
     var patientUserImage: String!
@@ -39,12 +41,13 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     var didPressRightButton = false
     var didChooseConcernLevel = false
     
-    //question
+    //question info
     var objectId: String!
     var summary: String!
     var duration: String!
     //var videoJaunt: PFFile!
     var videoPreview: String!
+    var chargeId: String!
     
     //video
     var playerItem: AVPlayerItem!
@@ -75,7 +78,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        
         // Do any additional setup after loading the view.
         
         self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
@@ -92,7 +95,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.shouldScrollToBottomAfterKeyboardShows = true
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -102,6 +105,16 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.loadPost()
         setUpAlertView()
         subscribeToUpdates()
+        
+        let query = PFQuery(className: "Advisor")
+        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                
+                self.connectId = object?["connectId"] as! String
+            }
+        }
 
     }
     
@@ -285,6 +298,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     func respondAction(_ sender: UIButton){
         //postResponse
         if didChooseConcernLevel{
+            self.startAnimating()
             let query = PFQuery(className: "Post")
             query.whereKey("objectId", equalTo: objectId)
             query.getFirstObjectInBackground {
@@ -293,15 +307,10 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                     object?["isAnswered"] = true
                     object?["comment"] = self.comments
                     object?["level"] = self.level
-                    self.startAnimating()
                     object?.saveEventually{
                         (success: Bool, error: Error?) -> Void in
-                        self.stopAnimating()
                         if (success) {
-                            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                            controller.didAnswer = true
-                            self.present(controller, animated: true, completion: nil)
+                            self.chargePatient()
                             
                         } else {
                            SCLAlertView().showError("Issue with Responding", subTitle: "Check internet connection and try again")
@@ -331,6 +340,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                 let videoPreview = object?["videoScreenShot"] as! PFFile
                 self.videoPreview = videoPreview.url
                 self.patientUserId = object?["userId"] as! String
+                self.chargeId = object?["chargeId"] as! String
                 self.objectId = object?.objectId
                 self.loadPatient()
             }
@@ -417,7 +427,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         cancelQuestionView.addButton("Okay"){
             let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-            controller.didAnswer = true
             self.present(controller, animated: true, completion: nil)
         }
     }
@@ -444,7 +453,19 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     
     func backEndIsh(){
         startAnimating()
+        
         Alamofire.request(self.baseURL, method: .post, parameters: ["id": objectId], encoding: JSONEncoding.default).validate().response{response in
+            self.stopAnimating()
+            print(response)
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    func chargePatient(){
+        Alamofire.request(self.chargeURL, method: .post, parameters: ["charge": chargeId, "connectId": connectId], encoding: JSONEncoding.default).validate().response{response in
             self.stopAnimating()
             print(response)
             let storyboard = UIStoryboard(name: "Advisor", bundle: nil)

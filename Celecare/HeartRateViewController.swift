@@ -8,15 +8,18 @@
 
 import UIKit
 import SCLAlertView
+import Parse
+import NVActivityIndicatorView
 
-class HeartRateViewController: UIViewController {
+class HeartRateViewController: UIViewController, NVActivityIndicatorViewable {
     @IBOutlet weak var startButton: UIButton!
 
     @IBOutlet weak var heartRateImage: UIImageView!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var bpmLabel: UILabel!
     var didPressStart = false
-    var beatsPM: Int!
+    var beatsPM = 0
+    
     
     //used to record the amount of times user taps button
     var taps = 0
@@ -29,7 +32,7 @@ class HeartRateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = " Vitals 1/2"
+        self.title = " Vitals"
         
         nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
@@ -39,15 +42,39 @@ class HeartRateViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! RespRateViewController
-        desti.beatsPM = "\(beatsPM)"
+        /*let desti = segue.destination as! RespRateViewController
+        desti.beatsPM = "\(beatsPM)"*/
     }
     
     func nextAction(_ sender: UIBarButtonItem){
         if didPressStart{
             endTimer()
         } else {
-            performSegue(withIdentifier: "showRespRate", sender: self)
+           // performSegue(withIdentifier: "showRespRate", sender: self)
+            startAnimating()
+            let query = PFQuery(className: "_User")
+            query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
+            query.getFirstObjectInBackground {
+                (object: PFObject?, error: Error?) -> Void in
+                if error != nil || object == nil {
+                    self.stopAnimating()
+                    //SCLAlertView().showError("Medical Info Update Failed", subTitle: "Check internet connection and try again. Contact help@sickcallhealth.com if the issue persists.")
+                    
+                } else {
+                    object?["beatsPM"] = "\(self.beatsPM)"
+                    //object?["respsPM"] = self.respsPM
+                    object?.saveInBackground {
+                        (success: Bool, error: Error?) -> Void in
+                        self.stopAnimating()
+                        if (success) {
+                            self.performSegue(withIdentifier: "showQuestion", sender: self)
+                            
+                        } else {
+                            SCLAlertView().showError("Medical Info Update Failed", subTitle: "Check internet connection and try again. Contact help@sickcallhealth.com if the issue persists.")
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -81,8 +108,8 @@ class HeartRateViewController: UIViewController {
     func endTimer() {
         if totalTime == 0{
             beatsPM = taps * 4
-            SCLAlertView().showSuccess("Your BPM is \(beatsPM!)", subTitle: "")
-            bpmLabel.text = "\(beatsPM!) Beats per Minute (BPM)"
+            SCLAlertView().showSuccess("Your BPM is \(beatsPM)", subTitle: "")
+            bpmLabel.text = "\(beatsPM) Beats per Minute (BPM)"
             bpmLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
         }
 

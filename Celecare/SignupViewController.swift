@@ -53,8 +53,8 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     func next(_ sender: UIBarButtonItem){
-        startAnimating()
         if validateEmail() && validatePassword(){
+            startAnimating()
             //self.performSegue(withIdentifier: "showNewProfile", sender: self)
             let emailQuery = PFQuery(className: "_User")
             emailQuery.whereKey("email", equalTo: self.emailField.text!  )

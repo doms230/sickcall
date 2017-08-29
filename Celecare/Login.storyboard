@@ -24,42 +24,44 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sickcall" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Zq-c4-f5J">
                                 <rect key="frame" x="16" y="28" width="343" height="70"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="eVI-FB-hTP"/>
+                                    <constraint firstAttribute="height" constant="70" id="SKO-h9-sqH"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="50"/>
                                 <color key="textColor" red="0.93333333333333335" green="0.094117647058823528" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Find out how serious your health emergency is" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wC3-cl-PfV">
-                                <rect key="frame" x="16" y="106" width="343" height="65"/>
+                                <rect key="frame" x="16" y="106" width="343" height="80"/>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="hsL-Y5-x6H"/>
+                                    <constraint firstAttribute="height" constant="80" id="7lN-Vc-GP8"/>
                                 </constraints>
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fng-Il-Xps">
-                                <rect key="frame" x="16" y="512" width="343" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJT-vY-vl7">
+                                <rect key="frame" x="16" y="194" width="343" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="fLJ-pV-eIn"/>
+                                    <constraint firstAttribute="height" constant="50" id="nZI-pR-Idi"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Continue with Facebook"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Sign In">
+                                    <color key="titleColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
-                                    <action selector="facebookAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="fDu-OE-JdU"/>
+                                    <action selector="signInAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="Q0h-2D-0yU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2R-cw-jUn">
-                                <rect key="frame" x="16" y="571" width="343" height="50"/>
-                                <color key="backgroundColor" red="0.93333333330000001" green="0.094117647060000004" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2R-cw-jUn">
+                                <rect key="frame" x="16" y="252" width="343" height="50"/>
+                                <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="sd7-S9-YZJ"/>
+                                    <constraint firstAttribute="height" constant="50" id="WpB-d4-Klu"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Sign Up">
-                                    <color key="titleColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.93333333330000001" green="0.094117647060000004" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="signupAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="tow-dV-RDr"/>
@@ -68,7 +70,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xq4-5n-k2z">
                                 <rect key="frame" x="16" y="629" width="343" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="H1N-Nr-Ng2"/>
+                                    <constraint firstAttribute="height" constant="30" id="BhY-Cg-ZyX"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <state key="normal" title="By continuing, you agree to our terms and privacy policy">
@@ -78,40 +80,38 @@
                                     <action selector="termsAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="KVH-uV-4xG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJT-vY-vl7">
-                                <rect key="frame" x="16" y="179" width="343" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fng-Il-Xps">
+                                <rect key="frame" x="16" y="310" width="343" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="ydp-eu-kaQ"/>
+                                    <constraint firstAttribute="height" constant="50" id="ZE4-Az-yFj"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                <state key="normal" title="Sign In">
-                                    <color key="titleColor" red="0.93333333330000001" green="0.094117647060000004" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Continue with Facebook"/>
                                 <connections>
-                                    <action selector="signInAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="Q0h-2D-0yU"/>
+                                    <action selector="facebookAction:" destination="uwt-fy-VdF" eventType="touchUpInside" id="fDu-OE-JdU"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="leading" secondItem="cEP-tV-kIm" secondAttribute="leadingMargin" id="DCE-YP-KHA"/>
-                            <constraint firstItem="wC3-cl-PfV" firstAttribute="trailing" secondItem="YJT-vY-vl7" secondAttribute="trailing" id="DgH-2h-uTj"/>
-                            <constraint firstItem="M2R-cw-jUn" firstAttribute="trailing" secondItem="Xq4-5n-k2z" secondAttribute="trailing" id="G3F-7r-TFG"/>
-                            <constraint firstItem="wC3-cl-PfV" firstAttribute="leading" secondItem="YJT-vY-vl7" secondAttribute="leading" id="JeJ-8h-Hla"/>
-                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="leading" secondItem="wC3-cl-PfV" secondAttribute="leading" id="Jfy-4u-hQA"/>
-                            <constraint firstItem="wC3-cl-PfV" firstAttribute="top" secondItem="5Zq-c4-f5J" secondAttribute="bottom" constant="8" symbolic="YES" id="Krp-xZ-lKa"/>
-                            <constraint firstItem="POD-aU-Pgc" firstAttribute="top" secondItem="Xq4-5n-k2z" secondAttribute="bottom" constant="8" symbolic="YES" id="Ktn-ak-fKh"/>
-                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="trailing" secondItem="wC3-cl-PfV" secondAttribute="trailing" id="bHa-iF-Qxs"/>
-                            <constraint firstItem="YJT-vY-vl7" firstAttribute="top" secondItem="wC3-cl-PfV" secondAttribute="bottom" constant="8" symbolic="YES" id="fQJ-Ll-Gcd"/>
-                            <constraint firstItem="YJT-vY-vl7" firstAttribute="leading" secondItem="fng-Il-Xps" secondAttribute="leading" id="gFH-f8-rNc"/>
-                            <constraint firstItem="fng-Il-Xps" firstAttribute="trailing" secondItem="M2R-cw-jUn" secondAttribute="trailing" id="iG2-TD-sMy"/>
-                            <constraint firstItem="M2R-cw-jUn" firstAttribute="leading" secondItem="Xq4-5n-k2z" secondAttribute="leading" id="ji7-iT-rto"/>
-                            <constraint firstItem="fng-Il-Xps" firstAttribute="leading" secondItem="M2R-cw-jUn" secondAttribute="leading" id="lYx-ov-4hF"/>
-                            <constraint firstItem="Xq4-5n-k2z" firstAttribute="top" secondItem="M2R-cw-jUn" secondAttribute="bottom" constant="8" symbolic="YES" id="nCw-HX-fkC"/>
-                            <constraint firstItem="M2R-cw-jUn" firstAttribute="top" secondItem="fng-Il-Xps" secondAttribute="bottom" constant="9" id="oMB-m3-boc"/>
-                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="trailing" secondItem="cEP-tV-kIm" secondAttribute="trailingMargin" id="uOY-jg-dvv"/>
-                            <constraint firstItem="YJT-vY-vl7" firstAttribute="trailing" secondItem="fng-Il-Xps" secondAttribute="trailing" id="vwm-mz-eIa"/>
-                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="top" secondItem="Ln8-eg-K8A" secondAttribute="bottom" constant="8" symbolic="YES" id="y6A-em-z8D"/>
+                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="trailing" secondItem="cEP-tV-kIm" secondAttribute="trailingMargin" id="1Y4-dj-cAD"/>
+                            <constraint firstItem="wC3-cl-PfV" firstAttribute="trailing" secondItem="YJT-vY-vl7" secondAttribute="trailing" id="3nR-LU-7t6"/>
+                            <constraint firstItem="fng-Il-Xps" firstAttribute="top" secondItem="M2R-cw-jUn" secondAttribute="bottom" constant="8" symbolic="YES" id="GAR-1U-kQY"/>
+                            <constraint firstItem="M2R-cw-jUn" firstAttribute="leading" secondItem="fng-Il-Xps" secondAttribute="leading" id="L3h-OD-kdZ"/>
+                            <constraint firstItem="POD-aU-Pgc" firstAttribute="top" secondItem="Xq4-5n-k2z" secondAttribute="bottom" constant="8" symbolic="YES" id="Nat-GC-zqm"/>
+                            <constraint firstItem="YJT-vY-vl7" firstAttribute="trailing" secondItem="M2R-cw-jUn" secondAttribute="trailing" id="Qt7-zl-Kae"/>
+                            <constraint firstItem="YJT-vY-vl7" firstAttribute="top" secondItem="wC3-cl-PfV" secondAttribute="bottom" constant="8" symbolic="YES" id="fGs-FG-nUE"/>
+                            <constraint firstItem="M2R-cw-jUn" firstAttribute="trailing" secondItem="fng-Il-Xps" secondAttribute="trailing" id="fwM-X9-FDK"/>
+                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="trailing" secondItem="wC3-cl-PfV" secondAttribute="trailing" id="gTC-2E-5WI"/>
+                            <constraint firstItem="wC3-cl-PfV" firstAttribute="leading" secondItem="YJT-vY-vl7" secondAttribute="leading" id="jMY-a0-xKA"/>
+                            <constraint firstItem="YJT-vY-vl7" firstAttribute="leading" secondItem="M2R-cw-jUn" secondAttribute="leading" id="jdj-xj-jAh"/>
+                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="top" secondItem="Ln8-eg-K8A" secondAttribute="bottom" constant="8" symbolic="YES" id="jiC-Qz-h7Q"/>
+                            <constraint firstItem="wC3-cl-PfV" firstAttribute="top" secondItem="5Zq-c4-f5J" secondAttribute="bottom" constant="8" symbolic="YES" id="n3V-er-usw"/>
+                            <constraint firstItem="M2R-cw-jUn" firstAttribute="top" secondItem="YJT-vY-vl7" secondAttribute="bottom" constant="8" symbolic="YES" id="ojE-ZL-hm9"/>
+                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="leading" secondItem="cEP-tV-kIm" secondAttribute="leadingMargin" id="uAb-zR-nJJ"/>
+                            <constraint firstItem="5Zq-c4-f5J" firstAttribute="leading" secondItem="wC3-cl-PfV" secondAttribute="leading" id="xpQ-ip-Mv2"/>
+                            <constraint firstItem="fng-Il-Xps" firstAttribute="leading" secondItem="Xq4-5n-k2z" secondAttribute="leading" id="y4g-gr-Zgf"/>
+                            <constraint firstItem="fng-Il-Xps" firstAttribute="trailing" secondItem="Xq4-5n-k2z" secondAttribute="trailing" id="zQI-Bd-ig8"/>
                         </constraints>
                     </view>
                     <connections>

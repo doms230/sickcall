@@ -16,8 +16,10 @@ import AVFoundation
 import Stripe
 import Alamofire
 import SwiftyJSON
+import NVActivityIndicatorView
+import SCLAlertView
 
-class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate {
+class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate, NVActivityIndicatorViewable {
     
     //post info
     var healthConcernDuration: String!
@@ -26,6 +28,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     var pickedFile: URL!
     var screenshotImage: PFFile!
     var image: UIImage!
+    var chargeId: String!
     
     //user 
     var customerId: String!
@@ -34,9 +37,9 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     @IBOutlet weak var healthDurationLabel: UILabel!
     @IBOutlet weak var questionVideoButton: UIButton!
     
-    //payments 
-    var baseURL = "https://celecare.herokuapp.com/payments/pay"
-    //var baseURL = "http://192.168.1.75:5000/payments/pay"
+    //payments
+    var baseURL = "https://celecare.herokuapp.com/payments/createCharge"
+    var questionURL = "https://celecare.herokuapp.com/posts/assignQuestion"
     var tokenId: String!
     
     @IBOutlet weak var paymentImage: UIImageView!
@@ -46,9 +49,6 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     var isVideoCompressed = false
     var hasUserPaid = false
     var isVideoSaved = false
-    
-    //progress bar
-    var messageFrame: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +57,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
         //let customerContext = STPCustomerContext(keyProvider: MyAPIClient.sharedClient)
         
         //TODO: Uncomment
-        /*image = self.videoPreviewImage()
+        image = self.videoPreviewImage()
         
         questionSummary.text = healthConcernSummary
         healthDurationLabel.text = healthConcernDuration
@@ -74,40 +74,31 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
              
                 
             }else{
-                // self.mapJaunt.removeAnnotation(tempPin)
-                /*let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
-                newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                self.present(newTwitterHandlePrompt, animated: true, completion: nil)*/
             }
         }
         
         
-        compressAction(videoFile: pickedFile)*/
+        compressAction(videoFile: pickedFile)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 
     
     //UI Action
     
     @IBAction func askQuestionAction(_ sender: UIButton) {
-        progressBarDisplayer("")
-        hasUserPaid = true
-        createCharge()
+        
+        if tokenId != nil{
+            startAnimating()
+            createCharge()
+
+        } else {
+            self.paymentCard.setTitleColor(.red, for: .normal)
+        }
     }
     
     @IBAction func choosePaymentAction(_ sender: UIButton) {
@@ -120,12 +111,6 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     
     //
     @IBAction func questionVideoAction(_ sender: UIButton) {
-        // Find the video in the app's document directory
-        
-        /* guard let path = Bundle.main.path(forResource: "video", ofType:"m4v") else {
-         debugPrint("video.m4v not found")
-         return
-         }*/
         
         let player = AVPlayer(url: pickedFile)
         let playerController = AVPlayerViewController()
@@ -160,14 +145,15 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
             case .exporting:
                 break
             case .completed:
-                
+
                 let data = try? Data(contentsOf: compressedURL)
                 self.videoFile = PFFile(name:"media.mp4", data:data!)!
                 self.videoFile.saveInBackground {
                     (success: Bool, error: Error?) -> Void in
                     if (success) {
                         self.isVideoCompressed = true
-                        
+                        self.cleanup(outputFileURL: compressedURL)
+                        self.cleanup(outputFileURL: videoFile)
                         if self.hasUserPaid{
                             self.postIt()
                         }
@@ -175,6 +161,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
                         print("video saved")
                         
                     }else{
+                        print(error!)
                         // self.mapJaunt.removeAnnotation(tempPin)
                         let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@hiikey.com if the issue persists.", preferredStyle: .alert)
                         newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
@@ -202,18 +189,19 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
     func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
         
         tokenId = token.tokenId;
+
         paymentCard.setTitle(token.card?.last4(), for: .normal)
+        paymentCard.setTitleColor(.blue, for: .normal)
         paymentImage.image = token.card?.image
         self.dismiss(animated: true, completion: nil)
     }
     
     func createCharge(){
         //TODO: add application charge and extra charge for stripe fee j
-        let p: Parameters = [
-            
-            "amount": 1000,
+        let p: Parameters = [            
             "description": "Health Concern for \(PFUser.current()!.objectId!)",
-            "token": tokenId
+            "token": tokenId,
+            "email": PFUser.current()!.email!
         ]
         
         Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
@@ -221,22 +209,17 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
             case .success(let data):
                 let json = JSON(data)
                 print("JSON: \(json)")
-                /* if let id = json["id"].string {
-                 }*/
                 
-
-                if let status = json["raw"]["statusCode"].string{
-                    let message = json["raw"]["message"].string
-                    if status.hasPrefix("4"){
-                        self.postAlert("Something Went Wrong", message: message! )
-                        
-                    } else {
-                        //do pay checkout jaunts
-                        //also do something where activity spinner shows up
-                        /*
-                         if isVideoCompressed{
-                         self.postIt()
-                         }*/
+                if let status = json["statusCode"].int{
+                    print(status)
+                    let message = json["message"].string
+                    SCLAlertView().showError("Something Went Wrong", subTitle: message!)
+                    
+                } else {
+                    self.chargeId = json["id"].string
+                    self.hasUserPaid = true
+                    if self.isVideoCompressed{
+                        self.postIt()
                     }
                 }
                 
@@ -246,8 +229,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
                 
             case .failure(let error):
                 print(error)
-                self.messageFrame.removeFromSuperview()
-                self.postAlert("Charge Unsuccessful", message: error.localizedDescription )
+                SCLAlertView().showError("Charge Unsuccessful", subTitle: error.localizedDescription)
             }
         }
     }
@@ -261,54 +243,30 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
         newQuestion["videoScreenShot"] = self.screenshotImage
         newQuestion["duration"] = healthConcernDuration
         newQuestion["summary"] = healthConcernSummary
+        newQuestion["level"] = ""
+        newQuestion["comment"] = ""
+        newQuestion["advisorUserId"] = ""
         newQuestion["isAnswered"] = false
-        newQuestion["isReserved"] = false
         newQuestion["isRemoved"] = false
+        newQuestion["chargeId"] = self.chargeId
         newQuestion.saveEventually{
             (success: Bool, error: Error?) -> Void in
             if (success) {
+                print(newQuestion.objectId!)
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-                self.present(controller, animated: true, completion: nil)
+                self.assignQuestion(objectId: newQuestion.objectId!)
                 
             } else {
-                // self.mapJaunt.removeAnnotation(pin)
-                let newTwitterHandlePrompt = UIAlertController(title: "Post Failed", message: "Check internet connection and try again. Contact help@celecareapp.com if the issue persists.", preferredStyle: .alert)
-                newTwitterHandlePrompt.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                
-                self.present(newTwitterHandlePrompt, animated: true, completion: nil)
+                print(error!)
+                SCLAlertView().showError("Post UnSuccessful", subTitle: "Check internet connection and try again.")
             }
         }
     }
     
     //mich
     
-    func postAlert(_ title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message,
-                                      preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func progressBarDisplayer(_ message: String) {
-        //CGRect(x: view.frame.midX - 90, y: view.frame.midY - 25 , width: 50, height: 50)
-        messageFrame = UIView(frame: view.bounds )
-        messageFrame.layer.cornerRadius = 15
-        messageFrame.backgroundColor = UIColor(white: 0, alpha: 0.7)
-        
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.white)
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        activityIndicator.startAnimating()
-        
-        messageFrame.addSubview(activityIndicator)
-        view.addSubview(messageFrame)
-    }
-    
     func videoPreviewImage() -> UIImage? {
-        //let filePath = NSString(string: "~/").expandingTildeInPath.appending("/Documents/").appending(fileName)
-        
-        //let vidURL = NSURL(fileURLWithPath:filePath)
+
         let asset = AVURLAsset(url: pickedFile)
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
@@ -326,4 +284,36 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate 
             return nil
         }
     }
+    
+    func cleanup(outputFileURL: URL ) {
+        print("started clean up")
+        let path = outputFileURL.path
+        
+        if FileManager.default.fileExists(atPath: path) {
+            do {
+                try FileManager.default.removeItem(atPath: path)
+                print("removed temp file")
+            }
+            catch {
+                print("Could not remove file at url: \(outputFileURL)")
+            }
+            
+        } else {
+            print("couldn't find file")
+        }
+    }
+    
+    func assignQuestion(objectId: String){
+        //startAnimating()
+        Alamofire.request(self.questionURL, method: .post, parameters: ["id": objectId], encoding: JSONEncoding.default).validate().response{response in
+            self.stopAnimating()
+            print(response)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "main")
+            self.present(controller, animated: true, completion: nil)
+            
+
+        }
+    }
+    
 }

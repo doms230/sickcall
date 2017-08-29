@@ -30,23 +30,26 @@ class AdvisorSideBarViewController: UIViewController {
                 
                 self.nameJaunt.text = object!["DisplayName"] as? String
                 
-                let adQuery = PFQuery(className: "Advisor")
-                adQuery.whereKey("userId", equalTo: PFUser.current()!.objectId!)
-                adQuery.getFirstObjectInBackground {
-                    (object: PFObject?, error: Error?) -> Void in
-                    if error == nil || object != nil {
-                        let isActive = object?["isActive"] as! Bool
-                        
-                        if isActive{
-                            self.paymentsButton.isHidden = true
-                        }
-                        
-                    } else {
-                        self.paymentsButton.isHidden = true
-                    }
-                }
+
             }
         }
+        
+        let adQuery = PFQuery(className: "Advisor")
+        adQuery.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+        adQuery.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                let isActive = object?["isActive"] as! Bool
+                
+                if !isActive{
+                    self.paymentsButton.isHidden = true
+                }
+                
+            } else {
+                self.paymentsButton.isHidden = true
+            }
+        }
+        
     }
     
     @IBAction func switchAction(_ sender: UIButton) {

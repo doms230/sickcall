@@ -13,14 +13,14 @@ import NVActivityIndicatorView
 
 class AdvisorContainerViewController: SOContainerViewController,NVActivityIndicatorViewable {
 
-    var didAnswer = false
     var isAdvisor = false
+    var segueQuestion = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xF4FF81)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -42,7 +42,12 @@ class AdvisorContainerViewController: SOContainerViewController,NVActivityIndica
                     self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "dashboard")
                     
                 } else {
-                    self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "question")
+                    self.segueQuestion = true 
+                    
+                    //doing this roundabout way to send advisor's connect id to view controller 
+                    let controller = self.storyboard?.instantiateViewController(withIdentifier: "question") 
+                    self.topViewController = controller
+                    
                 }
                 
                 self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
@@ -51,7 +56,6 @@ class AdvisorContainerViewController: SOContainerViewController,NVActivityIndica
         } else {
             self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "new")
             self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
-            
         }
     }
     
