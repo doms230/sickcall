@@ -185,7 +185,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         self.subscription = self.liveQueryClient
             .subscribe(self.questionsQuery)
             .handle(Event.updated) { _, object in
-                
+                print(object)
                 let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
                 let controller = storyboard.instantiateViewController(withIdentifier: "question")
                 self.present(controller, animated: true, completion: nil)

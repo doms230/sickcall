@@ -124,7 +124,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
     
     func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
         let urlAsset = AVURLAsset(url: inputURL, options: nil)
-        if let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetHighestQuality) {
+        if let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetMediumQuality) {
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileTypeQuickTimeMovie
             exportSession.shouldOptimizeForNetworkUse = true

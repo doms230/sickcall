@@ -57,7 +57,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
                 imagePicker.allowsEditing = false
                 imagePicker.videoMaximumDuration = 60
-                imagePicker.videoQuality = .typeHigh
+                imagePicker.videoQuality = .typeMedium
                 imagePicker.delegate = self
                 
                 present(imagePicker, animated: true, completion: {})
@@ -120,5 +120,5 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         } else {
             print("couldn't find file")
         }
-    }
+    }    
 }

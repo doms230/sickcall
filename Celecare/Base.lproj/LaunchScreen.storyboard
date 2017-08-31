@@ -20,14 +20,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appy" translatesAutoresizingMaskIntoConstraints="NO" id="iSl-Wb-kXV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appy_trans" translatesAutoresizingMaskIntoConstraints="NO" id="iSl-Wb-kXV">
                                 <rect key="frame" x="137" y="283" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Qwr-p8-fZD"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.95686274509803915" green="1" blue="0.50588235294117645" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.094117647060000004" blue="0.28235294119999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="iSl-Wb-kXV" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="AmN-rM-vWu"/>
                             <constraint firstItem="iSl-Wb-kXV" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="263" id="JRg-pD-5Uk"/>
@@ -41,6 +41,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="appy" width="16" height="16"/>
+        <image name="appy_trans" width="16" height="16"/>
     </resources>
 </document>

@@ -379,7 +379,8 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                     let search = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
                         UIAlertAction in
                         let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                        let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+                        let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                        controller.isAdvisor = true 
                         self.present(controller, animated: true, completion: nil)
                     }
                     
@@ -395,7 +396,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         viewQuestionButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         viewQuestionButton.titleLabel?.textAlignment = .center
         viewQuestionButton.setTitle("View Question", for: .normal)
-        viewQuestionButton.backgroundColor = uicolorFromHex(0xf4ff81)
+        viewQuestionButton.backgroundColor = uicolorFromHex(0xee1848)
         viewQuestionButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
         self.textView.superview?.addSubview(viewQuestionButton)
         

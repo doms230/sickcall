@@ -140,19 +140,19 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             cell.vitalsButton.addTarget(self, action: #selector(self.vitalsAction(_:)), for: .touchUpInside)
             
             //TODO: Uncomment
-            //cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
-            
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
             //cell.videoButton.backgroundColor = uicolorFromHex(0xE8E6DF)
             
-            //cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
-            cell.videoImage.image = UIImage(named: "appy")
+            cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
+            //cell.videoImage.image = UIImage(named: "appy")
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "advisorReuse", for: indexPath) as! ViewAnswerTableViewCell
             cell.selectionStyle = .none
-            cell.advisorImage.image = UIImage(named: "appy")
-            //cell.advisorImage.kf.setImage(with: URL(string: self.advisorUserImage))
-            cell.advisorName.text = self.advisorUsername
+            //cell.advisorImage.image = UIImage(named: "appy")
+            if advisorUserImage != nil{
+                cell.advisorImage.kf.setImage(with: URL(string: self.advisorUserImage))
+                cell.advisorName.text = self.advisorUsername
+            }
             
             cell.levelLabel.text = self.level
             

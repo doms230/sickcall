@@ -12,6 +12,8 @@ class NewQuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        clearTmpDirectory()
+        
     }
     
     @IBAction func continueAction(_ sender: UIButton) {
@@ -33,4 +35,15 @@ class NewQuestionViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func clearTmpDirectory(){
+        let path = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let manager = FileManager.default
+        let files = try? manager.contentsOfDirectory(atPath: path.path)
+        files?.forEach { (file) in
+            let temp = path.appendingPathComponent(file)
+            try? manager.removeItem(at: temp)
+            
+            // --- you can use do{} catch{} for error handling ---//
+        }
+    }
 }
