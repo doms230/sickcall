@@ -116,9 +116,9 @@ class HeartRateViewController: UIViewController, NVActivityIndicatorViewable {
         countdownTimer.invalidate()
         didPressStart = false
         startButton.setTitle("Start", for: .normal)
-        startButton.backgroundColor = uicolorFromHex(0xF4FF81)
+        startButton.backgroundColor = uicolorFromHex(0x159373)
         nextButton.title = "Next"
-        nextButton.tintColor = uicolorFromHex(0x180d22)
+        nextButton.tintColor = .white
         timerLabel.text = "00:15"
         totalTime = 15
     }

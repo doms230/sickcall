@@ -23,7 +23,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         super.viewDidLoad()
 
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
@@ -43,6 +43,12 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
             self.startAnimating()
             if let user = user {
                 print(user)
+                
+                let installation = PFInstallation.current()
+                installation?["user"] = user
+                installation?["userId"] = user.objectId
+                installation?.saveEventually()
+                
                 if user.isNew {
                     
                     let request = FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"], tokenString: FBSDKAccessToken.current().tokenString, version: nil, httpMethod: "GET")
@@ -56,7 +62,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                             //self.image.kf.setImage(with: URL(string: imageURL))
                             if let url = URL(string: imageURL) {
                                 if let data = NSData(contentsOf: url){
-                                    self.image = UIImage(data: data as! Data)
+                                    self.image = UIImage(data: data as Data)
                                 }
                             }
                             let proPic = UIImageJPEGRepresentation(self.image, 0.5)
@@ -82,6 +88,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                                         (success: Bool, error: Error?) -> Void in
                                         if (success) {
                                             self.stopAnimating()
+                                            
                                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                                             let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
                                             self.present(controller, animated: true, completion: nil)
@@ -93,6 +100,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                     })
                 } else {
                     self.stopAnimating()
+                    
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
                     self.present(initialViewController, animated: true, completion: nil)
@@ -112,7 +120,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     }    
     
     @IBAction func termsAction(_ sender: UIButton) {
-        UIApplication.shared.openURL(URL(string: "https://www.sickcallhealth.com/terms" )!)
+        UIApplication.shared.open(URL(string: "https://www.sickcallhealth.com/terms" )!, options: [:], completionHandler: nil)
     }
 
 }

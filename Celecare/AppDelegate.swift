@@ -12,11 +12,10 @@ import Parse
 import FacebookCore
 import FacebookLogin
 import ParseFacebookUtilsV4
-import Firebase
 import Stripe
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -25,20 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //change color of time/status jaunts to white
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:UIControlState())
         
-        UITabBar.appearance().tintColor = uicolorFromHex(0xee1848)
+        UITabBar.appearance().tintColor = uicolorFromHex(0x159373)
         
         let navigationBarAppearace = UINavigationBar.appearance()
         
         navigationBarAppearace.barTintColor = uicolorFromHex(0xffffff)
-        navigationBarAppearace.tintColor = uicolorFromHex(0xee1848)
+        navigationBarAppearace.tintColor = uicolorFromHex(0x159373)
         
         //Stripe ***
         STPPaymentConfiguration.shared().publishableKey = "pk_test_oP3znUobvO9fTRuYb6Qo7PYB"
-        STPPaymentConfiguration.shared().appleMerchantIdentifier = "merchant.com.socialgroupe.paymentsTest"
-        
-        //firebase ****
-        
-        FirebaseApp.configure()
         
         //Parse *****
         
@@ -57,33 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.initialize(with: configuration)
         
         PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions)
-        
-        // [Optional] Track statistics around application opens.
-        PFAnalytics.trackAppOpened(launchOptions: launchOptions)
-        
-        //Notification Jaunts.. see: https://www.parse.com/docs/ios/guide#push-notifications-setting-up-push
-        /*let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        UIApplication.shared.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()*/
-        
-        //notifications ****
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-                (granted, error) in
-                //Parse errors and track state
-                print(granted)
-                
-                if !granted{
-                    print(error!)
-                    
-                }                
-            }
-            
-        } else {
-            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            UIApplication.shared.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
-        }
+
         
         //PFUser.logOut()
         
@@ -167,14 +135,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = initialViewController
             self.window?.makeKeyAndVisible()
         }
-        
         return true
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -192,6 +158,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let installation = PFInstallation.current()
+        //replace badge # when someone clicks on notification
+        installation?.badge = 0
+        installation?.saveInBackground()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -199,6 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("deviceToken \(deviceToken)")
         // Store the deviceToken in the current Installation and save it to Parse
         let installation = PFInstallation.current()
         installation?.setDeviceTokenFrom(deviceToken)
@@ -206,7 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         installation?.badge = 0
         installation?.saveInBackground()
         
-        Auth.auth().setAPNSToken(deviceToken, type: AuthAPNSTokenType.prod)
+        //Auth.auth().setAPNSToken(deviceToken, type: AuthAPNSTokenType.prod)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -217,10 +188,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //firebase stuff
-        if Auth.auth().canHandleNotification(userInfo) {
+       /* if Auth.auth().canHandleNotification(userInfo) {
             completionHandler(UIBackgroundFetchResult.noData)
             return
-        }
+        }*/
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        PFPush.handle(notification.request.content.userInfo)
+        completionHandler(.alert)
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error)
     }
     
     //define custom color jaunts..  see https://coderwall.com/p/dyqrfa/customize-navigation-bar-appearance-with-swift for reference
@@ -231,6 +212,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-
 }
+
 

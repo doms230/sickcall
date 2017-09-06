@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import UserNotifications
+import SCLAlertView
 
 class NewQuestionViewController: UIViewController {
     
@@ -14,6 +16,21 @@ class NewQuestionViewController: UIViewController {
         super.viewDidLoad()
         clearTmpDirectory()
         
+        let current = UNUserNotificationCenter.current()
+        current.getNotificationSettings(completionHandler: { (settings) in
+            if settings.authorizationStatus == .notDetermined {
+                //UNUserNotificationCenter.current().delegate = self
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                    (granted, error) in
+                    //Parse errors and track state
+                   // print(granted)
+                    UIApplication.shared.registerForRemoteNotifications()
+                    /*if !granted{
+                        print(error!)
+                    }*/
+                }
+            }
+        })
     }
     
     @IBAction func continueAction(_ sender: UIButton) {

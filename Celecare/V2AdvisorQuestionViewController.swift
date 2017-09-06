@@ -93,7 +93,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.shouldScrollToBottomAfterKeyboardShows = true
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -392,20 +392,20 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     
     func UIElements(){
         viewQuestionButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
-        viewQuestionButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
+        viewQuestionButton.setTitleColor(.white, for: .normal)
         viewQuestionButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         viewQuestionButton.titleLabel?.textAlignment = .center
         viewQuestionButton.setTitle("View Question", for: .normal)
-        viewQuestionButton.backgroundColor = uicolorFromHex(0xee1848)
+        viewQuestionButton.backgroundColor = uicolorFromHex(0x159373)
         viewQuestionButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
         self.textView.superview?.addSubview(viewQuestionButton)
         
         respondButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
-        respondButton.setTitleColor(uicolorFromHex(0x180d22), for: .normal)
+        respondButton.setTitleColor(.white, for: .normal)
         respondButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         respondButton.titleLabel?.textAlignment = .center
         respondButton.setTitle("Respond", for: .normal)
-        respondButton.backgroundColor = uicolorFromHex(0x81ff96)
+        respondButton.backgroundColor = uicolorFromHex(0x159373)
         respondButton.addTarget(self, action: #selector(self.respondAction(_:)), for: .touchUpInside)
     }
     
@@ -459,7 +459,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     }
     
     func chargePatient(){
-        Alamofire.request(self.chargeURL, method: .post, parameters: ["charge": chargeId, "connectId": connectId], encoding: JSONEncoding.default).validate().response{response in
+        Alamofire.request(self.chargeURL, method: .post, parameters: ["charge": chargeId, "connectId": connectId, "user": self.patientUserId], encoding: JSONEncoding.default).validate().response{response in
             self.stopAnimating()
             print(response)
             let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
@@ -468,6 +468,17 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             self.present(controller, animated: true, completion: nil)
         }
     }
+    
+    /*func notifiyPatient(){
+        Alamofire.request(self.notificationURL, method: .post, parameters: ["userId": patientUserId, "message": "\(self.advisorUsername) replied to your question."], encoding: JSONEncoding.default).validate().response{response in
+            self.stopAnimating()
+            print(response)
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
+            self.present(controller, animated: true, completion: nil)
+        }
+    }*/
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

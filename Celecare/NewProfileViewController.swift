@@ -41,7 +41,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         imagePicker.delegate = self
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
@@ -80,6 +80,11 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                 SCLAlertView().showError("Oops", subTitle: "We couldn't sign you up. Check internet connection and try again")
                 
             } else {
+                let installation = PFInstallation.current()
+                installation?["user"] = PFUser.current()
+                installation?["userId"] = PFUser.current()?.objectId
+                installation?.saveEventually()
+                
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
                 self.present(initialViewController, animated: true, completion: nil)

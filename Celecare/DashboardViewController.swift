@@ -49,7 +49,9 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     private var subscription: Subscription<Post>?
     var questionsQuery: PFQuery<Post>{
         return (Post.query()!
-            .whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
+            //.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
+        .whereKey("isRemoved", equalTo: false) as! PFQuery<Post> )
+        //return Post.query()! as! PFQuery<Post>
     }
     
     override func viewDidLoad() {
@@ -66,7 +68,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         super.viewDidLoad()
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0xee1848)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -185,10 +187,13 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         self.subscription = self.liveQueryClient
             .subscribe(self.questionsQuery)
             .handle(Event.updated) { _, object in
-                print(object)
-                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                let controller = storyboard.instantiateViewController(withIdentifier: "question")
-                self.present(controller, animated: true, completion: nil)
+                //print(object)
+                let user = object["advisorUserId"] as! String
+                if user == PFUser.current()?.objectId{
+                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                    let controller = storyboard.instantiateViewController(withIdentifier: "question")
+                    self.present(controller, animated: true, completion: nil)
+                }
         }
     }
      
@@ -255,7 +260,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func getTransfers(){
-        let p: Parameters = [
+        /*let p: Parameters = [
             "account": connectId,
             ]
         let url = "https://celecare.herokuapp.com/payments/transfers"
@@ -287,7 +292,83 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             SCLAlertView().showError("Something Went Wrong", subTitle: "")
             
             }
+        }*/
+        
+        
+        let query = PFQuery(className:"Post")
+        query.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!)
+        query.whereKey("isAnswered", equalTo: true)
+        query.findObjectsInBackground {
+            (objects: [PFObject]?, error: Error?) -> Void in
+            if error == nil {
+                // The find succeeded.
+                print("Successfully retrieved \(objects!.count) scores.")
+                // Do something with the found objects
+                if let objects = objects {
+                    for object in objects {
+                        let weds = self.get(direction: .Previous, "Wednesday", considerToday: false)
+                        print(weds)
+                        let createdAt = object.createdAt!
+                        print(createdAt)
+                        if createdAt.compare(weds as Date) == .orderedDescending {
+                            self.payments = self.payments + 2.50
+                        }
+                    }
+                    // print(self.unAnsweredQuestionTitle[0])
+                    
+                    self.tableJaunt.reloadData()
+                    
+                }
+            } else {
+                // Log details of the failure
+                print("Error: \(error!)")
+            }
         }
+        
+    }
+    
+    //for figuring out previous weds .. see https://stackoverflow.com/questions/33397101/how-to-get-mondays-date-of-the-current-week-in-swift
+    func getWeekDaysInEnglish() -> [String] {
+        let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        calendar.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale
+        return calendar.weekdaySymbols
+    }
+    
+    enum SearchDirection {
+        case Next
+        case Previous
+        
+        var calendarOptions: NSCalendar.Options {
+            switch self {
+            case .Next:
+                return .matchNextTime
+            case .Previous:
+                return [.searchBackwards, .matchNextTime]
+            }
+        }
+    }
+    
+    func get(direction: SearchDirection, _ dayName: String, considerToday consider: Bool = false) -> NSDate {
+        let weekdaysName = getWeekDaysInEnglish()
+        
+        assert(weekdaysName.contains(dayName), "weekday symbol should be in form \(weekdaysName)")
+        
+        let nextWeekDayIndex = weekdaysName.index(of: dayName)! + 1 // weekday is in form 1 ... 7 where as index is 0 ... 6
+        
+        let today = NSDate()
+        
+        let calendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier.gregorian)!
+        
+        if consider && calendar.component(.weekday, from: today as Date) == nextWeekDayIndex {
+            return today
+        }
+        
+        let nextDateComponent = NSDateComponents()
+        nextDateComponent.weekday = nextWeekDayIndex
+        
+        
+        let date = calendar.nextDate(after: today as Date, matching: nextDateComponent as DateComponents, options: direction.calendarOptions)
+        return date! as NSDate
     }
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
