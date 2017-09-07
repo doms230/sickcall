@@ -54,8 +54,8 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
         
         successView = SCLAlertView(appearance: appearance)
         successView.addButton("Okay") {
-            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "container") as UIViewController
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
             self.present(controller, animated: true, completion: nil)
         }
 

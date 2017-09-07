@@ -176,8 +176,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //replace badge # when someone clicks on notification
         installation?.badge = 0
         installation?.saveInBackground()
-        
-        //Auth.auth().setAPNSToken(deviceToken, type: AuthAPNSTokenType.prod)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -186,12 +184,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if ( application.applicationState == UIApplicationState.background ){
             PFPush.handle(userInfo)
         }
-        
-        //firebase stuff
-       /* if Auth.auth().canHandleNotification(userInfo) {
-            completionHandler(UIBackgroundFetchResult.noData)
-            return
-        }*/
     }
     
     @available(iOS 10.0, *)

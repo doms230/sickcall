@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Firebase
-import Parse 
+import Parse
 
 class VerifyViewController: UIViewController {
     
@@ -38,40 +37,8 @@ class VerifyViewController: UIViewController {
  
     @IBAction func nextAction(_ sender: UIButton) {
         
-        //verify phone number with code send to user's phone
-        let verificationID = UserDefaults.standard.string(forKey: "authVerificationID")
 
-        
-        let credential = PhoneAuthProvider.provider().credential(
-            withVerificationID: verificationID!,
-            verificationCode: self.code.text!)
-        
-        Auth.auth().signIn(with: credential) { (user, error) in
-            if let error = error {
-                print(error)
-                return
-                
-            } else {
-                
-                //Verified, segue to EmailViewController
-                print("user signed in")
-                
-                let query = PFQuery(className: "_User")
-                query.whereKey("phoneNumber", equalTo: self.phoneNumber)
-                query.getFirstObjectInBackground {
-                    (object: PFObject?, error: Error?) -> Void in
-                    if error != nil || object == nil {
-                        print("The getFirstObject request failed.")
-                        self.performSegue(withIdentifier: "showEmail", sender: self)
-                    } else {
-                        // The find succeeded.
-                        print("Successfully retrieved the object.")
-                        let username = object?["username"] as! String
-                        self.login(username: username, password: self.phoneNumber)
-                    }
-                }                                
-            }
-        }
+
     }
     
     func login(username: String, password: String)  {
