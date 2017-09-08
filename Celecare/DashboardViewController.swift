@@ -49,9 +49,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     private var subscription: Subscription<Post>?
     var questionsQuery: PFQuery<Post>{
         return (Post.query()!
-            //.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
         .whereKey("isRemoved", equalTo: false) as! PFQuery<Post> )
-        //return Post.query()! as! PFQuery<Post>
     }
     
     override func viewDidLoad() {
@@ -107,8 +105,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = tableView.dequeueReusableCell(withIdentifier: "dashboardReuse", for: indexPath) as! AdvisorTableViewCell
         
         cell.backgroundColor = uicolorFromHex(0xe8e6df)
-        
-        //cell.getPaidButton.backgroundColor = uicolorFromHex(0x180d22)
         
         cell.paymentAmount.text = "$\(payments)0"
         
@@ -260,40 +256,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func getTransfers(){
-        /*let p: Parameters = [
-            "account": connectId,
-            ]
-        let url = "https://celecare.herokuapp.com/payments/transfers"
-        Alamofire.request(url, parameters: p, encoding: URLEncoding.default).validate().responseJSON { response in switch response.result {
-        case .success(let data):
-            let json = JSON(data)
-            //print("JSON: \(json)")
-            self.stopAnimating()
-            self.didLoad = true
-            //can't get status code for some reason
-            if let status = json["statusCode"].int{
-                print(status)
-                let message = json["message"].string
-                SCLAlertView().showError("Something Went Wrong", subTitle: message!)
-                
-            } else {
-                for object in json["data"].arrayValue.map({$0["amount"].double}) {
-                    let amount = object!
-                    
-                    self.payments = self.payments + amount
-                }
-                self.payments = self.payments * 0.01
-                self.tableJaunt.reloadData()
-            }
-            
-        case .failure(let error):
-            self.stopAnimating()
-            print(error)
-            SCLAlertView().showError("Something Went Wrong", subTitle: "")
-            
-            }
-        }*/
-        
         
         let query = PFQuery(className:"Post")
         query.whereKey("advisorUserId", equalTo: PFUser.current()!.objectId!)
@@ -324,7 +286,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                 print("Error: \(error!)")
             }
         }
-        
     }
     
     //for figuring out previous weds .. see https://stackoverflow.com/questions/33397101/how-to-get-mondays-date-of-the-current-week-in-swift

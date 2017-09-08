@@ -212,7 +212,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                     self.playerController.player = self.player
                     
                     NotificationCenter.default.addObserver(self,
-                    selector: #selector(AdvisorQuestionsViewController.playerItemDidReachEnd(_:)),
+                    selector: #selector(V2AdvisorQuestionViewController.playerItemDidReachEnd(_:)),
                     name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player.currentItem)
                     
                     if self.didPressPlay{
@@ -468,17 +468,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             self.present(controller, animated: true, completion: nil)
         }
     }
-    
-    /*func notifiyPatient(){
-        Alamofire.request(self.notificationURL, method: .post, parameters: ["userId": patientUserId, "message": "\(self.advisorUsername) replied to your question."], encoding: JSONEncoding.default).validate().response{response in
-            self.stopAnimating()
-            print(response)
-            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-            controller.isAdvisor = true
-            self.present(controller, animated: true, completion: nil)
-        }
-    }*/
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

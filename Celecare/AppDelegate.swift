@@ -62,69 +62,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             query.getFirstObjectInBackground {
                 (object: PFObject?, error: Error?) -> Void in
                 if error == nil || object != nil {
-                    if object!["isActive"] as! Bool{
-                        if object?["isOnline"] as! Bool{
-                            
-                            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                            initialViewController.isAdvisor = true
-                            self.window?.rootViewController = initialViewController
-                            self.window?.makeKeyAndVisible()
-                            
-                        } else {
-                            
-                            if let side = UserDefaults.standard.string(forKey: "side"){
-                                if side == "patient"{
-                                    self.window = UIWindow(frame: UIScreen.main.bounds)
-                                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                                    self.window?.rootViewController = initialViewController
-                                    self.window?.makeKeyAndVisible()
-                                    
-                                } else {
-                                    self.window = UIWindow(frame: UIScreen.main.bounds)
-                                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                                    initialViewController.isAdvisor = true
-                                    self.window?.rootViewController = initialViewController
-                                    self.window?.makeKeyAndVisible()
-                                }
-                                
-                            }else {
-                                self.window = UIWindow(frame: UIScreen.main.bounds)
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                                self.window?.rootViewController = initialViewController
-                                self.window?.makeKeyAndVisible()
-                            }
-                        }
+                    if object?["isOnline"] as! Bool{
+                        let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                        let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                        initialViewController.isAdvisor = true
+                        self.window?.rootViewController = initialViewController
+                        self.window?.makeKeyAndVisible()
                         
                     } else {
-                        
-                        if let side = UserDefaults.standard.string(forKey: "side"){
-                            if side == "patient"{
-                                self.window = UIWindow(frame: UIScreen.main.bounds)
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                                self.window?.rootViewController = initialViewController
-                                self.window?.makeKeyAndVisible()
-                                
-                            } else {
-                                self.window = UIWindow(frame: UIScreen.main.bounds)
-                                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
-                                self.window?.rootViewController = initialViewController
-                                self.window?.makeKeyAndVisible()
-                            }
-                            
-                        } else {
-                            self.window = UIWindow(frame: UIScreen.main.bounds)
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                            self.window?.rootViewController = initialViewController
-                            self.window?.makeKeyAndVisible()
-                        }
+                        self.checkUserDefaults()
                     }
+                    
+                } else {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                    self.window?.rootViewController = initialViewController
+                    self.window?.makeKeyAndVisible()
                 }
             }
             
@@ -204,6 +157,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let blue = CGFloat(rgbValue & 0xFF)/256.0
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
+    }
+    
+    func checkUserDefaults(){
+        if let side = UserDefaults.standard.string(forKey: "side"){
+            if side == "patient"{
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                self.window?.rootViewController = initialViewController
+                self.window?.makeKeyAndVisible()
+                
+            } else {
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
+                self.window?.rootViewController = initialViewController
+                self.window?.makeKeyAndVisible()
+            }
+            
+        } else {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+            self.window?.rootViewController = initialViewController
+            self.window?.makeKeyAndVisible()
+        }
     }
 }
 

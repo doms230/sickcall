@@ -39,12 +39,6 @@ class HeartRateViewController: UIViewController, NVActivityIndicatorViewable {
     }
 
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        /*let desti = segue.destination as! RespRateViewController
-        desti.beatsPM = "\(beatsPM)"*/
-    }
     
     func nextAction(_ sender: UIBarButtonItem){
         if didPressStart{
@@ -58,7 +52,6 @@ class HeartRateViewController: UIViewController, NVActivityIndicatorViewable {
                 (object: PFObject?, error: Error?) -> Void in
                 if error != nil || object == nil {
                     self.stopAnimating()
-                    //SCLAlertView().showError("Medical Info Update Failed", subTitle: "Check internet connection and try again. Contact help@sickcallhealth.com if the issue persists.")
                     
                 } else {
                     object?["beatsPM"] = "\(self.beatsPM)"

@@ -104,7 +104,6 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
     //validation tests
     func validateFirstName() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
         if firstNameText.text!.isEmpty{
             
@@ -119,7 +118,6 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
     
     func validateLastName() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
         if lastNameText.text!.isEmpty{
             

@@ -104,7 +104,6 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
     //validate
     func validateDay() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
         if dayText.text!.isEmpty{
             dayText.attributedPlaceholder = NSAttributedString(string:"Field required",

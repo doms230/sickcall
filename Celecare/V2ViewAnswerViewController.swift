@@ -44,7 +44,6 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     
     var cancelQuestionView: SCLAlertView!
     
-    /*** In case user presses play before video is loaded */
     var didPressPlay = false
     
     //mich

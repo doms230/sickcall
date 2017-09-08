@@ -33,7 +33,6 @@ class AdvisorTableViewCell: UITableViewCell {
     lazy var paymentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-       // view.layer.cornerRadius = 3
         view.clipsToBounds = true
         return view
     }()
@@ -72,7 +71,6 @@ class AdvisorTableViewCell: UITableViewCell {
         let button = UIButton()
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        //button.setImage(UIImage(named: "exit"), for: .normal)
         button.backgroundColor = UIColor.white
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
@@ -189,7 +187,6 @@ class AdvisorTableViewCell: UITableViewCell {
         button.setTitleColor(UIColor.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
         button.setTitle("Add comment that supports your opinion", for: .normal)
-        //button.setImage(UIImage(named: "exit"), for: .normal)
         button.backgroundColor = .white
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
@@ -210,7 +207,6 @@ class AdvisorTableViewCell: UITableViewCell {
                 make.top.equalTo(self).offset(10)
                 make.left.equalTo(self).offset(10)
                 make.right.equalTo(self).offset(-10)
-               // make.bottom.equalTo(self).offset(-5)
             }
             questionContent.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(questionTitle.snp.bottom).offset(5)
@@ -270,28 +266,24 @@ class AdvisorTableViewCell: UITableViewCell {
             make.top.equalTo(self)
             make.left.equalTo(self)
             make.right.equalTo(self)
-            // make.bottom.equalTo(self).offset(-50)
         }
         
         paymentsLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(paymentView.snp.top).offset(20)
             make.left.equalTo(paymentView.snp.left).offset(5)
             make.right.equalTo(paymentView.snp.right).offset(-5)
-            // make.bottom.equalTo(self).offset(-50)
         }
         
         paymentAmount.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(paymentsLabel.snp.bottom).offset(5)
             make.left.equalTo(paymentView.snp.left).offset(5)
             make.right.equalTo(paymentView.snp.right).offset(-5)
-           // make.bottom.equalTo(paymentView.snp.bottom).offset(-10)
         }
         
         getPaidLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(paymentAmount.snp.bottom).offset(15)
             make.left.equalTo(paymentView.snp.left).offset(10)
             make.right.equalTo(paymentView.snp.right).offset(-10)
-            // make.bottom.equalTo(paymentView.snp.bottom).offset(-10)
         }
         
         //status
@@ -303,7 +295,6 @@ class AdvisorTableViewCell: UITableViewCell {
             make.top.equalTo(paymentView.snp.bottom).offset(15)
             make.left.equalTo(self).offset(10)
             make.right.equalTo(self).offset(-10)
-           // make.bottom.equalTo(self).offset(-50)
         }
         
         queueLabel.snp.makeConstraints { (make) -> Void in
@@ -324,7 +315,6 @@ class AdvisorTableViewCell: UITableViewCell {
             make.width.height.equalTo(50)
             make.top.equalTo(self).offset(25)
             make.left.equalTo(self).offset(10)
-            // make.right.equalTo(self).offset(-10)
             make.bottom.equalTo(self).offset(-25)
         }
         
@@ -332,7 +322,6 @@ class AdvisorTableViewCell: UITableViewCell {
             make.top.equalTo(patientImage.snp.top).offset(10)
             make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-5)
-            //make.bottom.equalTo(self).offset(-25)
         }
     }
     

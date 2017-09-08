@@ -22,12 +22,8 @@ class NewQuestionViewController: UIViewController {
                 //UNUserNotificationCenter.current().delegate = self
                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
                     (granted, error) in
-                    //Parse errors and track state
-                   // print(granted)
+
                     UIApplication.shared.registerForRemoteNotifications()
-                    /*if !granted{
-                        print(error!)
-                    }*/
                 }
             }
         })

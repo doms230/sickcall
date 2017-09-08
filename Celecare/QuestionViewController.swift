@@ -15,7 +15,6 @@ import AVFoundation
 
 class QuestionViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-   // var videoFile: PFFile!
     var videoFile: URL!
     
     var healthConcernDuration: String!
@@ -47,9 +46,6 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
     
     @IBAction func askQuestionAction(_ sender: UIButton) {
         
-        // self.performSegue(withIdentifier: "showCheckout", sender: self)
-        
-        //TODO: uncomment later... needed 
         if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
             if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
                 

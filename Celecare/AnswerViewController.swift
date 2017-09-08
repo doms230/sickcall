@@ -37,7 +37,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "noQuestionsReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
-       // self.tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
@@ -82,26 +81,20 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if objectId.count > 0{
             cell = tableView.dequeueReusableCell(withIdentifier: "myQuestionsReuse", for: indexPath) as! MainTableViewCell
             
-          //  cell.backgroundColor = uicolorFromHex(0xe8e6df)
             cell.selectionStyle = .none
             self.tableJaunt.separatorStyle = .singleLine
             
             cell.questionImage.kf.setImage(with: URL(string: questionImages[indexPath.row]), placeholder: UIImage(named: "appy"))
             cell.questionLabel.text = questions[indexPath.row]
             cell.questionLabel.textColor = uicolorFromHex(0x180d22)
-            //cell.durationLabel.text = questionDurations[indexPath.row]
-            //cell.durationLabel.textColor = uicolorFromHex(0x180d22)
             cell.statusLabel.text = questionStatus[indexPath.row]
             cell.statusLabel.textColor = uicolorFromHex(0x180d22)
-            //cell.dateUploadedLabel.text = dateUploaded[indexPath.row]
+            
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "noQuestionsReuse", for: indexPath) as! MainTableViewCell
-            //cell.backgroundColor = uicolorFromHex(0xe8e6df)
             cell.selectionStyle = .none
             self.tableJaunt.separatorStyle = .none
         }
-        
-        //let
         
         return cell
     }
@@ -153,7 +146,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.questionVideos.append(object["video"] as! PFFile)
                         
                     }
-                   // print(self.unAnsweredQuestionTitle[0])
                     
                     self.tableJaunt.reloadData()
                     self.stopAnimating()

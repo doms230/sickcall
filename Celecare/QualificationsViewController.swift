@@ -75,7 +75,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         datePicker.isEnabled = false
         
         licenseTypePrompt.addAction(datePicker)
-        //prompt.addAction(okay)
         
         let height:NSLayoutConstraint = NSLayoutConstraint(item: licenseTypePrompt.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.6)
         
@@ -83,7 +82,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
             UIAlertAction in
-            //self.chooseDateAction(type: self.dateType)
         }
         
         licenseTypePrompt.addAction(okayJaunt)
@@ -108,7 +106,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         space.isEnabled = false
         
         statePrompt.addAction(space)
-        //prompt.addAction(okay)
         
         let height:NSLayoutConstraint = NSLayoutConstraint(item: statePrompt.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.6)
         
@@ -116,7 +113,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
             UIAlertAction in
-            //self.chooseDateAction(type: self.dateType)
         }
         
         statePrompt.addAction(okayJaunt)
@@ -157,19 +153,16 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         if whichPicker == "type"{
             licenseTypeButton.setTitle(" \(types[row])", for: .normal)
             licenseTypeButton.setTitleColor(.black, for: .normal)
-            //licenseTypePrompt.dismiss(animated: true, completion: nil)
             
         }else {
             stateButton.setTitle(" \(states[row])", for: .normal)
             stateButton.setTitleColor(.black, for: .normal)
-            //statePrompt.dismiss(animated: true, completion: nil)
         }
     }
     
     //validation tests 
     func validateLicenseNumber() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
         if licenseNumberText.text!.isEmpty{
             
@@ -184,7 +177,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func validateLicenseTypeButton() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
         if licenseTypeButton.titleLabel?.text == " "{
             licenseTypeButton.setTitle(" Field Required", for: .normal)
@@ -198,7 +190,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func validateStateButton() ->Bool{
         var isValidated = false
-        //let usernameJaunt = username.text?.characters.split{$0 == " "}.map(String.init)
         
         if stateButton.titleLabel?.text == " "{
             stateButton.setTitle(" Field Required", for: .normal)

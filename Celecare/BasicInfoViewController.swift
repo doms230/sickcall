@@ -32,9 +32,6 @@ class BasicInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        
-        
         // Do any additional setup after loading the view.
     }
 
@@ -155,24 +152,11 @@ class BasicInfoViewController: UIViewController {
         return isValidated
     }
     
-    
-
-    
     func postAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message,
                                       preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -110,17 +110,14 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
                     print(status)
                     let message = json["message"].string
                     
-                    //self.errorMessage("Something Went Wrong", message: message! )
                     SCLAlertView().showError("Something Went Wrong", subTitle: message!)
                     
                 } else {
                     let bankName = json["external_accounts"]["data"][0]["bank_name"].string
                     let bankLast4 = json["external_accounts"]["data"][0]["last4"].string
-                    //self.successMessage(bankName!, bankLast4: bankLast4!)
                     self.successView.showSuccess("Success", subTitle: "Your funds will be deposited to \(String(describing: bankName!)) ****\(String(describing: bankLast4!)) from now on.")
                 }
                 print("Validation Successful")
-                //self.performSegue(withIdentifier: "showCurrentMeds", sender: self)
                 
             case .failure(let error):
                 print(error)
