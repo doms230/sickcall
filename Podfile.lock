@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.4.0)
+  - Alamofire (4.5.1)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -15,22 +15,15 @@ PODS:
     - FacebookCore (~> 0.2)
     - FBSDKCoreKit (~> 4.15)
     - FBSDKLoginKit (~> 4.15)
-  - FacebookShare (0.2.0):
-    - Bolts (~> 1.8)
-    - FacebookCore (~> 0.2)
-    - FBSDKCoreKit (~> 4.15)
-    - FBSDKShareKit (~> 4.15)
-  - FBSDKCoreKit (4.20.0):
+  - FBSDKCoreKit (4.26.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.20.0):
+  - FBSDKLoginKit (4.26.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.20.0):
-    - FBSDKCoreKit
-  - Kingfisher (3.5.1)
+  - Kingfisher (3.12.2)
   - NVActivityIndicatorView (3.7.0):
     - NVActivityIndicatorView/Presenter (= 3.7.0)
   - NVActivityIndicatorView/Presenter (3.7.0)
-  - Parse (1.14.2):
+  - Parse (1.15.2):
     - Bolts/Tasks (~> 1.8)
   - ParseFacebookUtilsV4 (1.11.1):
     - Bolts/Tasks (>= 1.6)
@@ -38,23 +31,22 @@ PODS:
     - FBSDKLoginKit (~> 4.10)
     - FBSDKTVOSKit (~> 4.10)
     - Parse (~> 1.12)
-  - ParseLiveQuery (2.0.0):
+  - ParseLiveQuery (2.2.1):
     - Bolts-Swift (~> 1.3)
-    - Parse (~> 1.14.2)
-    - Starscream (= 2.0.3)
+    - Parse (~> 1.15.0)
+    - Starscream (= 2.1.1)
   - SCLAlertView (0.7.0)
   - SidebarOverlay (4.1)
   - SlackTextViewController (1.9.5)
   - SnapKit (3.2.0)
-  - Starscream (2.0.3)
-  - Stripe (10.2.0)
+  - Starscream (2.1.1)
+  - Stripe (11.2.0)
   - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
   - Alamofire
   - FacebookCore
   - FacebookLogin
-  - FacebookShare
   - Kingfisher
   - NVActivityIndicatorView
   - Parse
@@ -68,28 +60,26 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
-  FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
-  FBSDKCoreKit: 2d16979b28fe28c2b95af0d275ad5f9703c6c8de
-  FBSDKLoginKit: a9d9391506c687e2304a590bf9312837fce7f375
-  FBSDKShareKit: 1b91af62a603d67f392bc7fde63bc4a0705dde31
-  Kingfisher: 12eeffeef42ea45b68c5e5acfe8ba9005b713ab4
+  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
+  FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
+  Kingfisher: 320626678acadfcf47008b3c6841cd882050737b
   NVActivityIndicatorView: d3738df7e2e476aca0ba6bf32a8c9fbcfc33d64b
-  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
+  Parse: 7daa8804b876d250a65420534c97d2d786c3b0b4
   ParseFacebookUtilsV4: 2f30c2b7021c8005d3042781da7ef87d06589421
-  ParseLiveQuery: 38fb42e4b8611ecfcb199d47e48aeaf6879f8560
+  ParseLiveQuery: bc2321032ddae9d6ecfd4842d1b10210d453b08b
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SidebarOverlay: b65f0a1d9331ce4bf81f82eea202b21cc8655c5a
   SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  Starscream: 3fdd5c277e57cca6b5c406d274e3f34a7c88f2ce
-  Stripe: 5c5a49d750952b1801e4c1f5c4264a08e427c67d
+  Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
+  Stripe: 898f83a95d72180c6eb4acd65b2ae6158fc6a8bd
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: bb6e659aff60d3446eba026025fc4572a819cab3
+PODFILE CHECKSUM: ec9cb2faf76fd2b3be37a27da41f77028db7c50f
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

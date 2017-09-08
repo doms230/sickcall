@@ -12,6 +12,7 @@
 
 #import "NSArray+Stripe_BoundSafe.h"
 #import "NSBundle+Stripe_AppName.h"
+#import "NSCharacterSet+Stripe.h"
 #import "NSDecimalNumber+Stripe_Currency.h"
 #import "NSDictionary+Stripe.h"
 #import "NSMutableURLRequest+Stripe.h"
@@ -21,6 +22,7 @@
 #import "PKPaymentAuthorizationViewController+Stripe_Blocks.h"
 #import "STPAPIClient+ApplePay.h"
 #import "STPAspects.h"
+#import "StripeError.h"
 #import "UIBarButtonItem+Stripe.h"
 #import "UIImage+Stripe.h"
 #import "UINavigationBar+Stripe_Theme.h"
@@ -41,6 +43,7 @@
     linkNSBundleAppNameCategory();
     linkNSDecimalNumberCurrencyCategory();
     linkNSDictionaryCategory();
+    linkNSErrorCategory();
     linkNSMutableURLRequestCategory();
     linkNSStringCategory();
     linkNSURLComponentsCategory();
@@ -58,6 +61,7 @@
     linkUIViewControllerParentViewControllerCategory();
     linkUIViewControllerPromisesCategory();
     linkUIViewFirstResponderCategory();
+    linkNSCharacterSetCategory();
 }
 
 @end

@@ -135,58 +135,44 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
             (object: PFObject?, error: Error?) -> Void in
             self.stopAnimating()
             if error == nil || object != nil {
-                if object!["isActive"] as! Bool{
-                    if object?["isOnline"] as! Bool{
-                        let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                        let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                        initialViewController.isAdvisor = true
-                        self.present(initialViewController, animated: true, completion: nil)
-                        
-                    } else {
-                        
-                        if let side = UserDefaults.standard.string(forKey: "side"){
-                            if side == "patient"{
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                                self.present(initialViewController, animated: true, completion: nil)
-                                
-                            } else {
-                                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                                let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                                initialViewController.isAdvisor = true
-                                self.present(initialViewController, animated: true, completion: nil)
-                            }
-                            
-                        }else {
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                            self.present(initialViewController, animated: true, completion: nil)
-                        }
-                    }
+                if object!["isOnline"] as! Bool{
+                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                    initialViewController.isAdvisor = true
+                    self.present(initialViewController, animated: true, completion: nil)
                     
                 } else {
+                    self.checkUserDefaults()
                     
-                    if let side = UserDefaults.standard.string(forKey: "side"){
-                        if side == "patient"{
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                            self.present(initialViewController, animated: true, completion: nil)
-                            
-                        } else {
-                            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container")
-                            self.present(initialViewController, animated: true, completion: nil)
-                        }
-                        
-                    } else {
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                        self.present(initialViewController, animated: true, completion: nil)
-                    }
                 }
+            } else {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                self.present(initialViewController, animated: true, completion: nil)
             }
         }
-        //end parse jaunt
+    }
+    
+    //checks to see what user was using Sickcall as last... Advisor or patient
+    func checkUserDefaults(){
+        if let side = UserDefaults.standard.string(forKey: "side"){
+            if side == "patient"{
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                self.present(initialViewController, animated: true, completion: nil)
+                
+            } else {
+                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                initialViewController.isAdvisor = true
+                self.present(initialViewController, animated: true, completion: nil)
+            }
+            
+        }else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+            self.present(initialViewController, animated: true, completion: nil)
+        }
     }
     
     func exitAction(_ sender: UIBarButtonItem){

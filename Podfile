@@ -20,7 +20,7 @@ target 'Celecare' do
   #facebook ish
   pod 'FacebookCore'
   pod 'FacebookLogin'
-  pod 'FacebookShare'
+  # pod 'FacebookShare'
   
   
   #stripe
