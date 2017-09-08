@@ -32,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         navigationBarAppearace.tintColor = uicolorFromHex(0x159373)
         
         //Stripe ***
-        STPPaymentConfiguration.shared().publishableKey = "pk_test_oP3znUobvO9fTRuYb6Qo7PYB"
+        //STPPaymentConfiguration.shared().publishableKey = "pk_test_oP3znUobvO9fTRuYb6Qo7PYB"
+        STPPaymentConfiguration.shared().publishableKey = "pk_live_chGMzaqKctIYqbalvJbvRzWz"
         
         //Parse *****
         
