@@ -1,9 +1,9 @@
 //
 //  V2AdvisorQuestionViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/14/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -185,7 +185,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         }
     }
     
-    func loadPlayJaunt(_ sender: UIButton){
+    @objc func loadPlayJaunt(_ sender: UIButton){
         if playerItem != nil{
             player.seek(to: kCMTimeZero)
             stopAnimating()
@@ -227,7 +227,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         }
     }
     
-    func playerItemDidReachEnd( _ notification: Notification) {
+    @objc func playerItemDidReachEnd( _ notification: Notification) {
         player.seek(to: kCMTimeZero)
         viewQuestionButton.isHidden = true
         self.textView.isHidden = false
@@ -236,7 +236,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
 
     }
     
-    func didPressSegment(_ sender: UISegmentedControl){
+    @objc func didPressSegment(_ sender: UISegmentedControl){
         switch sender.selectedSegmentIndex{
         case 0:
             optionBody = "- Over the counter solution \n - Doctors Appointment"
@@ -259,7 +259,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.tableView?.reloadData()
     }
     
-    func addCommentAction(_ sender: UIButton){
+    @objc func addCommentAction(_ sender: UIButton){
         if didPressRightButton{
             self.textView.becomeFirstResponder()
             self.textView.text = comments
@@ -290,7 +290,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.textView.resignFirstResponder()
     }
     
-    func respondAction(_ sender: UIButton){
+    @objc func respondAction(_ sender: UIButton){
         //postResponse
         if didChooseConcernLevel{
             self.startAnimating()
@@ -360,7 +360,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         }
     }
     
-    func showVitals(_ sender: UIButton){
+    @objc func showVitals(_ sender: UIButton){
         self.performSegue(withIdentifier: "showVitals", sender: self)
     }
     

@@ -1,9 +1,9 @@
 //
 //  AllergyViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/8/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -127,7 +127,7 @@ class AllergyViewController: UIViewController {
         
     }
     
-    func nextAction(_ sender: UIBarButtonItem){
+    @objc func nextAction(_ sender: UIBarButtonItem){
         // Do any additional setup after loading the view.
         performSegue(withIdentifier: "showHistory", sender: self)
         

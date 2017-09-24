@@ -1,9 +1,8 @@
 //
 //  Post.swift
-//  Celecare
-//
-//  Created by Mac Owner on 7/19/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//Sickcall
+//  Created by Dominic Smtih on 7/19/17.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -11,9 +10,9 @@ import Parse
 
 public class Post: PFObject, PFSubclassing {
     
-    override public class func initialize() {
+  /*  override public class func initialize() {
         // registerSubclass()
-    }
+    }*/
     
     public class func parseClassName() -> String {
         return "Post"

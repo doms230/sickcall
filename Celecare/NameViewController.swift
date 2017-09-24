@@ -1,9 +1,9 @@
 //
 //  NameViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/5/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -108,7 +108,7 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
         if firstNameText.text!.isEmpty{
             
             firstNameText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                     attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         } else{
             isValidated = true
@@ -122,7 +122,7 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
         if lastNameText.text!.isEmpty{
             
             lastNameText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                     attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                    attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         } else{
             isValidated = true

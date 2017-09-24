@@ -1,9 +1,9 @@
 //
 //  MedHistoryTableViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/8/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -56,7 +56,7 @@ class MedHistoryTableViewController: UITableViewController, NVActivityIndicatorV
     @IBOutlet weak var medHistoryText: UITextView!
     @IBOutlet weak var healthIssuesText: UITextView!
     
-    func nextAction(_ sender: UIBarButtonItem){
+    @objc func nextAction(_ sender: UIBarButtonItem){
         // Do any additional setup after loading the view.
         startAnimating()
         let query = PFQuery(className: "_User")

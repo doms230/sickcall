@@ -1,9 +1,9 @@
 //
 //  ViewAnswerTableViewCell.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/14/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit

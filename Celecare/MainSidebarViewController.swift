@@ -2,8 +2,8 @@
 //  MainSidebarViewController.swift
 //  Celecare
 //
-//  Created by Mac Owner on 7/10/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Created by Dominic Smtih on 7/19/17.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -106,7 +106,7 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
         return cell
     }
     
-    func switchAction(_ sender: UIButton) {
+    @objc func switchAction(_ sender: UIButton) {
         //to determine which side to put advisor on when they get on the app
         UserDefaults.standard.set("advisor", forKey: "side")
         
@@ -117,7 +117,7 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
         
     }
     
-    func editProfile(_ sender: UIButton){
+    @objc func editProfile(_ sender: UIButton){
         self.performSegue(withIdentifier: "showEditProfile", sender: self)
     }
     

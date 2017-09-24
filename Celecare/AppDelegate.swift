@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Celecare
+//  Sickcall
 //
-//  Created by Mac Owner on 6/21/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Created by Dominic Smtih on 7/19/17.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         //change color of time/status jaunts to white
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.white], for:UIControlState())
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for:UIControlState())
         
         UITabBar.appearance().tintColor = uicolorFromHex(0x159373)
         

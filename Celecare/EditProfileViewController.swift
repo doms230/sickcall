@@ -1,9 +1,9 @@
 //
 //  EditProfileViewController.swift
-//  Celecare
+//  Sickcall
 //
-//  Created by Mac Owner on 7/17/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Created by Dominic Smtih on 7/19/17.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit

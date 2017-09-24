@@ -1,9 +1,9 @@
 //
 //  HeartRateViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/8/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -40,7 +40,7 @@ class HeartRateViewController: UIViewController, NVActivityIndicatorViewable {
 
     // MARK: - Navigation
     
-    func nextAction(_ sender: UIBarButtonItem){
+    @objc func nextAction(_ sender: UIBarButtonItem){
         if didPressStart{
             endTimer()
         } else {
@@ -88,7 +88,7 @@ class HeartRateViewController: UIViewController, NVActivityIndicatorViewable {
         }
     }
     
-    func updateTime() {
+    @objc func updateTime() {
         timerLabel.text = "\(timeFormatted(totalTime))"
         
         if totalTime != 0 {

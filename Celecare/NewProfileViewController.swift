@@ -1,10 +1,9 @@
+//NewProfileViewController.swift
+//Sickcall
 //
-//  NewProfileViewController.swift
-//  Celecare
-//
-//  Created by Mac Owner on 7/2/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
-//#F2F2F5 -type off white jaunt beige color
+//  Created by Dom Smith on 7/2/17.
+//  Copyright © 2017 Sickcall All rights reserved.
+
 
 import UIKit
 import Parse
@@ -46,7 +45,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
-    func signUpAction(_ sender: UIBarButtonItem) {
+    @objc func signUpAction(_ sender: UIBarButtonItem) {
         //create new Profile.. send to med info
         startAnimating()
         newUser(displayName: userName.text!, username: emailString!, password: passwordString, email: emailString!, imageFile: uploadedImage)

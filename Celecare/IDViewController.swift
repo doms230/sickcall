@@ -1,9 +1,9 @@
 //
 //  IDViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/6/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -62,7 +62,7 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
         // Do any additional setup after loading the view.
     }
 
-    func doneAction(_ sender: UIBarButtonItem){
+    @objc func doneAction(_ sender: UIBarButtonItem){
         self.yearText.resignFirstResponder()
         self.monthText.resignFirstResponder()
         self.dayText.resignFirstResponder()
@@ -107,11 +107,11 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
         
         if dayText.text!.isEmpty{
             dayText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                 attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                               attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
         } else if dayText.text?.characters.count != 2{
             dayText.text = ""
             dayText.attributedPlaceholder = NSAttributedString(string:"Wrong Format. try 01 etc.",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                               attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         }else{
             isValidated = true
@@ -123,11 +123,11 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
         var isValidated = false
         if monthText.text!.isEmpty{
             monthText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
         } else if monthText.text?.characters.count != 2{
             monthText.text = ""
             monthText.attributedPlaceholder = NSAttributedString(string:"Wrong Format. try 01 etc.",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         }else{
             isValidated = true
@@ -139,11 +139,11 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
         var isValidated = false
         if yearText.text!.isEmpty{
             yearText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
         } else if yearText.text?.characters.count != 4{
             yearText.text = ""
             yearText.attributedPlaceholder = NSAttributedString(string:"Wrong Format. try 1994 etc.",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         }else{
             isValidated = true
@@ -156,12 +156,12 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
         if ssnButton.text!.isEmpty{
             
             ssnButton.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                    attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         } else if (ssnButton.text?.characters.count)! != 4{
             ssnButton.text = ""
             ssnButton.attributedPlaceholder = NSAttributedString(string:"last 4 digits of your social security number",
-                                                                 attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
         }else{
             isValidated = true
         }

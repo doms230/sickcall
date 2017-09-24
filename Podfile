@@ -28,7 +28,8 @@ target 'Celecare' do
   
   #
   pod 'SidebarOverlay'
-  pod 'SCLAlertView'
+  #pod 'SCLAlertView'
+  pod 'SCLAlertView',:git => 'https://github.com/vikmeup/SCLAlertView-Swift.git'
   #pod 'DateTimePicker'
   pod 'NVActivityIndicatorView'
   #pod 'SRCountdownTimer'

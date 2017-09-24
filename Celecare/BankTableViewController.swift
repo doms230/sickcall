@@ -1,9 +1,9 @@
 //
 //  BankTableViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dominic Smith on 7/26/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 //get bank info and post it above
@@ -81,7 +81,7 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
         return 2
     }
     
-    func nextAction(_ sender: UIBarButtonItem){
+    @objc func nextAction(_ sender: UIBarButtonItem){
         //loading view
         
         if sender.tag == 0{

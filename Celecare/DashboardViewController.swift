@@ -1,9 +1,9 @@
 //
 //  DashboardViewController.swift
-//  Celecare
+//  Sickcall
 //
-//  Created by Mac Owner on 7/14/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Created by Dom Smith on 7/14/17.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -133,7 +133,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
-    func statusAction(_ sender: UIButton){
+    @objc func statusAction(_ sender: UIButton){
         if sender.tag == 1{
             self.performSegue(withIdentifier: "showBank", sender: self)
             

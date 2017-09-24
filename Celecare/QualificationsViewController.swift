@@ -1,9 +1,9 @@
 //
 //  QualificationsViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/6/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -53,7 +53,7 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         desti.state = stateButton.titleLabel?.text!
     }
  
-    func nextAction(_ sender: UIBarButtonItem){
+    @objc func nextAction(_ sender: UIBarButtonItem){
         if validateLicenseNumber() && validateLicenseTypeButton() && validateStateButton(){
             performSegue(withIdentifier: "showId", sender: self)
         }
@@ -167,7 +167,7 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         if licenseNumberText.text!.isEmpty{
             
             licenseNumberText.attributedPlaceholder = NSAttributedString(string:" Field required",
-                                                                    attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                         attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         } else{
             isValidated = true

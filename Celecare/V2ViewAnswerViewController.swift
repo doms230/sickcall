@@ -1,9 +1,9 @@
 //
 //  V2ViewAnswerViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/14/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -178,7 +178,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         return cell
     }
     
-    func loadPlayJaunt(_ sender: UIButton){
+    @objc func loadPlayJaunt(_ sender: UIButton){
         startAnimating()
         if playerItem != nil{
             player.seek(to: kCMTimeZero)
@@ -231,11 +231,11 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         }
     }
     
-    func cancelQuestion(_ sender: UIBarButtonItem){
+    @objc func cancelQuestion(_ sender: UIBarButtonItem){
         cancelQuestionView.showNotice("Cancel Question?", subTitle: "")
     }
     
-    func vitalsAction(_ sender: UIButton){
+    @objc func vitalsAction(_ sender: UIButton){
         self.performSegue(withIdentifier: "showVitals", sender: self)
     }
     

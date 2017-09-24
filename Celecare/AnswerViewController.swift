@@ -1,9 +1,9 @@
 //
 //  AnswerViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Mac Owner on 7/10/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit

@@ -1,9 +1,9 @@
 //
 //  SummaryViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Mac Owner on 7/4/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -126,7 +126,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
         let urlAsset = AVURLAsset(url: inputURL, options: nil)
         if let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetMediumQuality) {
             exportSession.outputURL = outputURL
-            exportSession.outputFileType = AVFileTypeQuickTimeMovie
+            exportSession.outputFileType = AVFileType.mov
             exportSession.shouldOptimizeForNetworkUse = true
             exportSession.exportAsynchronously { () -> Void in
                 handler(exportSession)
@@ -190,7 +190,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
         
         tokenId = token.tokenId;
 
-        paymentCard.setTitle(token.card?.last4(), for: .normal)
+        paymentCard.setTitle(token.card?.last4, for: .normal)
         paymentCard.setTitleColor(.blue, for: .normal)
         paymentImage.image = token.card?.image
         self.dismiss(animated: true, completion: nil)

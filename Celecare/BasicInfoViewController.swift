@@ -1,9 +1,9 @@
 //
 //  BasicInfoViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Mac Owner on 7/4/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -141,7 +141,7 @@ class BasicInfoViewController: UIViewController {
         
         if questionSubjectTextfield.text!.isEmpty{
             questionSubjectTextfield.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                     attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                                attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             isValidated = false
             
         } else{

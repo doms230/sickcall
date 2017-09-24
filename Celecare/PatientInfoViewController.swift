@@ -1,9 +1,9 @@
 //
 //  PatientInfoViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/7/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -111,7 +111,7 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     // button actions
     
-    func nextAction(_ sender: UIBarButtonItem){
+    @objc func nextAction(_ sender: UIBarButtonItem){
         // Do any additional setup after loading the view.
         performSegue(withIdentifier: "showAllergies", sender: self)
 
@@ -156,7 +156,7 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
         present(prompt, animated: true, completion: nil)
     }
     
-    func datePickerAction(_ sender: UIDatePicker){
+    @objc func datePickerAction(_ sender: UIDatePicker){
         
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .short

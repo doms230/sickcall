@@ -1,9 +1,9 @@
 //
 //  SignupViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dom Smith on 8/23/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -52,7 +52,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
 
     }
     
-    func next(_ sender: UIBarButtonItem){
+    @objc func next(_ sender: UIBarButtonItem){
         if validateEmail() && validatePassword(){
             startAnimating()
             //self.performSegue(withIdentifier: "showNewProfile", sender: self)
@@ -76,7 +76,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     func validatePassword() -> Bool{
         if passwordField.text!.isEmpty{
             passwordField.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                     attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                     attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valPassword = false
             
         } else{
@@ -91,21 +91,21 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         let emailString : NSString = emailField.text! as NSString
         if emailField.text!.isEmpty{
             emailField.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                  attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                  attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valEmail = false
             view.endEditing(true)
             
         } else if !emailString.contains("@"){
             emailField.text = ""
             emailField.attributedPlaceholder = NSAttributedString(string:"Valid email required",
-                                                                  attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                  attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valEmail = false
             view.endEditing(true)
             
         } else if !emailString.contains("."){
             emailField.text = ""
             emailField.attributedPlaceholder = NSAttributedString(string:"Valid email required",
-                                                                  attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                  attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valEmail = false
             view.endEditing(true)
             
@@ -115,7 +115,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         return valEmail
     }
     
-    func exitAction(_ sender: UIBarButtonItem) {
+    @objc func exitAction(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "welcome") as UIViewController
         self.present(controller, animated: true, completion: nil)

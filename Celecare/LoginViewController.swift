@@ -1,9 +1,9 @@
 //
 //  LoginViewController.swift
-//  Celecare
+//  Sickcall
 //
-//  Created by Mac Owner on 6/29/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Created by Dom Smith on 6/29/17.
+//  Copyright © 2017 Sickcall All rights reserved.
 //
 
 import UIKit
@@ -53,7 +53,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         if email.text!.isEmpty{
             
             email.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                             attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valUsername = false
             
         } else{
@@ -66,7 +66,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         
         if password.text!.isEmpty{
             password.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                attributes:[NSForegroundColorAttributeName: UIColor.red])
+                                                                attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valPassword = false
             
         } else{
@@ -175,7 +175,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         }
     }
     
-    func exitAction(_ sender: UIBarButtonItem){
+    @objc func exitAction(_ sender: UIBarButtonItem){
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: "welcome")
         self.present(initialViewController, animated: true, completion: nil)
