@@ -97,7 +97,7 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! AllergyViewController
+        let desti = segue.destination as! AllergyViewTableViewController
         desti.gender = genderButton.titleLabel?.text!
         desti.birthday = birthdayButton.titleLabel?.text!
         desti.height = heightButton.titleLabel?.text!

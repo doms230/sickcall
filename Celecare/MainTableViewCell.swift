@@ -96,6 +96,36 @@ class MainTableViewCell: UITableViewCell {
         return button
     }()
     
+    //med History
+    lazy var medHistoryLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = ""
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var MedHistoryContent: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = ""
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var medHistoryButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 15)
+        button.titleLabel?.textAlignment = .left
+        button.setTitle("", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.textAlignment = .left
+        //label.numberOfLines = 0
+        return button
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -138,13 +168,32 @@ class MainTableViewCell: UITableViewCell {
                 make.left.equalTo(self).offset(10)
                 make.right.equalTo(self).offset(-5)
                 make.bottom.equalTo(self).offset(-25)
+            
+            }
+        } else if reuseIdentifier == "medHistoryReuse"{
+            self.addSubview(medHistoryLabel)
+            self.addSubview(MedHistoryContent)
+            self.addSubview(medHistoryButton)
+            
+            medHistoryLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(20)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-5)
+            }
+            
+            MedHistoryContent.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(medHistoryLabel.snp.bottom).offset(5)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-5)
+            }
+            
+            medHistoryButton.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(MedHistoryContent.snp.bottom).offset(10)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-5)
+                make.bottom.equalTo(self)
             }
         }
-    }
-    
-    // We won’t use this but it’s required for the class to compile
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
     
     //overview question view 
@@ -177,5 +226,11 @@ class MainTableViewCell: UITableViewCell {
             make.right.equalTo(self).offset(-5)
             make.bottom.equalTo(self).offset(-25)
         }
+    }
+    
+    ///////////
+    // We won’t use this but it’s required for the class to compile
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }

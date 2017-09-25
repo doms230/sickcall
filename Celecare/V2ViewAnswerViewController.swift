@@ -69,7 +69,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         self.tableView?.rowHeight = UITableViewAutomaticDimension
         self.tableView?.separatorStyle = .none
         self.isInverted = false
-        self.textView.isHidden = true
+        self.setTextInputbarHidden(true, animated: true)
         
         //set up indicator view
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple

@@ -91,7 +91,8 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.textView.placeholder = "Comment required to respond"
         self.rightButton.setTitle("Add", for: .normal)
         self.shouldScrollToBottomAfterKeyboardShows = true
-        
+        self.textInputbar.bringSubview(toFront: self.rightButton)
+        self.textInputbar.bringSubview(toFront: self.textView)
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
