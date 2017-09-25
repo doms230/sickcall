@@ -19,8 +19,9 @@ import SwiftyJSON
 import NVActivityIndicatorView
 import SCLAlertView
 
-class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate, NVActivityIndicatorViewable {
+class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, STPAddCardViewControllerDelegate, NVActivityIndicatorViewable {
     
+    @IBOutlet weak var tableJaunt: UITableView!
     //post info
     var healthConcernDuration: String!
     var healthConcernSummary: String!
@@ -33,17 +34,14 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
     //user 
     var customerId: String!
     
-    @IBOutlet weak var questionSummary: UILabel!
-    @IBOutlet weak var healthDurationLabel: UILabel!
-    @IBOutlet weak var questionVideoButton: UIButton!
     
     //payments
     var baseURL = "https://celecare.herokuapp.com/payments/createCharge"
     var questionURL = "https://celecare.herokuapp.com/posts/assignQuestion"
     var tokenId: String!
-    
-    @IBOutlet weak var paymentImage: UIImageView!
-    @IBOutlet weak var paymentCard: UIButton!
+    var creditCard = "Credit Card"
+    var ccImage: UIImage!
+    var didChooseCC: Bool!
     
     //bools
     var isVideoCompressed = false
@@ -56,14 +54,13 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
         // MyAPIClient implements STPEphemeralKeyProvider (see above)
         //let customerContext = STPCustomerContext(keyProvider: MyAPIClient.sharedClient)
         
+        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "checkoutReuse")
+        self.tableJaunt.estimatedRowHeight = 50
+        self.tableJaunt.rowHeight = UITableViewAutomaticDimension
+
+        
         //TODO: Uncomment
         image = self.videoPreviewImage()
-        
-        questionSummary.text = healthConcernSummary
-        healthDurationLabel.text = healthConcernDuration
-        questionVideoButton.setBackgroundImage(image, for: .normal)
-        questionVideoButton.layer.cornerRadius = 3
-        questionVideoButton.clipsToBounds = true
         
         
         let imageJaunt = UIImageJPEGRepresentation(image!, 0.5)
@@ -81,12 +78,32 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
         compressAction(videoFile: pickedFile)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //tableview
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
-
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "checkoutReuse", for: indexPath) as! MainTableViewCell
+        cell.selectionStyle = .none
+        self.tableJaunt.separatorStyle = .none
+        
+        cell.summaryTitle.text = healthConcernSummary
+        cell.durationLabel.text = healthConcernDuration
+        cell.videoButton.setImage(image, for: .normal)
+        cell.videoButton.addTarget(self, action: #selector(questionVideoAction(_:)), for: .touchUpInside)
+        cell.totalLabel.text = "Total: $7.00"
+        cell.creditCardButton.addTarget(self, action: #selector(choosePaymentAction(_:)), for: .touchUpInside)
+        cell.creditCardButton.setTitle(creditCard, for: .normal)
+        cell.creditCardImage.image = ccImage
+        
+        return cell
+    }
     
     //UI Action
     
@@ -97,11 +114,12 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
             createCharge()
 
         } else {
-            self.paymentCard.setTitleColor(.red, for: .normal)
+           //self.paymentCard.setTitleColor(.red, for: .normal)
+            SCLAlertView().showError("No Credit Card", subTitle: "Enter credit card info before checkout.")
         }
     }
     
-    @IBAction func choosePaymentAction(_ sender: UIButton) {
+    @objc func choosePaymentAction(_ sender: UIButton) {
         let addCardViewController = STPAddCardViewController()
         addCardViewController.delegate = self
         // STPAddCardViewController must be shown inside a UINavigationController.
@@ -110,7 +128,7 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
     }
     
     //
-    @IBAction func questionVideoAction(_ sender: UIButton) {
+    @objc func questionVideoAction(_ sender: UIButton) {
         
         let player = AVPlayer(url: pickedFile)
         let playerController = AVPlayerViewController()
@@ -189,17 +207,18 @@ class SummaryViewController: UIViewController, STPAddCardViewControllerDelegate,
     func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
         
         tokenId = token.tokenId;
-
-        paymentCard.setTitle(token.card?.last4, for: .normal)
-        paymentCard.setTitleColor(.blue, for: .normal)
-        paymentImage.image = token.card?.image
+        creditCard = (token.card?.last4)!
+        ccImage = token.card?.image
+       // paymentCard.setTitle(token.card?.last4, for: .normal)
+        //paymentCard.setTitleColor(.blue, for: .normal)
+        //paymentImage.image = token.card?.image
         self.dismiss(animated: true, completion: nil)
     }
     
     func createCharge(){
         //TODO: add application charge and extra charge for stripe fee j
         let p: Parameters = [            
-            "description": "Health Concern for \(PFUser.current()!.objectId!)",
+            "description": "\(String(describing: PFUser.current()?.email!))'s health question",
             "token": tokenId,
             "email": PFUser.current()!.email!
         ]

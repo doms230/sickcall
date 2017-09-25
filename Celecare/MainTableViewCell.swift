@@ -115,16 +115,88 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var medHistoryButton: UIButton = {
+    lazy var addLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 15)
+        label.text = ""
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    //new question checkout
+    lazy var summaryLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = "Summary"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var summaryTitle: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = ""
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var durationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = ""
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var videoButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 15)
-        button.titleLabel?.textAlignment = .left
         button.setTitle("", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.textAlignment = .left
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true 
         //label.numberOfLines = 0
         return button
     }()
+    
+    lazy var checkoutLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = "Checkout"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var totalLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = ""
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    
+    lazy var creditCardButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Credit Card", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
+    
+    lazy var creditCardImage : UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = UIColor.black
+        image.contentMode = .scaleAspectFill
+        image.image = UIImage(named: "new" )
+        return image
+    }()
+    
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -173,7 +245,7 @@ class MainTableViewCell: UITableViewCell {
         } else if reuseIdentifier == "medHistoryReuse"{
             self.addSubview(medHistoryLabel)
             self.addSubview(MedHistoryContent)
-            self.addSubview(medHistoryButton)
+            self.addSubview(addLabel)
             
             medHistoryLabel.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self).offset(20)
@@ -187,12 +259,14 @@ class MainTableViewCell: UITableViewCell {
                 make.right.equalTo(self).offset(-5)
             }
             
-            medHistoryButton.snp.makeConstraints { (make) -> Void in
+            addLabel.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(MedHistoryContent.snp.bottom).offset(10)
                 make.left.equalTo(self).offset(10)
                 make.right.equalTo(self).offset(-5)
-                make.bottom.equalTo(self)
+                make.bottom.equalTo(self).offset(-10)
             }
+        } else if reuseIdentifier == "checkoutReuse"{
+            configureCheckoutSubview()
         }
     }
     
@@ -225,6 +299,68 @@ class MainTableViewCell: UITableViewCell {
             make.left.equalTo(questionImage.snp.right).offset(10)
             make.right.equalTo(self).offset(-5)
             make.bottom.equalTo(self).offset(-25)
+        }
+    }
+    
+    func configureCheckoutSubview(){
+        self.addSubview(summaryLabel)
+        self.addSubview(summaryTitle)
+        self.addSubview(durationLabel)
+        self.addSubview(videoButton)
+        self.addSubview(checkoutLabel)
+        self.addSubview(totalLabel)
+        self.addSubview(creditCardImage)
+        self.addSubview(creditCardButton)
+        
+        summaryLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self).offset(20)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        summaryTitle.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(summaryLabel.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        durationLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(summaryTitle.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        videoButton.snp.makeConstraints { (make) -> Void in
+            make.width.height.equalTo(75)
+            make.top.equalTo(durationLabel.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+            //make.right.equalTo(self).offset(-10)
+        }
+        
+        checkoutLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(videoButton.snp.bottom).offset(20)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        totalLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(checkoutLabel.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+        }
+        
+        creditCardImage.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(30)
+            make.height.equalTo(20)
+            make.top.equalTo(totalLabel.snp.bottom).offset(5)
+            make.left.equalTo(self).offset(10)
+        }
+        
+        creditCardButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(creditCardImage.snp.top)
+            make.left.equalTo(creditCardImage.snp.right).offset(3)
+            //make.right.equalTo(self).offset(-10)
+            make.bottom.equalTo(self).offset(-20)
         }
     }
     

@@ -65,35 +65,36 @@ class MedHistoryViewController: SLKTextViewController, NVActivityIndicatorViewab
         return 2
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.textView.becomeFirstResponder()
+        self.setTextInputbarHidden(false, animated: true)
+        
+        if indexPath.row == 0{
+            self.textView.text = medHistory
+            self.textView.placeholder = "Medical History"
+            textViewTag = 0
+            
+        } else {
+            self.textView.text = ongoingMedIssues
+            self.textView.placeholder = "Ongoing Health Issues"
+            textViewTag = 1
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: MainTableViewCell!
         cell = tableView.dequeueReusableCell(withIdentifier: "medHistoryReuse", for: indexPath) as! MainTableViewCell
         cell.selectionStyle = .none
-        cell.medHistoryButton.setTitleColor(uicolorFromHex(0x159373), for: .normal)
-        cell.medHistoryButton.addTarget(self, action: #selector(MedHistoryViewController.medHistoryAction(_:)), for: .touchUpInside)
-        
+        cell.addLabel.textColor = uicolorFromHex(0x159373)
         if indexPath.row == 0{
             cell.medHistoryLabel.text = "Medical History"
-            cell.medHistoryButton.tag = 0
             cell.MedHistoryContent.text = medHistory
-            if medHistory == ""{
-                cell.medHistoryButton.setTitle("Add medical history", for: .normal)
-            } else {
-                cell.medHistoryButton.setTitle("Edit medical history", for: .normal)
-
-            }
+            cell.addLabel.text = "Add medical history"
             
         } else {
             cell.medHistoryLabel.text = "Ongoing Health Issues"
-            cell.medHistoryButton.tag = 1
             cell.MedHistoryContent.text = ongoingMedIssues
-            if medHistory == ""{
-                cell.medHistoryButton.setTitle("Add ongoing health issues", for: .normal)
-                
-            } else {
-                cell.medHistoryButton.setTitle("Edit ongoing health issues", for: .normal)
-                
-            }
+            cell.addLabel.text = "Add ongoing health issues"
         }
         
         return cell
@@ -173,11 +174,13 @@ class MedHistoryViewController: SLKTextViewController, NVActivityIndicatorViewab
                 object?["birthday"] = self.birthday
                 object?["medAllergies"] = self.medAllergies
                 object?["foodAllergies"] = self.foodAllergies
+                object!["medHistory"] = self.medHistory
+                object!["healthIssues"] = self.ongoingMedIssues
                 object?.saveInBackground {
                     (success: Bool, error: Error?) -> Void in
                     self.stopAnimating()
                     if (success) {
-                        self.performSegue(withIdentifier: "showMedVitals", sender: self)
+                        self.performSegue(withIdentifier: "showQuestion", sender: self)
                         
                     } else {
                         SCLAlertView().showError("Medical Info Update Failed", subTitle: "Check internet connection and try again. Contact help@sickcallhealth.com if the issue persists.")
