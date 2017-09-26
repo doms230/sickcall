@@ -54,6 +54,7 @@ class AdvisorContainerViewController: SOContainerViewController,NVActivityIndica
             }
             
         } else {
+            self.stopAnimating()
             self.topViewController = self.storyboard?.instantiateViewController(withIdentifier: "new")
             self.sideViewController = self.storyboard?.instantiateViewController(withIdentifier: "sidebar")
         }

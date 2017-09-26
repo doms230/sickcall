@@ -40,7 +40,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var questionURL = "https://celecare.herokuapp.com/posts/assignQuestion"
     var tokenId: String!
     var creditCard = "Credit Card"
-    var ccImage: UIImage!
+    var ccImage = UIImage(named: "new")
     var didChooseCC: Bool!
     
     //bools
@@ -51,13 +51,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // MyAPIClient implements STPEphemeralKeyProvider (see above)
-        //let customerContext = STPCustomerContext(keyProvider: MyAPIClient.sharedClient)
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(askQuestionAction(_:)))
+        self.navigationItem.setRightBarButton(doneButton, animated: true)
         
         self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "checkoutReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
-
+        
         
         //TODO: Uncomment
         image = self.videoPreviewImage()
@@ -91,24 +91,25 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "checkoutReuse", for: indexPath) as! MainTableViewCell
         cell.selectionStyle = .none
+        
         self.tableJaunt.separatorStyle = .none
         
         cell.summaryTitle.text = healthConcernSummary
         cell.durationLabel.text = healthConcernDuration
         cell.videoButton.setImage(image, for: .normal)
-        cell.videoButton.addTarget(self, action: #selector(questionVideoAction(_:)), for: .touchUpInside)
-        cell.totalLabel.text = "Total: $7.00"
-        cell.creditCardButton.addTarget(self, action: #selector(choosePaymentAction(_:)), for: .touchUpInside)
+        cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
+        cell.totalLabel.text = "Total: $6.99"
+        cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
         cell.creditCardButton.setTitle(creditCard, for: .normal)
-        cell.creditCardImage.image = ccImage
+        cell.creditCardButton.setImage(ccImage, for: .normal)
+        
         
         return cell
     }
     
     //UI Action
     
-    @IBAction func askQuestionAction(_ sender: UIButton) {
-        
+    @objc func askQuestionAction(_ sender: UIBarButtonItem) {
         if tokenId != nil{
             startAnimating()
             createCharge()
@@ -170,8 +171,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                     (success: Bool, error: Error?) -> Void in
                     if (success) {
                         self.isVideoCompressed = true
-                        self.cleanup(outputFileURL: compressedURL)
-                        self.cleanup(outputFileURL: videoFile)
+                       // self.cleanup(outputFileURL: compressedURL)
+                        //self.cleanup(outputFileURL: videoFile)
                         if self.hasUserPaid{
                             self.postIt()
                         }

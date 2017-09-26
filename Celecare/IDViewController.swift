@@ -12,6 +12,7 @@ import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
 import SCLAlertView
+import SnapKit
 
 class IDViewController: UIViewController, NVActivityIndicatorViewable {
     
@@ -19,19 +20,63 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
     var firstName: String!
     var lastName: String!
     var licenseNumber: String!
-    var licenseType: String!
     var state: String!
-    
-    
-    @IBOutlet weak var yearText: UITextField!
-    @IBOutlet weak var monthText: UITextField!
-    @IBOutlet weak var dayText: UITextField!
-    @IBOutlet weak var ssnButton: UITextField!
-    
+        
     var successView: SCLAlertView!
 
-    
     var didSelectBirthday = false
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = "ID Verification"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var birthdayLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = "Birthday"
+        label.textColor = UIColor.black
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var birthdayButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 17)
+        button.setTitle("", for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 4
+        button.titleLabel?.textAlignment = .left
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    lazy var ssnLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = "SSN-last 4"
+        label.textColor = UIColor.black
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var ssnText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "1234"
+        label.backgroundColor = .white
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.clearButtonMode = .whileEditing
+        label.borderStyle = .roundedRect
+        label.keyboardType = .numberPad
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,29 +103,63 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
             let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
             self.present(controller, animated: true, completion: nil)
         }
+        
+        //creat UI elements 
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(birthdayLabel)
+        self.view.addSubview(birthdayButton)
+        birthdayButton.addTarget(self, action: #selector(birthdayAction(_:)), for: .touchUpInside)
+        self.view.addSubview(ssnLabel)
+        self.view.addSubview(ssnText)
+        
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.view).offset(75)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        ssnLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        
+        ssnText.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(30)
+            make.top.equalTo(ssnLabel.snp.top)
+            make.left.equalTo(self.view).offset(125)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        birthdayLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(ssnText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        
+        birthdayButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(birthdayLabel.snp.top)
+            make.left.equalTo(self.view).offset(125)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        ssnText.becomeFirstResponder()
+        
 
         // Do any additional setup after loading the view.
     }
 
     @objc func doneAction(_ sender: UIBarButtonItem){
-        self.yearText.resignFirstResponder()
-        self.monthText.resignFirstResponder()
-        self.dayText.resignFirstResponder()
-        self.ssnButton.resignFirstResponder()
+        self.ssnText.resignFirstResponder()
         
         startAnimating()
-        if validateDay() && validateMonth() && validateYear() && validateSSN(){
+        if validateBirthday() && validateSSN(){
             let newAdvisor = PFObject(className: "Advisor")
             newAdvisor["userId"] = PFUser.current()?.objectId
             newAdvisor["first"] = firstName
             newAdvisor["last"] = lastName
             newAdvisor["licenseNumber"] = licenseNumber
-            newAdvisor["licenseType"] = licenseType
             newAdvisor["state"] = state
-            newAdvisor["birthdayday"] = dayText.text!
-            newAdvisor["birthdaymonth"] = monthText.text!
-            newAdvisor["birthdayyear"] = yearText.text!
-            newAdvisor["ssn"] = ssnButton.text
+            newAdvisor["birthday"] = birthdayButton.titleLabel?.text
+            newAdvisor["ssn"] = ssnText.text
             newAdvisor["connectId"] = ""
             newAdvisor["isActive"] = false
             newAdvisor["isOnline"] = false 
@@ -101,66 +180,77 @@ class IDViewController: UIViewController, NVActivityIndicatorViewable {
         
     }
     
+    @objc func birthdayAction(_ sender: UIButton) {
+        let prompt = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        //date jaunts
+        let datePickerView  : UIDatePicker = UIDatePicker()
+        // datePickerView.date = date!
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        datePickerView.addTarget(self, action: #selector(datePickerAction(_:)), for: UIControlEvents.valueChanged)
+        prompt.view.addSubview(datePickerView)
+        
+        let datePicker = UIAlertAction(title: "", style: UIAlertActionStyle.default) {
+            UIAlertAction in
+        }
+        
+        datePicker.isEnabled = false
+        
+        prompt.addAction(datePicker)
+        //prompt.addAction(okay)
+        
+        let height:NSLayoutConstraint = NSLayoutConstraint(item: prompt.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.6)
+        
+        prompt.view.addConstraint(height);
+        
+        let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
+            UIAlertAction in
+            
+        }
+        
+        prompt.addAction(okayJaunt)
+        
+        present(prompt, animated: true, completion: nil)
+    }
+    
+    @objc func datePickerAction(_ sender: UIDatePicker){
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateStyle = .short
+        
+        let formattedDate = timeFormatter.string(from: sender.date)
+        
+        birthdayButton.setTitle(" \(formattedDate)", for: .normal)
+        birthdayButton.setTitleColor(.black, for: .normal)
+        
+        didSelectBirthday = true
+        
+    }
+    
     //validate
-    func validateDay() ->Bool{
+    func validateBirthday() ->Bool{
         var isValidated = false
         
-        if dayText.text!.isEmpty{
-            dayText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                               attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
-        } else if dayText.text?.characters.count != 2{
-            dayText.text = ""
-            dayText.attributedPlaceholder = NSAttributedString(string:"Wrong Format. try 01 etc.",
-                                                               attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
+        if !didSelectBirthday{
+            birthdayButton.setTitle(" Field Required", for: .normal)
+            birthdayButton.setTitleColor(.red, for: .normal)
             
-        }else{
-            isValidated = true
-        }
-        return isValidated
-    }
-    
-    func validateMonth() ->Bool{
-        var isValidated = false
-        if monthText.text!.isEmpty{
-            monthText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
-        } else if monthText.text?.characters.count != 2{
-            monthText.text = ""
-            monthText.attributedPlaceholder = NSAttributedString(string:"Wrong Format. try 01 etc.",
-                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
-            
-        }else{
-            isValidated = true
-        }
-        return isValidated
-    }
-    
-    func validateYear() ->Bool{
-        var isValidated = false
-        if yearText.text!.isEmpty{
-            yearText.attributedPlaceholder = NSAttributedString(string:"Field required",
-                                                                attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
-        } else if yearText.text?.characters.count != 4{
-            yearText.text = ""
-            yearText.attributedPlaceholder = NSAttributedString(string:"Wrong Format. try 1994 etc.",
-                                                                attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
-            
-        }else{
+        } else{
             isValidated = true
         }
         return isValidated
     }
     
     func validateSSN() ->Bool{
-        var isValidated = false        
-        if ssnButton.text!.isEmpty{
+        var isValidated = false
+        if ssnText.text!.isEmpty{
             
-            ssnButton.attributedPlaceholder = NSAttributedString(string:"Field required",
+            ssnText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                                  attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
-        } else if (ssnButton.text?.characters.count)! != 4{
-            ssnButton.text = ""
-            ssnButton.attributedPlaceholder = NSAttributedString(string:"last 4 digits of your social security number",
+        } else if (ssnText.text?.characters.count)! != 4{
+            ssnText.text = ""
+            ssnText.attributedPlaceholder = NSAttributedString(string:"last 4 digits of your social security number",
                                                                  attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
         }else{
             isValidated = true

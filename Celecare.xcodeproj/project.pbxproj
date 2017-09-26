@@ -12,6 +12,7 @@
 		590F694C1F786B04004FE33A /* AllergyViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */; };
 		590F694F1F78700D004FE33A /* MedHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694E1F78700D004FE33A /* MedHistoryViewController.swift */; };
 		590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */; };
+		59FBDFB81F7A23A600446960 /* AdvisorWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FBDFB71F7A23A600446960 /* AdvisorWelcomeViewController.swift */; };
 		9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */; };
 		9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */; };
 		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
@@ -54,6 +55,7 @@
 		590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyViewTableViewController.swift; sourceTree = "<group>"; };
 		590F694E1F78700D004FE33A /* MedHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedHistoryViewController.swift; sourceTree = "<group>"; };
 		590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoTableViewController.swift; sourceTree = "<group>"; };
+		59FBDFB71F7A23A600446960 /* AdvisorWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvisorWelcomeViewController.swift; sourceTree = "<group>"; };
 		9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		9A2687251F0C087F00AF7A2B /* BasicInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicInfoViewController.swift; sourceTree = "<group>"; };
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 		F2FCEDC61F36A51E006D8FAD /* NewAdvisor */ = {
 			isa = PBXGroup;
 			children = (
+				59FBDFB71F7A23A600446960 /* AdvisorWelcomeViewController.swift */,
 				F2FCEDC91F36A6FC006D8FAD /* NameViewController.swift */,
 				F2FCEDCB1F37F923006D8FAD /* QualificationsViewController.swift */,
 				F2FCEDCD1F381C96006D8FAD /* IDViewController.swift */,
@@ -449,6 +452,7 @@
 				9A2687261F0C087F00AF7A2B /* BasicInfoViewController.swift in Sources */,
 				F24710781F42B2C4008AB906 /* V2AdvisorQuestionViewController.swift in Sources */,
 				F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */,
+				59FBDFB81F7A23A600446960 /* AdvisorWelcomeViewController.swift in Sources */,
 				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
 				F2FCEDCA1F36A6FC006D8FAD /* NameViewController.swift in Sources */,
 				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,

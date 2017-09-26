@@ -60,7 +60,6 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
                 self.titleImage.kf.setImage(with: URL(string: image ))
                 self.titleButton.addSubview(self.titleImage)
                 
-                
                 let leftItem = UIBarButtonItem(customView: self.titleButton)
                 
                 self.navigationItem.setLeftBarButton(leftItem, animated: true)
@@ -114,7 +113,6 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
         let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
         controller.isAdvisor = isAdvisor
         self.present(controller, animated: true, completion: nil)
-        
     }
     
     @objc func editProfile(_ sender: UIButton){

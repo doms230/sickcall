@@ -10,66 +10,103 @@ import UIKit
 import Parse
 import SidebarOverlay
 import Kingfisher
-import NVActivityIndicatorView
 import SCLAlertView
+import SnapKit
 
-class NameViewController: UIViewController, NVActivityIndicatorViewable {
-
-    @IBOutlet weak var lastNameText: UITextField!
-    @IBOutlet weak var firstNameText: UITextField!
+class NameViewController: UIViewController {
     
     @IBOutlet weak var profileImage: UIButton!
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = "Name"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var firstlabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = "First Name"
+        label.textColor = UIColor.black
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var firstNameText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "First Name"
+        label.backgroundColor = .white
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.clearButtonMode = .whileEditing
+        label.borderStyle = .roundedRect
+        return label
+    }()
+    
+    lazy var lastLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = "Last Name"
+        label.backgroundColor = .clear
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var lastNameText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "Last Name"
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.backgroundColor = .white
+        label.borderStyle = .roundedRect
+        label.clearButtonMode = .whileEditing
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "1/3"
         
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
-                let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
-                self.profileImage.layer.cornerRadius = 30 / 2
-                self.profileImage.clipsToBounds = true
-            }
+        //set up UI elements
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(firstlabel)
+        self.view.addSubview(firstNameText)
+        self.view.addSubview(lastLabel)
+        self.view.addSubview(lastNameText)
+        
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.view).offset(75)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
         }
         
-        NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
-        NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
-        NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        
-        let appearance = SCLAlertView.SCLAppearance(
-            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
-            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
-            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
-            showCloseButton: false
-        )
-        
-        let successView = SCLAlertView(appearance: appearance)
-        successView.addButton("Okay") {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-            self.present(controller, animated: true, completion: nil)
+        firstlabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
         }
-
-        // Do any additional setup after loading the view.
-        startAnimating()
-        let adQuery = PFQuery(className: "Advisor")
-        adQuery.whereKey("userId", equalTo: PFUser.current()!.objectId!)
-        adQuery.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            self.stopAnimating()
-            if error == nil || object != nil {
-                let isActive = object?["isActive"] as! Bool
-                if !isActive {
-                    successView.showNotice("In Review", subTitle: "We're still reviewing your information. We'll email you at \(PFUser.current()!.email!) when we have finished.")
-                }
-            }
+        
+        firstNameText.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(firstlabel.snp.top)
+            make.left.equalTo(self.view).offset(125)
+            make.right.equalTo(self.view).offset(-10)
         }
+        
+        lastLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(firstNameText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        
+        lastNameText.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(lastLabel.snp.top)
+            make.left.equalTo(self.view).offset(125)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        firstNameText.becomeFirstResponder()
     }
     
     // MARK: - Navigation
@@ -82,10 +119,10 @@ class NameViewController: UIViewController, NVActivityIndicatorViewable {
     }
     
     //make keyboard go away 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    /*override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
-    }
+    }*/
     
     @IBAction func nextAction(_ sender: UIBarButtonItem) {
         //startAnimating()

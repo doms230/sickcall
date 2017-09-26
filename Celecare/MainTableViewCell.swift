@@ -185,18 +185,9 @@ class MainTableViewCell: UITableViewCell {
         let button = UIButton()
         button.setTitle("Credit Card", for: .normal)
         button.setTitleColor(.blue, for: .normal)
-        //label.numberOfLines = 0
+        button.setImage(UIImage(named: "new"), for: .normal)
         return button
     }()
-    
-    lazy var creditCardImage : UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = UIColor.black
-        image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "new" )
-        return image
-    }()
-    
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -270,6 +261,12 @@ class MainTableViewCell: UITableViewCell {
         }
     }
     
+    ///////////
+    // We won’t use this but it’s required for the class to compile
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     //overview question view 
     
     func configureOverSubview(){
@@ -309,7 +306,6 @@ class MainTableViewCell: UITableViewCell {
         self.addSubview(videoButton)
         self.addSubview(checkoutLabel)
         self.addSubview(totalLabel)
-        self.addSubview(creditCardImage)
         self.addSubview(creditCardButton)
         
         summaryLabel.snp.makeConstraints { (make) -> Void in
@@ -334,7 +330,6 @@ class MainTableViewCell: UITableViewCell {
             make.width.height.equalTo(75)
             make.top.equalTo(durationLabel.snp.bottom).offset(5)
             make.left.equalTo(self).offset(10)
-            //make.right.equalTo(self).offset(-10)
         }
         
         checkoutLabel.snp.makeConstraints { (make) -> Void in
@@ -349,24 +344,9 @@ class MainTableViewCell: UITableViewCell {
             make.right.equalTo(self).offset(-10)
         }
         
-        creditCardImage.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(30)
-            make.height.equalTo(20)
-            make.top.equalTo(totalLabel.snp.bottom).offset(5)
+        creditCardButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(totalLabel.snp.bottom).offset(10)
             make.left.equalTo(self).offset(10)
         }
-        
-        creditCardButton.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(creditCardImage.snp.top)
-            make.left.equalTo(creditCardImage.snp.right).offset(3)
-            //make.right.equalTo(self).offset(-10)
-            make.bottom.equalTo(self).offset(-20)
-        }
-    }
-    
-    ///////////
-    // We won’t use this but it’s required for the class to compile
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 }

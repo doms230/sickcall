@@ -29,7 +29,7 @@ class NewQuestionViewController: UIViewController {
         })
     }
     
-    @IBAction func continueAction(_ sender: UIButton) {
+    @IBAction func continueAction(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "showBasicInfo", sender: self)
     }
     

@@ -7,25 +7,79 @@
 //
 
 import UIKit
+import SnapKit
 
 class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    //
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.text = "Qualifications"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var licenseLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = "License Number"
+        label.textColor = UIColor.black
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var licenseText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "RN-12345"
+        label.backgroundColor = .white
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.clearButtonMode = .whileEditing
+        label.borderStyle = .roundedRect
+        return label
+    }()
+    
+    lazy var stateLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 20)
+        label.text = "State"
+        label.textColor = UIColor.black
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var stateButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 17)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 4
+        button.titleLabel?.textAlignment = .left
+        button.clipsToBounds = true
+        return button
+    }()
+    
+    
+    
     
     //Name Values from NameViewController
     var firstName: String!
     var lastName: String!
     
     //Qualifications
-    @IBOutlet weak var licenseNumberText: UITextField!
-    @IBOutlet weak var licenseTypeButton: UIButton!
-    @IBOutlet weak var stateButton: UIButton!
+    //@IBOutlet weak var licenseNumberText: UITextField!
+    //@IBOutlet weak var licenseTypeButton: UIButton!
+    //@IBOutlet weak var stateButton: UIButton!
     
     //picker view values
-    var whichPicker = "type"
     var statePrompt: UIAlertController!
     var licenseTypePrompt: UIAlertController!
+    var didChooseState = false
     
     let states = ["","Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho"," Illinois","Indiana","Iowa","Kansas","Kentucky", "Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
-    let types = ["", "RN", "PN", "APRN-CNP", "APRN-CRNA", "APRN-CNS", "APRN-CNM"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +88,45 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
-        licenseTypeButton.layer.cornerRadius = 3
-        licenseTypeButton.clipsToBounds = true
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(licenseLabel)
+        self.view.addSubview(licenseText)
+        self.view.addSubview(stateLabel)
+        self.view.addSubview(stateButton)
+        stateButton.addTarget(self, action: #selector(stateAction(_:)), for: .touchUpInside)
         
-        stateButton.layer.cornerRadius = 3
-        stateButton.clipsToBounds = true
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.view).offset(75)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        licenseLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        
+        licenseText.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(licenseLabel.snp.top)
+            make.left.equalTo(self.view).offset(165)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        stateLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(licenseText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        
+        stateButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(30)
+            make.top.equalTo(stateLabel.snp.top)
+            make.left.equalTo(self.view).offset(165)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        licenseText.becomeFirstResponder()
+
+        
         
     }
 
@@ -48,49 +136,17 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         let desti = segue.destination as! IDViewController
         desti.firstName = firstName
         desti.lastName = lastName
-        desti.licenseNumber = licenseNumberText.text!
-        desti.licenseType = licenseTypeButton.titleLabel?.text!
+        desti.licenseNumber = licenseText.text!
         desti.state = stateButton.titleLabel?.text!
     }
  
     @objc func nextAction(_ sender: UIBarButtonItem){
-        if validateLicenseNumber() && validateLicenseTypeButton() && validateStateButton(){
+        if validateLicenseNumber() && validateStateButton(){
             performSegue(withIdentifier: "showId", sender: self)
         }
     }
     
-    @IBAction func licenseTypeAction(_ sender: UIButton) {
-        whichPicker = "type"
-        licenseTypePrompt = UIAlertController(title: "Choose License Type", message: "", preferredStyle: .actionSheet)
-        
-        let statePickerView: UIPickerView = UIPickerView()
-        statePickerView.delegate = self
-        statePickerView.dataSource = self
-        licenseTypePrompt.view.addSubview(statePickerView)
-        
-        let datePicker = UIAlertAction(title: "", style: UIAlertActionStyle.default) {
-            UIAlertAction in
-        }
-        
-        datePicker.isEnabled = false
-        
-        licenseTypePrompt.addAction(datePicker)
-        
-        let height:NSLayoutConstraint = NSLayoutConstraint(item: licenseTypePrompt.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: self.view.frame.height * 0.6)
-        
-        licenseTypePrompt.view.addConstraint(height);
-        
-        let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
-            UIAlertAction in
-        }
-        
-        licenseTypePrompt.addAction(okayJaunt)
-        
-        present(licenseTypePrompt, animated: true, completion: nil)
-    }
-    
-    @IBAction func stateAction(_ sender: UIButton) {
-        whichPicker = "state"
+    @objc func stateAction(_ sender: UIButton) {
         
         statePrompt = UIAlertController(title: "Choose State", message: "", preferredStyle: .actionSheet)
         
@@ -113,6 +169,7 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
             UIAlertAction in
+            
         }
         
         statePrompt.addAction(okayJaunt)
@@ -129,34 +186,22 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // data method to return the number of row shown in the picker.
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if whichPicker == "type"{
-            return types.count
-            
-        }else {
-            return states.count
-        }
+        return states.count
     }
     
     // delegate method to return the value shown in the picker
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if whichPicker == "type"{
-            return types[row]
-            
-        }else {
-            return states[row]
-            
-        }
+        return states[row]
+
     }
     
     // delegate method called when the row was selected.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if whichPicker == "type"{
-            licenseTypeButton.setTitle(" \(types[row])", for: .normal)
-            licenseTypeButton.setTitleColor(.black, for: .normal)
-            
-        }else {
-            stateButton.setTitle(" \(states[row])", for: .normal)
-            stateButton.setTitleColor(.black, for: .normal)
+        stateButton.setTitle(" \(states[row])", for: .normal)
+        stateButton.setTitleColor(.black, for: .normal)
+        
+        if states[row] != ""{
+            didChooseState = true 
         }
     }
     
@@ -164,9 +209,9 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     func validateLicenseNumber() ->Bool{
         var isValidated = false
         
-        if licenseNumberText.text!.isEmpty{
+        if licenseText.text!.isEmpty{
             
-            licenseNumberText.attributedPlaceholder = NSAttributedString(string:" Field required",
+            licenseText.attributedPlaceholder = NSAttributedString(string:" Field required",
                                                                          attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             
         } else{
@@ -175,30 +220,18 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         return isValidated
     }
     
-    func validateLicenseTypeButton() ->Bool{
-        var isValidated = false
-        
-        if licenseTypeButton.titleLabel?.text == " "{
-            licenseTypeButton.setTitle(" Field Required", for: .normal)
-            licenseTypeButton.setTitleColor(.red, for: .normal)
-            
-        } else{
-            isValidated = true
-        }
-        return isValidated
-    }
-    
     func validateStateButton() ->Bool{
-        var isValidated = false
+        var isStateValidated = false
         
-        if stateButton.titleLabel?.text == " "{
+        if !didChooseState{
             stateButton.setTitle(" Field Required", for: .normal)
             stateButton.setTitleColor(.red, for: .normal)
             
         } else{
-            isValidated = true
+            isStateValidated = true
         }
-        return isValidated
+        print("validation: \(isStateValidated)")
+        return isStateValidated
     }
     
     //mich.
