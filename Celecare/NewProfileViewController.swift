@@ -18,6 +18,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
     var userNameString: String!
     var emailString: String!
     var passwordString: String!
+    var isSwitchOn: Bool! 
     //image picker stuff
     
     var uploadedImage: PFFile!
@@ -84,9 +85,16 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
                 installation?["userId"] = PFUser.current()?.objectId
                 installation?.saveEventually()
                 
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                self.present(initialViewController, animated: true, completion: nil)
+                if self.isSwitchOn{
+                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                    initialViewController.isAdvisor = false
+                    self.present(initialViewController, animated: true, completion: nil)
+                } else {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                    self.present(initialViewController, animated: true, completion: nil)
+                }
             }
         }
     }

@@ -20,6 +20,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     //validate jaunts
     var valPassword = false
     var valEmail = false
+    var isSwitchOn = false
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -49,6 +50,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         //user info
         desti.emailString = emailField.text!
         desti.passwordString = passwordField.text!
+        desti.isSwitchOn = isSwitchOn
 
     }
     
@@ -114,6 +116,16 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         }
         return valEmail
     }
+    
+    @IBAction func switchAction(_ sender: UISwitch) {
+        if sender.isOn{
+            isSwitchOn = true
+            
+        } else {
+            isSwitchOn = false 
+        }
+    }
+    
     
     @objc func exitAction(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)

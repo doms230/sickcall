@@ -13,6 +13,7 @@ import ParseFacebookUtilsV4
 import Parse
 import NVActivityIndicatorView
 import Kingfisher
+import SCLAlertView
 
 class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
@@ -37,6 +38,22 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     @IBAction func facebookAction(_ sender: UIButton) {
+        let appearance = SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        )
+        let alertView = SCLAlertView(appearance: appearance)
+        
+        alertView.addButton("Yes"){
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            initialViewController.isAdvisor = false
+            self.present(initialViewController, animated: true, completion: nil)
+        }
+        alertView.addButton("No") {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
+            self.present(controller, animated: true, completion: nil)
+        }
         //
         PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
             (user: PFUser?, error: Error?) -> Void in
@@ -89,9 +106,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                                         if (success) {
                                             self.stopAnimating()
                                             
-                                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-                                            self.present(controller, animated: true, completion: nil)
+                                            alertView.showInfo("Are you a registered nurse?", subTitle: "")
                                         }
                                     }
                                 }

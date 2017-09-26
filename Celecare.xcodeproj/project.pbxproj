@@ -179,10 +179,10 @@
 		9AB1821D1F15827800678851 /* advisor */ = {
 			isa = PBXGroup;
 			children = (
+				9AB1821B1F15826D00678851 /* Advisor.storyboard */,
 				9AB1821E1F15836700678851 /* AdvisorContainerViewController.swift */,
 				9AB182281F188FDC00678851 /* DashboardViewController.swift */,
 				9AB182221F15886000678851 /* AdvisorTableViewCell.swift */,
-				9AB1821B1F15826D00678851 /* Advisor.storyboard */,
 				F2FCEDC61F36A51E006D8FAD /* NewAdvisor */,
 				590042EF1F2947B70077083A /* info */,
 				9AB182241F158AB500678851 /* AdvisorSideBarViewController.swift */,
