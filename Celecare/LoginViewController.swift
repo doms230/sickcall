@@ -19,9 +19,44 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     
     var signupHidden = true
     
-    @IBOutlet weak var email: UITextField!
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 30)
+        label.text = "Sign In"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
     
-    @IBOutlet weak var password: UITextField!
+    lazy var emailText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "Email"
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.backgroundColor = .white
+        label.borderStyle = .roundedRect
+        label.clearButtonMode = .whileEditing
+        return label
+    }()
+    
+    lazy var passwordText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "Password"
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.backgroundColor = .white
+        label.borderStyle = .roundedRect
+        label.clearButtonMode = .whileEditing
+        return label
+    }()
+    
+    lazy var signButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.titleLabel?.textAlignment = .right
+        button.setTitle("Sign In", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
     
     var forgotPasswordView: SCLAlertView!
     
@@ -31,7 +66,38 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(LoginViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
         
-        email.becomeFirstResponder()
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(emailText)
+        self.view.addSubview(passwordText)
+        self.view.addSubview(signButton)
+        
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.view).offset(75)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        emailText.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        passwordText.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(emailText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        signButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(passwordText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        //    make.bottom.equalTo(self.view).offset(-20)
+        }
+        signButton.addTarget(self, action: #selector(loginAction(_:)), for: .touchUpInside)
+        
+        emailText.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
@@ -44,17 +110,22 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         forgotPasswordView.showEdit("Forgot Password", subTitle: "Enter in your Sickcall email")
     }
     
-    @IBAction func loginAction(_ sender: UIButton) {
-        returningUser( password: password.text!, username: (email.text!))
+    @objc func loginAction(_ sender: UIButton) {
+        emailText.resignFirstResponder()
+        passwordText.resignFirstResponder()
+        if validateUsername() && validatePassword(){
+            returningUser( password: passwordText.text!, username: (emailText.text!))
+        }
+        
     }
     
     func validateUsername() ->Bool{
         
         //Validate username
         
-        if email.text!.isEmpty{
+        if emailText.text!.isEmpty{
             
-            email.attributedPlaceholder = NSAttributedString(string:"Field required",
+            emailText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                              attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valUsername = false
             
@@ -66,8 +137,8 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     
     func validatePassword() -> Bool{
         
-        if password.text!.isEmpty{
-            password.attributedPlaceholder = NSAttributedString(string:"Field required",
+        if passwordText.text!.isEmpty{
+            passwordText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valPassword = false
             

@@ -9,11 +9,31 @@ import UIKit
 import Parse
 import NVActivityIndicatorView
 import SCLAlertView
+import SnapKit
 
 class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegate, UINavigationControllerDelegate,NVActivityIndicatorViewable{
     
-    @IBOutlet weak var userName: UITextField!
-    @IBOutlet weak var userImage: UIButton!
+    let screenSize: CGRect = UIScreen.main.bounds
+
+    lazy var username: UITextField = {
+        let label = UITextField()
+        label.placeholder = "Name"
+        label.backgroundColor = .white
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.clearButtonMode = .whileEditing
+        label.borderStyle = .roundedRect
+        return label
+    }()
+    
+    lazy var image: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 40)
+        button.titleLabel?.textAlignment = .left
+        button.setTitle("+", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
         
     var userNameString: String!
     var emailString: String!
@@ -35,10 +55,27 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         let proPic = UIImageJPEGRepresentation(UIImage(named: "appy")!, 0.5)
         uploadedImage = PFFile(name: "defaultProfile_ios.jpeg", data: proPic!)
         
-        userImage.layer.cornerRadius = 50
-        userImage.clipsToBounds = true 
-        
         imagePicker.delegate = self
+        
+        image.layer.cornerRadius = 50
+        image.clipsToBounds = true
+        image.addTarget(self, action: #selector(uploadProfilePicAction(_:)), for: .touchUpInside)
+        
+        self.view.addSubview(username)
+        self.view.addSubview(image)
+        
+        image.snp.makeConstraints { (make) -> Void in
+            make.height.width.equalTo(100)
+            make.top.equalTo(self.view).offset(75)
+            make.left.equalTo(self.view).offset(screenSize.width / 2 - 50)
+        }
+        
+        username.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(image.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+            //make.bottom.equalTo(self.view).offset(-20)
+        }
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
@@ -49,7 +86,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
     @objc func signUpAction(_ sender: UIBarButtonItem) {
         //create new Profile.. send to med info
         startAnimating()
-        newUser(displayName: userName.text!, username: emailString!, password: passwordString, email: emailString!, imageFile: uploadedImage)
+        newUser(displayName: username.text!, username: emailString!, password: passwordString, email: emailString!, imageFile: uploadedImage)
         
     }
     
@@ -106,7 +143,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
         
         //userImage.setTitle("", for: .normal)
-        userImage.setBackgroundImage(chosenImage, for: .normal)
+        image.setBackgroundImage(chosenImage, for: .normal)
         //tableJaunt.reloadData()
         
         let proPic = UIImageJPEGRepresentation(chosenImage, 0.5)
@@ -123,7 +160,7 @@ class NewProfileViewController: UIViewController ,UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func uploadProfilePicAction(_ sender: UIButton) {
+    @objc func uploadProfilePicAction(_ sender: UIButton) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType =  .photoLibrary
         present(imagePicker, animated: true, completion: nil)

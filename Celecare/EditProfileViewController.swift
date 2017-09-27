@@ -10,11 +10,33 @@ import UIKit
 import Parse
 import NVActivityIndicatorView
 import Kingfisher
+import SnapKit
 
 class EditProfileViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate,NVActivityIndicatorViewable {
     
-    @IBOutlet weak var image: UIButton!
-    @IBOutlet weak var username: UITextField!
+    let screenSize: CGRect = UIScreen.main.bounds
+    
+    lazy var username: UITextField = {
+        let label = UITextField()
+        label.placeholder = "Name"
+        label.backgroundColor = .white
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.clearButtonMode = .whileEditing
+        label.borderStyle = .roundedRect
+        return label
+    }()
+    
+    lazy var image: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 40)
+        button.titleLabel?.textAlignment = .left
+        button.setTitle("+", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
+    
+    
     var imageJaunt: String!
     var nameJaunt: String!
     
@@ -27,7 +49,24 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
         image.layer.cornerRadius = 50
         image.clipsToBounds = true
         image.kf.setBackgroundImage(with: URL(string: imageJaunt), for: .normal)
+        image.addTarget(self, action: #selector(editProfile(_:)), for: .touchUpInside)
         username.text = nameJaunt
+        
+        self.view.addSubview(username)
+        self.view.addSubview(image)
+        
+        image.snp.makeConstraints { (make) -> Void in
+            make.height.width.equalTo(100)
+            make.top.equalTo(self.view).offset(75)
+            make.left.equalTo(self.view).offset(screenSize.width / 2 - 50)
+        }
+        
+        username.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(image.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+            //make.bottom.equalTo(self.view).offset(-20)
+        }
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
@@ -95,7 +134,7 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
     }
     
     
-    @IBAction func EditProfile(_ sender: UIButton) {
+    @objc func editProfile(_ sender: UIButton) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)

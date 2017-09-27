@@ -12,8 +12,15 @@ import SCLAlertView
 
 class NewQuestionViewController: UIViewController {
     
+    var didAskQuestion = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+      /*  if didAskQuestion{
+            self.tabBarController?.selectedIndex = 1
+        }*/
+        
         clearTmpDirectory()
         
         let current = UNUserNotificationCenter.current()

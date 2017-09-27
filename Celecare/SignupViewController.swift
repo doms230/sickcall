@@ -10,17 +10,62 @@ import UIKit
 import Parse
 import SCLAlertView
 import NVActivityIndicatorView
+import SnapKit
 
 class SignupViewController: UIViewController,NVActivityIndicatorViewable {
 
     //UI components
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var emailField: UITextField!
     
     //validate jaunts
     var valPassword = false
     var valEmail = false
     var isSwitchOn = false
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 30)
+        label.text = "Sign Up"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var emailText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "Email"
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.backgroundColor = .white
+        label.borderStyle = .roundedRect
+        label.clearButtonMode = .whileEditing
+        label.keyboardType = .emailAddress
+        return label
+    }()
+    
+    lazy var passwordText: UITextField = {
+        let label = UITextField()
+        label.placeholder = "Password"
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.backgroundColor = .white
+        label.borderStyle = .roundedRect
+        label.clearButtonMode = .whileEditing
+        label.isSecureTextEntry = true 
+        return label
+    }()
+    
+    lazy var nurseSwitch: UISwitch = {
+        let switchJaunt = UISwitch()
+        switchJaunt.onTintColor = uicolorFromHex(0x180d22)
+        return switchJaunt
+    }()
+    
+    lazy var switchLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+        label.text = "I'm a registered nurse"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -31,7 +76,44 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         let doneItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(SignupViewController.next(_:)))
         self.navigationItem.rightBarButtonItem = doneItem
         
-        emailField.becomeFirstResponder()
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(emailText)
+        self.view.addSubview(passwordText)
+        self.view.addSubview(nurseSwitch)
+        self.view.addSubview(switchLabel)
+        
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.view).offset(75)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        emailText.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        passwordText.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(emailText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        nurseSwitch.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(passwordText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        nurseSwitch.addTarget(self, action: #selector(switchAction(_:)), for: .valueChanged)
+        
+        switchLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(nurseSwitch.snp.top).offset(1)
+            make.left.equalTo(nurseSwitch.snp.right).offset(5)
+            make.right.equalTo(self.view).offset(-10)
+        }
+        
+        
+        emailText.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
@@ -50,18 +132,20 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         let desti = segue.destination as! NewProfileViewController
         
         //user info
-        desti.emailString = emailField.text!
-        desti.passwordString = passwordField.text!
+        desti.emailString = emailText.text!
+        desti.passwordString = passwordText.text!
         desti.isSwitchOn = isSwitchOn
 
     }
     
     @objc func next(_ sender: UIBarButtonItem){
+        emailText.resignFirstResponder()
+        passwordText.resignFirstResponder()
         if validateEmail() && validatePassword(){
             startAnimating()
             //self.performSegue(withIdentifier: "showNewProfile", sender: self)
             let emailQuery = PFQuery(className: "_User")
-            emailQuery.whereKey("email", equalTo: self.emailField.text!  )
+            emailQuery.whereKey("email", equalTo: self.emailText.text!  )
             emailQuery.findObjectsInBackground{
                 (objects: [PFObject]?, error: Error?) -> Void in
                 self.stopAnimating()
@@ -78,8 +162,8 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     //MARK: Validate jaunts
     
     func validatePassword() -> Bool{
-        if passwordField.text!.isEmpty{
-            passwordField.attributedPlaceholder = NSAttributedString(string:"Field required",
+        if passwordText.text!.isEmpty{
+            passwordText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                                      attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valPassword = false
             
@@ -92,23 +176,23 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     func validateEmail() -> Bool{
-        let emailString : NSString = emailField.text! as NSString
-        if emailField.text!.isEmpty{
-            emailField.attributedPlaceholder = NSAttributedString(string:"Field required",
+        let emailString : NSString = emailText.text! as NSString
+        if emailText.text!.isEmpty{
+            emailText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                                   attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valEmail = false
             view.endEditing(true)
             
         } else if !emailString.contains("@"){
-            emailField.text = ""
-            emailField.attributedPlaceholder = NSAttributedString(string:"Valid email required",
+            emailText.text = ""
+            emailText.attributedPlaceholder = NSAttributedString(string:"Valid email required",
                                                                   attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valEmail = false
             view.endEditing(true)
             
         } else if !emailString.contains("."){
-            emailField.text = ""
-            emailField.attributedPlaceholder = NSAttributedString(string:"Valid email required",
+            emailText.text = ""
+            emailText.attributedPlaceholder = NSAttributedString(string:"Valid email required",
                                                                   attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
             valEmail = false
             view.endEditing(true)
@@ -119,7 +203,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         return valEmail
     }
     
-    @IBAction func switchAction(_ sender: UISwitch) {
+    @objc func switchAction(_ sender: UISwitch) {
         if sender.isOn{
             isSwitchOn = true
             

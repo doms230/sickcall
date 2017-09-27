@@ -22,14 +22,14 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var selectedBirthday: String!
     
     @IBOutlet weak var heightButton: UIButton!
-    var heightFt = [ "0'", "1'", "2'", "3'", "4'", "5'", "6'", "7'", "8'" ]
+    var heightFt = [ "0", "1'", "2'", "3'", "4'", "5'", "6'", "7'", "8'" ]
     var heightIn = [ "0\"", "1\"", "2\"", "3\"", "4\"", "5\"", "6\"", "7\"", "8\"", "9\"", "10\"", "11\""]
     var selectedHeightFt = "0'"
     var selectedHeightIn = "0\""
     
     @IBOutlet weak var weightButton: UIButton!
     var weight = [String]()
-    var selectedWeight: String!
+    var selectedWeight = ""
     
     //
     var whichPicker = "gender"
@@ -312,7 +312,7 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
                 break
                 
             case "weight":
-                self.weightButton.setTitle(" \(self.selectedWeight!) lbs", for: .normal)
+                self.weightButton.setTitle(" \(self.selectedWeight) lbs", for: .normal)
                 break
                 
             default:

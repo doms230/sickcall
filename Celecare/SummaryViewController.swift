@@ -324,11 +324,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.stopAnimating()
             print(response)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "main")
+            let controller = storyboard.instantiateViewController(withIdentifier: "main") as! UITabBarController
+            controller.selectedIndex = 1
             self.present(controller, animated: true, completion: nil)
-            
-
         }
     }
-    
 }
