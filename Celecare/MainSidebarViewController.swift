@@ -3,7 +3,7 @@
 //  Celecare
 //
 //  Created by Dominic Smtih on 7/19/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -96,6 +96,7 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
 
         cell.editProfileButton.addTarget(self, action: #selector(self.editProfile(_:)), for: .touchUpInside)
         cell.advisorButton.addTarget(self, action: #selector(self.switchAction(_:)), for: .touchUpInside)
+        cell.selectionStyle = .none
         if isAdvisor{
             cell.advisorButton.setTitle(" Switch To Advisor", for: .normal)
             

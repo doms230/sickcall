@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Dom Smith on 6/29/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -30,6 +30,8 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(LoginViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
+        
+        email.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)

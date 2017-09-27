@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Mac Owner on 7/4/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -21,7 +21,7 @@ import SCLAlertView
 
 class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, STPAddCardViewControllerDelegate, NVActivityIndicatorViewable {
     
-    @IBOutlet weak var tableJaunt: UITableView!
+ var tableJaunt: UITableView!
     //post info
     var healthConcernDuration: String!
     var healthConcernSummary: String!
@@ -33,7 +33,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     //user 
     var customerId: String!
-    
     
     //payments
     var baseURL = "https://celecare.herokuapp.com/payments/createCharge"
@@ -53,15 +52,17 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(askQuestionAction(_:)))
         self.navigationItem.setRightBarButton(doneButton, animated: true)
-        
+        self.tableJaunt = UITableView(frame: self.view.bounds)
+        self.tableJaunt.dataSource = self
+        self.tableJaunt.delegate = self
         self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "checkoutReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
-        
+        self.tableJaunt.separatorStyle = .none
+        self.view.addSubview(self.tableJaunt)
         
         //TODO: Uncomment
         image = self.videoPreviewImage()
-        
         
         let imageJaunt = UIImageJPEGRepresentation(image!, 0.5)
         screenshotImage  = PFFile(name: "screenshot.jpeg", data: imageJaunt!)
@@ -73,7 +74,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             }else{
             }
         }
-        
         
         compressAction(videoFile: pickedFile)
     }
@@ -92,18 +92,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "checkoutReuse", for: indexPath) as! MainTableViewCell
         cell.selectionStyle = .none
         
-        self.tableJaunt.separatorStyle = .none
-        
         cell.summaryTitle.text = healthConcernSummary
         cell.durationLabel.text = healthConcernDuration
         cell.videoButton.setImage(image, for: .normal)
         cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
         cell.totalLabel.text = "Total: $6.99"
-        cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
         cell.creditCardButton.setTitle(creditCard, for: .normal)
         cell.creditCardButton.setImage(ccImage, for: .normal)
-        
-        
+        cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
+
         return cell
     }
     
@@ -210,9 +207,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         tokenId = token.tokenId;
         creditCard = (token.card?.last4)!
         ccImage = token.card?.image
-       // paymentCard.setTitle(token.card?.last4, for: .normal)
-        //paymentCard.setTitleColor(.blue, for: .normal)
-        //paymentImage.image = token.card?.image
+        self.tableJaunt.reloadData()
         self.dismiss(animated: true, completion: nil)
     }
     

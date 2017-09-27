@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Dom Smith on 8/14/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -87,12 +87,13 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         self.tableView?.separatorStyle = .none
         
         self.isInverted = false
-        self.textView.isHidden = true
         self.textView.placeholder = "Comment required to respond"
         self.rightButton.setTitle("Add", for: .normal)
         self.shouldScrollToBottomAfterKeyboardShows = true
+        self.setTextInputbarHidden(true, animated: false)
         self.textInputbar.bringSubview(toFront: self.rightButton)
         self.textInputbar.bringSubview(toFront: self.textView)
+        
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
@@ -114,7 +115,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
                 self.connectId = object?["connectId"] as! String
             }
         }
-
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -136,7 +136,6 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        
         var cell: ViewAnswerTableViewCell!
         var adCell: AdvisorTableViewCell!
         
@@ -231,10 +230,9 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     @objc func playerItemDidReachEnd( _ notification: Notification) {
         player.seek(to: kCMTimeZero)
         viewQuestionButton.isHidden = true
-        self.textView.isHidden = false
+        self.setTextInputbarHidden(false, animated: false)
         didWatchVideo = true
         self.tableView?.reloadData()
-
     }
     
     @objc func didPressSegment(_ sender: UISegmentedControl){
@@ -279,16 +277,15 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
         //clear and hide input text box
         self.textView.text = ""
         self.textView.isHidden = true
-        
+        self.textView.resignFirstResponder()
+
         //comment exists
         didPressRightButton = true
         
         self.tableView?.reloadData()
         
         //so user can post response
-        self.textView.superview?.addSubview(respondButton)
-        
-        self.textView.resignFirstResponder()
+        self.view.addSubview(respondButton)
     }
     
     @objc func respondAction(_ sender: UIButton){
@@ -392,22 +389,23 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
     }
     
     func UIElements(){
-        viewQuestionButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
+        viewQuestionButton = UIButton(frame: CGRect(x: 0, y: screenSize.height-50, width: screenSize.width, height: 50))
         viewQuestionButton.setTitleColor(.white, for: .normal)
         viewQuestionButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         viewQuestionButton.titleLabel?.textAlignment = .center
         viewQuestionButton.setTitle("View Question", for: .normal)
         viewQuestionButton.backgroundColor = uicolorFromHex(0x159373)
         viewQuestionButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
-        self.textView.superview?.addSubview(viewQuestionButton)
-        
-        respondButton = UIButton(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 50))
+        self.view.addSubview(viewQuestionButton)
+
+        respondButton = UIButton(frame: CGRect(x: 0, y: screenSize.height-50, width: screenSize.width, height: 50))
         respondButton.setTitleColor(.white, for: .normal)
         respondButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
         respondButton.titleLabel?.textAlignment = .center
         respondButton.setTitle("Respond", for: .normal)
         respondButton.backgroundColor = uicolorFromHex(0x159373)
         respondButton.addTarget(self, action: #selector(self.respondAction(_:)), for: .touchUpInside)
+ 
     }
     
     func setUpAlertView(){

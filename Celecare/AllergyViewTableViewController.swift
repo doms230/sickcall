@@ -3,7 +3,7 @@
 //  Celecare
 //
 //  Created by Dominic Smith on 9/24/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated  All rights reserved.
 //
 
 import UIKit

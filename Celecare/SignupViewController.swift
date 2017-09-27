@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Dom Smith on 8/23/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -30,6 +30,8 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         
         let doneItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(SignupViewController.next(_:)))
         self.navigationItem.rightBarButtonItem = doneItem
+        
+        emailField.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)

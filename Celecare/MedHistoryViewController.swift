@@ -3,7 +3,7 @@
 //  Celecare
 //
 //  Created by Dominic Smith on 9/24/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -40,8 +40,6 @@ class MedHistoryViewController: SLKTextViewController, NVActivityIndicatorViewab
         self.tableView?.rowHeight = UITableViewAutomaticDimension
         self.tableView?.separatorStyle = .singleLine
         self.isInverted = false
-        self.rightButton.isEnabled = true
-        self.leftButton.setTitle("left", for: .normal)
         self.setTextInputbarHidden(true, animated: true)
         self.rightButton.setTitle("Add", for: .normal)
         self.textInputbar.bringSubview(toFront: self.rightButton)

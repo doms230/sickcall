@@ -3,7 +3,7 @@
 //  Celecare
 //
 //  Created by Dominic Smith on 9/26/17.
-//  Copyright © 2017 Celecare LLC. All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -15,18 +15,6 @@ class AdvisorWelcomeViewController: UIViewController, NVActivityIndicatorViewabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
-                /*   let imageFile: PFFile = object!["Profile"] as! PFFile
-                 self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
-                 self.profileImage.layer.cornerRadius = 30 / 2
-                 self.profileImage.clipsToBounds = true*/
-            }
-        }
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
@@ -65,6 +53,13 @@ class AdvisorWelcomeViewController: UIViewController, NVActivityIndicatorViewabl
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func menuAction(_ sender: UIBarButtonItem) {
+        if let container = self.so_containerViewController {
+            container.isSideViewControllerPresented = true
+        }
+    }
+    
+    
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
         let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0

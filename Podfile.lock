@@ -15,9 +15,9 @@ PODS:
     - FacebookCore (~> 0.2)
     - FBSDKCoreKit (~> 4.15)
     - FBSDKLoginKit (~> 4.15)
-  - FBSDKCoreKit (4.26.0):
+  - FBSDKCoreKit (4.27.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.26.0):
+  - FBSDKLoginKit (4.27.0):
     - FBSDKCoreKit
   - Kingfisher (4.0.1)
   - NVActivityIndicatorView (4.0.0):
@@ -74,8 +74,8 @@ SPEC CHECKSUMS:
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
-  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
-  FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
+  FBSDKCoreKit: ebc6c5f5b3f0e72396041050e2266781a38ac587
+  FBSDKLoginKit: 887be4b7452e1c5a3cc4485ce152529965a0c41e
   Kingfisher: b771785e9461ed4b8686d40e7145f9e58100cb24
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
   Parse: cdc0f1f975ee8be0409e66f21b05df4ae067047c

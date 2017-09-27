@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Dominic Smith on 7/6/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -185,7 +185,7 @@ class MainTableViewCell: UITableViewCell {
         let button = UIButton()
         button.setTitle("Credit Card", for: .normal)
         button.setTitleColor(.blue, for: .normal)
-        button.setImage(UIImage(named: "new"), for: .normal)
+        //button.setImage(UIImage(named: "new"), for: .normal)
         return button
     }()
     
@@ -347,6 +347,7 @@ class MainTableViewCell: UITableViewCell {
         creditCardButton.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(totalLabel.snp.bottom).offset(10)
             make.left.equalTo(self).offset(10)
+            make.bottom.equalTo(self).offset(-20)
         }
     }
 }

@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Dom Smith on 7/14/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -15,6 +15,7 @@ import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
 import SCLAlertView
+import Kingfisher
 
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
     
@@ -41,9 +42,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var payments = 0.00
     
-    @IBOutlet weak var profileImage: UIButton!
-    
     @IBOutlet weak var tableJaunt: UITableView!
+    
     
     let liveQueryClient = ParseLiveQuery.Client()
     private var subscription: Subscription<Post>?
@@ -71,17 +71,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         startAnimating()
-        let query = PFQuery(className: "_User")
-        query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
-                let imageFile: PFFile = object!["Profile"] as! PFFile
-                self.profileImage.kf.setImage(with: URL(string: imageFile.url!), for: .normal)
-                self.profileImage.layer.cornerRadius = 30 / 2
-                self.profileImage.clipsToBounds = true
-            }
-        }
         
         loadData()
         
@@ -173,11 +162,13 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    @IBAction func menuAction(_ sender: UIButton) {
+
+    @IBAction func menuAction(_ sender: UIBarButtonItem) {
         if let container = self.so_containerViewController {
             container.isSideViewControllerPresented = true
         }
     }
+    
     
     func startQuestionSubscription(){
         self.subscription = self.liveQueryClient

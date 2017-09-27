@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Dom Smith on 7/11/17.
-//  Copyright © 2017 Sickcall All rights reserved.
+//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
 //
 
 import UIKit
@@ -83,10 +83,10 @@ class AdvisorMedsViewController: UIViewController, UITableViewDelegate, UITableV
                     self.vitalContent.append(object)
                 }
                 
-                self.vitalTitles.append("Heart Rate")
+                /*self.vitalTitles.append("Heart Rate")
                 self.vitalContent.append(object?["beatsPM"] as! String)
                 self.vitalTitles.append("Breate Rate")
-                self.vitalContent.append(object?["respsPM"] as! String)
+                self.vitalContent.append(object?["respsPM"] as! String)*/
                 
                 self.vitalTitles.append("Medical History")
                 self.vitalContent.append(object?["medHistory"] as! String)
