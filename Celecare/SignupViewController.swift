@@ -21,6 +21,8 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     var valEmail = false
     var isSwitchOn = false
     
+    var emailString: String!
+    
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 30)
@@ -132,7 +134,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         let desti = segue.destination as! NewProfileViewController
         
         //user info
-        desti.emailString = emailText.text!
+        desti.emailString = emailString
         desti.passwordString = passwordText.text!
         desti.isSwitchOn = isSwitchOn
 
@@ -141,11 +143,14 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     @objc func next(_ sender: UIBarButtonItem){
         emailText.resignFirstResponder()
         passwordText.resignFirstResponder()
+        
+        emailString = emailText.text?.lowercased()
+        
         if validateEmail() && validatePassword(){
             startAnimating()
             //self.performSegue(withIdentifier: "showNewProfile", sender: self)
             let emailQuery = PFQuery(className: "_User")
-            emailQuery.whereKey("email", equalTo: self.emailText.text!  )
+            emailQuery.whereKey("email", equalTo: self.emailString )
             emailQuery.findObjectsInBackground{
                 (objects: [PFObject]?, error: Error?) -> Void in
                 self.stopAnimating()

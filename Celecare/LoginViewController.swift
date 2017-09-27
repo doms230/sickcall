@@ -35,6 +35,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         label.backgroundColor = .white
         label.borderStyle = .roundedRect
         label.clearButtonMode = .whileEditing
+        label.keyboardType = .emailAddress
         return label
     }()
     
@@ -45,6 +46,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         label.backgroundColor = .white
         label.borderStyle = .roundedRect
         label.clearButtonMode = .whileEditing
+        label.isSecureTextEntry = true
         return label
     }()
     
@@ -113,10 +115,10 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     @objc func loginAction(_ sender: UIButton) {
         emailText.resignFirstResponder()
         passwordText.resignFirstResponder()
+        let emailString = emailText.text?.lowercased()
         if validateUsername() && validatePassword(){
-            returningUser( password: passwordText.text!, username: (emailText.text!))
+            returningUser( password: passwordText.text!, username: emailString!)
         }
-        
     }
     
     func validateUsername() ->Bool{
