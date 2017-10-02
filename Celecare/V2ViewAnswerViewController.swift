@@ -138,11 +138,14 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             cell.vitalsButton.backgroundColor = uicolorFromHex(0x8c81ff)
             cell.vitalsButton.addTarget(self, action: #selector(self.vitalsAction(_:)), for: .touchUpInside)
             
+            cell.searchButton.backgroundColor = uicolorFromHex(0x180d22)
             //TODO: Uncomment
+            cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
+            
             //cell.videoButton.backgroundColor = uicolorFromHex(0xE8E6DF)
             
-            cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
+           // cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
             //cell.videoImage.image = UIImage(named: "appy")
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "advisorReuse", for: indexPath) as! ViewAnswerTableViewCell

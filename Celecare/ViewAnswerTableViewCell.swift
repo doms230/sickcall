@@ -213,7 +213,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
     
     lazy var summaryBody: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 18)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
         label.text = "Summary"
         label.textColor = UIColor.black
         label.numberOfLines = 0
@@ -240,18 +240,30 @@ class ViewAnswerTableViewCell: UITableViewCell {
     
     lazy var vitalsButton: UIButton = {
         let button = UIButton()
-        button.layer.cornerRadius = 3
+        button.layer.cornerRadius = 5
         button.clipsToBounds = true
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 18)
-        button.setTitle("Vitals", for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        button.setTitle(" Vitals", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setImage(UIImage(named: "vitals"), for: .normal)
         return button
     }()
     
-    lazy var videoImage: UIImageView = {
+    lazy var searchButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 5
+        button.clipsToBounds = true
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
+        button.setTitle(" Clinics", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setImage(UIImage(named: "search"), for: .normal)
+        button.backgroundColor = .black
+        return button
+    }()
+    
+    lazy var playImage: UIImageView = {
         let image = UIImageView()
-        image.layer.cornerRadius = 25
-        image.clipsToBounds = true
+        image.image = UIImage(named: "play")
         return image
     }()
     
@@ -273,49 +285,66 @@ class ViewAnswerTableViewCell: UITableViewCell {
     
     func configureQuestionSubviews(){
         
-        self.addSubview(summaryLabel)
+        self.addSubview(videoButton)
+        self.videoButton.addSubview(playImage)
+        //self.addSubview(summaryLabel)
         self.addSubview(summaryBody)
-        self.addSubview(durationLabel)
+        //self.addSubview(durationLabel)
         self.addSubview(durationBody)
         self.addSubview(vitalsButton)
+        self.addSubview(searchButton)
         
-        self.addSubview(videoButton)
+       /* self.addSubview(videoButton)
         self.videoButton.addSubview(videoImage)
-        self.videoButton.addSubview(videoLabel)
-
-        durationLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(patientName.snp.bottom).offset(10)
-            make.left.equalTo(patientImage.snp.right).offset(5)
-            make.right.equalTo(self).offset(-5)
-        }
+        self.videoButton.addSubview(videoLabel)*/
         
         durationBody.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(durationLabel.snp.bottom)
-            make.left.equalTo(patientImage.snp.right).offset(5)
-            make.right.equalTo(self).offset(-5)
-        }
-        
-        summaryLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(durationBody.snp.bottom).offset(5)
-            make.left.equalTo(patientImage.snp.right).offset(5)
-            make.right.equalTo(self).offset(-5)
+            make.top.equalTo(patientName.snp.bottom).offset(5)
+            make.left.equalTo(patientImage.snp.right).offset(10)
+            //make.right.equalTo(self).offset(-5)
         }
         
         summaryBody.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(summaryLabel.snp.bottom)
+            make.top.equalTo(durationBody.snp.bottom).offset(5)
             make.left.equalTo(patientImage.snp.right).offset(5)
-            make.right.equalTo(self).offset(-5)
+            make.right.equalTo(self).offset(-10)
         }
         
+        videoButton.snp.makeConstraints { (make) -> Void in
+            make.height.width.equalTo(125)
+            make.top.equalTo(summaryBody.snp.bottom).offset(10)
+            make.left.equalTo(patientImage.snp.right).offset(5)
+            // make.right.equalTo(self).offset(-100)
+             make.bottom.equalTo(self).offset(-20)
+        }
+        
+        playImage.snp.makeConstraints { (make) -> Void in
+            make.height.width.equalTo(50)
+            make.top.equalTo(videoButton.snp.top).offset(40)
+            make.left.equalTo(videoButton.snp.left).offset(40)
+            // make.right.equalTo(self).offset(-100)
+            // make.bottom.equalTo(self).offset(-20)
+        }
         
         vitalsButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(125)
-            make.top.equalTo(summaryBody.snp.bottom).offset(10)
-            make.left.equalTo(patientImage.snp.right).offset(5)
+            make.height.equalTo(40)
+            make.top.equalTo(videoButton.snp.top).offset(15)
+            make.left.equalTo(videoButton.snp.right).offset(10)
+            //make.right.equalTo(self).offset(-10)
+        }
+        
+        searchButton.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(125)
+            make.height.equalTo(40)
+            make.top.equalTo(vitalsButton.snp.bottom).offset(10)
+            make.left.equalTo(videoButton.snp.right).offset(10)
+            //make.right.equalTo(self).offset(-10)
+           // make.bottom.equalTo(self).offset(-20)
         }
         
         //video view
-        videoButton.snp.makeConstraints { (make) -> Void in
+        /*videoButton.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(vitalsButton.snp.bottom).offset(10)
             make.left.equalTo(patientImage.snp.right).offset(5)
             make.right.equalTo(self).offset(-10)
@@ -332,7 +361,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
         videoLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(videoImage).offset(15)
             make.left.equalTo(videoImage.snp.right).offset(5)
-        }
+        }*/
     }
     
     ////

@@ -82,13 +82,26 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell = tableView.dequeueReusableCell(withIdentifier: "myQuestionsReuse", for: indexPath) as! MainTableViewCell
             
             cell.selectionStyle = .none
-            self.tableJaunt.separatorStyle = .singleLine
+            self.tableJaunt.separatorStyle = .none
             
-            cell.questionImage.kf.setImage(with: URL(string: questionImages[indexPath.row]), placeholder: UIImage(named: "appy"))
+            //cell.questionImage.kf.setImage(with: URL(string: questionImages[indexPath.row]), placeholder: UIImage(named: "appy"))
+            //cell.questionImage.kf.setImage(with: URL(string: questionImages[indexPath.row]), for: .)
             cell.questionLabel.text = questions[indexPath.row]
-            cell.questionLabel.textColor = uicolorFromHex(0x180d22)
             cell.statusLabel.text = questionStatus[indexPath.row]
-            cell.statusLabel.textColor = uicolorFromHex(0x180d22)
+            
+            if isAnswered[indexPath.row]{
+                if level[indexPath.row] == "low"{
+                    cell.questionView.backgroundColor = uicolorFromHex(0x159373)
+                    
+                } else if level[indexPath.row] == "medium"{
+                    cell.questionView.backgroundColor = uicolorFromHex(0x936b15)
+                } else {
+                    cell.questionView.backgroundColor = uicolorFromHex(0x932c15)
+                }
+                
+            } else {
+                cell.questionView.backgroundColor = uicolorFromHex(0x180d22)
+            }
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "noQuestionsReuse", for: indexPath) as! MainTableViewCell

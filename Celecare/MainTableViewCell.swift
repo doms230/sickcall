@@ -35,20 +35,19 @@ class MainTableViewCell: UITableViewCell {
     }()
     
     //question views
-    lazy var questionImage: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = UIColor.black
-        image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 25
-        image.clipsToBounds = true
-        return image
+    lazy var questionView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
+        view.backgroundColor = .black 
+        return view
     }()
     
     //what the question is about
     lazy var questionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 20)
-        label.textColor = UIColor.black
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
+        label.textColor = UIColor.white
         label.numberOfLines = 1
         return label
     }()
@@ -56,8 +55,8 @@ class MainTableViewCell: UITableViewCell {
     //status of the question.. either answer or pending answer
     lazy var statusLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
-        label.textColor = UIColor.black
+        label.font = UIFont(name: "HelveticaNeue", size: 15)
+        label.textColor = UIColor.white
         label.numberOfLines = 0
         return label
     }()
@@ -270,32 +269,30 @@ class MainTableViewCell: UITableViewCell {
     //overview question view 
     
     func configureOverSubview(){
-        self.addSubview(questionImage)
-        self.addSubview(questionLabel)
-       // self.addSubview(durationLabel)
-        self.addSubview(statusLabel)
+        self.addSubview(questionView)
+        self.questionView.addSubview(questionLabel)
+        self.questionView.addSubview(statusLabel)
         //self.addSubview(dateUploadedLabel)
         
-        questionImage.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(50)
-            make.top.equalTo(self).offset(25)
+        questionView.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(100)
+            make.top.equalTo(self).offset(20)
             make.left.equalTo(self).offset(10)
-            // make.right.equalTo(self).offset(-10)
-            //make.bottom.equalTo(self).offset(-5)
-        }
-        
-        questionLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(questionImage.snp.top).offset(5)
-            make.left.equalTo(questionImage.snp.right).offset(10)
-            make.right.equalTo(self).offset(-5)
-            //make.bottom.equalTo(self)
+            make.right.equalTo(self).offset(-10)
+            make.bottom.equalTo(self).offset(-20)
         }
         
         statusLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(questionLabel.snp.bottom).offset(5)
-            make.left.equalTo(questionImage.snp.right).offset(10)
-            make.right.equalTo(self).offset(-5)
-            make.bottom.equalTo(self).offset(-25)
+            make.top.equalTo(self.questionView.snp.top).offset(20)
+            make.left.equalTo(self.questionView.snp.left).offset(10)
+            make.right.equalTo(self.questionView.snp.right).offset(-10)
+        }
+        
+        questionLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(statusLabel.snp.bottom).offset(5)
+            make.left.equalTo(self.questionView.snp.left).offset(10)
+            make.right.equalTo(self.questionView.snp.right).offset(-10)
+            //make.bottom.equalTo(self).offset(-20)
         }
     }
     
