@@ -264,7 +264,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                         let createdAt = object.createdAt!
                         print(createdAt)
                         if createdAt.compare(weds as Date) == .orderedDescending {
-                            self.payments = self.payments + 2.50
+                            self.payments = self.payments + 5.00
                         }
                     }
                     // print(self.unAnsweredQuestionTitle[0])

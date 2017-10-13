@@ -14,14 +14,16 @@ import SnapKit
 
 class SignupViewController: UIViewController,NVActivityIndicatorViewable {
 
+    //propic
+    
+    var uploadedImage: PFFile!
+    
     //UI components
     
     //validate jaunts
     var valPassword = false
     var valEmail = false
     var isSwitchOn = false
-    
-    var emailString: String!
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -75,7 +77,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(SignupViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
         
-        let doneItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(SignupViewController.next(_:)))
+        let doneItem = UIBarButtonItem(title: "Sign Up", style: .plain, target: self, action: #selector(SignupViewController.next(_:)))
         self.navigationItem.rightBarButtonItem = doneItem
         
         self.view.addSubview(titleLabel)
@@ -114,7 +116,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
             make.right.equalTo(self.view).offset(-10)
         }
         
-        
         emailText.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
@@ -122,6 +123,9 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
+        let proPic = UIImageJPEGRepresentation(UIImage(named: "appy")!, 0.5)
+        uploadedImage = PFFile(name: "defaultProfile_ios.jpeg", data: proPic!)
+        uploadedImage?.saveInBackground()
         // Do any additional setup after loading the view.
     }
     
@@ -130,26 +134,25 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         super.touchesBegan(touches, with: event)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let desti = segue.destination as! NewProfileViewController
         
         //user info
         desti.emailString = emailString
         desti.passwordString = passwordText.text!
         desti.isSwitchOn = isSwitchOn
-
-    }
+    }*/
     
     @objc func next(_ sender: UIBarButtonItem){
         emailText.resignFirstResponder()
         passwordText.resignFirstResponder()
         
-        emailString = emailText.text?.lowercased()
+        let emailString = emailText.text?.lowercased()
         
         if validateEmail() && validatePassword(){
             startAnimating()
             //self.performSegue(withIdentifier: "showNewProfile", sender: self)
-            let emailQuery = PFQuery(className: "_User")
+            /*let emailQuery = PFQuery(className: "_User")
             emailQuery.whereKey("email", equalTo: self.emailString )
             emailQuery.findObjectsInBackground{
                 (objects: [PFObject]?, error: Error?) -> Void in
@@ -159,6 +162,56 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
                     
                 } else {
                     SCLAlertView().showError("Oops", subTitle: "Email already in use")
+                }
+            }*/
+            
+            newUser(username: emailString!, password: passwordText.text!, email: emailString!, imageFile:
+                uploadedImage)
+            
+        }
+    }
+    
+    func newUser( username: String,
+                  password: String, email: String, imageFile: PFFile ){
+        let user = PFUser()
+        user.username = username
+        user.password = password
+        user.email = email
+        user["DisplayName"] = "Sickcaller"
+        user["Profile"] = imageFile
+        user["foodAllergies"] = []
+        user["gender"] = " "
+        user["height"] = " "
+        user["medAllergies"] = []
+        user["weight"] = " "
+        user["birthday"] = " "
+        user["beatsPM"] = " "
+        user["healthIssues"] = " "
+        user["respsPM"] = " "
+        user["medHistory"] = " "
+        user.signUpInBackground{ (succeeded: Bool, error: Error?) -> Void in
+            self.stopAnimating()
+            if error != nil {
+                // let errorString = erro_userInfofo["error"] as? NSString
+                //
+                print(error!)
+                SCLAlertView().showError("Oops", subTitle: "Email already taken.")
+                
+            } else {
+                let installation = PFInstallation.current()
+                installation?["user"] = PFUser.current()
+                installation?["userId"] = PFUser.current()?.objectId
+                installation?.saveEventually()
+                
+                if self.isSwitchOn{
+                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+                    initialViewController.isAdvisor = false
+                    self.present(initialViewController, animated: true, completion: nil)
+                } else {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                    self.present(initialViewController, animated: true, completion: nil)
                 }
             }
         }
@@ -217,7 +270,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         }
     }
     
-    
     @objc func exitAction(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "welcome") as UIViewController
@@ -231,5 +283,4 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-    
 }

@@ -243,7 +243,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
         button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 18)
-        button.setTitle(" Vitals", for: .normal)
+        button.setTitle(" Info", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.setImage(UIImage(named: "vitals"), for: .normal)
         return button

@@ -161,6 +161,7 @@ class V2AdvisorQuestionViewController: SLKTextViewController,NVActivityIndicator
             
             //TODO: Uncomment
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
+            cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
           //  cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
             
             return cell

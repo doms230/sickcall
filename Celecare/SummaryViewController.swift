@@ -50,6 +50,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Summary"
+        
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(askQuestionAction(_:)))
         self.navigationItem.setRightBarButton(doneButton, animated: true)
         self.tableJaunt = UITableView(frame: self.view.bounds)
@@ -70,7 +72,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             (success: Bool, error: Error?) -> Void in
             if (success) {
              
-                
             }else{
             }
         }
@@ -93,13 +94,17 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.selectionStyle = .none
         
         cell.summaryTitle.text = healthConcernSummary
+        //cell.summaryView.backgroundColor = uicolorFromHex(0xe8e6df)
+        cell.summaryView.addTarget(self, action: #selector(questionVideoAction(_:)), for: .touchUpInside)
         cell.durationLabel.text = healthConcernDuration
         cell.videoButton.setImage(image, for: .normal)
-        cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
-        cell.totalLabel.text = "Total: $6.99"
+        //cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
+        //cell.checkoutView.backgroundColor = uicolorFromHex(0xe8e6df)
+        cell.checkoutView.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
+        cell.totalLabel.text = "$6.99"
         cell.creditCardButton.setTitle(creditCard, for: .normal)
         cell.creditCardButton.setImage(ccImage, for: .normal)
-        cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
+        //cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
 
         return cell
     }
@@ -328,5 +333,12 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             controller.selectedIndex = 1
             self.present(controller, animated: true, completion: nil)
         }
+    }
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
 }
