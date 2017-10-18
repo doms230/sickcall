@@ -193,6 +193,10 @@ class AdvisorTableViewCell: UITableViewCell {
         return button
     }()
     
+    //new account
+    
+    
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

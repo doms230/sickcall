@@ -62,9 +62,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         return button
     }()
     
-    
-    
-    
     //Name Values from NameViewController
     var firstName: String!
     var lastName: String!
@@ -125,9 +122,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
         
         licenseText.becomeFirstResponder()
-
-        
-        
     }
 
     // MARK: - Navigation
@@ -192,7 +186,6 @@ class QualificationsViewController: UIViewController, UIPickerViewDelegate, UIPi
     // delegate method to return the value shown in the picker
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return states[row]
-
     }
     
     // delegate method called when the row was selected.

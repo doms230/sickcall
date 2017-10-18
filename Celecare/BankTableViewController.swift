@@ -16,7 +16,7 @@ import NVActivityIndicatorView
 import SCLAlertView
 
 class BankTableViewController: UITableViewController, NVActivityIndicatorViewable {
-    
+        
     //payments
     var baseURL = "https://celecare.herokuapp.com/payments/bank"
 
@@ -28,6 +28,7 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
@@ -165,6 +166,8 @@ class BankTableViewController: UITableViewController, NVActivityIndicatorViewabl
             }
         }
     }
+    
+
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

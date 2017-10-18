@@ -36,6 +36,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     var isOnline = false
     
     var connectId: String!
+    var isConnected = false
     
     var needBankInfo = false
     var didLoad = false
@@ -43,7 +44,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     var payments = 0.00
     
     @IBOutlet weak var tableJaunt: UITableView!
-    
     
     let liveQueryClient = ParseLiveQuery.Client()
     private var subscription: Subscription<Post>?
@@ -97,10 +97,17 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell.paymentAmount.text = "$\(payments)0"
         
-        if needBankInfo{
-            cell.queueLabel.text = "Link your bank account to start taking questions"
+        if !isConnected{
+            cell.queueLabel.text = "You're almost there!"
+            cell.statusButton.setTitle("Complete my Setup", for: .normal)
+            cell.statusButton.backgroundColor = uicolorFromHex(0xcf3812)
+            cell.statusButton.setTitleColor(.white, for: .normal)
+            cell.statusButton.tag = 0
+            
+        } else if needBankInfo{
+            cell.queueLabel.text = "Update your bank account"
             cell.statusButton.setTitle("Link Your Bank", for: .normal)
-            cell.statusButton.backgroundColor = uicolorFromHex(0xff8781)
+            cell.statusButton.backgroundColor = uicolorFromHex(0xcf3812)
             cell.statusButton.setTitleColor(.white, for: .normal)
             cell.statusButton.tag = 1
             
@@ -123,7 +130,10 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @objc func statusAction(_ sender: UIButton){
-        if sender.tag == 1{
+        if sender.tag == 0{
+            self.performSegue(withIdentifier: "showNewBank", sender: self)
+            
+        } else if sender.tag == 1{
             self.performSegue(withIdentifier: "showBank", sender: self)
             
         } else {
@@ -161,14 +171,12 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             }
         }
     }
-    
 
     @IBAction func menuAction(_ sender: UIBarButtonItem) {
         if let container = self.so_containerViewController {
             container.isSideViewControllerPresented = true
         }
     }
-    
     
     func startQuestionSubscription(){
         self.subscription = self.liveQueryClient
@@ -192,15 +200,23 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         query.getFirstObjectInBackground {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
-                if object?["isOnline"] as! Bool{
+                /*if object?["isOnline"] as! Bool{
                     self.isOnline = true
-                }
+                }*/
                 
                 self.connectId = object?["connectId"] as! String
-
-                self.getAccountInfo()
-                self.getTransfers()
-                self.tableJaunt.reloadData()
+                
+                if self.connectId == ""{
+                    self.didLoad = true
+                    self.tableJaunt.reloadData()
+                    self.stopAnimating()
+                
+                } else {
+                    self.isConnected = true
+                    self.getAccountInfo()
+                    self.getTransfers()
+                    self.tableJaunt.reloadData()
+                }
                 
             } else{
                 //you're not connected to the internet message
