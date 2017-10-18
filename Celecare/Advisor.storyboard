@@ -109,11 +109,12 @@
                         <outlet property="nameJaunt" destination="RTz-er-IZd" id="tBN-6J-SCj"/>
                         <outlet property="paymentsButton" destination="GCz-nQ-l4Z" id="kEV-O9-RF4"/>
                         <outlet property="switchButton" destination="BZa-JO-v6V" id="gxp-RX-dTL"/>
+                        <segue destination="XHJ-ea-DOd" kind="show" identifier="showBankInfo" id="mmg-0X-MUi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fCJ-iD-H46" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="652" y="377"/>
+            <point key="canvasLocation" x="593" y="395"/>
         </scene>
         <!--Advisor Question View Controller-->
         <scene sceneID="9nb-2t-lm1">
@@ -221,6 +222,7 @@
                     <connections>
                         <outlet property="tableJaunt" destination="WW5-k0-Nbr" id="a2c-5E-yGy"/>
                         <segue destination="2v9-QC-5FS" kind="show" identifier="showNewBank" id="UkY-yN-A5y"/>
+                        <segue destination="XHJ-ea-DOd" kind="show" identifier="showBank" id="DRr-Ok-1jm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hYg-r1-CVZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -579,7 +581,7 @@
                     <view key="view" contentMode="scaleToFill" id="lCG-vI-le4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <segue destination="p9x-0f-Nvm" kind="show" identifier="showBank" id="oUB-Jc-8Im"/>
@@ -595,4 +597,7 @@
         <image name="menu" width="33" height="33"/>
         <image name="money" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="mmg-0X-MUi"/>
+    </inferredMetricsTieBreakers>
 </document>

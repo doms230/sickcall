@@ -19,7 +19,7 @@ class NewAddressViewController: UIViewController, UITableViewDelegate, UITableVi
     var line2: UITextField!
     var city: UITextField!
     var zipCode: UITextField!
-    var state: String!
+    var state: UIButton!
     
     let states = ["","Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho"," Illinois","Indiana","Iowa","Kansas","Kentucky", "Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]
     
@@ -29,6 +29,15 @@ class NewAddressViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Address 1/3"
+        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
+        self.navigationItem.setRightBarButton(nextButton, animated: true)
+        nextButton.tag = 0
+        
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(nextAction(_:)))
+        self.navigationItem.setLeftBarButton(cancelButton, animated: true)
+        cancelButton.tag = 1
+        
         self.tableJaunt = UITableView(frame: self.view.bounds)
         self.tableJaunt.dataSource = self
         self.tableJaunt.delegate = self
@@ -37,9 +46,19 @@ class NewAddressViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
         self.tableJaunt.keyboardDismissMode = .onDrag
         self.tableJaunt.backgroundColor = uicolorFromHex(0xE8E6DF)
+        self.tableJaunt.separatorStyle = .none
         self.view.addSubview(self.tableJaunt)
-
+        
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! NewSSNViewController
+        desti.line1 = line1.text
+        desti.line2 = line2.text
+        desti.city = city.text
+        desti.zipCode = zipCode.text
+        desti.state = state.titleLabel?.text
     }
 
     //tableview
@@ -55,14 +74,16 @@ class NewAddressViewController: UIViewController, UITableViewDelegate, UITableVi
                 
         let cell = tableView.dequeueReusableCell(withIdentifier: "addressReuse", for: indexPath) as! InfoTableViewCell
         cell.selectionStyle = .none
+        cell.backgroundColor = uicolorFromHex(0xE8E6DF)
         
         line1 = cell.line1Text
         line2 = cell.line2Text
         city = cell.cityText
         zipCode = cell.zipText
         
-        cell.stateButton.setTitle(states[row], for: .normal)
+        cell.line1Text.becomeFirstResponder()
         cell.stateButton.addTarget(self, action: #selector(stateAction(_:)), for: .touchUpInside)
+        state = cell.stateButton
         
         return cell
     }
@@ -116,15 +137,58 @@ class NewAddressViewController: UIViewController, UITableViewDelegate, UITableVi
     
     // delegate method called when the row was selected.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //stateButton.setTitle(" \(states[row])", for: .normal)
-        // stateButton.setTitleColor(.black, for: .normal)
-        self.state = states[row]
-        self.row = row
+        state.setTitle(" \(states[row])", for: .normal)
+         state.setTitleColor(.black, for: .normal)
+        //self.state = states[row]
+        //self.row = row
         self.tableJaunt.reloadData()
         
         if states[row] != ""{
             didChooseState = true
         }
+    }
+    
+    @objc func nextAction(_ sender: UIBarButtonItem){
+        if sender.tag == 0{
+            if validateInput(textField: line1) && validateInput(textField: city) && validateInput(textField: zipCode) && validateStateButton(){
+                self.performSegue(withIdentifier: "showSSN", sender: self)
+            }
+            
+        } else {
+            //cancel
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
+            self.present(controller, animated: true, completion: nil)
+        }
+    }
+    
+    //validation
+    func validateInput(textField: UITextField) ->Bool{
+        var isValidated = false
+        
+        if textField.text!.isEmpty{
+            
+            textField.attributedPlaceholder = NSAttributedString(string:"Field required",
+                                                                     attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
+        } else{
+            isValidated = true
+        }
+        return isValidated
+    }
+    
+    func validateStateButton() ->Bool{
+        var isStateValidated = false
+        
+        if !didChooseState{
+            state.setTitle(" Field Required", for: .normal)
+            state.setTitleColor(.red, for: .normal)
+            
+        } else{
+            isStateValidated = true
+        }
+        print("validation: \(isStateValidated)")
+        return isStateValidated
     }
     
     //mich.
@@ -135,16 +199,4 @@ class NewAddressViewController: UIViewController, UITableViewDelegate, UITableVi
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

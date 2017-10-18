@@ -59,20 +59,35 @@ class newBankViewController: UIViewController, NVActivityIndicatorViewable {
     }()
     
     var connectId: String!
-    var baseURL = "https://celecare.herokuapp.com/payments/newAccount"
     var first_name: String!
     var last_name: String!
-    var personal_id_number: String!
     var dobDay: Int!
     var dobMonth: Int!
     var dobYear: Int!
+    var email: String!
+
+    //bank
     var routing: String!
     var account: String!
-    var email: String!
+    var bankName: String!
+    var accountLast4: String!
+    
+    //personal
+    var personal_id_number: String!
+    
+    //address
+    var line1: String!
+    var line2: String!
+    var city: String!
+    var zipCode: String!
+    var state: String!
+    
+    var successView: SCLAlertView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Bank Info 3/3"
         let nextButton = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(doneAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
@@ -92,49 +107,67 @@ class newBankViewController: UIViewController, NVActivityIndicatorViewable {
             (object: PFObject?, error: Error?) -> Void in
             if error == nil || object != nil {
                 
-                object?["connectId"]  = self.connectId
-                object?.saveInBackground {
-                    (success: Bool, error: Error?) -> Void in
-                    if (success) {
-                        //segue back
-                    }
-                }
+                self.first_name = object!["first"] as! String
+                self.last_name = object!["last"] as! String
+                self.dobMonth = Int(object!["birthdaymonth"] as! String)
+                self.dobDay = Int(object!["birthdayday"] as! String)
+                self.dobYear = Int(object!["birthdayyear"] as! String)
                 
             } else{
                 //you're not connected to the internet message
             }
         }
+        
+        let appearance = SCLAlertView.SCLAppearance(
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: false
+        )
+        
+        successView = SCLAlertView(appearance: appearance)
+        successView.addButton("Okay") {
+            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
+            controller.isAdvisor = true
+            self.present(controller, animated: true, completion: nil)
+        }
+        
     }
     
     @objc func doneAction(_ sender: UIBarButtonItem){
-    
-        let userId = PFUser.current()?.objectId
-        let query = PFQuery(className: "Advisor")
-        query.whereKey("userId", equalTo: userId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            if error == nil || object != nil {
-                
-                 object?["connectId"]  = self.connectId
-                object?.saveInBackground {
-                    (success: Bool, error: Error?) -> Void in
-                    if (success) {
-                       //segue back
-                    }
-                }
-            } else{
-                //you're not connected to the internet message
-            }
-        }
+        startAnimating()
+        bAccountText.resignFirstResponder()
+        bRoutingtext.resignFirstResponder()
+        postNewAccount()
     }
     
-    func getAccountInfo(){
+    func postNewAccount(){
         //class won't compile with textfield straight in parameters so has to be put to string first
-       /* let p: Parameters = [
-            "account_Id": connectId,
+        let last4 = String(personal_id_number.suffix(4))
+        let email = PFUser.current()!.email!
+        let routing = bRoutingtext.text!
+        let account = bAccountText.text!
+        
+        let p: Parameters = [
+            "email": email ,
+            "ssn_last_4": last4,
+            "personal_id_number": personal_id_number,
+            "city": city,
+            "line1": line1,
+            "line2": line2,
+            "postal_code": zipCode,
+            "state": state,
+            "day": dobDay,
+            "month": dobMonth,
+            "year": dobYear,
+            "first_name": first_name,
+            "last_name": last_name,
+            "account_number": account,
+            "routing_number": routing
             ]
-        let url = "https://celecare.herokuapp.com/payments/account"
-        Alamofire.request(url, parameters: p, encoding: URLEncoding.default).validate().responseJSON { response in switch response.result {
+        let url = "https://celecare.herokuapp.com/payments/newAccount"
+        Alamofire.request(url, method: .post, parameters: p, encoding: URLEncoding.default).validate().responseJSON { response in switch response.result {
         case .success(let data):
             let json = JSON(data)
             print("JSON: \(json)")
@@ -145,18 +178,41 @@ class newBankViewController: UIViewController, NVActivityIndicatorViewable {
                 let message = json["message"].string
                 SCLAlertView().showError("Something Went Wrong", subTitle: message!)
                 
-            } else if let last4 = json["external_accounts"]["data"][0]["last4"].string{
-                self.accountTextField.text = "****\(last4)"
-                self.routingTextField.text = json["external_accounts"]["data"][0]["routing_number"].string
+            } else {
+                self.bankName = json["external_accounts"]["data"][0]["bank_name"].string
+                self.accountLast4 = json["external_accounts"]["data"][0]["last4"].string
+                self.connectId = json["id"].string
+                self.saveConnectId()
             }
             
         case .failure(let error):
             self.stopAnimating()
             print(error)
-            SCLAlertView().showError("Something Went Wrong", subTitle: "")
+            SCLAlertView().showError("Something Went Wrong", subTitle: error as! String)
             
             }
-        }*/
+        }
+    }
+    
+    func saveConnectId(){
+        let userId = PFUser.current()?.objectId
+        let query = PFQuery(className: "Advisor")
+        query.whereKey("userId", equalTo: userId!)
+        query.getFirstObjectInBackground {
+            (object: PFObject?, error: Error?) -> Void in
+            if error == nil || object != nil {
+                
+                object?["connectId"]  = self.connectId
+                object?.saveEventually {
+                    (success: Bool, error: Error?) -> Void in
+                    if (success) {
+                        self.successView.showSuccess("Account Updated!", subTitle: "Your funds will be deposited to \(self.bankName!) ****\(self.accountLast4!) from now on.")
+                    }
+                }
+            } else{
+                //you're not connected to the internet message
+            }
+        }
     }
     
     func configureBank(){
@@ -166,7 +222,7 @@ class newBankViewController: UIViewController, NVActivityIndicatorViewable {
         self.view.addSubview(bRoutingtext)
         
         accountLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view).offset(20)
+            make.top.equalTo(self.view).offset(75)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
         }
@@ -187,7 +243,7 @@ class newBankViewController: UIViewController, NVActivityIndicatorViewable {
             make.top.equalTo(routingLabel.snp.bottom).offset(5)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
-            make.bottom.equalTo(self.view).offset(-20)
+            //make.bottom.equalTo(self.view).offset(-20)
         }
     }
     

@@ -51,9 +51,29 @@ class NewSSNViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "SSN 2/3"
+        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
+        self.navigationItem.setRightBarButton(nextButton, animated: true)
+        
         configureSSN()
-
+        ssnText.becomeFirstResponder()
         // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let desti = segue.destination as! newBankViewController
+        desti.line1 = line1
+        desti.line2 = line2
+        desti.city = city
+        desti.zipCode = zipCode
+        desti.state = state
+        desti.personal_id_number = ssnText.text
+    }
+    
+    @objc func nextAction(_ sender: UIBarButtonItem){
+        if validateInput(textField: ssnText){
+            self.performSegue(withIdentifier: "showBank", sender: self)
+        }
     }
 
     func configureSSN(){
@@ -62,7 +82,7 @@ class NewSSNViewController: UIViewController {
         self.view.addSubview(ssnExplanation)
         
         ssnLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view).offset(20)
+            make.top.equalTo(self.view).offset(75)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
         }
@@ -77,18 +97,25 @@ class NewSSNViewController: UIViewController {
             make.top.equalTo(ssnText.snp.bottom).offset(5)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
-            make.bottom.equalTo(self.view).offset(-20)
+          //  make.bottom.equalTo(self.view).offset(-20)
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func validateInput(textField: UITextField) ->Bool{
+        var isValidated = false
+        
+        if textField.text!.isEmpty{
+            
+            textField.attributedPlaceholder = NSAttributedString(string:"Field required",
+                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
+            
+        } else if textField.text?.count != 9{
+            textField.attributedPlaceholder = NSAttributedString(string:"Valid SSN required",
+                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
+        } else {
+            isValidated = true
+        }
+        return isValidated
     }
-    */
-
+    
 }

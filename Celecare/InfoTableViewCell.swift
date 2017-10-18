@@ -15,7 +15,7 @@ class InfoTableViewCell: UITableViewCell {
     
     lazy var streetlabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
         label.text = "Street Address"
         label.textColor = UIColor.black
         label.backgroundColor = .clear
@@ -30,7 +30,6 @@ class InfoTableViewCell: UITableViewCell {
         label.font = UIFont(name: "HelveticaNeue", size: 17)
         label.clearButtonMode = .whileEditing
         label.borderStyle = .roundedRect
-        label.keyboardType = .numberPad
         return label
     }()
     
@@ -41,13 +40,12 @@ class InfoTableViewCell: UITableViewCell {
         label.font = UIFont(name: "HelveticaNeue", size: 17)
         label.clearButtonMode = .whileEditing
         label.borderStyle = .roundedRect
-        label.keyboardType = .numberPad
         return label
     }()
     
     lazy var cityLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
         label.text = "City"
         label.textColor = UIColor.black
         label.backgroundColor = .clear
@@ -62,13 +60,12 @@ class InfoTableViewCell: UITableViewCell {
         label.font = UIFont(name: "HelveticaNeue", size: 17)
         label.clearButtonMode = .whileEditing
         label.borderStyle = .roundedRect
-        label.keyboardType = .numberPad
         return label
     }()
     
     lazy var zipLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
         label.text = "Zip Code"
         label.textColor = UIColor.black
         label.backgroundColor = .clear
@@ -89,7 +86,7 @@ class InfoTableViewCell: UITableViewCell {
     
     lazy var statelabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
         label.text = "State"
         label.textColor = UIColor.black
         label.backgroundColor = .clear
@@ -168,14 +165,14 @@ class InfoTableViewCell: UITableViewCell {
         }
         
         stateButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(100)
+            make.width.equalTo(150)
             make.top.equalTo(self.statelabel.snp.bottom).offset(5)
             make.left.equalTo(self).offset(10)
-            make.bottom.equalTo(self).offset(-20)
+            //make.bottom.equalTo(self).offset(-20)
         }
         
         zipLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.statelabel.snp.bottom).offset(10)
+            make.top.equalTo(self.cityText.snp.bottom).offset(10)
             make.left.equalTo(self.stateButton.snp.right).offset(10)
             make.right.equalTo(self).offset(-10)
         }
