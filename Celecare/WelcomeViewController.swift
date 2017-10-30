@@ -48,7 +48,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
     lazy var signinButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Sign In", for: .normal)
+        button.setTitle("Login", for: .normal)
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 3
@@ -70,7 +70,8 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
     lazy var facebookButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Continue with Facebook", for: .normal)
+        button.setTitle(" Login with Facebook", for: .normal)
+        button.setImage(UIImage(named: "facebook"), for: .normal)
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 3
@@ -94,18 +95,20 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         super.viewDidLoad()
 
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         self.view.addSubview(appImage)
         self.view.addSubview(appName)
-        appName.textColor = uicolorFromHex(0x159373)
+        appName.textColor = uicolorFromHex(0x006a52)
         self.view.addSubview(appEx)
         self.view.addSubview(signinButton)
         signinButton.addTarget(self, action: #selector(signInAction(_:)), for: .touchUpInside)
         self.view.addSubview(signupButton)
-        signupButton.backgroundColor = uicolorFromHex(0x159373)
+        signinButton.setTitleColor(uicolorFromHex(0x006a52), for: .normal)  
+        
+        signupButton.backgroundColor = uicolorFromHex(0x006a52)
         signupButton.addTarget(self, action: #selector(signupAction(_:)), for: .touchUpInside)
         self.view.addSubview(facebookButton)
         facebookButton.backgroundColor = uicolorFromHex(0x0950D0)
@@ -170,22 +173,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     @objc func facebookAction(_ sender: UIButton) {
-        let appearance = SCLAlertView.SCLAppearance(
-            showCloseButton: false
-        )
-        let alertView = SCLAlertView(appearance: appearance)
-        
-        alertView.addButton("Yes"){
-            let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-            initialViewController.isAdvisor = false
-            self.present(initialViewController, animated: true, completion: nil)
-        }
-        alertView.addButton("No") {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let controller = storyboard.instantiateViewController(withIdentifier: "main") as UIViewController
-            self.present(controller, animated: true, completion: nil)
-        }
         //
         PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
             (user: PFUser?, error: Error?) -> Void in
@@ -238,8 +225,9 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                                         if (success) {
                                             self.stopAnimating()
                                             
-                                            alertView.showInfo("Are you a registered nurse?", subTitle: "")
-                                        }
+                                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                                            self.present(initialViewController, animated: true, completion: nil)                                        }
                                     }
                                 }
                             }

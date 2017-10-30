@@ -76,6 +76,7 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
         let desti = segue.destination as! EditProfileViewController
         desti.nameJaunt = nameJaunt
         desti.imageJaunt = imageJaunt
+        desti.isAdvisor = isAdvisor
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -97,23 +98,14 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
         cell.editProfileButton.addTarget(self, action: #selector(self.editProfile(_:)), for: .touchUpInside)
         cell.advisorButton.addTarget(self, action: #selector(self.switchAction(_:)), for: .touchUpInside)
         cell.selectionStyle = .none
-        if isAdvisor{
-            cell.advisorButton.setTitle(" Switch To Advisor", for: .normal)
-            
-        } else {
-            cell.advisorButton.setTitle(" Become Advisor", for: .normal)
-        }
+        cell.advisorButton.setTitle(" Become Advisor", for: .normal)
         return cell
     }
     
     @objc func switchAction(_ sender: UIButton) {
-        //to determine which side to put advisor on when they get on the app
-        UserDefaults.standard.set("advisor", forKey: "side")
-        
-        let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-        controller.isAdvisor = isAdvisor
-        self.present(controller, animated: true, completion: nil)
+        let url = URL(string : "https://www.sickcallhealth.com/advisor/app" )
+
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
     
     @objc func editProfile(_ sender: UIButton){

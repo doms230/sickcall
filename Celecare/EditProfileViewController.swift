@@ -40,6 +40,9 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
     var imageJaunt: String!
     var nameJaunt: String!
     
+    //don't let person edit their name if they're an advisor
+    var isAdvisor = false 
+    
     let imagePicker = UIImagePickerController()
 
     override func viewDidLoad() {
@@ -53,6 +56,9 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
         username.text = nameJaunt
         
         self.view.addSubview(username)
+        if isAdvisor{
+            username.isEnabled = false 
+        }
         self.view.addSubview(image)
         
         image.snp.makeConstraints { (make) -> Void in
@@ -68,8 +74,9 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
             //make.bottom.equalTo(self.view).offset(-20)
         }
         
+        
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         

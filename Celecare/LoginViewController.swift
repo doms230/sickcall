@@ -102,7 +102,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         emailText.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
@@ -169,7 +169,9 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
                 installation?["userId"] = PFUser.current()?.objectId
                 installation?.saveEventually()
                 
-                self.determineNextScreen()
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                self.present(initialViewController, animated: true, completion: nil)
                 
             } else {
                 self.stopAnimating()
@@ -200,53 +202,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
                     SCLAlertView().showNotice("Oops", subTitle: "Couldn't find an email associated with \(txt.text!)")
                 }
             }
-        }
-    }
-    
-    func determineNextScreen(){
-        let query = PFQuery(className: "Advisor")
-        query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
-        query.getFirstObjectInBackground {
-            (object: PFObject?, error: Error?) -> Void in
-            self.stopAnimating()
-            if error == nil || object != nil {
-                if object!["isOnline"] as! Bool{
-                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                    initialViewController.isAdvisor = true
-                    self.present(initialViewController, animated: true, completion: nil)
-                    
-                } else {
-                    self.checkUserDefaults()
-                    
-                }
-            } else {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                self.present(initialViewController, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    //checks to see what user was using Sickcall as last... Advisor or patient
-    func checkUserDefaults(){
-        if let side = UserDefaults.standard.string(forKey: "side"){
-            if side == "patient"{
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                self.present(initialViewController, animated: true, completion: nil)
-                
-            } else {
-                let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                initialViewController.isAdvisor = true
-                self.present(initialViewController, animated: true, completion: nil)
-            }
-            
-        }else {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-            self.present(initialViewController, animated: true, completion: nil)
         }
     }
     

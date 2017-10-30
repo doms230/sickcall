@@ -24,12 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //change color of time/status jaunts to white
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.white], for:UIControlState())
         
-        UITabBar.appearance().tintColor = uicolorFromHex(0x159373)
+        UITabBar.appearance().tintColor = uicolorFromHex(0x006a52)
         
         let navigationBarAppearace = UINavigationBar.appearance()
         
         navigationBarAppearace.barTintColor = uicolorFromHex(0xffffff)
-        navigationBarAppearace.tintColor = uicolorFromHex(0x159373)
+        navigationBarAppearace.tintColor = uicolorFromHex(0x006a52)
         
         //Stripe ***
         //STPPaymentConfiguration.shared().publishableKey = "pk_test_oP3znUobvO9fTRuYb6Qo7PYB"
@@ -57,29 +57,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //PFUser.logOut()
         
         if (PFUser.current() != nil){
-            let query = PFQuery(className: "Advisor")
-            query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
-            query.getFirstObjectInBackground {
-                (object: PFObject?, error: Error?) -> Void in
-                if error == nil || object != nil {
-                    if object?["isOnline"] as! Bool{
-                        let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                        let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                        initialViewController.isAdvisor = true
-                        self.window?.rootViewController = initialViewController
-                        self.window?.makeKeyAndVisible()
-                        
-                    } else {
-                        self.checkUserDefaults()
-                    }
-                    
-                } else {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                    self.window?.rootViewController = initialViewController
-                    self.window?.makeKeyAndVisible()
-                }
-            }
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+            self.window?.rootViewController = initialViewController
+            self.window?.makeKeyAndVisible()
             
         } else {
             //usealy "welcome" for storyboard id.. replaced with meds for testing

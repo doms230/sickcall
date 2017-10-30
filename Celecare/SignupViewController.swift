@@ -56,21 +56,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         return label
     }()
     
-    lazy var nurseSwitch: UISwitch = {
-        let switchJaunt = UISwitch()
-        switchJaunt.onTintColor = uicolorFromHex(0x180d22)
-        return switchJaunt
-    }()
-    
-    lazy var switchLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
-        label.text = "I'm a registered nurse"
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        return label
-    }()
-    
     override func viewDidLoad(){
         super.viewDidLoad()
         //print(numberToSend[0])
@@ -83,8 +68,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         self.view.addSubview(titleLabel)
         self.view.addSubview(emailText)
         self.view.addSubview(passwordText)
-        self.view.addSubview(nurseSwitch)
-        self.view.addSubview(switchLabel)
         
         titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view).offset(75)
@@ -104,22 +87,10 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
             make.right.equalTo(self.view).offset(-10)
         }
         
-        nurseSwitch.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(passwordText.snp.bottom).offset(10)
-            make.left.equalTo(self.view).offset(10)
-        }
-        nurseSwitch.addTarget(self, action: #selector(switchAction(_:)), for: .valueChanged)
-        
-        switchLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(nurseSwitch.snp.top).offset(1)
-            make.left.equalTo(nurseSwitch.snp.right).offset(5)
-            make.right.equalTo(self.view).offset(-10)
-        }
-        
         emailText.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -134,15 +105,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         super.touchesBegan(touches, with: event)
     }
     
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! NewProfileViewController
-        
-        //user info
-        desti.emailString = emailString
-        desti.passwordString = passwordText.text!
-        desti.isSwitchOn = isSwitchOn
-    }*/
-    
     @objc func next(_ sender: UIBarButtonItem){
         emailText.resignFirstResponder()
         passwordText.resignFirstResponder()
@@ -151,23 +113,9 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         
         if validateEmail() && validatePassword(){
             startAnimating()
-            //self.performSegue(withIdentifier: "showNewProfile", sender: self)
-            /*let emailQuery = PFQuery(className: "_User")
-            emailQuery.whereKey("email", equalTo: self.emailString )
-            emailQuery.findObjectsInBackground{
-                (objects: [PFObject]?, error: Error?) -> Void in
-                self.stopAnimating()
-                if objects?.count == 0{
-                    self.performSegue(withIdentifier: "showNewProfile", sender: self)
-                    
-                } else {
-                    SCLAlertView().showError("Oops", subTitle: "Email already in use")
-                }
-            }*/
             
             newUser(username: emailString!, password: passwordText.text!, email: emailString!, imageFile:
                 uploadedImage)
-            
         }
     }
     
@@ -203,16 +151,9 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
                 installation?["userId"] = PFUser.current()?.objectId
                 installation?.saveEventually()
                 
-                if self.isSwitchOn{
-                    let storyboard = UIStoryboard(name: "Advisor", bundle: nil)
-                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "container") as! AdvisorContainerViewController
-                    initialViewController.isAdvisor = false
-                    self.present(initialViewController, animated: true, completion: nil)
-                } else {
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                    self.present(initialViewController, animated: true, completion: nil)
-                }
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                self.present(initialViewController, animated: true, completion: nil)
             }
         }
     }

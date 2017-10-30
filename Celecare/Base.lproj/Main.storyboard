@@ -496,7 +496,7 @@
             </objects>
             <point key="canvasLocation" x="-564" y="-681"/>
         </scene>
-        <!--New-->
+        <!--New Question-->
         <scene sceneID="1d7-ng-vbd">
             <objects>
                 <viewController id="2Wr-an-JNf" customClass="NewQuestionViewController" customModule="Celecare" customModuleProvider="target" sceneMemberID="viewController">
@@ -587,13 +587,7 @@
                             <constraint firstItem="2TQ-pO-k0Z" firstAttribute="trailing" secondItem="jGq-1G-NZg" secondAttribute="trailingMargin" constant="35" id="x2m-Nl-aaX"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="New" id="bv1-Lw-0mC">
-                        <barButtonItem key="rightBarButtonItem" title="Get Started" id="GzW-WD-Pjx">
-                            <connections>
-                                <action selector="continueAction:" destination="2Wr-an-JNf" id="6zH-Un-lFx"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="New Question" id="bv1-Lw-0mC"/>
                     <connections>
                         <segue destination="1Dp-c7-GqE" kind="show" identifier="showBasicInfo" id="XIj-NQ-0gy"/>
                     </connections>
