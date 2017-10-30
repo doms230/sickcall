@@ -10,10 +10,29 @@ import UIKit
 import UserNotifications
 import SCLAlertView
 import SnapKit
+import BulletinBoard
 
 class NewQuestionViewController: UIViewController {
     
     var didAskQuestion = false
+    
+    lazy var bulletinManager: BulletinManager = {
+        
+        let page = PageBulletinItem(title: "Medical Information")
+        page.image = UIImage(named: "info")
+        
+        page.descriptionText = "Providing your medical information allows your nurse advisor to send you accurate information about your health concern."
+        page.actionButtonTitle = "Okay"
+        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.actionButtonTitleColor = .white
+        page.isDismissable = true
+        page.actionHandler = { (item: PageBulletinItem) in
+            self.performSegue(withIdentifier: "showBasicInfo", sender: self)
+            page.manager?.dismissBulletin()
+        }
+        return BulletinManager(rootItem: page)
+        
+    }()
     
     lazy var signupButton: UIButton = {
         let button = UIButton()
@@ -36,10 +55,6 @@ class NewQuestionViewController: UIViewController {
         signupButton.backgroundColor = uicolorFromHex(0x006a52)
         signupButton.addTarget(self, action: #selector(continueAction(_:)), for: .touchUpInside)
         
-      /*  if didAskQuestion{
-            self.tabBarController?.selectedIndex = 1
-        }*/
-        
         clearTmpDirectory()
         
         let current = UNUserNotificationCenter.current()
@@ -56,7 +71,14 @@ class NewQuestionViewController: UIViewController {
     }
     
     @objc func continueAction(_ sender: UIButton) {
-        performSegue(withIdentifier: "showBasicInfo", sender: self)
+        if UserDefaults.standard.object(forKey: "medInfo") != nil{
+            self.performSegue(withIdentifier: "showBasicInfo", sender: self)
+            
+        } else {
+            UserDefaults.standard.set(true, forKey: "medInfo")
+            bulletinManager.prepare()
+            bulletinManager.presentBulletin(above: self)
+        }
     }
     
     @IBAction func callAction(_ sender: UIButton) {

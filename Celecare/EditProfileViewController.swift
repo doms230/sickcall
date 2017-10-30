@@ -74,7 +74,6 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
             //make.bottom.equalTo(self.view).offset(-20)
         }
         
-        
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)

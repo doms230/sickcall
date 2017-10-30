@@ -7,6 +7,7 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - BulletinBoard (1.2.0)
   - FacebookCore (0.3.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.27)
@@ -45,6 +46,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - BulletinBoard
   - FacebookCore
   - FacebookLogin
   - Kingfisher
@@ -72,6 +74,7 @@ SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Bolts-Swift: fa98d1b59fc1acea9b21a21306dcdca1c85e3737
+  BulletinBoard: 1fc75b03f4eecb4c7bc395c124ea8fb65ad66318
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
   FBSDKCoreKit: 03365dad5d790249196ffad8be4f6d8a2d98f932
@@ -89,6 +92,6 @@ SPEC CHECKSUMS:
   Stripe: 3c86dc18af21e59dd559aa15e83cb501248f9903
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 4b078e941b0db3a47f39793d34cd312b1e8d3e30
+PODFILE CHECKSUM: 8ae6ad1540b0796951dbf65ea358b92b4b36a571
 
 COCOAPODS: 1.3.1

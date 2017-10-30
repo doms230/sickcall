@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -268,7 +268,7 @@
                         <outlet property="questionSubjectTextfield" destination="G3D-6w-zO8" id="VhF-ur-Gyu"/>
                         <outlet property="todaySwitch" destination="Yya-ve-8Pc" id="c5U-vm-eAk"/>
                         <outlet property="yesterdaySwitch" destination="nhx-kt-R5K" id="Mb4-J8-jTh"/>
-                        <segue destination="iPe-Zn-4oR" kind="show" identifier="showQuestion" id="hb0-Om-8e2"/>
+                        <segue destination="Lhj-0d-Z5Y" kind="show" identifier="showCheckout" id="5iT-Gj-nP4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sqR-sL-Gpr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -288,7 +288,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MyC-kK-01c">
-                                <rect key="frame" x="16" y="72" width="288" height="60"/>
+                                <rect key="frame" x="16" y="28" width="288" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="A5l-2K-jTf"/>
                                 </constraints>
@@ -297,7 +297,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQ1-rE-eZK">
-                                <rect key="frame" x="16" y="140" width="288" height="128"/>
+                                <rect key="frame" x="16" y="96" width="288" height="128"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="qeq-Ar-GlC"/>
@@ -308,7 +308,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rvq-Af-cGw">
-                                <rect key="frame" x="0.0" y="381" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
                                 <color key="backgroundColor" red="0.08235294118" green="0.57647058819999997" blue="0.45098039220000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="l9G-Ou-0Mx"/>
@@ -335,13 +335,10 @@
                             <constraint firstItem="Rvq-Af-cGw" firstAttribute="leading" secondItem="GcQ-TX-hcC" secondAttribute="leading" id="tC9-37-Uc7"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="Lhj-0d-Z5Y" kind="show" identifier="showCheckout" id="Sij-PL-Dlq"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ECq-zm-Wdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4434" y="-648"/>
+            <point key="canvasLocation" x="4431" y="110"/>
         </scene>
         <!--Summary View Controller-->
         <scene sceneID="AyL-E9-4Lf">
@@ -359,7 +356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bKk-cJ-spE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5190" y="-648"/>
+            <point key="canvasLocation" x="4367" y="-646"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">

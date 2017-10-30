@@ -34,4 +34,5 @@ target 'Celecare' do
   pod 'NVActivityIndicatorView'
   #pod 'SRCountdownTimer'
   pod "SlackTextViewController"
+pod 'BulletinBoard'
 end

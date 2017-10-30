@@ -11,7 +11,18 @@ import Parse
 import Kingfisher
 import SidebarOverlay
 
-class BasicInfoTableViewController: UITableViewController {
+import MobileCoreServices
+import AVKit
+import AVFoundation
+
+import BulletinBoard
+
+class BasicInfoTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    //video stuff
+    var videoFile: URL!
+    let imagePicker: UIImagePickerController! = UIImagePickerController()
+    let saveFileName = "/test.mp4"
     
     @IBOutlet weak var questionSubjectTextfield: UITextField!
     
@@ -24,6 +35,24 @@ class BasicInfoTableViewController: UITableViewController {
     @IBOutlet weak var pastYearSwitch: UISwitch!
     @IBOutlet weak var moreThanYearSwitch: UISwitch!
     
+    lazy var bulletinManager: BulletinManager = {
+        
+        let page = PageBulletinItem(title: "Spend 60 seconds")
+        page.image = UIImage(named: "video")
+        
+        page.descriptionText = "Explain your health concern in detail. Show yourself or any affected areas to help your nurse advisor provide you with accurate information."
+        page.actionButtonTitle = "Got It"
+        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.actionButtonTitleColor = .white
+        page.isDismissable = true
+        page.actionHandler = { (item: PageBulletinItem) in
+            page.manager?.dismissBulletin()
+            self.showVideo()
+        }
+        return BulletinManager(rootItem: page)
+        
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +62,11 @@ class BasicInfoTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! QuestionViewController
+        let desti = segue.destination as! SummaryViewController
         desti.healthConcernDuration = healthConcernDuration
         desti.healthConcernSummary = questionSubjectTextfield.text
+        desti.pickedFile = videoFile
     }
-    
-   /* override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-        super.touchesBegan(touches, with: event)
-    }*/
 
 
     // MARK: - Table view data source
@@ -58,7 +83,9 @@ class BasicInfoTableViewController: UITableViewController {
     
      @objc func nextAction(_ sender: UIBarButtonItem) {
         if validateTitle(){
-            performSegue(withIdentifier: "showQuestion", sender: self)
+            //performSegue(withIdentifier: "showQuestion", sender: self)
+            bulletinManager.prepare()
+            bulletinManager.presentBulletin(above: self)
         }
     }
     
@@ -168,6 +195,60 @@ class BasicInfoTableViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
-
-
+    //////video ///
+    
+    func showVideo(){
+        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
+            if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
+                
+                imagePicker.sourceType = .camera
+                imagePicker.cameraDevice = .front
+                imagePicker.mediaTypes = [kUTTypeMovie as String]
+                imagePicker.allowsEditing = false
+                imagePicker.videoMaximumDuration = 60
+                imagePicker.videoQuality = .typeMedium
+                imagePicker.delegate = self
+                
+                present(imagePicker, animated: true, completion: {})
+            } else {
+                postAlert("Rear camera doesn't exist", message: "Application cannot access the camera.")
+            }
+        } else {
+            postAlert("Camera inaccessable", message: "Application cannot access the camera.")
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        print("Got a video")
+        
+        if let pickedVideo:URL = (info[UIImagePickerControllerMediaURL] as? URL) {
+            
+            videoFile = pickedVideo
+            
+            imagePicker.dismiss(animated: true, completion: {
+                // Anything you want to happen when the user saves an video
+                self.performSegue(withIdentifier: "showCheckout", sender: self)
+            })
+            
+        } else {
+            //TODO: something happened
+        }
+    }
+    
+    // Called when the user selects cancel
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("User canceled image")
+        dismiss(animated: true, completion: {
+            // Anything you want to happen when the user selects cancel
+        })
+    }
+    
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
+    }
+    
 }

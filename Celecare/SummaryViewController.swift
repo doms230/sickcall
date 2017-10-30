@@ -19,6 +19,7 @@ import SwiftyJSON
 import NVActivityIndicatorView
 import SCLAlertView
 
+import BulletinBoard
 class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, STPAddCardViewControllerDelegate, NVActivityIndicatorViewable {
     
  var tableJaunt: UITableView!
@@ -46,6 +47,35 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var isVideoCompressed = false
     var hasUserPaid = false
     var isVideoSaved = false
+    
+    lazy var bulletinManager: BulletinManager = {
+        
+        let page = PageBulletinItem(title: "Thank You!")
+        page.image = UIImage(named: "info")
+        
+        page.descriptionText = "Sickcall partners with registered nurses in the United States. We work together to insure that your answers are accurate. By continuing, you understand that Sickcall and our nurse advisors are not liable for any actions you take after receiving information through Sickcall."
+        page.shouldCompactDescriptionText = true
+        page.actionButtonTitle = "I understand"
+        page.alternativeButtonTitle = "Terms & Privacy Policy"
+        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.actionButtonTitleColor = .white
+        page.isDismissable = true
+        page.shouldCompactDescriptionText = true
+        page.actionHandler = { (item: PageBulletinItem) in
+            page.manager?.dismissBulletin()
+            self.startAnimating()
+            self.createCharge()
+            UserDefaults.standard.set(true, forKey: "termsInfo")
+        }
+        
+        page.alternativeHandler = { (item: PageBulletinItem) in
+            page.manager?.dismissBulletin()
+            let url = URL(string : "https://www.sickcallhealth.com/terms" )
+            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        }
+        return BulletinManager(rootItem: page)
+        
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,7 +131,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         //cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
         //cell.checkoutView.backgroundColor = uicolorFromHex(0xe8e6df)
         cell.checkoutView.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
-        cell.totalLabel.text = "$6.99"
+        cell.totalLabel.text = "$12.99"
         cell.creditCardButton.setTitle(creditCard, for: .normal)
         cell.creditCardButton.setImage(ccImage, for: .normal)
         //cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
@@ -113,12 +143,18 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @objc func askQuestionAction(_ sender: UIBarButtonItem) {
         if tokenId != nil{
-            startAnimating()
-            createCharge()
+            if UserDefaults.standard.object(forKey: "termsInfo") != nil{
+                self.startAnimating()
+                self.createCharge()
+                
+            } else {
+                bulletinManager.prepare()
+                bulletinManager.presentBulletin(above: self)
+            }
 
         } else {
            //self.paymentCard.setTitleColor(.red, for: .normal)
-            SCLAlertView().showError("No Credit Card", subTitle: "Enter credit card info before checkout.")
+            SCLAlertView().showError("Credit Card Required", subTitle: "Enter credit card info before checkout.")
         }
     }
     

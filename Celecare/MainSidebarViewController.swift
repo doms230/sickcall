@@ -104,7 +104,6 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     
     @objc func switchAction(_ sender: UIButton) {
         let url = URL(string : "https://www.sickcallhealth.com/advisor/app" )
-
         UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
     

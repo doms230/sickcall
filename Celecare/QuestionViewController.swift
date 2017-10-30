@@ -100,7 +100,7 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         self.present(alert, animated: true, completion: nil)
     }
     
-    func cleanup(outputFileURL: URL ) {
+   /* func cleanup(outputFileURL: URL ) {
         print("started clean up")
         let path = outputFileURL.path
         
@@ -116,5 +116,5 @@ class QuestionViewController: UIViewController, UIImagePickerControllerDelegate,
         } else {
             print("couldn't find file")
         }
-    }    
+    }*/
 }
