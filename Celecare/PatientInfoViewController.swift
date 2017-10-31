@@ -8,6 +8,9 @@
 
 import UIKit
 import Parse
+import SnapKit
+import BulletinBoard
+import UserNotifications
 
 class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
@@ -41,13 +44,90 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var medHistory: String!
     var ongoingMedIssues: String!
     
+    lazy var startButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.setTitleColor(.white, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
+    
+    lazy var bulletinManager: BulletinManager = {
+        
+        let page = PageBulletinItem(title: "Medical Information")
+        page.image = UIImage(named: "info")
+        
+        page.descriptionText = "Providing your medical information helps your nurse advisor send you accurate information about your health concern."
+        page.actionButtonTitle = "Okay"
+        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.actionButtonTitleColor = .white
+        page.isDismissable = true
+        page.actionHandler = { (item: PageBulletinItem) in
+            self.bulletinManager.dismissBulletin()
+            UserDefaults.standard.set(true, forKey: "medInfo")
+            self.notificationsManager.prepare()
+            self.notificationsManager.presentBulletin(above: self)
+        }
+        return BulletinManager(rootItem: page)
+    }()
+    
+    lazy var notificationsManager: BulletinManager = {
+        
+        let page = PageBulletinItem(title: "Notifications")
+        page.image = UIImage(named: "bell")
+        
+        page.descriptionText = "Sickcall uses notifications to let you know about important updates, like when your nurse advisor replies to your health concern."
+        page.actionButtonTitle = "Okay"
+        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.actionButtonTitleColor = .white
+        page.isDismissable = true
+        page.actionHandler = { (item: PageBulletinItem) in
+            page.manager?.dismissBulletin()
+            UserDefaults.standard.set(true, forKey: "medInfo")
+            let current = UNUserNotificationCenter.current()
+            current.getNotificationSettings(completionHandler: { (settings) in
+                if settings.authorizationStatus == .notDetermined {
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                        (granted, error) in
+                        
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+                }
+            })
+        }
+        return BulletinManager(rootItem: page)
+        
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+      if UserDefaults.standard.object(forKey: "medInfo") == nil{
+            self.bulletinManager.prepare()
+            self.bulletinManager.presentBulletin(above: self)
+        
+        } else if UserDefaults.standard.object(forKey: "notifications") == nil{
+            self.notificationsManager.prepare()
+            self.notificationsManager.presentBulletin(above: self)
+        }
         
         self.title = "Info 1/3"
-        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
+        let nextButton = UIBarButtonItem(title: "911", style: .plain, target: self, action: #selector(emergencyAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
+        
+        self.view.addSubview(startButton)
+        startButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(50)
+            make.left.equalTo(self.view)
+            make.right.equalTo(self.view)
+            make.bottom.equalTo(self.view).offset(-49)
+        }
+        
+        clearTmpDirectory()
+        
+        startButton.backgroundColor = uicolorFromHex(0x006a52)
+        startButton.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
         
         genderButton.layer.cornerRadius = 3
         genderButton.clipsToBounds = true
@@ -111,10 +191,16 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     // button actions
     
-    @objc func nextAction(_ sender: UIBarButtonItem){
+    @objc func nextAction(_ sender: UIButton){
         // Do any additional setup after loading the view.
         performSegue(withIdentifier: "showAllergies", sender: self)
 
+    }
+    
+    @objc func emergencyAction(_ sender: UIBarButtonItem){
+        if let url = URL(string: "tel://911)"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
     }
     
     @IBAction func genderAction(_ sender: UIButton) {
@@ -148,7 +234,6 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
         
         let okayJaunt = UIAlertAction(title: "Okay", style: UIAlertActionStyle.cancel) {
             UIAlertAction in
-            
         }
         
         prompt.addAction(okayJaunt)
@@ -323,5 +408,25 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
         prompt.addAction(okayJaunt)
         
         present(prompt, animated: true, completion: nil)
+    }
+    
+    func clearTmpDirectory(){
+        let path = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+        let manager = FileManager.default
+        let files = try? manager.contentsOfDirectory(atPath: path.path)
+        files?.forEach { (file) in
+            let temp = path.appendingPathComponent(file)
+            try? manager.removeItem(at: temp)
+            
+            // --- you can use do{} catch{} for error handling ---//
+        }
+    }
+    
+    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
 }

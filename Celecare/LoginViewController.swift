@@ -10,6 +10,8 @@ import UIKit
 import Parse
 import SCLAlertView
 import NVActivityIndicatorView
+import UserNotifications
+import BulletinBoard
 
 class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     
@@ -59,6 +61,8 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         //label.numberOfLines = 0
         return button
     }()
+    
+
     
     var forgotPasswordView: SCLAlertView!
     

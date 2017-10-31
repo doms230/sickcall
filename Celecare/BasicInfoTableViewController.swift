@@ -35,9 +35,18 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
     @IBOutlet weak var pastYearSwitch: UISwitch!
     @IBOutlet weak var moreThanYearSwitch: UISwitch!
     
+    lazy var nextButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.setTitleColor(.white, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
+    
     lazy var bulletinManager: BulletinManager = {
         
-        let page = PageBulletinItem(title: "Spend 60 seconds")
+        let page = PageBulletinItem(title: "In 60 seconds")
         page.image = UIImage(named: "video")
         
         page.descriptionText = "Explain your health concern in detail. Show yourself or any affected areas to help your nurse advisor provide you with accurate information."

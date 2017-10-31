@@ -21,7 +21,7 @@ class NewQuestionViewController: UIViewController {
         let page = PageBulletinItem(title: "Medical Information")
         page.image = UIImage(named: "info")
         
-        page.descriptionText = "Providing your medical information allows your nurse advisor to send you accurate information about your health concern."
+        page.descriptionText = "Providing your medical information helps your nurse advisor to send you accurate information about your health concern."
         page.actionButtonTitle = "Okay"
         page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
         page.interfaceFactory.actionButtonTitleColor = .white

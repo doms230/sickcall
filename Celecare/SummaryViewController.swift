@@ -50,7 +50,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     lazy var bulletinManager: BulletinManager = {
         
-        let page = PageBulletinItem(title: "Thank You!")
+        let page = PageBulletinItem(title: "Thank you!")
         page.image = UIImage(named: "info")
         
         page.descriptionText = "Sickcall partners with registered nurses in the United States. We work together to insure that your answers are accurate. By continuing, you understand that Sickcall and our nurse advisors are not liable for any actions you take after receiving information through Sickcall."
@@ -65,7 +65,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             page.manager?.dismissBulletin()
             self.startAnimating()
             self.createCharge()
-            UserDefaults.standard.set(true, forKey: "termsInfo")
         }
         
         page.alternativeHandler = { (item: PageBulletinItem) in
@@ -84,6 +83,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(askQuestionAction(_:)))
         self.navigationItem.setRightBarButton(doneButton, animated: true)
+        
         self.tableJaunt = UITableView(frame: self.view.bounds)
         self.tableJaunt.dataSource = self
         self.tableJaunt.delegate = self
@@ -141,16 +141,10 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     //UI Action
     
-    @objc func askQuestionAction(_ sender: UIBarButtonItem) {
+    @objc func askQuestionAction(_ sender: UIButton) {
         if tokenId != nil{
-            if UserDefaults.standard.object(forKey: "termsInfo") != nil{
-                self.startAnimating()
-                self.createCharge()
-                
-            } else {
-                bulletinManager.prepare()
-                bulletinManager.presentBulletin(above: self)
-            }
+            bulletinManager.prepare()
+            bulletinManager.presentBulletin(above: self)
 
         } else {
            //self.paymentCard.setTitleColor(.red, for: .normal)
@@ -244,7 +238,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
-        
         tokenId = token.tokenId;
         creditCard = (token.card?.last4)!
         ccImage = token.card?.image

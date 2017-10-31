@@ -15,6 +15,7 @@ import NVActivityIndicatorView
 import Kingfisher
 import SCLAlertView
 import SnapKit
+import BulletinBoard
 
 class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
@@ -90,6 +91,8 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         //label.numberOfLines = 0
         return button
     }()
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
