@@ -23,6 +23,9 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     var retreivedImage: PFFile!
     let screenSize: CGRect = UIScreen.main.bounds
     
+    //bulletin wasn't showing on viewdidload.. moved to view did appear.. because of fb login, show bulleting again.. trying to avoid that by manualyy making sure it's not shown again.
+    var didShowWelcome = false
+    
     lazy var appImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "appy")
@@ -174,8 +177,11 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     }()
     
     override func viewDidAppear(_ animated: Bool) {
-        self.welcomeManager.prepare()
-        self.welcomeManager.presentBulletin(above: self)
+        if !didShowWelcome{
+            self.welcomeManager.prepare()
+            self.welcomeManager.presentBulletin(above: self)
+            didShowWelcome = true
+        }
     }
     
     override func viewDidLoad() {
