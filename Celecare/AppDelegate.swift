@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
             self.window?.rootViewController = initialViewController
-            self.window?.makeKeyAndVisible()
+           // self.window?.makeKeyAndVisible()
             
         } else {
             //usealy "welcome" for storyboard id.. replaced with meds for testing
@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let storyboard = UIStoryboard(name: "Login", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "welcome")
             self.window?.rootViewController = initialViewController
-            self.window?.makeKeyAndVisible()
+           // self.window?.makeKeyAndVisible()
         }
         return true
     }

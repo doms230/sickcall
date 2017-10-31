@@ -84,7 +84,7 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
         page.isDismissable = true
         page.actionHandler = { (item: PageBulletinItem) in
             page.manager?.dismissBulletin()
-            UserDefaults.standard.set(true, forKey: "medInfo")
+            UserDefaults.standard.set(true, forKey: "notifications")
             let current = UNUserNotificationCenter.current()
             current.getNotificationSettings(completionHandler: { (settings) in
                 if settings.authorizationStatus == .notDetermined {

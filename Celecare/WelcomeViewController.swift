@@ -92,11 +92,95 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         return button
     }()
     
-
+    var welcomePage: PageBulletinItem!
+    lazy var welcomeManager: BulletinManager = {
+        
+        welcomePage = PageBulletinItem(title: "Welcome to Sickcall!")
+        welcomePage.image = UIImage(named: "appy")
+        
+        welcomePage.descriptionText = "We work with registered nurses in the U.S. to provide you info specific to your health concern. Should I go to the E.R.? Book a Doctor's appointment? What's happening to me? These are all questions that our Nurse Advisors can provide answers to."
+        welcomePage.shouldCompactDescriptionText = true
+        welcomePage.actionButtonTitle = "Next"
+        welcomePage.alternativeButtonTitle = "Get Started"
+        welcomePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        welcomePage.interfaceFactory.actionButtonTitleColor = .white
+        welcomePage.isDismissable = true
+        welcomePage.actionHandler = { (item: PageBulletinItem) in
+            self.welcomePage.manager?.dismissBulletin()
+            self.affordablemanger.prepare()
+            self.affordablemanger.presentBulletin(above: self)
+        }
+        welcomePage.alternativeHandler = { (item: PageBulletinItem) in
+            self.welcomePage.manager?.dismissBulletin()
+            
+        }
+        return BulletinManager(rootItem: self.welcomePage)
+        
+    }()
+    
+    var affordablePage: PageBulletinItem!
+    lazy var affordablemanger: BulletinManager = {
+        
+        affordablePage = PageBulletinItem(title: "We're affordable")
+        affordablePage.image = UIImage(named: "dollar")
+        
+        affordablePage.descriptionText = "We charge you the lowest price possible, while supplying quick and accurate information."
+        affordablePage.actionButtonTitle = "next"
+        affordablePage.alternativeButtonTitle = "Go Back"
+        affordablePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        affordablePage.interfaceFactory.actionButtonTitleColor = .white
+        affordablePage.isDismissable = true
+        affordablePage.nextItem = accesiblePage
+        affordablePage.actionHandler = { (item: PageBulletinItem) in
+            self.affordablePage.manager?.dismissBulletin()
+            self.accesibleManger.prepare()
+            self.accesibleManger.presentBulletin(above: self)
+        }
+     
+        affordablePage.alternativeHandler = { (item: PageBulletinItem) in
+            self.affordablePage.manager?.dismissBulletin()
+            self.welcomeManager.prepare()
+            self.welcomeManager.presentBulletin(above: self)
+            
+        }
+        return BulletinManager(rootItem: self.affordablePage)
+        
+    }()
+    
+    var accesiblePage: PageBulletinItem!
+    lazy var accesibleManger: BulletinManager = {
+        
+        accesiblePage = PageBulletinItem(title: "We're Accessible")
+        accesiblePage.image = UIImage(named: "key")
+        
+        accesiblePage.descriptionText = "No health insurance or scheduling required. We're available 24/7 at your convenience."
+        accesiblePage.actionButtonTitle = "Get Started"
+        accesiblePage.alternativeButtonTitle = "Go Back"
+        accesiblePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        accesiblePage.interfaceFactory.actionButtonTitleColor = .white
+        accesiblePage.isDismissable = true
+        accesiblePage.actionHandler = { (item: PageBulletinItem) in
+            self.accesiblePage.manager?.dismissBulletin()
+            
+        }
+        accesiblePage.alternativeHandler = { (item: PageBulletinItem) in
+            self.accesiblePage.manager?.dismissBulletin()
+            self.affordablemanger.prepare()
+            self.affordablemanger.presentBulletin(above: self)
+            
+        }
+        return BulletinManager(rootItem: self.accesiblePage)
+        
+    }()
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.welcomeManager.prepare()
+        self.welcomeManager.presentBulletin(above: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
@@ -165,6 +249,8 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
             make.right.equalTo(self.view).offset(-10)
             make.bottom.equalTo(self.view).offset(-20)
         }
+        
+
     }
 
     @objc func signInAction(_ sender: UIButton) {
