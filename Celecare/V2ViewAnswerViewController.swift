@@ -135,10 +135,10 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             cell.durationBody.text = self.duration
             cell.durationBody.textColor = uicolorFromHex(0x180d22)
             //cell.videoPreview.image = UIImage(named: "appy")
-            cell.vitalsButton.backgroundColor = uicolorFromHex(0x8c81ff)
-            cell.vitalsButton.addTarget(self, action: #selector(self.vitalsAction(_:)), for: .touchUpInside)
+           // cell.vitalsButton.backgroundColor = uicolorFromHex(0x8c81ff)
+           // cell.vitalsButton.addTarget(self, action: #selector(self.vitalsAction(_:)), for: .touchUpInside)
             
-            cell.searchButton.backgroundColor = uicolorFromHex(0x180d22)
+           // cell.searchButton.backgroundColor = uicolorFromHex(0x180d22)
             //TODO: Uncomment
             cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)

@@ -238,7 +238,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var vitalsButton: UIButton = {
+    /*lazy var vitalsButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
@@ -247,9 +247,9 @@ class ViewAnswerTableViewCell: UITableViewCell {
         button.setTitleColor(UIColor.white, for: .normal)
         button.setImage(UIImage(named: "vitals"), for: .normal)
         return button
-    }()
+    }()*/
     
-    lazy var searchButton: UIButton = {
+   /* lazy var searchButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
@@ -259,7 +259,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
         button.setImage(UIImage(named: "search"), for: .normal)
         button.backgroundColor = .black
         return button
-    }()
+    }()*/
     
     lazy var playImage: UIImageView = {
         let image = UIImageView()
@@ -291,8 +291,8 @@ class ViewAnswerTableViewCell: UITableViewCell {
         self.addSubview(summaryBody)
         //self.addSubview(durationLabel)
         self.addSubview(durationBody)
-        self.addSubview(vitalsButton)
-        self.addSubview(searchButton)
+        //self.addSubview(vitalsButton)
+        //self.addSubview(searchButton)
         
        /* self.addSubview(videoButton)
         self.videoButton.addSubview(videoImage)
@@ -315,7 +315,7 @@ class ViewAnswerTableViewCell: UITableViewCell {
             make.top.equalTo(summaryBody.snp.bottom).offset(10)
             make.left.equalTo(patientImage.snp.right).offset(5)
             // make.right.equalTo(self).offset(-100)
-             make.bottom.equalTo(self).offset(-20)
+             make.bottom.equalTo(self).offset(-10)
         }
         
         playImage.snp.makeConstraints { (make) -> Void in
@@ -326,22 +326,22 @@ class ViewAnswerTableViewCell: UITableViewCell {
             // make.bottom.equalTo(self).offset(-20)
         }
         
-        vitalsButton.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(125)
-            make.height.equalTo(40)
-            make.top.equalTo(videoButton.snp.top).offset(15)
-            make.left.equalTo(videoButton.snp.right).offset(10)
-            //make.right.equalTo(self).offset(-10)
-        }
+       /* vitalsButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(50)
+            make.top.equalTo(videoButton.snp.bottom).offset(10)
+            make.left.equalTo(self).offset(10)
+            make.right.equalTo(self).offset(-10)
+            make.bottom.equalTo(self).offset(-10)
+        }*/
         
-        searchButton.snp.makeConstraints { (make) -> Void in
+        /*searchButton.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(125)
             make.height.equalTo(40)
             make.top.equalTo(vitalsButton.snp.bottom).offset(10)
             make.left.equalTo(videoButton.snp.right).offset(10)
             //make.right.equalTo(self).offset(-10)
            // make.bottom.equalTo(self).offset(-20)
-        }
+        }*/
         
         //video view
         /*videoButton.snp.makeConstraints { (make) -> Void in

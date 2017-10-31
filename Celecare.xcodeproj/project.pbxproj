@@ -13,7 +13,6 @@
 		590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */; };
 		5975BD4B1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5975BD4A1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift */; };
 		5975BD4D1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5975BD4C1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift */; };
-		9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */; };
 		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
 		9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F62F1F14168300B2E55B /* AnswerViewController.swift */; };
@@ -30,7 +29,6 @@
 		F22656171F4E364C001D2ED7 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22656161F4E364C001D2ED7 /* SignupViewController.swift */; };
 		F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */; };
 		F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */; };
-		F2E86B391F396A7600F4703C /* NewQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */; };
 		F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +41,6 @@
 		5975BD491FA6C2C80006FFB7 /* AdvisorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvisorTableViewCell.swift; path = ../../.Trash/AdvisorTableViewCell.swift; sourceTree = "<group>"; };
 		5975BD4A1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvisorMedsViewController.swift; path = ../../../.Trash/AdvisorMedsViewController.swift; sourceTree = "<group>"; };
 		5975BD4C1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvisorTableViewCell.swift; path = ../../../.Trash/AdvisorTableViewCell.swift; sourceTree = "<group>"; };
-		9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		9A26F62F1F14168300B2E55B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
@@ -65,7 +62,6 @@
 		F22656161F4E364C001D2ED7 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V2ViewAnswerViewController.swift; sourceTree = "<group>"; };
 		F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAnswerTableViewCell.swift; sourceTree = "<group>"; };
-		F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewQuestionViewController.swift; sourceTree = "<group>"; };
 		F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,8 +100,6 @@
 		9AB0676B1EFAE95100092BC6 /* Celecare */ = {
 			isa = PBXGroup;
 			children = (
-				9A2687231F0AED3C00AF7A2B /* QuestionViewController.swift */,
-				F2E86B381F396A7600F4703C /* NewQuestionViewController.swift */,
 				9AF65FDA1F202D4E00C6E9CA /* Post.swift */,
 				9AB067831F0217DA00092BC6 /* Celecare.entitlements */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
@@ -366,7 +360,6 @@
 				F22656171F4E364C001D2ED7 /* SignupViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
 				F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */,
-				F2E86B391F396A7600F4703C /* NewQuestionViewController.swift in Sources */,
 				F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */,
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
 				9A73518B1F1D3C5C00A438C8 /* EditProfileViewController.swift in Sources */,
@@ -375,7 +368,6 @@
 				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
 				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,
 				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
-				9A2687241F0AED3C00AF7A2B /* QuestionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

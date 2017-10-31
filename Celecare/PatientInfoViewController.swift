@@ -56,7 +56,7 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     lazy var bulletinManager: BulletinManager = {
         
         let page = PageBulletinItem(title: "Medical Information")
-        page.image = UIImage(named: "info")
+        page.image = UIImage(named: "heart")
         
         page.descriptionText = "Providing your medical information helps your nurse advisor send you accurate information about your health concern."
         page.actionButtonTitle = "Okay"

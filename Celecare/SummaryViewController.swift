@@ -53,9 +53,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         let page = PageBulletinItem(title: "Thank you!")
         page.image = UIImage(named: "info")
         
-        page.descriptionText = "Sickcall partners with registered nurses in the United States. We work together to insure that your answers are accurate. By continuing, you understand that Sickcall and our nurse advisors are not liable for any actions you take after receiving information through Sickcall."
+        page.descriptionText = "Sickcall partners with registered nurses in the United States. We work together to insure that your answers are accurate. By tapping okay, you understand that Sickcall and our nurse advisors are not liable for any actions you take after receiving information through Sickcall."
         page.shouldCompactDescriptionText = true
-        page.actionButtonTitle = "I understand"
+        page.actionButtonTitle = "Okay"
         page.alternativeButtonTitle = "Terms & Privacy Policy"
         page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
         page.interfaceFactory.actionButtonTitleColor = .white
