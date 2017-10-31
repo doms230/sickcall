@@ -11,8 +11,6 @@
 		590F694C1F786B04004FE33A /* AllergyViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */; };
 		590F694F1F78700D004FE33A /* MedHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694E1F78700D004FE33A /* MedHistoryViewController.swift */; };
 		590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */; };
-		5975BD4B1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5975BD4A1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift */; };
-		5975BD4D1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5975BD4C1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift */; };
 		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
 		9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F62F1F14168300B2E55B /* AnswerViewController.swift */; };
@@ -37,10 +35,6 @@
 		590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyViewTableViewController.swift; sourceTree = "<group>"; };
 		590F694E1F78700D004FE33A /* MedHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedHistoryViewController.swift; sourceTree = "<group>"; };
 		590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoTableViewController.swift; sourceTree = "<group>"; };
-		5975BD481FA6C2C50006FFB7 /* AdvisorMedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvisorMedsViewController.swift; path = ../../.Trash/AdvisorMedsViewController.swift; sourceTree = "<group>"; };
-		5975BD491FA6C2C80006FFB7 /* AdvisorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvisorTableViewCell.swift; path = ../../.Trash/AdvisorTableViewCell.swift; sourceTree = "<group>"; };
-		5975BD4A1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvisorMedsViewController.swift; path = ../../../.Trash/AdvisorMedsViewController.swift; sourceTree = "<group>"; };
-		5975BD4C1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvisorTableViewCell.swift; path = ../../../.Trash/AdvisorTableViewCell.swift; sourceTree = "<group>"; };
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		9A26F62F1F14168300B2E55B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
@@ -80,8 +74,6 @@
 		9AB067601EFAE95100092BC6 = {
 			isa = PBXGroup;
 			children = (
-				5975BD481FA6C2C50006FFB7 /* AdvisorMedsViewController.swift */,
-				5975BD491FA6C2C80006FFB7 /* AdvisorTableViewCell.swift */,
 				9AB0676B1EFAE95100092BC6 /* Celecare */,
 				9AB0676A1EFAE95100092BC6 /* Products */,
 				CBB7995141C31F07B9987988 /* Pods */,
@@ -106,8 +98,6 @@
 				9AB067751EFAE95100092BC6 /* Assets.xcassets */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
 				9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */,
-				5975BD4A1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift */,
-				5975BD4C1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift */,
 				9AB067821F0207A500092BC6 /* main */,
 				9ACD38011F0992C2005842CF /* login */,
 			);
@@ -350,7 +340,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5975BD4D1FA6C3D70006FFB7 /* AdvisorTableViewCell.swift in Sources */,
 				590F694F1F78700D004FE33A /* MedHistoryViewController.swift in Sources */,
 				9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */,
 				9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */,
@@ -363,7 +352,6 @@
 				F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */,
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
 				9A73518B1F1D3C5C00A438C8 /* EditProfileViewController.swift in Sources */,
-				5975BD4B1FA6C3D50006FFB7 /* AdvisorMedsViewController.swift in Sources */,
 				F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */,
 				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
 				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,
