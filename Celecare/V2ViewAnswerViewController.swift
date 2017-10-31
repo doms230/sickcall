@@ -93,12 +93,6 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         subscribeToUpdates()
     }
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let desti = segue.destination as! AdvisorMedsViewController
-        desti.patientUserId = PFUser.current()?.objectId
-    }*/
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
