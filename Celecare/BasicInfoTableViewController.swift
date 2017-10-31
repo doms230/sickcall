@@ -57,11 +57,11 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
         page.actionHandler = { (item: PageBulletinItem) in
             page.manager?.dismissBulletin()
             self.showVideo()
+            UserDefaults.standard.set(true, forKey: "recordInfo")
         }
         return BulletinManager(rootItem: page)
         
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,8 +93,14 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
      @objc func nextAction(_ sender: UIBarButtonItem) {
         if validateTitle(){
             //performSegue(withIdentifier: "showQuestion", sender: self)
-            bulletinManager.prepare()
-            bulletinManager.presentBulletin(above: self)
+            
+            if UserDefaults.standard.object(forKey: "recordInfo") == nil{
+                bulletinManager.prepare()
+                bulletinManager.presentBulletin(above: self)
+                
+            } else {
+                self.showVideo()
+            }
         }
     }
     

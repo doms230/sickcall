@@ -90,7 +90,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.statusLabel.text = questionStatus[indexPath.row]
             
             if isAnswered[indexPath.row]{
-                cell.questionView.backgroundColor = uicolorFromHex(0x159373)
+                cell.questionView.backgroundColor = uicolorFromHex(0x006a52)
                 
             } else {
                 cell.questionView.backgroundColor = uicolorFromHex(0x180d22)

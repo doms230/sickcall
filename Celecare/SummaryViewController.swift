@@ -148,7 +148,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         } else {
            //self.paymentCard.setTitleColor(.red, for: .normal)
-            SCLAlertView().showError("Credit Card Required", subTitle: "Enter credit card info before checkout.")
+            SCLAlertView().showError("Credit Card Required", subTitle: "Enter your credit card info before checkout.")
         }
     }
     

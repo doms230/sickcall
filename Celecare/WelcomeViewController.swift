@@ -114,8 +114,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
             self.affordablemanger.presentBulletin(above: self)
         }
         welcomePage.alternativeHandler = { (item: PageBulletinItem) in
-            self.welcomePage.manager?.dismissBulletin()
-            
+            self.welcomePage.manager?.dismissBulletin()            
         }
         return BulletinManager(rootItem: self.welcomePage)
         
@@ -164,6 +163,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         accesiblePage.isDismissable = true
         accesiblePage.actionHandler = { (item: PageBulletinItem) in
             self.accesiblePage.manager?.dismissBulletin()
+            UserDefaults.standard.set(true, forKey: "welcomeInfo")
             
         }
         accesiblePage.alternativeHandler = { (item: PageBulletinItem) in
@@ -178,8 +178,10 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
     override func viewDidAppear(_ animated: Bool) {
         if !didShowWelcome{
-            self.welcomeManager.prepare()
-            self.welcomeManager.presentBulletin(above: self)
+            if UserDefaults.standard.object(forKey: "welcomeInfo") == nil{
+                self.welcomeManager.prepare()
+                self.welcomeManager.presentBulletin(above: self)
+            }
             didShowWelcome = true
         }
     }
@@ -256,7 +258,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
             make.bottom.equalTo(self.view).offset(-20)
         }
         
-
+        
     }
 
     @objc func signInAction(_ sender: UIButton) {
