@@ -63,7 +63,7 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
         
         image.snp.makeConstraints { (make) -> Void in
             make.height.width.equalTo(100)
-            make.top.equalTo(self.view).offset(75)
+            make.top.equalTo(self.view).offset(100)
             make.left.equalTo(self.view).offset(screenSize.width / 2 - 50)
         }
         

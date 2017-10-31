@@ -44,15 +44,6 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     var medHistory: String!
     var ongoingMedIssues: String!
     
-    lazy var startButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Next", for: .normal)
-        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
-        button.setTitleColor(.white, for: .normal)
-        //label.numberOfLines = 0
-        return button
-    }()
-    
     lazy var bulletinManager: BulletinManager = {
         
         let page = PageBulletinItem(title: "Medical Information")
@@ -112,22 +103,14 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
             self.notificationsManager.presentBulletin(above: self)
         }
         
-        self.title = "Info 1/3"
-        let nextButton = UIBarButtonItem(title: "911", style: .plain, target: self, action: #selector(emergencyAction(_:)))
+        //self.title = "New Question"
+        let nineElevenButton = UIBarButtonItem(title: "911", style: .plain, target: self, action: #selector(emergencyAction(_:)))
+        self.navigationItem.setLeftBarButton(nineElevenButton, animated: true)
+        
+        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
-        self.view.addSubview(startButton)
-        startButton.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(50)
-            make.left.equalTo(self.view)
-            make.right.equalTo(self.view)
-            make.bottom.equalTo(self.view).offset(-49)
-        }
-        
         clearTmpDirectory()
-        
-        startButton.backgroundColor = uicolorFromHex(0x006a52)
-        startButton.addTarget(self, action: #selector(nextAction(_:)), for: .touchUpInside)
         
         genderButton.layer.cornerRadius = 3
         genderButton.clipsToBounds = true
@@ -191,10 +174,9 @@ class PatientInfoViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     // button actions
     
-    @objc func nextAction(_ sender: UIButton){
+    @objc func nextAction(_ sender: UIBarButtonItem){
         // Do any additional setup after loading the view.
         performSegue(withIdentifier: "showAllergies", sender: self)
-
     }
     
     @objc func emergencyAction(_ sender: UIBarButtonItem){

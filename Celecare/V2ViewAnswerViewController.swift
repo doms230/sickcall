@@ -73,7 +73,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         
         //set up indicator view
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x159373)
+        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -134,19 +134,11 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             cell.summaryBody.textColor = uicolorFromHex(0x180d22)
             cell.durationBody.text = self.duration
             cell.durationBody.textColor = uicolorFromHex(0x180d22)
-            //cell.videoPreview.image = UIImage(named: "appy")
-           // cell.vitalsButton.backgroundColor = uicolorFromHex(0x8c81ff)
-           // cell.vitalsButton.addTarget(self, action: #selector(self.vitalsAction(_:)), for: .touchUpInside)
-            
-           // cell.searchButton.backgroundColor = uicolorFromHex(0x180d22)
+
             //TODO: Uncomment
             cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
             
-            //cell.videoButton.backgroundColor = uicolorFromHex(0xE8E6DF)
-            
-           // cell.videoImage.kf.setImage(with: URL(string: self.videoPreview))
-            //cell.videoImage.image = UIImage(named: "appy")
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "advisorReuse", for: indexPath) as! ViewAnswerTableViewCell
             cell.selectionStyle = .none

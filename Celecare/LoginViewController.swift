@@ -78,7 +78,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         self.view.addSubview(signButton)
         
         titleLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view).offset(75)
+            make.top.equalTo(self.view).offset(100)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
         }

@@ -299,10 +299,10 @@ class MainTableViewCell: UITableViewCell {
         
         questionView.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(100)
-            make.top.equalTo(self).offset(20)
+            make.top.equalTo(self).offset(10)
             make.left.equalTo(self).offset(10)
             make.right.equalTo(self).offset(-10)
-            make.bottom.equalTo(self).offset(-20)
+            make.bottom.equalTo(self).offset(-10)
         }
         
         statusLabel.snp.makeConstraints { (make) -> Void in
