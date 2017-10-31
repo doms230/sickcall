@@ -2,7 +2,7 @@
 //  Post.swift
 //Sickcall
 //  Created by Dominic Smtih on 7/19/17.
-//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
+//  Copyright © 2017 Sickcall LLC All rights reserved.
 //
 
 import UIKit

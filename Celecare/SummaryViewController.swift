@@ -3,7 +3,7 @@
 //  Sickcall
 //
 //  Created by Mac Owner on 7/4/17.
-//  Copyright © 2017 Socialgroupe Incorporated All rights reserved.
+//  Copyright © 2017 Sickcall LLC All rights reserved.
 //
 
 import UIKit
