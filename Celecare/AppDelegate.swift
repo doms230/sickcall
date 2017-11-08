@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Sickcall
+//  Celecare
 //
-//  Created by Dominic Smtih on 7/19/17.
-//  Copyright © 2017 Sickcall LLC All rights reserved.
+//  Created by Dominic Smith on 10/31/17.
+//  Copyright © 2017 Celecare LLC. All rights reserved.
 //
 
 import UIKit
@@ -16,9 +16,9 @@ import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
-
+    
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: uicolorFromHex(0x006a52)], for:UIControlState())
@@ -46,12 +46,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             $0.applicationId = "O9M9IE9aXxHHaKmA21FpQ1SR26EdP2rf4obYxzBF"
             $0.clientKey = "LdoCUneRAIK9sJLFFhBFwz2YkW02wChG5yi2wkk2"
             $0.server = "https://celecare.herokuapp.com/parse"
-           // $0.server = "http://192.168.1.75:5000/parse"
+            // $0.server = "http://192.168.1.75:5000/parse"
         }
         Parse.initialize(with: configuration)
         
         PFFacebookUtils.initializeFacebook(applicationLaunchOptions: launchOptions)
-
+        
         
         //PFUser.logOut()
         
@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
             self.window?.rootViewController = initialViewController
-           // self.window?.makeKeyAndVisible()
+            // self.window?.makeKeyAndVisible()
             
         } else {
             //usealy "welcome" for storyboard id.. replaced with meds for testing
@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let storyboard = UIStoryboard(name: "Login", bundle: nil)
             let initialViewController = storyboard.instantiateViewController(withIdentifier: "welcome")
             self.window?.rootViewController = initialViewController
-           // self.window?.makeKeyAndVisible()
+            // self.window?.makeKeyAndVisible()
         }
         return true
     }
@@ -75,21 +75,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         let installation = PFInstallation.current()
@@ -97,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         installation?.badge = 0
         installation?.saveInBackground()
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
@@ -165,5 +165,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
 }
-
-

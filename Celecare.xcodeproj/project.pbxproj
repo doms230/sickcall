@@ -11,11 +11,11 @@
 		590F694C1F786B04004FE33A /* AllergyViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */; };
 		590F694F1F78700D004FE33A /* MedHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694E1F78700D004FE33A /* MedHistoryViewController.swift */; };
 		590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */; };
+		59B5F7301FA978E3008EE10C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B5F72F1FA978E3008EE10C /* AppDelegate.swift */; };
 		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
 		9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26F62F1F14168300B2E55B /* AnswerViewController.swift */; };
 		9A73518B1F1D3C5C00A438C8 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */; };
-		9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */; };
 		9AB067741EFAE95100092BC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067721EFAE95100092BC6 /* Main.storyboard */; };
 		9AB067761EFAE95100092BC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067751EFAE95100092BC6 /* Assets.xcassets */; };
 		9AB067791EFAE95100092BC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */; };
@@ -35,12 +35,12 @@
 		590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyViewTableViewController.swift; sourceTree = "<group>"; };
 		590F694E1F78700D004FE33A /* MedHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedHistoryViewController.swift; sourceTree = "<group>"; };
 		590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoTableViewController.swift; sourceTree = "<group>"; };
+		59B5F72F1FA978E3008EE10C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		9A26F62F1F14168300B2E55B /* AnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerViewController.swift; sourceTree = "<group>"; };
 		9A73518A1F1D3C5C00A438C8 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		9AB067691EFAE95100092BC6 /* Celecare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Celecare.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9AB067731EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9AB067751EFAE95100092BC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9AB067781EFAE95100092BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -97,9 +97,9 @@
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
 				9AB067751EFAE95100092BC6 /* Assets.xcassets */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
-				9AB0676C1EFAE95100092BC6 /* AppDelegate.swift */,
 				9AB067821F0207A500092BC6 /* main */,
 				9ACD38011F0992C2005842CF /* login */,
+				59B5F72F1FA978E3008EE10C /* AppDelegate.swift */,
 			);
 			path = Celecare;
 			sourceTree = "<group>";
@@ -348,6 +348,7 @@
 				590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */,
 				F22656171F4E364C001D2ED7 /* SignupViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
+				59B5F7301FA978E3008EE10C /* AppDelegate.swift in Sources */,
 				F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */,
 				F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */,
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
@@ -355,7 +356,6 @@
 				F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */,
 				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
 				9A26F6301F14168300B2E55B /* AnswerViewController.swift in Sources */,
-				9AB0676D1EFAE95100092BC6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

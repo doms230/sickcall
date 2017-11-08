@@ -65,9 +65,6 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
                 self.navigationItem.setLeftBarButton(leftItem, animated: true)
                 self.tableJaunt.reloadData()
                 self.loadAdvisor()
-                
-            } else {
-                
             }
         }
     }
