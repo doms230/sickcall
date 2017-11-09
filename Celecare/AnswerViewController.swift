@@ -28,11 +28,15 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let screenSize: CGRect = UIScreen.main.bounds
     
     @IBOutlet weak var tableJaunt: UITableView!
+    
+    var refreshControl: UIRefreshControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "My Questions"
         
+        startAnimating()
+
         self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "myQuestionsReuse")
         self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "noQuestionsReuse")
         self.tableJaunt.estimatedRowHeight = 50
@@ -43,7 +47,29 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: UIControlEvents.valueChanged)
+        tableJaunt.addSubview(refreshControl) // not required when using UITableViewController
+        
         loadData()
+    }
+    
+    @objc func refresh(sender: UIRefreshControl) {
+        questionImages.removeAll()
+        questions.removeAll()
+        questionDurations.removeAll()
+        questionStatus.removeAll()
+        dateUploaded.removeAll()
+        objectId.removeAll()
+        comments.removeAll()
+        level.removeAll()
+        isAnswered.removeAll()
+        advisorUserId.removeAll()
+        questionVideos.removeAll()
+        
+        loadData()
+        
+        // Code to refresh table view
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -111,7 +137,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //data
     func loadData(){
-        startAnimating()
         let query = PFQuery(className:"Post")
         query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
         query.whereKey("isRemoved", equalTo: false)
@@ -119,9 +144,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         query.findObjectsInBackground {
             (objects: [PFObject]?, error: Error?) -> Void in
             if error == nil {
-                // The find succeeded.
-                print("Successfully retrieved \(objects!.count) scores.")
-                // Do something with the found objects
                 if let objects = objects {
                     for object in objects {
                         self.objectId.append(object.objectId!)
@@ -154,6 +176,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     }
                     
                     self.tableJaunt.reloadData()
+                    self.refreshControl.endRefreshing()
                     self.stopAnimating()
 
                 }

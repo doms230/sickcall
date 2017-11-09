@@ -407,7 +407,7 @@
         <scene sceneID="gnW-kz-0HH">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LTG-VZ-RKo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Ask Question" image="new" id="cPa-gy-q4n">
+                    <tabBarItem key="tabBarItem" title="Ask Question" image="new" selectedImage="new-filled" id="cPa-gy-q4n">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="keyPath">
                                 <color key="value" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -843,7 +843,7 @@
         <scene sceneID="78Q-bp-8Yl">
             <objects>
                 <navigationController storyboardIdentifier="myQuestions" automaticallyAdjustsScrollViewInsets="NO" id="BuW-dw-pCC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Questions" image="askQuestion" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="My Questions" image="askQuestion" selectedImage="askQuestion-filled" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dWE-qx-t2O">
                         <autoresizingMask key="autoresizingMask"/>
@@ -861,7 +861,7 @@
         <scene sceneID="NCA-7R-LML">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TZQ-Pi-33b" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="profile" id="Rbs-em-5ra"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile" selectedImage="profile-filled" id="Rbs-em-5ra"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qBe-6T-g8u">
                         <autoresizingMask key="autoresizingMask"/>
@@ -916,7 +916,10 @@
     </scenes>
     <resources>
         <image name="askQuestion" width="25" height="25"/>
+        <image name="askQuestion-filled" width="25" height="25"/>
         <image name="new" width="25" height="25"/>
+        <image name="new-filled" width="25" height="25"/>
         <image name="profile" width="25" height="25"/>
+        <image name="profile-filled" width="25" height="25"/>
     </resources>
 </document>

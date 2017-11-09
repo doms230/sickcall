@@ -291,7 +291,6 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
                 }
             }
         }
-
     }
     
     func subscribeToUpdates(){
