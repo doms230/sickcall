@@ -172,7 +172,6 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.level.append(object["level"] as! String)
                         self.comments.append(object["comment"] as! String)
                         self.questionVideos.append(object["video"] as! PFFile)
-                        
                     }
                     
                     self.tableJaunt.reloadData()

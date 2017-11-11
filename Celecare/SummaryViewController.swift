@@ -38,6 +38,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //payments
     var baseURL = "https://celecare.herokuapp.com/payments/createCharge"
     var questionURL = "https://celecare.herokuapp.com/posts/assignQuestion"
+    var priceURL = "https://celecare.herokuapp.com/payments"
     var tokenId: String!
     var creditCard = "Credit Card"
     var ccImage = UIImage(named: "new")
@@ -47,6 +48,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var isVideoCompressed = false
     var hasUserPaid = false
     var isVideoSaved = false
+    
+    var price = "$0.00"
+    var priceView = SCLAlertView()
     
     lazy var bulletinManager: BulletinManager = {
         
@@ -93,6 +97,13 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableJaunt.separatorStyle = .none
         self.view.addSubview(self.tableJaunt)
         
+        //load price stuff
+        self.priceView.addButton("Reload") {
+            self.priceView.dismiss(animated: true, completion: nil)
+            self.loadPrice()
+        }
+        self.loadPrice()
+        
         //TODO: Uncomment
         image = self.videoPreviewImage()
         
@@ -105,7 +116,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             }else{
             }
         }
-        
         compressAction(videoFile: pickedFile)
     }
 
@@ -131,7 +141,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         //cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
         //cell.checkoutView.backgroundColor = uicolorFromHex(0xe8e6df)
         cell.checkoutView.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
-        cell.totalLabel.text = "$12.99"
+        cell.totalLabel.text = self.price
         cell.creditCardButton.setTitle(creditCard, for: .normal)
         cell.creditCardButton.setImage(ccImage, for: .normal)
         //cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
@@ -248,7 +258,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func createCharge(){
         //TODO: add application charge and extra charge for stripe fee j
         let p: Parameters = [            
-            "description": "\(String(describing: PFUser.current()?.email!))'s health question",
+            "description": "\(String(describing: PFUser.current()!.email!))'s Sickcall",
             "token": tokenId,
             "email": PFUser.current()!.email!
         ]
@@ -363,6 +373,31 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.present(controller, animated: true, completion: nil)
         }
     }
+    
+    func loadPrice(){
+        self.startAnimating()
+        Alamofire.request(self.priceURL, method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                
+                self.price = json["price"].string!
+                self.tableJaunt.reloadData()
+                self.stopAnimating()
+                
+            case .failure(let error):
+                print(error)
+                self.stopAnimating()
+                let alert = UIAlertController(title: "Something Went Wrong", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Reload", style: .default, handler: { action in
+                    alert.dismiss(animated: true, completion: nil)
+                    self.loadPrice()
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
         let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
