@@ -41,6 +41,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var priceURL = "https://celecare.herokuapp.com/payments"
     var tokenId: String!
     var creditCard = "Credit Card"
+    var addLabel = "Add"
     var ccImage = UIImage(named: "new")
     var didChooseCC: Bool!
     
@@ -49,8 +50,14 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var hasUserPaid = false
     var isVideoSaved = false
     
-    var price = "$0.00"
+    var didShare = false
+    var booking_fee = 0
+    var nurse_fee = 0
+    var discount = 0
+    var total = 0
     var priceView = SCLAlertView()
+    
+    let screenSize: CGRect = UIScreen.main.bounds
     
     lazy var bulletinManager: BulletinManager = {
         
@@ -68,7 +75,14 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         page.actionHandler = { (item: PageBulletinItem) in
             page.manager?.dismissBulletin()
             self.startAnimating()
-            self.createCharge()
+            if self.didShare{
+                if self.isVideoCompressed{
+                    self.postIt()
+                }
+                
+            } else {
+                self.createCharge()
+            }
         }
         
         page.alternativeHandler = { (item: PageBulletinItem) in
@@ -78,6 +92,28 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         return BulletinManager(rootItem: page)
         
+    }()
+    
+    lazy var shareManager: BulletinManager = {
+        
+        let page = PageBulletinItem(title: "Share")
+        page.image = UIImage(named: "share")
+        
+        page.descriptionText = "Share Sickcall, and ask for free!"
+        page.actionButtonTitle = "Share Sickcall"
+        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.actionButtonTitleColor = .white
+        page.actionHandler = { (item: PageBulletinItem) in
+            self.shareAction()
+        }
+        page.alternativeButtonTitle = " Or pay $\(Double(total) * 0.01)"
+        
+        page.alternativeHandler = { (item: PageBulletinItem) in
+            self.discount = 0
+            self.tableJaunt.reloadData()
+            page.manager?.dismissBulletin(animated: true )
+        }
+        return BulletinManager(rootItem: page)
     }()
 
     override func viewDidLoad() {
@@ -91,10 +127,14 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableJaunt = UITableView(frame: self.view.bounds)
         self.tableJaunt.dataSource = self
         self.tableJaunt.delegate = self
-        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "checkoutReuse")
+        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "summaryReuse")
+        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "subtotalReuse")
+        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "totalReuse")
+        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "ccReuse")
+        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "ccDescriptionReuse")
         self.tableJaunt.estimatedRowHeight = 50
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
-        self.tableJaunt.separatorStyle = .none
+        self.tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
         self.view.addSubview(self.tableJaunt)
         
         //load price stuff
@@ -121,48 +161,114 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     //tableview
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return 1
+        if section == 0{
+            return 1
+            
+        } else if didShare {
+            return 2
+            
+        } else {
+            return 4
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 && indexPath.row == 2{
+            choosePaymentAction()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "checkoutReuse", for: indexPath) as! MainTableViewCell
-        cell.selectionStyle = .none
+        var cell: MainTableViewCell!
         
-        cell.summaryTitle.text = healthConcernSummary
-        //cell.summaryView.backgroundColor = uicolorFromHex(0xe8e6df)
-        cell.summaryView.addTarget(self, action: #selector(questionVideoAction(_:)), for: .touchUpInside)
-        cell.durationLabel.text = healthConcernDuration
-        cell.videoButton.setImage(image, for: .normal)
-        //cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
-        //cell.checkoutView.backgroundColor = uicolorFromHex(0xe8e6df)
-        cell.checkoutView.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
-        cell.totalLabel.text = self.price
-        cell.creditCardButton.setTitle(creditCard, for: .normal)
-        cell.creditCardButton.setImage(ccImage, for: .normal)
-        //cell.creditCardButton.addTarget(self, action: #selector(self.choosePaymentAction(_:)), for: .touchUpInside)
+        if indexPath.section == 0{
+            cell = tableView.dequeueReusableCell(withIdentifier: "summaryReuse", for: indexPath) as! MainTableViewCell
+            cell.selectionStyle = .none
+            self.tableJaunt.separatorStyle = .none
+            cell.summaryTitle.text = healthConcernSummary
+            cell.durationLabel.text = healthConcernDuration
+            cell.videoButton.setImage(image, for: .normal)
+            cell.videoButton.addTarget(self, action: #selector(self.questionVideoAction(_:)), for: .touchUpInside)
+            
+        } else {
+            self.tableJaunt.separatorStyle = .singleLine
 
+            switch indexPath.row{
+            case 0:
+                cell = tableView.dequeueReusableCell(withIdentifier: "subtotalReuse", for: indexPath) as! MainTableViewCell
+                cell.selectionStyle = .none
+                //multiplying numbers by 0.1 to convert from cents to dollar amount
+                let nursePrice = Double(nurse_fee) * 0.01
+                let stringNurse = String(format:"%.2f", nursePrice)
+                cell.nursePrice.text = "$\(stringNurse)"
+                
+                let bookingPrice = Double(booking_fee) * 0.01
+                let stringBooking = String(format:"%.2f", bookingPrice)
+                cell.bookingPrice.text = "$\(stringBooking)"
+                
+                let discountPrice = Double(discount) * 0.01
+                let stringDiscount = String(format:"%.2f", discountPrice)
+                cell.discountPrice.text = "$\(stringDiscount)"
+                break
+                
+            case 1:
+                cell = tableView.dequeueReusableCell(withIdentifier: "totalReuse", for: indexPath) as! MainTableViewCell
+                cell.selectionStyle = .none
+                //gotta convert from cents to dollars
+                let totalPrice = Double(total) * 0.01
+                let stringPrice = String(format:"%.2f", totalPrice)
+                cell.totalPrice.text = "$\(stringPrice)"
+                if didShare{
+                    self.tableJaunt.separatorStyle = .none
+                }
+                break
+                
+            case 2:
+                cell = tableView.dequeueReusableCell(withIdentifier: "ccReuse", for: indexPath) as! MainTableViewCell
+                cell.selectionStyle = .none
+                cell.ccImage.image = ccImage
+                cell.ccLabel.text = creditCard
+                cell.addLabel.text = addLabel
+                self.tableJaunt.separatorStyle = .none
+                break
+                
+            case 3:
+                cell = tableView.dequeueReusableCell(withIdentifier: "ccDescriptionReuse", for: indexPath) as! MainTableViewCell
+                self.tableJaunt.separatorStyle = .none
+                cell.backgroundColor = uicolorFromHex(0xe8e6df)
+                
+            default:
+                break
+            }
+        }
+    
         return cell
     }
     
     //UI Action
     
     @objc func askQuestionAction(_ sender: UIButton) {
-        if tokenId != nil{
+        if didShare{
             bulletinManager.prepare()
             bulletinManager.presentBulletin(above: self)
-
+            
         } else {
-           //self.paymentCard.setTitleColor(.red, for: .normal)
-            SCLAlertView().showError("Credit Card Required", subTitle: "Enter your credit card info before checkout.")
+            if tokenId != nil{
+                bulletinManager.prepare()
+                bulletinManager.presentBulletin(above: self)
+                
+            } else {
+                SCLAlertView().showError("Credit Card Required", subTitle: "Enter your credit card info before checkout.")
+            }
         }
     }
     
-    @objc func choosePaymentAction(_ sender: UIButton) {
+    func choosePaymentAction() {
         let addCardViewController = STPAddCardViewController()
         addCardViewController.delegate = self
         // STPAddCardViewController must be shown inside a UINavigationController.
@@ -251,16 +357,18 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         tokenId = token.tokenId;
         creditCard = (token.card?.last4)!
         ccImage = token.card?.image
+        addLabel = "Change"
         self.tableJaunt.reloadData()
         self.dismiss(animated: true, completion: nil)
     }
     
     func createCharge(){
-        //TODO: add application charge and extra charge for stripe fee j
-        let p: Parameters = [            
+        let p: Parameters = [
+            "total": total,
             "description": "\(String(describing: PFUser.current()!.email!))'s Sickcall",
             "token": tokenId,
-            "email": PFUser.current()!.email!
+            "email": PFUser.current()!.email!,
+            "didShare": didShare
         ]
         
         Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
@@ -381,7 +489,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             case .success(let data):
                 let json = JSON(data)
                 
-                self.price = json["price"].string!
+                self.booking_fee = json["booking_fee"].int!
+                self.nurse_fee = json["advisor_fee"].int!
+                self.discount = json["discount"].int!
+                self.total = self.booking_fee + self.nurse_fee
+                
+                //showPromo
+                self.shareManager.prepare()
+                self.shareManager.presentBulletin(above: self)
+                //
                 self.tableJaunt.reloadData()
                 self.stopAnimating()
                 
@@ -396,6 +512,40 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.present(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    func shareAction(){
+        let textItem = "I'm getting my health concern assessed by a registered nurse through @sickallhealth !"
+        let linkItem : NSURL = NSURL(string: "https://www.sickcallhealth.com/app")!
+        // If you want to put an image
+        
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [linkItem, textItem], applicationActivities: nil)
+        
+        activityViewController.excludedActivityTypes = [
+            .message,
+            .copyToPasteboard,
+            .mail,
+            .addToReadingList,
+            UIActivityType(rawValue: "com.apple.mobilenotes.SharingExtension"),
+            UIActivityType(rawValue: "com.apple.reminders.RemindersEditorExtension")
+        ]
+        
+        activityViewController.completionWithItemsHandler = { activity, success, items, error in
+            print(activity!)
+            if activity != nil{
+                self.total = self.total - self.discount
+                self.didShare = true
+                self.tableJaunt.reloadData()
+                
+            } else {
+                self.discount = 0
+                self.tableJaunt.reloadData()
+            }
+        }
+        
+        self.shareManager.dismissBulletin(animated: true)
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{

@@ -38,7 +38,7 @@ class AllergyViewTableViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "Info 2/3"
         
-        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
+        let nextButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
         for allergy in medAllergies{

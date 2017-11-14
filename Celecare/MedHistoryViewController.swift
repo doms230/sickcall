@@ -45,7 +45,7 @@ class MedHistoryViewController: SLKTextViewController, NVActivityIndicatorViewab
         self.textInputbar.bringSubview(toFront: self.rightButton)
         self.textInputbar.bringSubview(toFront: self.textView)
         self.title = "Info 3/3"
-        let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
+        let nextButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple

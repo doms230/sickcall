@@ -157,8 +157,6 @@ class MainTableViewCell: UITableViewCell {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 50
         button.clipsToBounds = true 
-        //label.numberOfLines = 0
-        button.isEnabled = false
         return button
     }()
     
@@ -168,36 +166,129 @@ class MainTableViewCell: UITableViewCell {
         image.image = UIImage(named: "play")
         return image
     }()
-    
-    lazy var checkoutLabel: UILabel = {
+    //
+    lazy var nurseFeeLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 25)
-        label.text = "Checkout"
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.text = "Registered nurse advsior fee"
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
     }()
+    
+    lazy var nursePrice: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.text = "$0.00"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var bookingLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.text = "Booking fee"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var bookingPrice: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.text = "$1.99"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var discountLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.text = "Discounts"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var discountPrice: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 17)
+        label.text = "$0.00"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
     
     lazy var totalLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 40)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
        // label.textAlignment = .center
-        label.text = ""
+        label.text = "Total"
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
     }()
     
-    lazy var creditCardButton: UIButton = {
+    lazy var totalPrice: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        // label.textAlignment = .center
+        label.text = "$0.00"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    /*lazy var creditCardButton: UIButton = {
         let button = UIButton()
         button.setTitle("Credit Card", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         button.isEnabled = false
         //button.setImage(UIImage(named: "new"), for: .normal)
         return button
+    }()*/
+    
+    lazy var ccImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "add")
+        image.contentMode = .scaleAspectFit
+        return image
     }()
     
-    lazy var checkoutView: UIButton = {
+    lazy var ccLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 15)
+        // label.textAlignment = .center
+        label.text = "Credit Card"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var addCCLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 15)
+        // label.textAlignment = .center
+        label.text = "Add"
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var chargeDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 12)
+        label.textAlignment = .center
+        label.text = "You're credit card will be charged after your Sickcall is answered."
+        label.textColor = UIColor.darkGray
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    /*lazy var checkoutView: UIButton = {
         let button = UIButton()
         /*button.layer.cornerRadius = 5
         button.clipsToBounds = true*/
@@ -209,7 +300,7 @@ class MainTableViewCell: UITableViewCell {
        /* button.layer.cornerRadius = 5
         button.clipsToBounds = true*/
         return button
-    }()
+    }()*/
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -278,8 +369,126 @@ class MainTableViewCell: UITableViewCell {
                 make.right.equalTo(self).offset(-5)
                 make.bottom.equalTo(self).offset(-10)
             }
-        } else if reuseIdentifier == "checkoutReuse"{
-            configureCheckoutSubview()
+        } else if reuseIdentifier == "summaryReuse"{
+            self.addSubview(summaryTitle)
+            self.addSubview(durationLabel)
+            self.addSubview(videoButton)
+            self.addSubview(playImage)
+            
+            videoButton.snp.makeConstraints { (make) -> Void in
+                make.width.height.equalTo(100)
+                make.top.equalTo(self).offset(20)
+                make.left.equalTo(self).offset(10)
+                make.bottom.equalTo(self).offset(-20)
+            }
+            
+            playImage.snp.makeConstraints { (make) -> Void in
+                make.width.height.equalTo(35)
+                make.top.equalTo(videoButton.snp.top).offset(35)
+                make.left.equalTo(videoButton.snp.left).offset(35)
+            }
+            
+            summaryTitle.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(videoButton.snp.top).offset(20)
+                make.left.equalTo(videoButton.snp.right).offset(5)
+                make.right.equalTo(self).offset(-5)
+            }
+            
+            durationLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(summaryTitle.snp.bottom).offset(5)
+                make.left.equalTo(videoButton.snp.right).offset(5)
+                make.right.equalTo(self).offset(-5)
+            }
+            
+        } else if reuseIdentifier == "subtotalReuse"{
+            self.addSubview(nurseFeeLabel)
+            self.addSubview(nursePrice)
+            self.addSubview(bookingLabel)
+            self.addSubview(bookingPrice)
+            self.addSubview(discountLabel)
+            self.addSubview(discountPrice)
+            
+            nurseFeeLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.left.equalTo(self).offset(10)
+            }
+            
+            nursePrice.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+            }
+            
+            bookingLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self.nurseFeeLabel.snp.bottom).offset(10)
+                make.left.equalTo(self).offset(10)
+            }
+            
+            bookingPrice.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self.nurseFeeLabel.snp.bottom).offset(10)
+                make.right.equalTo(self).offset(-10)
+            }
+            
+            discountLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self.bookingLabel.snp.bottom).offset(10)
+                make.left.equalTo(self).offset(10)
+            }
+            
+            discountPrice.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self.bookingLabel.snp.bottom).offset(10)
+                make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self).offset(-10)
+            }
+            
+        } else if reuseIdentifier == "totalReuse"{
+            self.addSubview(totalLabel)
+            self.addSubview(totalPrice)
+            
+            totalLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.left.equalTo(self).offset(10)
+            }
+            
+            totalPrice.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self).offset(-10)
+            }
+            
+            
+        } else if reuseIdentifier == "ccReuse"{
+            self.addSubview(ccImage)
+            self.addSubview(ccLabel)
+            self.addSubview(addCCLabel)
+            self.addSubview(chargeDescriptionLabel)
+
+            ccImage.snp.makeConstraints { (make) -> Void in
+                make.width.equalTo(30)
+                make.height.equalTo(20)
+                make.top.equalTo(self).offset(10)
+                make.left.equalTo(self).offset(10)
+                make.bottom.equalTo(self).offset(-10)
+            }
+            
+            ccLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.left.equalTo(self.ccImage.snp.right).offset(3)
+                make.bottom.equalTo(self).offset(-10)
+            }
+            
+            addCCLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self).offset(-10)
+            }
+            
+        } else if reuseIdentifier == "ccDescriptionReuse"{
+            self.addSubview(chargeDescriptionLabel)
+            chargeDescriptionLabel.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self).offset(10)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self).offset(-10)
+            }
         }
     }
     
@@ -319,7 +528,7 @@ class MainTableViewCell: UITableViewCell {
         }
     }
     
-    func configureCheckoutSubview(){
+    /*func configureCheckoutSubview(){
         self.addSubview(summaryLabel)
         self.addSubview(summaryView)
         self.summaryView.addSubview(summaryTitle)
@@ -407,5 +616,5 @@ class MainTableViewCell: UITableViewCell {
             make.left.equalTo(checkoutView.snp.left)
            // make.bottom.equalTo(checkoutView.snp.bottom)
         }
-    }
+    }*/
 }
