@@ -259,6 +259,7 @@
                             <outlet property="delegate" destination="aos-dy-R68" id="WLH-FG-icN"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="r7Y-eO-aew"/>
                     <connections>
                         <outlet property="moreThanYearSwitch" destination="eov-2U-MXP" id="bdc-t7-H8n"/>
                         <outlet property="pastMonthSwitch" destination="USm-aW-84Z" id="PpI-RD-9BF"/>
@@ -272,7 +273,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sqR-sL-Gpr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3614" y="-648"/>
+            <point key="canvasLocation" x="289" y="-681"/>
         </scene>
         <!--Summary View Controller-->
         <scene sceneID="AyL-E9-4Lf">
@@ -290,7 +291,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bKk-cJ-spE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4367" y="-646"/>
+            <point key="canvasLocation" x="1189" y="-681"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -350,13 +351,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <segue destination="aos-dy-R68" kind="show" identifier="showQuestion" id="aIw-XA-jGw"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Pw-9B-CiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2751" y="-648"/>
+            <point key="canvasLocation" x="4093" y="-1413"/>
         </scene>
         <!--Main Sidebar View Controller-->
         <scene sceneID="Vrf-P8-X9R">
@@ -420,7 +418,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="1Dp-c7-GqE" kind="relationship" relationship="rootViewController" id="Slb-Gb-s21"/>
+                        <segue destination="aos-dy-R68" kind="relationship" relationship="rootViewController" id="n6f-tc-ch4"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sSN-7q-PtM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -440,25 +438,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Basic Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iPH-v3-u7t">
-                                <rect key="frame" x="16" y="72" width="212" height="30"/>
+                                <rect key="frame" x="16" y="28" width="212" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="25"/>
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2h-my-lOw">
-                                <rect key="frame" x="16" y="230" width="52.5" height="20"/>
+                                <rect key="frame" x="16" y="186" width="52.5" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Height" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zg5-RF-KmF">
-                                <rect key="frame" x="16" y="191" width="64" height="25"/>
+                                <rect key="frame" x="16" y="147" width="64" height="25"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <color key="textColor" red="0.094117647060000004" green="0.050980392159999999" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Birthday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sbq-rg-k6R">
-                                <rect key="frame" x="16" y="153" width="64" height="21"/>
+                                <rect key="frame" x="16" y="109" width="64" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="gdK-1d-5yO"/>
                                 </constraints>
@@ -467,7 +465,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EZT-6n-yit">
-                                <rect key="frame" x="88" y="187" width="216" height="32"/>
+                                <rect key="frame" x="88" y="143" width="216" height="32"/>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal">
@@ -478,7 +476,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tne-R3-REW">
-                                <rect key="frame" x="88" y="148" width="216" height="31"/>
+                                <rect key="frame" x="88" y="104" width="216" height="31"/>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal">
@@ -489,7 +487,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibJ-Lz-ULa">
-                                <rect key="frame" x="88" y="110" width="216" height="30"/>
+                                <rect key="frame" x="88" y="66" width="216" height="30"/>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal">
@@ -500,7 +498,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ys0-LK-vMm">
-                                <rect key="frame" x="16" y="115" width="64" height="21"/>
+                                <rect key="frame" x="16" y="71" width="64" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="sdj-jX-B1W"/>
                                 </constraints>
@@ -509,7 +507,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ovE-CE-gnj">
-                                <rect key="frame" x="88" y="224" width="216" height="32"/>
+                                <rect key="frame" x="88" y="180" width="216" height="32"/>
                                 <color key="backgroundColor" red="0.90980392160000001" green="0.90196078430000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal">
@@ -562,7 +560,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmJ-Ju-Nki" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1248.75" y="-646.25"/>
+            <point key="canvasLocation" x="2634" y="-1415"/>
         </scene>
         <!--Allergy View Table View Controller-->
         <scene sceneID="ZBh-pS-RQm">
@@ -837,7 +835,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Sz-WD-1H4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1970.625" y="-647.5"/>
+            <point key="canvasLocation" x="3328" y="-1414"/>
         </scene>
         <!--My Questions-->
         <scene sceneID="78Q-bp-8Yl">

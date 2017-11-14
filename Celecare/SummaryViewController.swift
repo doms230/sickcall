@@ -40,7 +40,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var questionURL = "https://celecare.herokuapp.com/posts/assignQuestion"
     var priceURL = "https://celecare.herokuapp.com/payments"
     var tokenId: String!
-    var creditCard = "Credit Card"
+    var creditCard = "Card"
     var addLabel = "Add"
     var ccImage = UIImage(named: "new")
     var didChooseCC: Bool!
@@ -53,7 +53,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var didShare = false
     var booking_fee = 0
     var nurse_fee = 0
-    var discount = 0
+    //var discount = 0
     var total = 0
     var priceView = SCLAlertView()
     
@@ -75,14 +75,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         page.actionHandler = { (item: PageBulletinItem) in
             page.manager?.dismissBulletin()
             self.startAnimating()
-            if self.didShare{
+            self.createCharge()
+           /* if self.didShare{
                 if self.isVideoCompressed{
                     self.postIt()
                 }
                 
             } else {
                 self.createCharge()
-            }
+            }*/
         }
         
         page.alternativeHandler = { (item: PageBulletinItem) in
@@ -94,7 +95,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }()
     
-    lazy var shareManager: BulletinManager = {
+    /*lazy var shareManager: BulletinManager = {
         
         let page = PageBulletinItem(title: "Share")
         page.image = UIImage(named: "share")
@@ -114,6 +115,15 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             page.manager?.dismissBulletin(animated: true )
         }
         return BulletinManager(rootItem: page)
+    }()*/
+    
+    lazy var checkoutButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Checkout", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.setBackgroundColor(uicolorFromHex(0x006a52
+        ), forState: .normal)
+        return button
     }()
 
     override func viewDidLoad() {
@@ -121,8 +131,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.title = "Summary"
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(askQuestionAction(_:)))
-        self.navigationItem.setRightBarButton(doneButton, animated: true)
+        /*let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(askQuestionAction(_:)))
+        self.navigationItem.setRightBarButton(doneButton, animated: true)*/
         
         self.tableJaunt = UITableView(frame: self.view.bounds)
         self.tableJaunt.dataSource = self
@@ -136,6 +146,19 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableJaunt.rowHeight = UITableViewAutomaticDimension
         self.tableJaunt.backgroundColor = uicolorFromHex(0xe8e6df)
         self.view.addSubview(self.tableJaunt)
+        
+        self.view.addSubview(checkoutButton)
+        checkoutButton.addTarget(self, action: #selector(askQuestionAction(_:)), for: .touchUpInside)
+        checkoutButton.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(50)
+            make.left.equalTo(self.view)
+            make.right.equalTo(self.view)
+            if (PFUser.current() != nil){
+                make.bottom.equalTo(self.view).offset(-50)
+            } else {
+                make.bottom.equalTo(self.view)
+            }
+        }
         
         //load price stuff
         self.priceView.addButton("Reload") {
@@ -167,9 +190,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return 1
-            
-        } else if didShare {
-            return 2
             
         } else {
             return 4
@@ -211,9 +231,9 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let stringBooking = String(format:"%.2f", bookingPrice)
                 cell.bookingPrice.text = "$\(stringBooking)"
                 
-                let discountPrice = Double(discount) * 0.01
-                let stringDiscount = String(format:"%.2f", discountPrice)
-                cell.discountPrice.text = "$\(stringDiscount)"
+                //let discountPrice = Double(discount) * 0.01
+                //let stringDiscount = String(format:"%.2f", discountPrice)
+                //cell.discountPrice.text = "$\(stringDiscount)"
                 break
                 
             case 1:
@@ -223,9 +243,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let totalPrice = Double(total) * 0.01
                 let stringPrice = String(format:"%.2f", totalPrice)
                 cell.totalPrice.text = "$\(stringPrice)"
-                if didShare{
-                    self.tableJaunt.separatorStyle = .none
-                }
                 break
                 
             case 2:
@@ -241,6 +258,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 cell = tableView.dequeueReusableCell(withIdentifier: "ccDescriptionReuse", for: indexPath) as! MainTableViewCell
                 self.tableJaunt.separatorStyle = .none
                 cell.backgroundColor = uicolorFromHex(0xe8e6df)
+                break
                 
             default:
                 break
@@ -253,7 +271,16 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     //UI Action
     
     @objc func askQuestionAction(_ sender: UIButton) {
-        if didShare{
+        
+        if tokenId != nil{
+            bulletinManager.prepare()
+            bulletinManager.presentBulletin(above: self)
+            
+        } else {
+            SCLAlertView().showError("Credit Card Required", subTitle: "Enter your credit card info before checkout.")
+        }
+        
+        /*if didShare{
             bulletinManager.prepare()
             bulletinManager.presentBulletin(above: self)
             
@@ -265,7 +292,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             } else {
                 SCLAlertView().showError("Credit Card Required", subTitle: "Enter your credit card info before checkout.")
             }
-        }
+        }*/
     }
     
     func choosePaymentAction() {
@@ -367,8 +394,8 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             "total": total,
             "description": "\(String(describing: PFUser.current()!.email!))'s Sickcall",
             "token": tokenId,
-            "email": PFUser.current()!.email!,
-            "didShare": didShare
+            "email": PFUser.current()!.email!
+          //  "didShare": didShare
         ]
         
         Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
@@ -491,12 +518,12 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 self.booking_fee = json["booking_fee"].int!
                 self.nurse_fee = json["advisor_fee"].int!
-                self.discount = json["discount"].int!
+               // self.discount = json["discount"].int!
                 self.total = self.booking_fee + self.nurse_fee
                 
                 //showPromo
-                self.shareManager.prepare()
-                self.shareManager.presentBulletin(above: self)
+               // self.shareManager.prepare()
+               // self.shareManager.presentBulletin(above: self)
                 //
                 self.tableJaunt.reloadData()
                 self.stopAnimating()
@@ -514,7 +541,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func shareAction(){
+   /* func shareAction(){
         let textItem = "I'm getting my health concern assessed by a registered nurse through @sickallhealth !"
         let linkItem : NSURL = NSURL(string: "https://www.sickcallhealth.com/app")!
         // If you want to put an image
@@ -546,7 +573,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.shareManager.dismissBulletin(animated: true)
         self.present(activityViewController, animated: true, completion: nil)
-    }
+    }*/
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
         let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0

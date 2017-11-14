@@ -262,7 +262,7 @@ class MainTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue", size: 15)
         // label.textAlignment = .center
-        label.text = "Credit Card"
+        label.text = "Card"
         label.textColor = UIColor.black
         label.numberOfLines = 0
         return label
@@ -280,13 +280,34 @@ class MainTableViewCell: UITableViewCell {
     
     lazy var chargeDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 12)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
         label.textAlignment = .center
-        label.text = "You're credit card will be charged after your Sickcall is answered."
+        label.text = "You're card will be charged after your Sickcall is answered."
         label.textColor = UIColor.darkGray
         label.numberOfLines = 0
         return label
     }()
+    lazy var chargeDescriptionLabel2: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 12)
+        label.textAlignment = .center
+        label.text = "Sickcall never stores your card information without your permission."
+        label.textColor = UIColor.darkGray
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var chargeDescriptionLabel1: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue", size: 12)
+        label.textAlignment = .center
+        label.text = "This transaction is performed over a 128-Bit SSL Encryption."
+        label.textColor = UIColor.darkGray
+        label.numberOfLines = 0
+        return label
+    }()
+    
+
     
     /*lazy var checkoutView: UIButton = {
         let button = UIButton()
@@ -405,8 +426,8 @@ class MainTableViewCell: UITableViewCell {
             self.addSubview(nursePrice)
             self.addSubview(bookingLabel)
             self.addSubview(bookingPrice)
-            self.addSubview(discountLabel)
-            self.addSubview(discountPrice)
+            //self.addSubview(discountLabel)
+            //self.addSubview(discountPrice)
             
             nurseFeeLabel.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self).offset(10)
@@ -426,9 +447,10 @@ class MainTableViewCell: UITableViewCell {
             bookingPrice.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self.nurseFeeLabel.snp.bottom).offset(10)
                 make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self).offset(-10)
             }
             
-            discountLabel.snp.makeConstraints { (make) -> Void in
+            /*discountLabel.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self.bookingLabel.snp.bottom).offset(10)
                 make.left.equalTo(self).offset(10)
             }
@@ -437,7 +459,7 @@ class MainTableViewCell: UITableViewCell {
                 make.top.equalTo(self.bookingLabel.snp.bottom).offset(10)
                 make.right.equalTo(self).offset(-10)
                 make.bottom.equalTo(self).offset(-10)
-            }
+            }*/
             
         } else if reuseIdentifier == "totalReuse"{
             self.addSubview(totalLabel)
@@ -483,11 +505,26 @@ class MainTableViewCell: UITableViewCell {
             
         } else if reuseIdentifier == "ccDescriptionReuse"{
             self.addSubview(chargeDescriptionLabel)
+            self.addSubview(chargeDescriptionLabel1)
+            self.addSubview(chargeDescriptionLabel2)
+
             chargeDescriptionLabel.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self).offset(10)
                 make.left.equalTo(self).offset(10)
                 make.right.equalTo(self).offset(-10)
-                make.bottom.equalTo(self).offset(-10)
+            }
+            
+            chargeDescriptionLabel1.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self.chargeDescriptionLabel.snp.bottom).offset(10)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+            }
+            
+            chargeDescriptionLabel2.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(self.chargeDescriptionLabel1.snp.bottom).offset(10)
+                make.left.equalTo(self).offset(10)
+                make.right.equalTo(self).offset(-10)
+                make.bottom.equalTo(self)
             }
         }
     }
@@ -527,94 +564,4 @@ class MainTableViewCell: UITableViewCell {
             //make.bottom.equalTo(self).offset(-20)
         }
     }
-    
-    /*func configureCheckoutSubview(){
-        self.addSubview(summaryLabel)
-        self.addSubview(summaryView)
-        self.summaryView.addSubview(summaryTitle)
-        self.summaryView.addSubview(durationLabel)
-        self.summaryView.addSubview(videoButton)
-        self.videoButton.addSubview(playImage)
-        /*self.addSubview(summaryLabel)
-        self.addSubview(summaryTitle)
-        self.addSubview(durationLabel)
-        self.addSubview(videoButton)*/
-        
-        self.addSubview(checkoutLabel)
-        self.addSubview(checkoutView)
-        self.checkoutView.addSubview(totalLabel)
-        self.checkoutView.addSubview(creditCardButton)
-       /* self.addSubview(checkoutLabel)
-        self.addSubview(totalLabel)
-        self.addSubview(creditCardButton)*/
-        
-        //summary
-        summaryLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self).offset(20)
-            make.left.equalTo(self).offset(10)
-            make.right.equalTo(self).offset(-10)
-        }
-        
-        summaryView.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(125)
-            make.top.equalTo(summaryLabel.snp.bottom).offset(15)
-            make.left.equalTo(self).offset(10)
-            make.right.equalTo(self).offset(-10)
-        }
-        
-        videoButton.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(100)
-            make.top.equalTo(summaryView.snp.top)
-            make.left.equalTo(summaryView.snp.left)
-         //   make.bottom.equalTo(summaryView.snp.bottom).offset(-5)
-        }
-        
-        playImage.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(35)
-            make.top.equalTo(videoButton.snp.top).offset(35)
-            make.left.equalTo(videoButton.snp.left).offset(35)
-            //   make.bottom.equalTo(summaryView.snp.bottom).offset(-5)
-        }
-        
-        
-        summaryTitle.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(videoButton.snp.top).offset(5)
-            make.left.equalTo(videoButton.snp.right).offset(5)
-            make.right.equalTo(summaryView.snp.right)
-        }
-        
-        durationLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(summaryTitle.snp.bottom).offset(5)
-            make.left.equalTo(videoButton.snp.right).offset(5)
-            make.right.equalTo(summaryView.snp.right)
-        }
-
-        
-        //checkout
-        checkoutLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(summaryView.snp.bottom).offset(20)
-            make.left.equalTo(self).offset(10)
-            make.right.equalTo(self).offset(-10)
-        }
-        
-        checkoutView.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(150)
-            make.top.equalTo(checkoutLabel.snp.bottom).offset(10)
-            make.left.equalTo(self).offset(10)
-            make.right.equalTo(self).offset(-10)
-            make.bottom.equalTo(self).offset(-20)
-        }
-        
-        totalLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(checkoutView.snp.top)
-            make.left.equalTo(checkoutView.snp.left)
-            make.right.equalTo(checkoutView.snp.right)
-        }
-        
-        creditCardButton.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(totalLabel.snp.bottom).offset(5)
-            make.left.equalTo(checkoutView.snp.left)
-           // make.bottom.equalTo(checkoutView.snp.bottom)
-        }
-    }*/
 }

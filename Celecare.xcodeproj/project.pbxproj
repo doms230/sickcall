@@ -92,6 +92,9 @@
 		9AB0676B1EFAE95100092BC6 /* Celecare */ = {
 			isa = PBXGroup;
 			children = (
+				F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */,
+				590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */,
+				590F694E1F78700D004FE33A /* MedHistoryViewController.swift */,
 				9AF65FDA1F202D4E00C6E9CA /* Post.swift */,
 				9AB067831F0217DA00092BC6 /* Celecare.entitlements */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
@@ -150,9 +153,6 @@
 		F2E86B3C1F396BF200F4703C /* newQuestion */ = {
 			isa = PBXGroup;
 			children = (
-				F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */,
-				590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */,
-				590F694E1F78700D004FE33A /* MedHistoryViewController.swift */,
 				590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */,
 				9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */,
 			);
