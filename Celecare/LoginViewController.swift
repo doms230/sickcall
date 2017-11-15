@@ -12,8 +12,14 @@ import SCLAlertView
 import NVActivityIndicatorView
 import UserNotifications
 import BulletinBoard
+import FacebookCore
+import FacebookLogin
+import ParseFacebookUtilsV4
 
 class LoginViewController: UIViewController,NVActivityIndicatorViewable {
+    
+    var image: UIImage!
+    var retreivedImage: PFFile!
     
     var valUsername = false
     var valPassword = false
@@ -62,7 +68,15 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         return button
     }()
     
-
+    lazy var forgotPasswordButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.titleLabel?.textAlignment = .left
+        button.setTitle("Forgot password", for: .normal)
+        button.setTitleColor(.blue, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
     
     var forgotPasswordView: SCLAlertView!
     
@@ -72,10 +86,14 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(LoginViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
         
+        let facebookItem = UIBarButtonItem(title: "Login with Facebook", style: .plain, target: self, action: #selector(facebookAction(_:)))
+        self.navigationItem.rightBarButtonItem = facebookItem
+        
         self.view.addSubview(titleLabel)
         self.view.addSubview(emailText)
         self.view.addSubview(passwordText)
         self.view.addSubview(signButton)
+        self.view.addSubview(forgotPasswordButton)
         
         titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view).offset(100)
@@ -97,11 +115,16 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         
         signButton.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(passwordText.snp.bottom).offset(10)
-            make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
-        //    make.bottom.equalTo(self.view).offset(-20)
         }
         signButton.addTarget(self, action: #selector(loginAction(_:)), for: .touchUpInside)
+        
+        forgotPasswordButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(passwordText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+        }
+        forgotPasswordButton.addTarget(self, action: #selector(forgotPasswordAction(_:)), for: .touchUpInside)
+        
         
         emailText.becomeFirstResponder()
         
@@ -111,7 +134,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
-    @IBAction func forgotPasswordAction(_ sender: UIBarButtonItem) {
+    @IBAction func forgotPasswordAction(_ sender: UIButton) {
         forgotPasswordUI()
         forgotPasswordView.showEdit("Forgot Password", subTitle: "Enter in your Sickcall email")
     }
@@ -208,6 +231,81 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
             }
         }
     }
+    
+    @objc func facebookAction(_ sender: UIBarButtonItem){
+        PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
+            (user: PFUser?, error: Error?) -> Void in
+            self.startAnimating()
+            if let user = user {
+                print(user)
+                
+                let installation = PFInstallation.current()
+                installation?["user"] = user
+                installation?["userId"] = user.objectId
+                installation?.saveEventually()
+                
+                if user.isNew {
+                    
+                    let request = FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"], tokenString: FBSDKAccessToken.current().tokenString, version: nil, httpMethod: "GET")
+                    let _ = request?.start(completionHandler: { (connection, result, error) in
+                        guard let userInfo = result as? [String: Any] else { return } //handle the error
+                        
+                        print(userInfo)
+                        //The url is nested 3 layers deep into the result so it's pretty messy
+                        if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
+                            
+                            //self.image.kf.setImage(with: URL(string: imageURL))
+                            if let url = URL(string: imageURL) {
+                                if let data = NSData(contentsOf: url){
+                                    self.image = UIImage(data: data as Data)
+                                }
+                            }
+                            let proPic = UIImageJPEGRepresentation(self.image, 0.5)
+                            
+                            self.retreivedImage = PFFile(name: "profile_ios.jpeg", data: proPic!)
+                            self.retreivedImage?.saveInBackground {
+                                (success: Bool, error: Error?) -> Void in
+                                if (success) {
+                                    user.email = userInfo["email"] as! String?
+                                    user["DisplayName"] = userInfo["first_name"] as! String?
+                                    user["Profile"] = self.retreivedImage
+                                    user["foodAllergies"] = []
+                                    user["gender"] = userInfo["gender"] as! String?
+                                    user["height"] = " "
+                                    user["medAllergies"] = []
+                                    user["weight"] = " "
+                                    user["birthday"] = " "
+                                    user["beatsPM"] = " "
+                                    user["healthIssues"] = " "
+                                    user["respsPM"] = " "
+                                    user["medHistory"] = " "
+                                    user.saveEventually{
+                                        (success: Bool, error: Error?) -> Void in
+                                        if (success) {
+                                            self.stopAnimating()
+                                            
+                                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                                            self.present(initialViewController, animated: true, completion: nil)                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                } else {
+                    self.stopAnimating()
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                    self.present(initialViewController, animated: true, completion: nil)
+                }
+            } else {
+                self.stopAnimating()
+            }
+        }
+    }
+    
+
     
     @objc func exitAction(_ sender: UIBarButtonItem){
         let storyboard = UIStoryboard(name: "Login", bundle: nil)

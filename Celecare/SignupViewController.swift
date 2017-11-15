@@ -11,9 +11,15 @@ import Parse
 import SCLAlertView
 import NVActivityIndicatorView
 import SnapKit
+import BulletinBoard
+import FacebookCore
+import FacebookLogin
+import ParseFacebookUtilsV4
 
 class SignupViewController: UIViewController,NVActivityIndicatorViewable {
 
+    var image: UIImage!
+    var retreivedImage: PFFile!
     //propic
     
     var uploadedImage: PFFile!
@@ -56,18 +62,80 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         return label
     }()
     
+    lazy var signupButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Signup", for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.setTitleColor(.blue, for: .normal)
+        button.titleLabel?.textAlignment = .right
+        //label.numberOfLines = 0
+        return button
+    }()
+    
+    var welcomePage: PageBulletinItem!
+    lazy var welcomeManager: BulletinManager = {
+        
+        welcomePage = PageBulletinItem(title: "How Sickcall works")
+        welcomePage.image = UIImage(named: "settings")
+        
+        welcomePage.descriptionText = "Spend up to 1 minute explaining your health concern in detail"
+        welcomePage.shouldCompactDescriptionText = true
+        welcomePage.actionButtonTitle = "Next"
+        welcomePage.alternativeButtonTitle = "Get Started"
+        welcomePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        welcomePage.interfaceFactory.actionButtonTitleColor = .white
+        welcomePage.isDismissable = true
+        welcomePage.actionHandler = { (item: PageBulletinItem) in
+            self.welcomePage.manager?.dismissBulletin()
+            self.affordablemanger.prepare()
+            self.affordablemanger.presentBulletin(above: self)
+        }
+        welcomePage.alternativeHandler = { (item: PageBulletinItem) in
+            self.welcomePage.manager?.dismissBulletin()
+            self.emailText.becomeFirstResponder()
+        }
+        return BulletinManager(rootItem: self.welcomePage)
+        
+    }()
+    
+    var affordablePage: PageBulletinItem!
+    lazy var affordablemanger: BulletinManager = {
+        
+        affordablePage = PageBulletinItem(title: "How Sickcall works")
+        affordablePage.image = UIImage(named: "settings")
+        
+        affordablePage.descriptionText = "Your Sickcall nurse advisor will respond with a low, medium, or high serious level and some information on what may be going on. "
+        affordablePage.actionButtonTitle = "Get Started"
+        affordablePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        affordablePage.interfaceFactory.actionButtonTitleColor = .white
+        affordablePage.isDismissable = true
+        affordablePage.actionHandler = { (item: PageBulletinItem) in
+            self.affordablePage.manager?.dismissBulletin()
+            self.emailText.becomeFirstResponder()
+        }
+
+        return BulletinManager(rootItem: self.affordablePage)
+        
+    }()
+    
     override func viewDidLoad(){
         super.viewDidLoad()
         //print(numberToSend[0])
+        
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(SignupViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
         
-        let doneItem = UIBarButtonItem(title: "Sign Up", style: .plain, target: self, action: #selector(SignupViewController.next(_:)))
-        self.navigationItem.rightBarButtonItem = doneItem
+        let facebookItem = UIBarButtonItem(title: "Login with Facebook", style: .plain, target: self, action: #selector(facebookAction(_:)))
+        self.navigationItem.rightBarButtonItem = facebookItem
+        
+        self.welcomeManager.prepare()
+        self.welcomeManager.presentBulletin(above: self)
         
         self.view.addSubview(titleLabel)
         self.view.addSubview(emailText)
         self.view.addSubview(passwordText)
+        self.view.addSubview(signupButton)
+        signupButton.addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
         
         titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.view).offset(100)
@@ -86,8 +154,11 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
         }
-        
-        emailText.becomeFirstResponder()
+        signupButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(passwordText.snp.bottom).offset(10)
+            make.left.equalTo(self.view).offset(10)
+            make.right.equalTo(self.view).offset(-10)
+        }
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
         NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
@@ -105,7 +176,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         super.touchesBegan(touches, with: event)
     }
     
-    @objc func next(_ sender: UIBarButtonItem){
+    @objc func next(_ sender: UIButton){
         emailText.resignFirstResponder()
         passwordText.resignFirstResponder()
         
@@ -211,10 +282,83 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         }
     }
     
-    @objc func exitAction(_ sender: UIBarButtonItem) {
+    @objc func exitAction(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Login", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "welcome") as UIViewController
         self.present(controller, animated: true, completion: nil)
+    }
+    
+    @objc func facebookAction(_ sender: UIBarButtonItem){
+        PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
+            (user: PFUser?, error: Error?) -> Void in
+            self.startAnimating()
+            if let user = user {
+                print(user)
+                
+                let installation = PFInstallation.current()
+                installation?["user"] = user
+                installation?["userId"] = user.objectId
+                installation?.saveEventually()
+                
+                if user.isNew {
+                    
+                    let request = FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"], tokenString: FBSDKAccessToken.current().tokenString, version: nil, httpMethod: "GET")
+                    let _ = request?.start(completionHandler: { (connection, result, error) in
+                        guard let userInfo = result as? [String: Any] else { return } //handle the error
+                        
+                        print(userInfo)
+                        //The url is nested 3 layers deep into the result so it's pretty messy
+                        if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
+                            
+                            //self.image.kf.setImage(with: URL(string: imageURL))
+                            if let url = URL(string: imageURL) {
+                                if let data = NSData(contentsOf: url){
+                                    self.image = UIImage(data: data as Data)
+                                }
+                            }
+                            let proPic = UIImageJPEGRepresentation(self.image, 0.5)
+                            
+                            self.retreivedImage = PFFile(name: "profile_ios.jpeg", data: proPic!)
+                            self.retreivedImage?.saveInBackground {
+                                (success: Bool, error: Error?) -> Void in
+                                if (success) {
+                                    user.email = userInfo["email"] as! String?
+                                    user["DisplayName"] = userInfo["first_name"] as! String?
+                                    user["Profile"] = self.retreivedImage
+                                    user["foodAllergies"] = []
+                                    user["gender"] = userInfo["gender"] as! String?
+                                    user["height"] = " "
+                                    user["medAllergies"] = []
+                                    user["weight"] = " "
+                                    user["birthday"] = " "
+                                    user["beatsPM"] = " "
+                                    user["healthIssues"] = " "
+                                    user["respsPM"] = " "
+                                    user["medHistory"] = " "
+                                    user.saveEventually{
+                                        (success: Bool, error: Error?) -> Void in
+                                        if (success) {
+                                            self.stopAnimating()
+                                            
+                                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                                            self.present(initialViewController, animated: true, completion: nil)                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                } else {
+                    self.stopAnimating()
+                    
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+                    self.present(initialViewController, animated: true, completion: nil)
+                }
+            } else {
+                self.stopAnimating()
+            }
+        }
     }
     
     func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
