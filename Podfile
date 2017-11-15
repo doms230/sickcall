@@ -27,12 +27,8 @@ target 'Celecare' do
   pod 'Stripe'
   
   #
-  pod 'SidebarOverlay'
-  #pod 'SCLAlertView'
   pod 'SCLAlertView',:git => 'https://github.com/vikmeup/SCLAlertView-Swift.git'
-  #pod 'DateTimePicker'
   pod 'NVActivityIndicatorView'
-  #pod 'SRCountdownTimer'
-  pod "SlackTextViewController"
-pod 'BulletinBoard'
+  pod 'BulletinBoard'
+  
 end

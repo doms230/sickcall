@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1D757311A6C8CE3F6EA451F0 /* Pods_Celecare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */; };
-		590F694C1F786B04004FE33A /* AllergyViewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */; };
-		590F694F1F78700D004FE33A /* MedHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F694E1F78700D004FE33A /* MedHistoryViewController.swift */; };
 		590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */; };
 		59B5F7301FA978E3008EE10C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B5F72F1FA978E3008EE10C /* AppDelegate.swift */; };
 		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
@@ -27,13 +25,10 @@
 		F22656171F4E364C001D2ED7 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22656161F4E364C001D2ED7 /* SignupViewController.swift */; };
 		F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */; };
 		F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */; };
-		F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celecare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergyViewTableViewController.swift; sourceTree = "<group>"; };
-		590F694E1F78700D004FE33A /* MedHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedHistoryViewController.swift; sourceTree = "<group>"; };
 		590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoTableViewController.swift; sourceTree = "<group>"; };
 		59B5F72F1FA978E3008EE10C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +51,6 @@
 		F22656161F4E364C001D2ED7 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		F24710731F4236A8008AB906 /* V2ViewAnswerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = V2ViewAnswerViewController.swift; sourceTree = "<group>"; };
 		F24710751F42396A008AB906 /* ViewAnswerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAnswerTableViewCell.swift; sourceTree = "<group>"; };
-		F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,9 +86,6 @@
 		9AB0676B1EFAE95100092BC6 /* Celecare */ = {
 			isa = PBXGroup;
 			children = (
-				F2E86B3A1F396BE200F4703C /* PatientInfoViewController.swift */,
-				590F694B1F786B04004FE33A /* AllergyViewTableViewController.swift */,
-				590F694E1F78700D004FE33A /* MedHistoryViewController.swift */,
 				9AF65FDA1F202D4E00C6E9CA /* Post.swift */,
 				9AB067831F0217DA00092BC6 /* Celecare.entitlements */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
@@ -265,8 +256,6 @@
 				"${BUILT_PRODUCTS_DIR}/ParseFacebookUtilsV4/ParseFacebookUtilsV4.framework",
 				"${BUILT_PRODUCTS_DIR}/ParseLiveQuery/ParseLiveQuery.framework",
 				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/SidebarOverlay/SidebarOverlay.framework",
-				"${BUILT_PRODUCTS_DIR}/SlackTextViewController/SlackTextViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
@@ -288,8 +277,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParseFacebookUtilsV4.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParseLiveQuery.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SidebarOverlay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlackTextViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
@@ -340,17 +327,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				590F694F1F78700D004FE33A /* MedHistoryViewController.swift in Sources */,
 				9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */,
 				9AF65FDB1F202D4E00C6E9CA /* Post.swift in Sources */,
-				590F694C1F786B04004FE33A /* AllergyViewTableViewController.swift in Sources */,
 				9ACD37FA1F05F10A005842CF /* LoginViewController.swift in Sources */,
 				590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */,
 				F22656171F4E364C001D2ED7 /* SignupViewController.swift in Sources */,
 				9ACD37FC1F05F9A5005842CF /* WelcomeViewController.swift in Sources */,
 				59B5F7301FA978E3008EE10C /* AppDelegate.swift in Sources */,
 				F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */,
-				F2E86B3B1F396BE200F4703C /* PatientInfoViewController.swift in Sources */,
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
 				9A73518B1F1D3C5C00A438C8 /* EditProfileViewController.swift in Sources */,
 				F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */,

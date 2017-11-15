@@ -9,7 +9,6 @@
 import UIKit
 import Parse
 import Kingfisher
-import SidebarOverlay
 
 import MobileCoreServices
 import AVKit

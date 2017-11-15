@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SlackTextViewController
 import Parse
 import NVActivityIndicatorView
 import MobileCoreServices
@@ -16,7 +15,7 @@ import AVFoundation
 import SCLAlertView
 import ParseLiveQuery
 
-class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewable {
+class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, UITableViewDelegate, UITableViewDataSource {
     
     //advisor
     var advisorUserImage: String!
@@ -59,18 +58,21 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         return (Post.query()!
             .whereKey("userId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
     }
+    
+    var tableJaunt: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
-        self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "advisorReuse")
-        self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "shareReuse")
-        self.tableView?.estimatedRowHeight = 50
-        self.tableView?.rowHeight = UITableViewAutomaticDimension
-        self.tableView?.separatorStyle = .none
-        self.isInverted = false
-        self.setTextInputbarHidden(true, animated: true)
+        self.tableJaunt = UITableView(frame: self.view.bounds)
+        self.tableJaunt.dataSource = self
+        self.tableJaunt.delegate = self
+        self.tableJaunt?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
+        self.tableJaunt?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "advisorReuse")
+        self.tableJaunt?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "shareReuse")
+        self.tableJaunt?.estimatedRowHeight = 50
+        self.tableJaunt?.rowHeight = UITableViewAutomaticDimension
+        self.tableJaunt?.separatorStyle = .none
+        self.view.addSubview(self.tableJaunt)
         
         //set up indicator view
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
@@ -94,11 +96,11 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         subscribeToUpdates()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.patientUsername == nil{
             return 0
             
@@ -110,7 +112,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         }
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: ViewAnswerTableViewCell!
         
         if self.patientUsername != nil{
@@ -199,7 +201,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
                 self.patientUserImage = imageFile.url
                 self.patientUsername = object!["DisplayName"] as! String
                 
-                self.tableView?.reloadData()
+                self.tableJaunt?.reloadData()
                 //self.stopAnimating()
                 if self.isAnswered{
                     self.loadAdvisor()
@@ -222,7 +224,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
                 self.advisorUserImage = imageFile.url
                 
                 self.advisorUsername = object!["DisplayName"] as! String
-                self.tableView?.reloadData()
+                self.tableJaunt?.reloadData()
                 self.stopAnimating()
             }
         }
@@ -329,7 +331,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
                     self.advisorUserId = object["advisorUserId"] as! String
                     //person can't cancel question once question is answered
                     self.cancelQuestionButton.isEnabled = false
-                    self.tableView?.reloadData()
+                    self.tableJaunt?.reloadData()
                 }
         }
     }
