@@ -153,11 +153,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             make.height.equalTo(50)
             make.left.equalTo(self.view)
             make.right.equalTo(self.view)
-            if (PFUser.current() != nil){
-                make.bottom.equalTo(self.view).offset(-50)
-            } else {
-                make.bottom.equalTo(self.view)
-            }
+            make.bottom.equalTo(self.view).offset(-50)
         }
         
         //load price stuff

@@ -30,18 +30,58 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
     lazy var appName: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 50)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 35)
         label.text = "Sickcall"
-        label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }()
     
     lazy var appEx: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue", size: 25)
-        label.text = "Find out how serious your health concern is"
-        label.textAlignment = .center
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 35)
+        label.text = "Ask health related questions 24/7"
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var featureImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "medication")
+        return image
+    }()
+    
+    lazy var appFeature: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
+        label.text = "Get your health concern assesed by a U.S. registered nurse"
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var featureImage1: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "heart")
+        return image
+    }()
+    
+    lazy var appFeature1: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
+        label.text = "Find out if you should go to the E.R., doctor, or neither."
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    lazy var featureImage2: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "info")
+        return image
+    }()
+    
+    lazy var appFeature2: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
+        label.text = "Receive information specific to your health concern"
         label.numberOfLines = 0
         return label
     }()
@@ -59,7 +99,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
     lazy var signupButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Sign Up", for: .normal)
+        button.setTitle("Get Started", for: .normal)
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 3
@@ -103,6 +143,12 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         self.view.addSubview(appName)
         appName.textColor = uicolorFromHex(0x006a52)
         self.view.addSubview(appEx)
+        self.view.addSubview(appFeature)
+        self.view.addSubview(featureImage)
+        self.view.addSubview(appFeature1)
+        self.view.addSubview(featureImage1)
+        self.view.addSubview(appFeature2)
+        self.view.addSubview(featureImage2)
         self.view.addSubview(signinButton)
         signinButton.addTarget(self, action: #selector(signInAction(_:)), for: .touchUpInside)
         self.view.addSubview(signupButton)
@@ -110,29 +156,63 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         
         signupButton.backgroundColor = uicolorFromHex(0x006a52)
         signupButton.addTarget(self, action: #selector(signupAction(_:)), for: .touchUpInside)
-        self.view.addSubview(facebookButton)
+       /* self.view.addSubview(facebookButton)
         facebookButton.backgroundColor = uicolorFromHex(0x0950D0)
-        facebookButton.addTarget(self, action: #selector(facebookAction(_:)), for: .touchUpInside)
+        facebookButton.addTarget(self, action: #selector(facebookAction(_:)), for: .touchUpInside)*/
         self.view.addSubview(termsButton)
         termsButton.addTarget(self, action: #selector(termsAction(_:)), for: .touchUpInside)
         
         appImage.snp.makeConstraints { (make) -> Void in
-            make.height.width.equalTo(100)
-            make.left.equalTo(self.view).offset(screenSize.width / 2 - 50)
-            //make.right.equalTo(self.view).offset(-10)
-            make.bottom.equalTo(self.appName.snp.top).offset(-1)
+            make.height.width.equalTo(50)
+            make.top.equalTo(self.view).offset(25)
+            make.left.equalTo(self.view).offset(20)
         }
         
         appName.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(self.view).offset(10)
-            make.right.equalTo(self.view).offset(-10)
-            make.bottom.equalTo(self.appEx.snp.top).offset(-5)
+            make.top.equalTo(self.view).offset(30)
+            make.left.equalTo(self.appImage.snp.right)
         }
         
         appEx.snp.makeConstraints { (make) -> Void in
-            make.left.equalTo(self.view).offset(10)
-            make.right.equalTo(self.view).offset(-10)
-            make.bottom.equalTo(self.view).offset(-(screenSize.height / 2))
+            make.top.equalTo(self.appName.snp.bottom).offset(20)
+            make.left.equalTo(self.view).offset(20)
+            make.right.equalTo(self.view).offset(-20)
+        }
+        
+        featureImage.snp.makeConstraints { (make) -> Void in
+            make.width.height.equalTo(25)
+            make.top.equalTo(self.appEx.snp.bottom).offset(20)
+            make.left.equalTo(self.view).offset(20)
+        }
+        
+        appFeature.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.appEx.snp.bottom).offset(20)
+            make.left.equalTo(self.featureImage.snp.right).offset(5)
+            make.right.equalTo(self.view).offset(-20)
+        }
+        
+        featureImage1.snp.makeConstraints { (make) -> Void in
+            make.width.height.equalTo(25)
+            make.top.equalTo(self.appFeature.snp.bottom).offset(20)
+            make.left.equalTo(self.view).offset(20)
+        }
+        
+        appFeature1.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.appFeature.snp.bottom).offset(20)
+            make.left.equalTo(self.featureImage1.snp.right).offset(5)
+            make.right.equalTo(self.view).offset(-20)
+        }
+        
+        featureImage2.snp.makeConstraints { (make) -> Void in
+            make.width.height.equalTo(25)
+            make.top.equalTo(self.appFeature1.snp.bottom).offset(20)
+            make.left.equalTo(self.view).offset(20)
+        }
+        
+        appFeature2.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(self.appFeature1.snp.bottom).offset(20)
+            make.left.equalTo(self.featureImage2.snp.right).offset(5)
+            make.right.equalTo(self.view).offset(-20)
         }
         
         signinButton.snp.makeConstraints { (make) -> Void in
@@ -149,21 +229,19 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
             make.right.equalTo(self.view).offset(-10)
         }
         
-        facebookButton.snp.makeConstraints { (make) -> Void in
+        /*facebookButton.snp.makeConstraints { (make) -> Void in
             make.height.equalTo(50)
             make.top.equalTo(signupButton.snp.bottom).offset(10)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
-        }
+        }*/
         
         termsButton.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.facebookButton.snp.bottom).offset(10)
+            make.top.equalTo(self.signupButton.snp.bottom).offset(10)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
             make.bottom.equalTo(self.view).offset(-20)
         }
-        
-        
     }
 
     @objc func signInAction(_ sender: UIButton) {
