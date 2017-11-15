@@ -104,7 +104,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         affordablePage = PageBulletinItem(title: "How Sickcall works")
         affordablePage.image = UIImage(named: "settings")
         
-        affordablePage.descriptionText = "Your Sickcall nurse advisor will respond with a low, medium, or high serious level and some information on what may be going on. "
+        affordablePage.descriptionText = "Your Sickcall nurse advisor will respond with a low, medium, or high serious level and some information on what may be going on."
         affordablePage.actionButtonTitle = "Get Started"
         affordablePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
         affordablePage.interfaceFactory.actionButtonTitleColor = .white

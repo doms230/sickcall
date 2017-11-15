@@ -65,6 +65,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
         
         self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
         self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "advisorReuse")
+        self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "shareReuse")
         self.tableView?.estimatedRowHeight = 50
         self.tableView?.rowHeight = UITableViewAutomaticDimension
         self.tableView?.separatorStyle = .none
@@ -102,7 +103,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             return 0
             
         } else if isAnswered {
-            return 2
+            return 3
             
         } else {
             return 1
@@ -132,6 +133,12 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             //TODO: Uncomment
             cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
+            tableView.separatorStyle = .none
+        } else if indexPath.row == 1 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "shareReuse", for: indexPath) as! ViewAnswerTableViewCell
+            cell.shareButton.addTarget(self, action: #selector(shareAction(_:)), for: .touchUpInside)
+            cell.shareButton.setBackgroundColor(uicolorFromHex(0x006a52), forState: .normal)
+            tableView.separatorStyle = .singleLine
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "advisorReuse", for: indexPath) as! ViewAnswerTableViewCell
@@ -149,7 +156,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             if self.level == "low"{
                 optionsBody = "- Over the counter solution \n - Doctors Appointment"
                 cell.levelLabel.backgroundColor = uicolorFromHex(0x81ff96)
-
+                
             } else if self.level == "medium"{
                 optionsBody = "- Doctor's appointment \n - Urgent Care"
                 cell.levelLabel.backgroundColor = uicolorFromHex(0xf4ff81)
@@ -162,6 +169,7 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
             cell.optionsBody.text = optionsBody
             
             cell.commentBody.text = self.comments
+
         }
         
         return cell
@@ -226,6 +234,17 @@ class V2ViewAnswerViewController: SLKTextViewController,NVActivityIndicatorViewa
     
     @objc func vitalsAction(_ sender: UIButton){
         self.performSegue(withIdentifier: "showVitals", sender: self)
+    }
+    
+    @objc func shareAction(_ sender: UIButton){
+        let textItem = "I found out my health concern was a \(self.level!) serious level through Sickcall!"
+        let linkItem : NSURL = NSURL(string: "https://www.sickcallhealth.com/app")!
+        // If you want to put an image
+        
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [linkItem, textItem], applicationActivities: nil)
+        
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     func setUpAlertView(){

@@ -16,9 +16,9 @@ PODS:
     - FacebookCore (~> 0.3)
     - FBSDKCoreKit (~> 4.27)
     - FBSDKLoginKit (~> 4.27)
-  - FBSDKCoreKit (4.27.1):
+  - FBSDKCoreKit (4.28.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.27.1):
+  - FBSDKLoginKit (4.28.0):
     - FBSDKCoreKit
   - Kingfisher (4.2.0)
   - NVActivityIndicatorView (4.0.0):
@@ -38,11 +38,11 @@ PODS:
     - Starscream (= 2.1.1)
   - SCLAlertView (0.7.0)
   - SidebarOverlay (4.1)
-  - SlackTextViewController (1.9.5)
+  - SlackTextViewController (1.9.6)
   - SnapKit (4.0.0)
   - Starscream (2.1.1)
-  - Stripe (11.4.0)
-  - SwiftyJSON (3.1.4)
+  - Stripe (11.5.0)
+  - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -77,8 +77,8 @@ SPEC CHECKSUMS:
   BulletinBoard: 23c9d98cac654fd484d76f2a0655669974e9bd9c
   FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
   FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
-  FBSDKCoreKit: 03365dad5d790249196ffad8be4f6d8a2d98f932
-  FBSDKLoginKit: 66ff53b73cffd967ab773e32fac39e90a60e6d46
+  FBSDKCoreKit: ca961e279113f691fd83dc634c0bbad9d4e3f370
+  FBSDKLoginKit: b077381c27d800f21661757e8140cf2c80a91e4a
   Kingfisher: 9ee7e788d8ba07c3f21ce0d43f33cec310a4f781
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
   Parse: cdc0f1f975ee8be0409e66f21b05df4ae067047c
@@ -86,11 +86,11 @@ SPEC CHECKSUMS:
   ParseLiveQuery: bc2321032ddae9d6ecfd4842d1b10210d453b08b
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
   SidebarOverlay: b65f0a1d9331ce4bf81f82eea202b21cc8655c5a
-  SlackTextViewController: fbcdadbb8090673f604484ff5b6eb8d77baed42a
+  SlackTextViewController: b854e62c1c156336bc4fd409c6ca79b5773e8f9d
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
-  Stripe: dc8396620ab86a36221fc8df72ba9f5d317d174c
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Stripe: 10761682d20dc491c52287393c800db056c9748d
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
 PODFILE CHECKSUM: 8ae6ad1540b0796951dbf65ea358b92b4b36a571
 

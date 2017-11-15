@@ -93,19 +93,30 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: "profileReuse", for: indexPath) as! MainTableViewCell
 
         cell.editProfileButton.addTarget(self, action: #selector(self.editProfile(_:)), for: .touchUpInside)
-        cell.advisorButton.addTarget(self, action: #selector(self.switchAction(_:)), for: .touchUpInside)
+        cell.supportButton.addTarget(self, action: #selector(supportAction(_:)), for: .touchUpInside)
+        cell.shareButton.addTarget(self, action: #selector(self.shareAction(_:)), for: .touchUpInside)
         cell.selectionStyle = .none
-        cell.advisorButton.setTitle(" Become Advisor", for: .normal)
         return cell
-    }
-    
-    @objc func switchAction(_ sender: UIButton) {
-        let url = URL(string : "https://www.sickcallhealth.com/advisor/app" )
-        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
     }
     
     @objc func editProfile(_ sender: UIButton){
         self.performSegue(withIdentifier: "showEditProfile", sender: self)
+    }
+    
+    @objc func supportAction(_ sender: UIButton) {
+        let url = URL(string : "https://www.sickcallhealth.com/advisor/app" )
+        UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+    }
+    
+    @objc func shareAction(_ sender: UIButton){
+        let textItem = "Find out how serious your health concern is through Sickcall!"
+        let linkItem : NSURL = NSURL(string: "https://www.sickcallhealth.com/app")!
+        // If you want to put an image
+        
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [linkItem, textItem], applicationActivities: nil)
+        
+        self.present(activityViewController, animated: true, completion: nil)
     }
     
     func loadAdvisor(){

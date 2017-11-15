@@ -78,18 +78,29 @@ class MainTableViewCell: UITableViewCell {
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.titleLabel?.textAlignment = .left
         button.setTitle(" Edit Profile", for: .normal)
-        button.setImage(UIImage(named: "user"), for: .normal)
+        button.setImage(UIImage(named: "profile"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         //label.numberOfLines = 0
         return button
     }()
     
-    lazy var advisorButton: UIButton = {
+    lazy var shareButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.titleLabel?.textAlignment = .left
-        button.setTitle("", for: .normal)
-        button.setImage(UIImage(named: "medication"), for: .normal)
+        button.setTitle(" Share Sickcall", for: .normal)
+        button.setImage(UIImage(named: "share-icon"), for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        //label.numberOfLines = 0
+        return button
+    }()
+    
+    lazy var supportButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
+        button.titleLabel?.textAlignment = .left
+        button.setTitle(" Support", for: .normal)
+        button.setImage(UIImage(named: "support"), for: .normal)
         button.setTitleColor(.black, for: .normal)
         //label.numberOfLines = 0
         return button
@@ -221,7 +232,6 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    
     lazy var totalLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
@@ -282,7 +292,7 @@ class MainTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
         label.textAlignment = .center
-        label.text = "You're card will be charged after your Sickcall is answered."
+        label.text = "Your card will be charged after your Sickcall is answered."
         label.textColor = UIColor.darkGray
         label.numberOfLines = 0
         return label
@@ -301,13 +311,11 @@ class MainTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue", size: 12)
         label.textAlignment = .center
-        label.text = "This transaction is performed over a 128-Bit SSL Encryption."
+        label.text = "This transaction is encrypted over a 128-Bit SSL."
         label.textColor = UIColor.darkGray
         label.numberOfLines = 0
         return label
     }()
-    
-
     
     /*lazy var checkoutView: UIButton = {
         let button = UIButton()
@@ -327,10 +335,9 @@ class MainTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         if reuseIdentifier == "profileReuse"{
-           // self.addSubview(userImage)
-           // self.addSubview(userName)
             self.addSubview(editProfileButton)
-            self.addSubview(advisorButton)
+            self.addSubview(shareButton)
+            self.addSubview(supportButton)
             
             editProfileButton.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(self).offset(25)
@@ -339,8 +346,15 @@ class MainTableViewCell: UITableViewCell {
                 //make.bottom.equalTo(self).offset(-25)
             }
             
-            advisorButton.snp.makeConstraints { (make) -> Void in
+            supportButton.snp.makeConstraints { (make) -> Void in
                 make.top.equalTo(editProfileButton.snp.bottom).offset(25)
+                make.left.equalTo(self).offset(10)
+                //make.right.equalTo(self).offset(-10)
+                //make.bottom.equalTo(self).offset(-25)
+            }
+            
+            shareButton.snp.makeConstraints { (make) -> Void in
+                make.top.equalTo(supportButton.snp.bottom).offset(25)
                 make.left.equalTo(self).offset(10)
                 //make.right.equalTo(self).offset(-10)
                 make.bottom.equalTo(self).offset(-25)

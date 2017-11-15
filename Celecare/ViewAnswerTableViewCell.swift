@@ -36,6 +36,17 @@ class ViewAnswerTableViewCell: UITableViewCell {
         } else if reuseIdentifier == "advisorReuse"{
             
             configureAdvisorSubviews()
+            
+        } else if reuseIdentifier == "shareReuse"{
+            self.addSubview(shareButton)
+
+            shareButton.snp.makeConstraints { (make) -> Void in
+                make.height.equalTo(50)
+                make.top.equalTo(self).offset(20)
+                make.left.equalTo(self).offset(20)
+                make.right.equalTo(self).offset(-20)
+                make.bottom.equalTo(self).offset(-20)
+            }
         }
     }
     
@@ -44,6 +55,17 @@ class ViewAnswerTableViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
+    
+    //share
+    lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Update family & friends", for: .normal)
+        button.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
+        return button
+    }()
     
     //advisor 
     lazy var advisorImage: UIImageView = {
