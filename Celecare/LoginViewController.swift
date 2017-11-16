@@ -86,7 +86,9 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(LoginViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
         
-        let facebookItem = UIBarButtonItem(title: "Login with Facebook", style: .plain, target: self, action: #selector(facebookAction(_:)))
+        let facebookItem = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(facebookAction(_:)))
+        facebookItem.image = UIImage(named: "facebook")
+        
         self.navigationItem.rightBarButtonItem = facebookItem
         
         self.view.addSubview(titleLabel)
@@ -304,8 +306,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
             }
         }
     }
-    
-
     
     @objc func exitAction(_ sender: UIBarButtonItem){
         let storyboard = UIStoryboard(name: "Login", bundle: nil)

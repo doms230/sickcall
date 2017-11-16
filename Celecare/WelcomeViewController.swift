@@ -30,7 +30,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
     lazy var appName: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 35)
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 30)
         label.text = "Sickcall"
         label.numberOfLines = 0
         return label
@@ -39,49 +39,49 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     lazy var appEx: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 35)
-        label.text = "Ask health related questions 24/7"
+        label.text = "Ask health related questions"
         label.numberOfLines = 0
         return label
     }()
     
     lazy var featureImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "medication")
+        image.image = UIImage(named: "rocket")
         return image
     }()
     
     lazy var appFeature: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
-        label.text = "Get your health concern assesed by a U.S. registered nurse"
+        label.text = "Get a reply within 15 mintues from our U.S. registered nurse advisors"
         label.numberOfLines = 0
         return label
     }()
     
     lazy var featureImage1: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "heart")
+        image.image = UIImage(named: "check")
         return image
     }()
     
     lazy var appFeature1: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
-        label.text = "Find out if you should go to the E.R., doctor, or neither."
+        label.text = "All nurse advisors are verified through their states' board of nursing verifcation checks."
         label.numberOfLines = 0
         return label
     }()
     
     lazy var featureImage2: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "info")
+        image.image = UIImage(named: "key")
         return image
     }()
     
     lazy var appFeature2: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
-        label.text = "Receive information specific to your health concern"
+        label.text = "We’re HIPAA compliant. Our Sickcall advisors only have access to your question while answering and their access is revoked afterwards"
         label.numberOfLines = 0
         return label
     }()
@@ -164,12 +164,12 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         
         appImage.snp.makeConstraints { (make) -> Void in
             make.height.width.equalTo(50)
-            make.top.equalTo(self.view).offset(25)
+            make.top.equalTo(self.view).offset(30)
             make.left.equalTo(self.view).offset(20)
         }
         
         appName.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view).offset(30)
+            make.top.equalTo(self.view).offset(35)
             make.left.equalTo(self.appImage.snp.right)
         }
         
