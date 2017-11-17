@@ -86,8 +86,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(LoginViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
         
-        let facebookItem = UIBarButtonItem(title: "Login", style: .plain, target: self, action: #selector(facebookAction(_:)))
-        facebookItem.image = UIImage(named: "facebook")
+        let facebookItem = UIBarButtonItem(image: UIImage(named: "facebook"), style: .plain, target: self, action: #selector(facebookAction(_:)))
         
         self.navigationItem.rightBarButtonItem = facebookItem
         

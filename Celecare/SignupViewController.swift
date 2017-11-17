@@ -105,7 +105,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         affordablePage.image = UIImage(named: "settings")
         
         affordablePage.descriptionText = "Your Sickcall nurse advisor will respond with a low, medium, or high serious level and some information on what may be going on."
-        affordablePage.actionButtonTitle = "Get Started"
+        affordablePage.actionButtonTitle = "Got It"
         affordablePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
         affordablePage.interfaceFactory.actionButtonTitleColor = .white
         affordablePage.isDismissable = true
@@ -125,7 +125,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(SignupViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
         
-        let facebookItem = UIBarButtonItem(title: "Login with Facebook", style: .plain, target: self, action: #selector(facebookAction(_:)))
+        let facebookItem = UIBarButtonItem(image: UIImage(named: "facebook"), style: .plain, target: self, action: #selector(facebookAction(_:)))
         self.navigationItem.rightBarButtonItem = facebookItem
         
         self.welcomeManager.prepare()

@@ -30,7 +30,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     
     lazy var appName: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 30)
+        label.font = UIFont(name: "HelveticaNeue", size: 30)
         label.text = "Sickcall"
         label.numberOfLines = 0
         return label
@@ -81,7 +81,7 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     lazy var appFeature2: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 15)
-        label.text = "We’re HIPAA compliant. Our Sickcall advisors only have access to your question while answering and their access is revoked afterwards"
+        label.text = "We’re HIPAA compliant. Our Sickcall advisors only have access to your question while replying to your Sickcall."
         label.numberOfLines = 0
         return label
     }()
@@ -163,24 +163,24 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         termsButton.addTarget(self, action: #selector(termsAction(_:)), for: .touchUpInside)
         
         appImage.snp.makeConstraints { (make) -> Void in
-            make.height.width.equalTo(50)
+            make.height.width.equalTo(35)
             make.top.equalTo(self.view).offset(30)
             make.left.equalTo(self.view).offset(20)
         }
         
         appName.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.view).offset(35)
+            make.top.equalTo(self.view).offset(30)
             make.left.equalTo(self.appImage.snp.right)
         }
         
         appEx.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.appName.snp.bottom).offset(20)
+            make.top.equalTo(self.appName.snp.bottom).offset(10)
             make.left.equalTo(self.view).offset(20)
             make.right.equalTo(self.view).offset(-20)
         }
         
         featureImage.snp.makeConstraints { (make) -> Void in
-            make.width.height.equalTo(25)
+            make.width.height.equalTo(30)
             make.top.equalTo(self.appEx.snp.bottom).offset(20)
             make.left.equalTo(self.view).offset(20)
         }
@@ -237,10 +237,10 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         }*/
         
         termsButton.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self.signupButton.snp.bottom).offset(10)
+            make.top.equalTo(self.signupButton.snp.bottom).offset(5)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
-            make.bottom.equalTo(self.view).offset(-20)
+            make.bottom.equalTo(self.view).offset(-5)
         }
     }
 

@@ -15,6 +15,7 @@ import AVKit
 import AVFoundation
 
 import BulletinBoard
+import UserNotifications
 
 class BasicInfoTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -62,11 +63,43 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
         
     }()
     
+    lazy var notificationsManager: BulletinManager = {
+        
+        let page = PageBulletinItem(title: "Notifications")
+        page.image = UIImage(named: "bell")
+        
+        page.descriptionText = "Sickcall uses notifications to let you know when you nurse advisor replies to your health concern."
+        page.actionButtonTitle = "Okay"
+        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.actionButtonTitleColor = .white
+        page.isDismissable = true
+        page.actionHandler = { (item: PageBulletinItem) in
+            page.manager?.dismissBulletin()
+            UserDefaults.standard.set(true, forKey: "notifications")
+            let current = UNUserNotificationCenter.current()
+            current.getNotificationSettings(completionHandler: { (settings) in
+                if settings.authorizationStatus == .notDetermined {
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                        (granted, error) in
+                        
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+                }
+            })
+        }
+        return BulletinManager(rootItem: page)
+        
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let nextButton = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextAction(_:)))
         self.navigationItem.setRightBarButton(nextButton, animated: true)
-
+        
+        if UserDefaults.standard.object(forKey: "notifications") == nil{
+            self.notificationsManager.prepare()
+            self.notificationsManager.presentBulletin(above: self)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

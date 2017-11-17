@@ -30,6 +30,8 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableJaunt: UITableView!
     
     var refreshControl: UIRefreshControl!
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
