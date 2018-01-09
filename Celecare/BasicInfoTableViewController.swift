@@ -1,33 +1,33 @@
 //
 //  BasicInfoTableViewController.swift
-//  Celecare
+//  Sickcall 
 //
 //  Created by Dominic Smith on 9/24/17.
 //  Copyright © 2017 Sickcall LLC All rights reserved.
-//
+
 
 import UIKit
 import Parse
 import Kingfisher
-
 import MobileCoreServices
 import AVKit
 import AVFoundation
-
 import BulletinBoard
 import UserNotifications
 
 class BasicInfoTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    //video stuff
+    var color = Color()
+    
+    //video variables and constants
     var videoFile: URL!
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     let saveFileName = "/test.mp4"
     
     @IBOutlet weak var questionSubjectTextfield: UITextField!
     
+    //Health concern duration switch variables
     var healthConcernDuration = "Today"
-    
     @IBOutlet weak var todaySwitch: UISwitch!
     @IBOutlet weak var yesterdaySwitch: UISwitch!
     @IBOutlet weak var pastWeekSwitch: UISwitch!
@@ -40,18 +40,15 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
         button.setTitle("Next", for: .normal)
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.setTitleColor(.white, for: .normal)
-        //label.numberOfLines = 0
         return button
     }()
     
     lazy var bulletinManager: BulletinManager = {
-        
         let page = PageBulletinItem(title: "In 60 seconds")
         page.image = UIImage(named: "video")
-        
         page.descriptionText = "Explain your health concern in detail. Show yourself or any affected areas to help your nurse advisor provide you with accurate information."
         page.actionButtonTitle = "Got It"
-        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.tintColor = color.sickcallGreen()
         page.interfaceFactory.actionButtonTitleColor = .white
         page.isDismissable = true
         page.actionHandler = { (item: PageBulletinItem) in
@@ -60,17 +57,14 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
             UserDefaults.standard.set(true, forKey: "recordInfo")
         }
         return BulletinManager(rootItem: page)
-        
     }()
     
     lazy var notificationsManager: BulletinManager = {
-        
         let page = PageBulletinItem(title: "Notifications")
         page.image = UIImage(named: "bell")
-        
         page.descriptionText = "Sickcall uses notifications to let you know when you nurse advisor replies to your health concern."
         page.actionButtonTitle = "Okay"
-        page.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        page.interfaceFactory.tintColor = color.sickcallGreen()
         page.interfaceFactory.actionButtonTitleColor = .white
         page.isDismissable = true
         page.actionHandler = { (item: PageBulletinItem) in
@@ -111,21 +105,16 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
 
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 1
     }
     
      @objc func nextAction(_ sender: UIBarButtonItem) {
         if validateTitle(){
-            //performSegue(withIdentifier: "showQuestion", sender: self)
-            
             if UserDefaults.standard.object(forKey: "recordInfo") == nil{
                 bulletinManager.prepare()
                 bulletinManager.presentBulletin(above: self)
@@ -136,8 +125,7 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
         }
     }
     
-    //how long have you felt this way switch actions
-    
+    //Health concern duration switch actions
     @IBAction func todaySwitchAction(_ sender: UISwitch) {
         if sender.isOn{
             yesterdaySwitch.setOn(false, animated: true)
@@ -164,8 +152,8 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
         } else {
             yesterdaySwitch.setOn(true, animated: true)
         }
-        
     }
+    
     @IBAction func pastWeekSwitchAction(_ sender: UISwitch) {
         if sender.isOn{
             yesterdaySwitch.setOn(false, animated: true)
@@ -179,6 +167,7 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
             pastWeekSwitch.setOn(true, animated: true)
         }
     }
+    
     @IBAction func pastMonthSwitchAction(_ sender: UISwitch) {
         if sender.isOn{
             yesterdaySwitch.setOn(false, animated: true)
@@ -192,6 +181,7 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
             pastMonthSwitch.setOn(true, animated: true)
         }
     }
+    
     @IBAction func pastYearSwitchAction(_ sender: UISwitch) {
         if sender.isOn{
             yesterdaySwitch.setOn(false, animated: true)
@@ -205,6 +195,7 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
             pastYearSwitch.setOn(true, animated: true)
         }
     }
+    
     @IBAction func moreThanYearSwitchAction(_ sender: UISwitch) {
         if sender.isOn{
             yesterdaySwitch.setOn(false, animated: true)
@@ -242,12 +233,10 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
         self.present(alert, animated: true, completion: nil)
     }
 
-    //////video ///
-    
+    //Video functions
     func showVideo(){
         if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
             if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
-                
                 imagePicker.sourceType = .camera
                 imagePicker.cameraDevice = .front
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
@@ -255,30 +244,27 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
                 imagePicker.videoMaximumDuration = 60
                 imagePicker.videoQuality = .typeMedium
                 imagePicker.delegate = self
-                
                 present(imagePicker, animated: true, completion: {})
+                
             } else {
                 postAlert("Rear camera doesn't exist", message: "Application cannot access the camera.")
             }
+            
         } else {
             postAlert("Camera inaccessable", message: "Application cannot access the camera.")
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("Got a video")
-        
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         if let pickedVideo:URL = (info[UIImagePickerControllerMediaURL] as? URL) {
-            
             videoFile = pickedVideo
-            
             imagePicker.dismiss(animated: true, completion: {
-                // Anything you want to happen when the user saves an video
                 self.performSegue(withIdentifier: "showCheckout", sender: self)
             })
             
         } else {
-            //TODO: something happened
+            //video pick failed, dismiss
+            imagePicker.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -286,16 +272,6 @@ class BasicInfoTableViewController: UITableViewController, UIImagePickerControll
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("User canceled image")
         dismiss(animated: true, completion: {
-            // Anything you want to happen when the user selects cancel
         })
     }
-    
-    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
-    }
-    
 }

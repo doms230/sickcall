@@ -21,6 +21,8 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     var image: UIImage!
     var retreivedImage: PFFile!
     
+    var color = Color()
+    
     var valUsername = false
     var valPassword = false
     var valEmail = false
@@ -64,7 +66,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         button.titleLabel?.textAlignment = .right
         button.setTitle("Sign In", for: .normal)
         button.setTitleColor(.blue, for: .normal)
-        //label.numberOfLines = 0
         return button
     }()
     
@@ -74,7 +75,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         button.titleLabel?.textAlignment = .left
         button.setTitle("Forgot password", for: .normal)
         button.setTitleColor(.blue, for: .normal)
-        //label.numberOfLines = 0
         return button
     }()
     
@@ -126,11 +126,10 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         }
         forgotPasswordButton.addTarget(self, action: #selector(forgotPasswordAction(_:)), for: .touchUpInside)
         
-        
         emailText.becomeFirstResponder()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
+        NVActivityIndicatorView.DEFAULT_COLOR = color.sickcallGreen()
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
@@ -150,9 +149,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     func validateUsername() ->Bool{
-        
         //Validate username
-        
         if emailText.text!.isEmpty{
             
             emailText.attributedPlaceholder = NSAttributedString(string:"Field required",
@@ -166,7 +163,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     func validatePassword() -> Bool{
-        
         if passwordText.text!.isEmpty{
             passwordText.attributedPlaceholder = NSAttributedString(string:"Field required",
                                                                 attributes:[NSAttributedStringKey.foregroundColor: UIColor.red])
@@ -180,7 +176,6 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     func returningUser( password: String, username: String){
-        
         startAnimating()
         
         let userJaunt = username.trimmingCharacters(
@@ -236,26 +231,22 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
     @objc func facebookAction(_ sender: UIBarButtonItem){
         PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
             (user: PFUser?, error: Error?) -> Void in
+            
             self.startAnimating()
+            
             if let user = user {
-                print(user)
-                
                 let installation = PFInstallation.current()
                 installation?["user"] = user
                 installation?["userId"] = user.objectId
                 installation?.saveEventually()
                 
                 if user.isNew {
-                    
                     let request = FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"], tokenString: FBSDKAccessToken.current().tokenString, version: nil, httpMethod: "GET")
                     let _ = request?.start(completionHandler: { (connection, result, error) in
                         guard let userInfo = result as? [String: Any] else { return } //handle the error
                         
-                        print(userInfo)
-                        //The url is nested 3 layers deep into the result so it's pretty messy
                         if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
                             
-                            //self.image.kf.setImage(with: URL(string: imageURL))
                             if let url = URL(string: imageURL) {
                                 if let data = NSData(contentsOf: url){
                                     self.image = UIImage(data: data as Data)
@@ -300,6 +291,7 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
                     let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
                     self.present(initialViewController, animated: true, completion: nil)
                 }
+                
             } else {
                 self.stopAnimating()
             }
@@ -311,13 +303,4 @@ class LoginViewController: UIViewController,NVActivityIndicatorViewable {
         let initialViewController = storyboard.instantiateViewController(withIdentifier: "welcome")
         self.present(initialViewController, animated: true, completion: nil)
     }
-    
-    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
-    }
-    
 }

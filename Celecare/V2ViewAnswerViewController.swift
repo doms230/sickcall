@@ -2,7 +2,7 @@
 //  V2ViewAnswerViewController.swift
 //  Sickcall
 //
-//  Created by Dom Smith on 8/14/17.
+//  Created by Dominic Smith on 8/14/17.
 //  Copyright © 2017 Sickcall LLC All rights reserved.
 //
 
@@ -16,6 +16,8 @@ import SCLAlertView
 import ParseLiveQuery
 
 class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, UITableViewDelegate, UITableViewDataSource {
+    
+    var tableView: UITableView!
     
     //advisor
     var advisorUserImage: String!
@@ -34,7 +36,7 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
     //question
     var summary: String!
     var duration: String!
-    var videoJaunt: PFFile!
+    var videoFile: PFFile!
     var videoPreview: String!
     
     var playerItem: AVPlayerItem!
@@ -59,20 +61,18 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
             .whereKey("userId", equalTo: PFUser.current()!.objectId!) as! PFQuery<Post> )
     }
     
-    var tableJaunt: UITableView!
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableJaunt = UITableView(frame: self.view.bounds)
-        self.tableJaunt.dataSource = self
-        self.tableJaunt.delegate = self
-        self.tableJaunt?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
-        self.tableJaunt?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "advisorReuse")
-        self.tableJaunt?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "shareReuse")
-        self.tableJaunt?.estimatedRowHeight = 50
-        self.tableJaunt?.rowHeight = UITableViewAutomaticDimension
-        self.tableJaunt?.separatorStyle = .none
-        self.view.addSubview(self.tableJaunt)
+        self.tableView = UITableView(frame: self.view.bounds)
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "patientReuse")
+        self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "advisorReuse")
+        self.tableView?.register(ViewAnswerTableViewCell.self, forCellReuseIdentifier: "shareReuse")
+        self.tableView?.estimatedRowHeight = 50
+        self.tableView?.rowHeight = UITableViewAutomaticDimension
+        self.tableView?.separatorStyle = .none
+        self.view.addSubview(self.tableView)
         
         //set up indicator view
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
@@ -132,10 +132,10 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
             cell.durationBody.text = self.duration
             cell.durationBody.textColor = uicolorFromHex(0x180d22)
 
-            //TODO: Uncomment
             cell.videoButton.kf.setImage(with: URL(string: self.videoPreview), for: .normal)
             cell.videoButton.addTarget(self, action: #selector(self.loadPlayJaunt(_:)), for: .touchUpInside)
             tableView.separatorStyle = .none
+            
         } else if indexPath.row == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: "shareReuse", for: indexPath) as! ViewAnswerTableViewCell
             cell.shareButton.addTarget(self, action: #selector(shareAction(_:)), for: .touchUpInside)
@@ -145,7 +145,6 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "advisorReuse", for: indexPath) as! ViewAnswerTableViewCell
             cell.selectionStyle = .none
-            //cell.advisorImage.image = UIImage(named: "appy")
             if advisorUserImage != nil{
                 cell.advisorImage.kf.setImage(with: URL(string: self.advisorUserImage))
                 cell.advisorName.text = self.advisorUsername
@@ -171,7 +170,6 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
             cell.optionsBody.text = optionsBody
             
             cell.commentBody.text = self.comments
-
         }
         
         return cell
@@ -185,6 +183,7 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
             self.present(playerController, animated: true) {
                 self.player.play()
             }
+            
         } else {
             didPressPlay = true
         }
@@ -201,8 +200,7 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
                 self.patientUserImage = imageFile.url
                 self.patientUsername = object!["DisplayName"] as! String
                 
-                self.tableJaunt?.reloadData()
-                //self.stopAnimating()
+                self.tableView?.reloadData()
                 if self.isAnswered{
                     self.loadAdvisor()
                     
@@ -224,7 +222,7 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
                 self.advisorUserImage = imageFile.url
                 
                 self.advisorUsername = object!["DisplayName"] as! String
-                self.tableJaunt?.reloadData()
+                self.tableView?.reloadData()
                 self.stopAnimating()
             }
         }
@@ -288,11 +286,10 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
     }
     
     func getVideo(){
-        videoJaunt.getDataInBackground {
+        videoFile.getDataInBackground {
             (videoData: Data?, error: Error?) -> Void in
             if error == nil {
                 if let videoData = videoData {
-                    //self.selectedVideoData = videoData
                     //convert video file to playable format
                     let documentsPath : AnyObject = NSSearchPathForDirectoriesInDomains(.documentDirectory,.userDomainMask,true)[0] as AnyObject
                     let destinationPath:String = documentsPath.appending("/file.mov")
@@ -331,7 +328,7 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
                     self.advisorUserId = object["advisorUserId"] as! String
                     //person can't cancel question once question is answered
                     self.cancelQuestionButton.isEnabled = false
-                    self.tableJaunt?.reloadData()
+                    self.tableView?.reloadData()
                 }
         }
     }
@@ -343,5 +340,4 @@ class V2ViewAnswerViewController: UIViewController,NVActivityIndicatorViewable, 
         
         return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
-
 }

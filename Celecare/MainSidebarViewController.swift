@@ -1,6 +1,6 @@
 //
 //  MainSidebarViewController.swift
-//  Celecare
+//  Sickcall
 //
 //  Created by Dominic Smtih on 7/19/17.
 //  Copyright © 2017 Sickcall LLC All rights reserved.
@@ -11,12 +11,13 @@ import Parse
 import Kingfisher
 
 class MainSidebarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var nameJaunt: String!
-    var imageJaunt: String!
+    var nameString: String!
+    var imageString: String!
     
-    @IBOutlet weak var tableJaunt: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     var isAdvisor = false
+    
     //profile info is sent to edit profile... so if user taps before loaded, will crash
     var hasProfileLoaded = false
     
@@ -39,10 +40,10 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "profileReuse")
-        self.tableJaunt.estimatedRowHeight = 50
-        self.tableJaunt.rowHeight = UITableViewAutomaticDimension
-        tableJaunt.separatorStyle = .none
+        self.tableView.register(MainTableViewCell.self, forCellReuseIdentifier: "profileReuse")
+        self.tableView.estimatedRowHeight = 50
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.separatorStyle = .none
 
         let query = PFQuery(className: "_User")
         query.whereKey("objectId", equalTo: PFUser.current()!.objectId!)
@@ -53,17 +54,17 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
                 
                 let name = object!["DisplayName"] as! String
                 self.titleButton.setTitle("\(name)", for: .normal)
-                self.nameJaunt = name
+                self.nameString = name
                 
                 let image = imageFile.url!
-                self.imageJaunt = image 
+                self.imageString = image
                 self.titleImage.kf.setImage(with: URL(string: image ))
                 self.titleButton.addSubview(self.titleImage)
                 
                 let leftItem = UIBarButtonItem(customView: self.titleButton)
                 
                 self.navigationItem.setLeftBarButton(leftItem, animated: true)
-                self.tableJaunt.reloadData()
+                self.tableView.reloadData()
                 self.loadAdvisor()
             }
         }
@@ -71,8 +72,8 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let desti = segue.destination as! EditProfileViewController
-        desti.nameJaunt = nameJaunt
-        desti.imageJaunt = imageJaunt
+        desti.nameString = nameString
+        desti.imageString = imageString
         desti.isAdvisor = isAdvisor
     }
     
@@ -85,6 +86,7 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
             return 1
             
         } else {
+            
             return 0
         }
     }
@@ -111,7 +113,6 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
     @objc func shareAction(_ sender: UIButton){
         let textItem = "Find out how serious your health concern is through Sickcall!"
         let linkItem : NSURL = NSURL(string: "https://www.sickcallhealth.com/app")!
-        // If you want to put an image
         
         let activityViewController : UIActivityViewController = UIActivityViewController(
             activityItems: [linkItem, textItem], applicationActivities: nil)
@@ -131,10 +132,10 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
                 if isActive{
                     self.isAdvisor = true
                 }
-                self.tableJaunt.reloadData()
+                self.tableView.reloadData()
                 
             } else {
-                self.tableJaunt.reloadData()
+                self.tableView.reloadData()
             }
         }
     }

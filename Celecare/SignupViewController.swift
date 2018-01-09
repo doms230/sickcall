@@ -18,19 +18,18 @@ import ParseFacebookUtilsV4
 
 class SignupViewController: UIViewController,NVActivityIndicatorViewable {
 
+    var color = Color()
+    
     var image: UIImage!
     var retreivedImage: PFFile!
-    //propic
-    
     var uploadedImage: PFFile!
     
-    //UI components
-    
-    //validate jaunts
+    //validation variables
     var valPassword = false
     var valEmail = false
     var isSwitchOn = false
     
+    //UI components
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 30)
@@ -68,7 +67,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         button.titleLabel?.font = UIFont(name: "HelveticaNeue", size: 20)
         button.setTitleColor(.blue, for: .normal)
         button.titleLabel?.textAlignment = .right
-        //label.numberOfLines = 0
         return button
     }()
     
@@ -82,7 +80,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         welcomePage.shouldCompactDescriptionText = true
         welcomePage.actionButtonTitle = "Next"
         welcomePage.alternativeButtonTitle = "Get Started"
-        welcomePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        welcomePage.interfaceFactory.tintColor = color.sickcallGreen()
         welcomePage.interfaceFactory.actionButtonTitleColor = .white
         welcomePage.isDismissable = true
         welcomePage.actionHandler = { (item: PageBulletinItem) in
@@ -106,7 +104,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         
         affordablePage.descriptionText = "Your Sickcall nurse advisor will respond with a low, medium, or high serious level and some information on what may be going on."
         affordablePage.actionButtonTitle = "Got It"
-        affordablePage.interfaceFactory.tintColor = uicolorFromHex(0x006a52)// green
+        affordablePage.interfaceFactory.tintColor = color.sickcallGreen()
         affordablePage.interfaceFactory.actionButtonTitleColor = .white
         affordablePage.isDismissable = true
         affordablePage.actionHandler = { (item: PageBulletinItem) in
@@ -120,7 +118,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
     
     override func viewDidLoad(){
         super.viewDidLoad()
-        //print(numberToSend[0])
         
         let exitItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(SignupViewController.exitAction(_:)))
         self.navigationItem.leftBarButtonItem = exitItem
@@ -161,14 +158,13 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         }
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
+        NVActivityIndicatorView.DEFAULT_COLOR = color.sickcallGreen()
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         let proPic = UIImageJPEGRepresentation(UIImage(named: "appy")!, 0.5)
         uploadedImage = PFFile(name: "defaultProfile_ios.jpeg", data: proPic!)
         uploadedImage?.saveInBackground()
-        // Do any additional setup after loading the view.
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -211,9 +207,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         user.signUpInBackground{ (succeeded: Bool, error: Error?) -> Void in
             self.stopAnimating()
             if error != nil {
-                // let errorString = erro_userInfofo["error"] as? NSString
-                //
-                print(error!)
                 SCLAlertView().showError("Oops", subTitle: "Email already taken.")
                 
             } else {
@@ -229,8 +222,7 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         }
     }
     
-    //MARK: Validate jaunts
-    
+    //MARK: Validate password and email
     func validatePassword() -> Bool{
         if passwordText.text!.isEmpty{
             passwordText.attributedPlaceholder = NSAttributedString(string:"Field required",
@@ -238,7 +230,6 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
             valPassword = false
             
         } else{
-            print("true")
             valPassword = true
         }
         
@@ -292,25 +283,21 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
         PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
             (user: PFUser?, error: Error?) -> Void in
             self.startAnimating()
+            
             if let user = user {
-                print(user)
-                
                 let installation = PFInstallation.current()
                 installation?["user"] = user
                 installation?["userId"] = user.objectId
                 installation?.saveEventually()
                 
                 if user.isNew {
-                    
                     let request = FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"], tokenString: FBSDKAccessToken.current().tokenString, version: nil, httpMethod: "GET")
                     let _ = request?.start(completionHandler: { (connection, result, error) in
                         guard let userInfo = result as? [String: Any] else { return } //handle the error
                         
-                        print(userInfo)
                         //The url is nested 3 layers deep into the result so it's pretty messy
                         if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
                             
-                            //self.image.kf.setImage(with: URL(string: imageURL))
                             if let url = URL(string: imageURL) {
                                 if let data = NSData(contentsOf: url){
                                     self.image = UIImage(data: data as Data)
@@ -355,17 +342,10 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
                     let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
                     self.present(initialViewController, animated: true, completion: nil)
                 }
+                
             } else {
                 self.stopAnimating()
             }
         }
-    }
-    
-    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
 }

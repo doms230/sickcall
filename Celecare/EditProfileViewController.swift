@@ -16,6 +16,8 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
     
     let screenSize: CGRect = UIScreen.main.bounds
     
+    var color = Color()
+    
     lazy var username: UITextField = {
         let label = UITextField()
         label.placeholder = "Name"
@@ -32,13 +34,12 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
         button.titleLabel?.textAlignment = .left
         button.setTitle("+", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        //label.numberOfLines = 0
         return button
     }()
     
     
-    var imageJaunt: String!
-    var nameJaunt: String!
+    var imageString: String!
+    var nameString: String!
     
     //don't let person edit their name if they're an advisor
     var isAdvisor = false 
@@ -51,9 +52,9 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
 
         image.layer.cornerRadius = 50
         image.clipsToBounds = true
-        image.kf.setBackgroundImage(with: URL(string: imageJaunt), for: .normal)
+        image.kf.setBackgroundImage(with: URL(string: imageString), for: .normal)
         image.addTarget(self, action: #selector(editProfile(_:)), for: .touchUpInside)
-        username.text = nameJaunt
+        username.text = nameString
         
         self.view.addSubview(username)
         if isAdvisor{
@@ -71,11 +72,10 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
             make.top.equalTo(image.snp.bottom).offset(10)
             make.left.equalTo(self.view).offset(10)
             make.right.equalTo(self.view).offset(-10)
-            //make.bottom.equalTo(self.view).offset(-20)
         }
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
+        NVActivityIndicatorView.DEFAULT_COLOR = color.sickcallGreen()
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
@@ -139,20 +139,9 @@ class EditProfileViewController: UIViewController,UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
     }
     
-    
     @objc func editProfile(_ sender: UIButton) {
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
     }
-    
-    
-    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
-    }
-
 }

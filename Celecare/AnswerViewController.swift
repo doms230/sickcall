@@ -2,9 +2,8 @@
 //  AnswerViewController.swift
 //  Sickcall
 //
-//  Created by Mac Owner on 7/10/17.
+//  Created by Dominic Smith on 7/10/17.
 //  Copyright © 2017 Sickcall LLC All rights reserved.
-//
 
 import UIKit
 import Parse
@@ -12,6 +11,10 @@ import Kingfisher
 import NVActivityIndicatorView
 
 class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var color = Color()
     
     var questionImages = [String]()
     var questions = [String]()
@@ -27,31 +30,27 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     let screenSize: CGRect = UIScreen.main.bounds
     
-    @IBOutlet weak var tableJaunt: UITableView!
-    
     var refreshControl: UIRefreshControl!
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "My Questions"
         
         startAnimating()
 
-        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "myQuestionsReuse")
-        self.tableJaunt.register(MainTableViewCell.self, forCellReuseIdentifier: "noQuestionsReuse")
-        self.tableJaunt.estimatedRowHeight = 50
-        self.tableJaunt.rowHeight = UITableViewAutomaticDimension
+        self.tableView.register(MainTableViewCell.self, forCellReuseIdentifier: "myQuestionsReuse")
+        self.tableView.register(MainTableViewCell.self, forCellReuseIdentifier: "noQuestionsReuse")
+        self.tableView.estimatedRowHeight = 50
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
+        NVActivityIndicatorView.DEFAULT_COLOR = color.sickcallGreen()
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: UIControlEvents.valueChanged)
-        tableJaunt.addSubview(refreshControl) // not required when using UITableViewController
+        tableView.addSubview(refreshControl)
         
         loadData()
     }
@@ -70,19 +69,17 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         questionVideos.removeAll()
         
         loadData()
-        
-        // Code to refresh table view
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let indexPath = tableJaunt.indexPathForSelectedRow{
+        if let indexPath = tableView.indexPathForSelectedRow{
             let desti = segue.destination as! V2ViewAnswerViewController
             desti.objectId = objectId[indexPath.row]
             desti.comments = comments[indexPath.row]
             desti.level = level[indexPath.row]
             desti.isAnswered = isAnswered[indexPath.row]
             desti.advisorUserId = advisorUserId[indexPath.row]
-            desti.videoJaunt = questionVideos[indexPath.row]
+            desti.videoFile = questionVideos[indexPath.row]
             desti.summary = questions[indexPath.row]
             desti.duration = questionDurations[indexPath.row]
             desti.videoPreview = questionImages[indexPath.row]
@@ -103,31 +100,27 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         var cell: MainTableViewCell!
         
         if objectId.count > 0{
             cell = tableView.dequeueReusableCell(withIdentifier: "myQuestionsReuse", for: indexPath) as! MainTableViewCell
             
             cell.selectionStyle = .none
-            self.tableJaunt.separatorStyle = .none
-            
-            //cell.questionImage.kf.setImage(with: URL(string: questionImages[indexPath.row]), placeholder: UIImage(named: "appy"))
-            //cell.questionImage.kf.setImage(with: URL(string: questionImages[indexPath.row]), for: .)
+            self.tableView.separatorStyle = .none
             cell.questionLabel.text = questions[indexPath.row]
             cell.statusLabel.text = questionStatus[indexPath.row]
             
             if isAnswered[indexPath.row]{
-                cell.questionView.backgroundColor = uicolorFromHex(0x006a52)
+                cell.questionView.backgroundColor = color.sickcallGreen()
                 
             } else {
-                cell.questionView.backgroundColor = uicolorFromHex(0x180d22)
+                cell.questionView.backgroundColor = color.sickcallBlack()
             }
             
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "noQuestionsReuse", for: indexPath) as! MainTableViewCell
             cell.selectionStyle = .none
-            self.tableJaunt.separatorStyle = .none
+            self.tableView.separatorStyle = .none
         }
         
         return cell
@@ -158,6 +151,7 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         if isAnswered{
                             self.questionStatus.append("Answered")
                             self.advisorUserId.append(object["advisorUserId"] as! String)
+                            
                         } else {
                             self.questionStatus.append("Pending Answer")
                             self.advisorUserId.append("nil")
@@ -176,23 +170,11 @@ class AnswerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         self.questionVideos.append(object["video"] as! PFFile)
                     }
                     
-                    self.tableJaunt.reloadData()
+                    self.tableView.reloadData()
                     self.refreshControl.endRefreshing()
                     self.stopAnimating()
-
                 }
-            } else {
-                // Log details of the failure
-                print("Error: \(error!)")
             }
         }
-    }
-    
-    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
 }

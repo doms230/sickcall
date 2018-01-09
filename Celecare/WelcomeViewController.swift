@@ -21,6 +21,8 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     var image: UIImage!
     var retreivedImage: PFFile!
     let screenSize: CGRect = UIScreen.main.bounds
+    
+    var color = Color()
 
     lazy var appImage: UIImageView = {
         let image = UIImageView()
@@ -93,7 +95,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
-        //label.numberOfLines = 0
         return button
     }()
     
@@ -104,7 +105,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
-        //label.numberOfLines = 0
         return button
     }()
     
@@ -116,7 +116,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
-        //label.numberOfLines = 0
         return button
     }()
     
@@ -127,7 +126,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
-        //label.numberOfLines = 0
         return button
     }()
     
@@ -135,13 +133,13 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         super.viewDidLoad()
         
         NVActivityIndicatorView.DEFAULT_TYPE = .ballScaleMultiple
-        NVActivityIndicatorView.DEFAULT_COLOR = uicolorFromHex(0x006a52)
+        NVActivityIndicatorView.DEFAULT_COLOR = color.sickcallGreen()
         NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE = CGSize(width: 60, height: 60)
         NVActivityIndicatorView.DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         
         self.view.addSubview(appImage)
         self.view.addSubview(appName)
-        appName.textColor = uicolorFromHex(0x006a52)
+        appName.textColor = color.sickcallGreen()
         self.view.addSubview(appEx)
         self.view.addSubview(appFeature)
         self.view.addSubview(featureImage)
@@ -152,13 +150,10 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
         self.view.addSubview(signinButton)
         signinButton.addTarget(self, action: #selector(signInAction(_:)), for: .touchUpInside)
         self.view.addSubview(signupButton)
-        signinButton.setTitleColor(uicolorFromHex(0x006a52), for: .normal)  
+        signinButton.setTitleColor(color.sickcallGreen(), for: .normal)
         
-        signupButton.backgroundColor = uicolorFromHex(0x006a52)
+        signupButton.backgroundColor = color.sickcallGreen()
         signupButton.addTarget(self, action: #selector(signupAction(_:)), for: .touchUpInside)
-       /* self.view.addSubview(facebookButton)
-        facebookButton.backgroundColor = uicolorFromHex(0x0950D0)
-        facebookButton.addTarget(self, action: #selector(facebookAction(_:)), for: .touchUpInside)*/
         self.view.addSubview(termsButton)
         termsButton.addTarget(self, action: #selector(termsAction(_:)), for: .touchUpInside)
         
@@ -229,13 +224,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
             make.right.equalTo(self.view).offset(-10)
         }
         
-        /*facebookButton.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(50)
-            make.top.equalTo(signupButton.snp.bottom).offset(10)
-            make.left.equalTo(self.view).offset(10)
-            make.right.equalTo(self.view).offset(-10)
-        }*/
-        
         termsButton.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(self.signupButton.snp.bottom).offset(5)
             make.left.equalTo(self.view).offset(10)
@@ -253,12 +241,10 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
     }
     
     @objc func facebookAction(_ sender: UIButton) {
-        //
         PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
             (user: PFUser?, error: Error?) -> Void in
             self.startAnimating()
             if let user = user {
-                print(user)
                 
                 let installation = PFInstallation.current()
                 installation?["user"] = user
@@ -266,7 +252,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                 installation?.saveEventually()
                 
                 if user.isNew {
-                    
                     let request = FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"], tokenString: FBSDKAccessToken.current().tokenString, version: nil, httpMethod: "GET")
                     let _ = request?.start(completionHandler: { (connection, result, error) in
                         guard let userInfo = result as? [String: Any] else { return } //handle the error
@@ -275,7 +260,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
                         //The url is nested 3 layers deep into the result so it's pretty messy
                         if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
                             
-                            //self.image.kf.setImage(with: URL(string: imageURL))
                             if let url = URL(string: imageURL) {
                                 if let data = NSData(contentsOf: url){
                                     self.image = UIImage(data: data as Data)
@@ -325,14 +309,6 @@ class WelcomeViewController: UIViewController,NVActivityIndicatorViewable {
             }
         }
     }
-    
-    func uicolorFromHex(_ rgbValue:UInt32)->UIColor{
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
-    }    
     
     @objc func termsAction(_ sender: UIButton) {
         UIApplication.shared.open(URL(string: "https://www.sickcallhealth.com/terms" )!, options: [:], completionHandler: nil)

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D757311A6C8CE3F6EA451F0 /* Pods_Celecare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */; };
 		590F69511F78A1F6004FE33A /* BasicInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */; };
+		5961F3A820049D88001C5282 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5961F3A720049D88001C5282 /* Color.swift */; };
 		59B5F7301FA978E3008EE10C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59B5F72F1FA978E3008EE10C /* AppDelegate.swift */; };
 		9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */; };
 		9A26872C1F0F033900AF7A2B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celecare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoTableViewController.swift; sourceTree = "<group>"; };
+		5961F3A720049D88001C5282 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		59B5F72F1FA978E3008EE10C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -65,6 +67,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5961F3A920049D95001C5282 /* mich */ = {
+			isa = PBXGroup;
+			children = (
+				9AF65FDA1F202D4E00C6E9CA /* Post.swift */,
+				5961F3A720049D88001C5282 /* Color.swift */,
+			);
+			name = mich;
+			sourceTree = "<group>";
+		};
 		9AB067601EFAE95100092BC6 = {
 			isa = PBXGroup;
 			children = (
@@ -86,11 +97,11 @@
 		9AB0676B1EFAE95100092BC6 /* Celecare */ = {
 			isa = PBXGroup;
 			children = (
-				9AF65FDA1F202D4E00C6E9CA /* Post.swift */,
 				9AB067831F0217DA00092BC6 /* Celecare.entitlements */,
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
 				9AB067751EFAE95100092BC6 /* Assets.xcassets */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
+				5961F3A920049D95001C5282 /* mich */,
 				9AB067821F0207A500092BC6 /* main */,
 				9ACD38011F0992C2005842CF /* login */,
 				59B5F72F1FA978E3008EE10C /* AppDelegate.swift */,
@@ -336,6 +347,7 @@
 				59B5F7301FA978E3008EE10C /* AppDelegate.swift in Sources */,
 				F24710741F4236A8008AB906 /* V2ViewAnswerViewController.swift in Sources */,
 				9A2687281F0C1B5D00AF7A2B /* SummaryViewController.swift in Sources */,
+				5961F3A820049D88001C5282 /* Color.swift in Sources */,
 				9A73518B1F1D3C5C00A438C8 /* EditProfileViewController.swift in Sources */,
 				F24710761F42396A008AB906 /* ViewAnswerTableViewCell.swift in Sources */,
 				9AB182181F147E6300678851 /* MainSidebarViewController.swift in Sources */,
