@@ -22,7 +22,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     var tableView: UITableView!
     
     var color = Color()
-    
+        
     //post
     var healthConcernDuration: String!
     var healthConcernSummary: String!
@@ -322,8 +322,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
             case .success(let data):
                 let json = JSON(data)
                 
-                if let status = json["statusCode"].int{
-                    print(status)
+                if let _ = json["statusCode"].int{
                     let message = json["message"].string
                     SCLAlertView().showError("Something Went Wrong", subTitle: message!)
                     
@@ -336,7 +335,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
                 
             case .failure(let error):
-                print(error)
                 SCLAlertView().showError("Charge Unsuccessful", subTitle: error.localizedDescription)
             }
         }
@@ -398,7 +396,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     func assignQuestion(objectId: String){
         Alamofire.request(self.questionURL, method: .post, parameters: ["id": objectId], encoding: JSONEncoding.default).validate().response{response in
             self.stopAnimating()
-            print(response)
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let controller = storyboard.instantiateViewController(withIdentifier: "main") as! UITabBarController
             controller.selectedIndex = 1
@@ -408,6 +405,7 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func loadPrice(){
         self.startAnimating()
+        
         Alamofire.request(self.priceURL, method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
             switch response.result {
             case .success(let data):

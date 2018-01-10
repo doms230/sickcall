@@ -1,5 +1,5 @@
 #  Sickcall
-## Health answers from U.S. Registered Nurses
+### Health answers from U.S. Registered Nurses
 
 Features
 ======
@@ -12,7 +12,6 @@ Component Libraries
 
 Frameworks
 -
-
 ### AVFoundation and AVKit
  * Used to record and playback the video that you record for your health concern.
  
@@ -103,22 +102,22 @@ func videoPreviewImage() -> UIImage? {
 //is set to record when the is shown the alert
 if UserDefaults.standard.object(forKey: "notifications") == nil{
     //prepare the custom external framework BulletinBoard alert
-    //self.notificationsManager.prepare()
-    //self.notificationsManager.presentBulletin(above: self)
+    self.notificationsManager.prepare()
+    self.notificationsManager.presentBulletin(above: self)
 }
 
 //show custom BulletinBoard alert
-//lazy var notificationsManager: BulletinManager = {
-    //let page = PageBulletinItem(title: "Notifications")
-    //page.image = UIImage(named: "bell")
-    //page.descriptionText = "Sickcall uses notifications to let you know when you nurse advisor replies to //your health concern."
-    //page.actionButtonTitle = "Okay"
-    //page.interfaceFactory.tintColor = color.sickcallGreen()
-    //page.interfaceFactory.actionButtonTitleColor = .white
-    //page.isDismissable = true
-    //page.actionHandler = { (item: PageBulletinItem) in
-        //page.manager?.dismissBulletin()
-        //show alert asking to enable notifications
+lazy var notificationsManager: BulletinManager = {
+    let page = PageBulletinItem(title: "Notifications")
+    page.image = UIImage(named: "bell")
+    page.descriptionText = "Sickcall uses notifications to let you know when you nurse advisor replies to your health concern."
+    page.actionButtonTitle = "Okay"
+    page.interfaceFactory.tintColor = color.sickcallGreen()
+    page.interfaceFactory.actionButtonTitleColor = .white
+    page.isDismissable = true
+    page.actionHandler = { (item: PageBulletinItem) in
+        page.manager?.dismissBulletin()
+        show alert asking to enable notifications
          UserDefaults.standard.set(true, forKey: "notifications")
          let current = UNUserNotificationCenter.current()
          current.getNotificationSettings(completionHandler: { (settings) in
@@ -130,11 +129,113 @@ if UserDefaults.standard.object(forKey: "notifications") == nil{
                  }
              }
          })
-     //}
+     }
      return BulletinManager(rootItem: page)
 
 }()
 
 ```
+External Libraries
+-
+External Libraries made Sickcall so much better. Thank you. Besides Google Search, I found many of these libraries from [iOS Cookies](http://www.ioscookies.com/). Check it out!
+
+### [Alamofire](https://github.com/Alamofire/Alamofire) & [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+* Alamofire and SwiftyJSON made the process of securely sending and retrieving payments data up to Sickcall's Node.js server ALOT easier.
+
+
+The block of code below grabs the price from the server. The server responds with a JSON and is parsed using SwiftyJSON.
+
+```swift
+func loadPrice(){
+    self.startAnimating()
+
+    Alamofire.request(self.priceURL, method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
+        switch response.result {
+        case .success(let data):
+            let json = JSON(data)
+
+            self.booking_fee = json["booking_fee"].int!
+            self.nurse_fee = json["advisor_fee"].int!
+            self.total = self.booking_fee + self.nurse_fee
+
+            self.tableView.reloadData()
+            self.stopAnimating()
+
+        case .failure(let error):
+            self.stopAnimating()
+            let alert = UIAlertController(title: "Something Went Wrong", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Reload", style: .default, handler: { action in
+            alert.dismiss(animated: true, completion: nil)
+            self.loadPrice()
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+}
+
+```
+
+
+
+The block of code below is a method that sent the payments data to server.
+```swift
+
+func createCharge(){
+
+    var baseURL = "https://celecare.herokuapp.com/payments/createTestCharge"
+    //price total in cents
+    var total = 699
+    
+    var tokenId = abc123
+    
+    let p: Parameters = [
+    "total": total,
+    "description": "\(String(describing: PFUser.current()!.email!))'s Sickcall",
+    "token": tokenId,
+    "email": PFUser.current()!.email!
+    ]
+
+    Alamofire.request(self.baseURL, method: .post, parameters: p, encoding: JSONEncoding.default).validate().responseJSON { response in
+        switch response.result {
+            case .success(let data):
+            let json = JSON(data)
+
+            if let status = json["statusCode"].int{
+            let message = json["message"].string
+            SCLAlertView().showError("Something Went Wrong", subTitle: message!)
+
+            } else {
+                self.chargeId = json["id"].string
+                self.hasUserPaid = true
+                if self.isVideoCompressed{
+                    self.postIt()
+                }
+            }
+
+            case .failure(let error):
+            SCLAlertView().showError("Charge Unsuccessful", subTitle: error.localizedDescription)
+        }
+    }
+}
+```
+
+The block below is using Alamofire to send the health concern objectId up to the server to where the user's nurse advisor will be determined. 
+```swift
+var questionURL = "https://celecare.herokuapp.com/posts/assignQuestion"
+var objectId = abc123
+
+func assignQuestion(objectId: String){
+    Alamofire.request(self.questionURL, method: .post, parameters: ["id": objectId], encoding: JSONEncoding.default).validate().response{response in
+        self.stopAnimating()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "main") as! UITabBarController
+        controller.selectedIndex = 1
+        self.present(controller, animated: true, completion: nil)
+    }
+}
+```
+
+
+
 
 
