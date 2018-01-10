@@ -12,11 +12,9 @@ Component Libraries
 
 Frameworks
 -
-#### Table of Contents
-#### [AVFoundation and AVKit](https://github.com/doms230/sickcall#AVFoundationandAVKit)
-#### [UserNotifications](https://github.com/doms230/sickcall#UserNotifications)
-#### [Facebook SDK](https://github.com/doms230/sickcall#FacebookSDK)
-#### [Parse](https://github.com/doms230/sickcall#Parse)
+#####Table of Contents
+ [AVFoundation and AVKit](https://github.com/doms230/sickcall#AVFoundationandAVKit)
+ [UserNotifications](https://github.com/doms230/sickcall#UserNotifications)
 
 ### AVFoundation and AVKit
  * Used to record and playback the video that you record for your health concern.
@@ -145,14 +143,18 @@ External Libraries
 -
 External Libraries made Sickcall so much better. Thank you. Besides Google Search, I found many of these libraries from [iOS Cookies](http://www.ioscookies.com/). Check it out!
 
-#### Table of Contents
-#### [Stripe](https://github.com/doms230/sickcall#stripe)
-#### [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#Alamofire&SwiftyJSON)
-#### [Kingfisher](https://github.com/doms230/sickcall#Kingfisher)
-#### [SnapKit](https://github.com/doms230/sickcall#SnapKit)
-#### [SCLAlertView](https://github.com/doms230/sickcall#SCLAlertViewv)
-
-
+#####Table of Contents
+ [Stripe](https://github.com/doms230/sickcall#stripe)
+ [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#Alamofire&SwiftyJSON)
+ [Kingfisher](https://github.com/doms230/sickcall#Kingfisher)
+ [SnapKit](https://github.com/doms230/sickcall#SnapKit)
+ [Parse](https://github.com/doms230/sickcall#Parse)
+ [Facebook SDK](https://github.com/doms230/sickcall#FacebookSDK)
+ [Kingfisher](https://github.com/doms230/sickcall#Kingfisher)
+ [SCLAlertView](https://github.com/doms230/sickcall#SCLAlertViewv)
+ [BulletinBoard](https://github.com/doms230/sickcall#BulletinBoard)
+ [NVActivityIndicatorView](https://github.com/doms230/sickcall#NVActivityIndicatorView)
+ 
 ### [Stripe](https://stripe.com/)
 * I used Stripe to process payments.
 
@@ -271,17 +273,6 @@ func assignQuestion(objectId: String){
         self.present(controller, animated: true, completion: nil)
     }
 }
-```
-
-### [Kingfisher](https://github.com/onevcat/Kingfisher)
-
-* Kingfisher handles downloading and caching images for you.
-
-It's very simple and straight foward.
-
-[EditProfileViewController](https://github.com/doms230/sickcall/blob/master/Celecare/EditProfileViewController.swift)
-```swift
-image.kf.setBackgroundImage(with: URL(string: imageString), for: .normal)
 ```
 
 ### [SnapKit](https://github.com/SnapKit/SnapKit)
@@ -471,6 +462,9 @@ func loadData(){
 }
 
 ```
+### [Kingfisher](https://github.com/onevcat/Kingfisher)
+
+* Kingfisher handles downloading and caching images for you.
 
 ### [SCLAlertView](https://github.com/vikmeup/SCLAlertView-Swift)
 * Custom animated Alertview
