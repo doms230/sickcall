@@ -326,10 +326,8 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
                                         (success: Bool, error: Error?) -> Void in
                                         if (success) {
                                             self.stopAnimating()
-                                            
-                                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                            let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                                            self.present(initialViewController, animated: true, completion: nil)                                        }
+                                            self.goHome()
+                                        }
                                     }
                                 }
                             }
@@ -337,15 +335,18 @@ class SignupViewController: UIViewController,NVActivityIndicatorViewable {
                     })
                 } else {
                     self.stopAnimating()
-                    
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
-                    self.present(initialViewController, animated: true, completion: nil)
+                    self.goHome()
                 }
                 
             } else {
                 self.stopAnimating()
             }
         }
+    }
+    
+    func goHome(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: "main")
+        self.present(initialViewController, animated: true, completion: nil)
     }
 }

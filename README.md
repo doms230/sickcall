@@ -155,7 +155,7 @@ func choosePaymentAction() {
 }
 
 ```
-Once the user updates their payment, Stripe encypts the data and creates a token with all the payment information. I update the UI with the user's payment info so they know that their information was capture. This includes the last 4 digits of the card and an image of the type of card such as Visa.
+Once the user updates their payment, Stripe encypts the data and creates a token with all the payment information. I update the UI with the user's payment info so they know that their information was captured. This includes the last 4 digits of the card and an image of the type of card such as Visa.
 
 ```swift
 func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
@@ -258,6 +258,218 @@ func assignQuestion(objectId: String){
     }
 }
 ```
+
+### [Kingfisher](https://github.com/onevcat/Kingfisher)
+
+* Kingfisher handles downloading and caching images for you.
+
+It's very simple and straight foward.
+
+[EditProfileViewController](https://github.com/doms230/sickcall/blob/master/Celecare/EditProfileViewController.swift)
+```swift
+image.kf.setBackgroundImage(with: URL(string: imageString), for: .normal)
+```
+
+### [SnapKit](https://github.com/SnapKit/SnapKit)
+
+*  SnapKit is A Swift Autolayout DSL for iOS & OS X
+
+SnapKit is one of my favorite libraries. I'm not a fan of dragging and dropping elements because it never works well accross different devices. Without SnapKit you end spending a lot of time trying to get the layout right.
+
+Here's a code snippet of SnapKit in action in Sickcall from the  [loginViewController](https://github.com/doms230/sickcall/blob/master/Celecare/LoginViewController.swift)
+
+```swift
+    titleLabel.snp.makeConstraints { (make) -> Void in
+        make.top.equalTo(self.view).offset(100)
+        make.left.equalTo(self.view).offset(10)
+        make.right.equalTo(self.view).offset(-10)
+    }
+
+    emailText.snp.makeConstraints { (make) -> Void in
+        make.top.equalTo(titleLabel.snp.bottom).offset(10)
+        make.left.equalTo(self.view).offset(10)
+        make.right.equalTo(self.view).offset(-10)
+    }
+
+    passwordText.snp.makeConstraints { (make) -> Void in
+        make.top.equalTo(emailText.snp.bottom).offset(10)
+        make.left.equalTo(self.view).offset(10)
+        make.right.equalTo(self.view).offset(-10)
+    }
+
+    signButton.snp.makeConstraints { (make) -> Void in
+        make.top.equalTo(passwordText.snp.bottom).offset(10)
+        make.right.equalTo(self.view).offset(-10)
+    }
+    
+    forgotPasswordButton.snp.makeConstraints { (make) -> Void in
+        make.top.equalTo(passwordText.snp.bottom).offset(10)
+        make.left.equalTo(self.view).offset(10)
+    }
+```
+
+### [Parse](https://github.com/parse-community)
+
+* Parse made it easy for me to store and query data in a mongoDB
+
+
+The code snippet below is an example of posting a new question [SummaryViewController](https://github.com/doms230/sickcall/blob/master/Celecare/SummaryViewController.swift)
+
+```swift
+func postIt(){
+    let newQuestion = PFObject(className: "Post")
+    newQuestion["userId"] = PFUser.current()?.objectId
+    newQuestion["video"] = videoFile
+    newQuestion["videoScreenShot"] = self.screenshotImage
+    newQuestion["duration"] = healthConcernDuration
+    newQuestion["summary"] = healthConcernSummary
+    newQuestion["level"] = ""
+    newQuestion["comment"] = ""
+    newQuestion["advisorUserId"] = ""
+    newQuestion["isAnswered"] = false
+    newQuestion["isRemoved"] = false
+    newQuestion["chargeId"] = self.chargeId
+    newQuestion.saveEventually{
+    (success: Bool, error: Error?) -> Void in
+        if (success) {
+        self.assignQuestion(objectId: newQuestion.objectId!)
+
+        } else {
+        SCLAlertView().showError("Post UnSuccessful", subTitle: "Check internet connection and try again.")
+        }
+    }
+}
+```
+The code snippet below loads the user's questions [V2AnswerViewController](https://github.com/doms230/sickcall/blob/master/Celecare/V2ViewAnswerViewController.swift)
+```swift
+//load data
+func loadData(){
+    let query = PFQuery(className:"Post")
+    query.whereKey("userId", equalTo: PFUser.current()!.objectId!)
+    query.whereKey("isRemoved", equalTo: false)
+    query.addDescendingOrder("createdAt")
+    query.findObjectsInBackground {
+    (objects: [PFObject]?, error: Error?) -> Void in
+        if error == nil {
+            if let objects = objects {
+                for object in objects {
+                    self.objectId.append(object.objectId!)
+                    let url = object["videoScreenShot"] as! PFFile
+                    self.questionImages.append(url.url!)
+                    self.questions.append(object["summary"] as! String)
+
+                    let isAnswered = object["isAnswered"] as! Bool
+                    self.isAnswered.append(isAnswered)
+                        if isAnswered{
+                            self.questionStatus.append("Answered")
+                            self.advisorUserId.append(object["advisorUserId"] as! String)
+
+                        } else {
+                            self.questionStatus.append("Pending Answer")
+                            self.advisorUserId.append("nil")
+                        }
+
+                    self.questionDurations.append(object["duration"] as! String)
+
+                    let rawCreatedAt = object.createdAt
+                    let createdAt = DateFormatter.localizedString(from: rawCreatedAt!, dateStyle: .short, timeStyle: .short)
+
+                    self.dateUploaded.append(createdAt)
+
+                    //
+                    self.level.append(object["level"] as! String)
+                    self.comments.append(object["comment"] as! String)
+                    self.questionVideos.append(object["video"] as! PFFile)
+                }
+
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+            self.stopAnimating()
+        
+            }
+        }
+    }
+}
+```
+### [Facebook SDK](https://developers.facebook.com/docs/swift)
+* I used Facebook login for a quick and easy login experience
+
+[SignupViewController](https://github.com/doms230/sickcall/blob/master/Celecare/SignupViewController.swift)
+```swift
+@objc func facebookAction(_ sender: UIBarButtonItem){
+    PFFacebookUtils.logInInBackground(withReadPermissions: ["public_profile","email"]){
+        (user: PFUser?, error: Error?) -> Void in
+        self.startAnimating()
+        
+            if user.isNew{
+                let request = FBSDKGraphRequest(graphPath: "me",parameters: ["fields": "id, name, first_name, last_name, email, gender, picture.type(large)"], tokenString: FBSDKAccessToken.current().tokenString, version: nil, httpMethod: "GET")
+                    let _ = request?.start(completionHandler: { (connection, result, error) in
+                    guard let userInfo = result as? [String: Any] else { return } //handle the error
+
+                    //The url is nested 3 layers deep into the result so it's pretty messy
+                        if let imageURL = ((userInfo["picture"] as? [String: Any])?["data"] as? [String: Any])?["url"] as? String {
+
+                        if let url = URL(string: imageURL){
+                            if let data = NSData(contentsOf: url){
+                            self.image = UIImage(data: data as Data)
+                            }
+                        }
+                        let proPic = UIImageJPEGRepresentation(self.image, 0.5)
+                        
+                        //save new user to database once facebook profile photo is retrieved
+                        self.retreivedImage = PFFile(name: "profile_ios.jpeg", data: proPic!)
+                        self.retreivedImage?.saveInBackground{
+                        (success: Bool, error: Error?) -> Void in
+                            if (success){
+                                user.email = userInfo["email"] as! String?
+                                user["DisplayName"] = userInfo["first_name"] as! String?
+                                user["Profile"] = self.retreivedImage
+                                user["foodAllergies"] = []
+                                user["gender"] = userInfo["gender"] as! String?
+                                user["height"] = " "
+                                user["medAllergies"] = []
+                                user["weight"] = " "
+                                user["birthday"] = " "
+                                user["beatsPM"] = " "
+                                user["healthIssues"] = " "
+                                user["respsPM"] = " "
+                                user["medHistory"] = " "
+                                user.saveEventually{
+                                (success: Bool, error: Error?) -> Void in
+                                    if(success){
+                                        self.stopAnimating()
+                                        self.goHome()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                })
+            } else {
+            self.stopAnimating()
+            self.goHome()
+            }
+            
+        } else {
+        self.stopAnimating()
+        }
+    }
+}
+
+```
+
+### [SCLAlertView](https://github.com/vikmeup/SCLAlertView-Swift)
+* Custom animated Alertview
+
+###[BulletinBoard](https://github.com/alexaubry/BulletinBoard)
+* General-purpose contextual cards for iOS
+
+###[NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView)
+* A collection of awesome loading animations
+
+
+
+
 
 
 
