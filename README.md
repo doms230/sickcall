@@ -13,8 +13,9 @@ Component Libraries
 Frameworks
 -
 ##### Table of Contents
- [AVFoundation and AVKit](https://github.com/doms230/sickcall#AVFoundationandAVKit)
- [UserNotifications](https://github.com/doms230/sickcall#UserNotifications)
+ [AVFoundation and AVKit](https://github.com/doms230/sickcall#avfoundationandavkit)
+ 
+ [UserNotifications](https://github.com/doms230/sickcall#usernotifications)
 
 ### AVFoundation and AVKit
  * Used to record and playback the video that you record for your health concern.
@@ -145,15 +146,22 @@ External Libraries made Sickcall so much better. Thank you. Besides Google Searc
 
 ##### Table of Contents
  [Stripe](https://github.com/doms230/sickcall#stripe)
- [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#Alamofire&SwiftyJSON)
- [Kingfisher](https://github.com/doms230/sickcall#Kingfisher)
- [SnapKit](https://github.com/doms230/sickcall#SnapKit)
- [Parse](https://github.com/doms230/sickcall#Parse)
- [Facebook SDK](https://github.com/doms230/sickcall#FacebookSDK)
- [Kingfisher](https://github.com/doms230/sickcall#Kingfisher)
- [SCLAlertView](https://github.com/doms230/sickcall#SCLAlertViewv)
- [BulletinBoard](https://github.com/doms230/sickcall#BulletinBoard)
- [NVActivityIndicatorView](https://github.com/doms230/sickcall#NVActivityIndicatorView)
+ 
+ [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#alamofire)
+ 
+ [SnapKit](https://github.com/doms230/sickcall#snapKit)
+ 
+ [Parse](https://github.com/doms230/sickcall#parse)
+ 
+ [Facebook SDK](https://github.com/doms230/sickcall#facebooksdk)
+ 
+ [Kingfisher](https://github.com/doms230/sickcall#kingfisher)
+ 
+ [SCLAlertView](https://github.com/doms230/sickcall#sclalertview)
+ 
+ [BulletinBoard](https://github.com/doms230/sickcall#bulletinboard)
+ 
+ [NVActivityIndicatorView](https://github.com/doms230/sickcall#nvactivityIndicatorview)
  
 ### [Stripe](https://stripe.com/)
 * I used Stripe to process payments.
