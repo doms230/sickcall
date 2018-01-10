@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,8 +32,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="9pv-A4-QxB" id="RDB-ci-Dk1"/>
-                                    <outlet property="delegate" destination="9pv-A4-QxB" id="JpB-aA-Afk"/>
+                                    <outlet property="dataSource" destination="9pv-A4-QxB" id="FJi-dM-KdB"/>
+                                    <outlet property="delegate" destination="9pv-A4-QxB" id="NHT-xQ-K4P"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -49,7 +49,7 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableJaunt" destination="57Y-K9-JCh" id="ujl-s1-7us"/>
+                        <outlet property="tableView" destination="57Y-K9-JCh" id="IJm-RN-Rqc"/>
                         <segue destination="jYE-s4-s8T" kind="show" identifier="showAnswer" id="8Jr-bz-HIF"/>
                     </connections>
                 </viewController>
@@ -352,8 +352,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="YmV-QH-sgw" id="zec-BF-sZ6"/>
-                                    <outlet property="delegate" destination="YmV-QH-sgw" id="NBX-Ty-jNJ"/>
+                                    <outlet property="dataSource" destination="YmV-QH-sgw" id="zUl-bo-WPs"/>
+                                    <outlet property="delegate" destination="YmV-QH-sgw" id="Wxe-Hi-d9q"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -373,7 +373,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableJaunt" destination="sgQ-mi-gee" id="9FB-eR-rhv"/>
+                        <outlet property="tableView" destination="sgQ-mi-gee" id="OVG-A9-l3o"/>
                         <segue destination="8Bz-vl-1MO" kind="show" identifier="showEditProfile" id="iAX-An-tgz"/>
                     </connections>
                 </viewController>
