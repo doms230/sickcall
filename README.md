@@ -12,7 +12,7 @@ Component Libraries
 
 Frameworks
 -
-#####Table of Contents
+##### Table of Contents
  [AVFoundation and AVKit](https://github.com/doms230/sickcall#AVFoundationandAVKit)
  [UserNotifications](https://github.com/doms230/sickcall#UserNotifications)
 
@@ -143,7 +143,7 @@ External Libraries
 -
 External Libraries made Sickcall so much better. Thank you. Besides Google Search, I found many of these libraries from [iOS Cookies](http://www.ioscookies.com/). Check it out!
 
-#####Table of Contents
+##### Table of Contents
  [Stripe](https://github.com/doms230/sickcall#stripe)
  [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#Alamofire&SwiftyJSON)
  [Kingfisher](https://github.com/doms230/sickcall#Kingfisher)
