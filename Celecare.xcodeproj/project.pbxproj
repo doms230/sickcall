@@ -32,6 +32,7 @@
 		3604C072FAB4EDAC5D57994E /* Pods_Celecare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Celecare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		590F69501F78A1F6004FE33A /* BasicInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoTableViewController.swift; sourceTree = "<group>"; };
 		5961F3A720049D88001C5282 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		5961F3AC2005D102001C5282 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		59B5F72F1FA978E3008EE10C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A2687271F0C1B5D00AF7A2B /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
 		9A26872B1F0F033900AF7A2B /* MainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,10 +102,11 @@
 				9AB067771EFAE95100092BC6 /* LaunchScreen.storyboard */,
 				9AB067751EFAE95100092BC6 /* Assets.xcassets */,
 				9AB0677A1EFAE95100092BC6 /* Info.plist */,
+				59B5F72F1FA978E3008EE10C /* AppDelegate.swift */,
+				5961F3AC2005D102001C5282 /* README.md */,
 				5961F3A920049D95001C5282 /* mich */,
 				9AB067821F0207A500092BC6 /* main */,
 				9ACD38011F0992C2005842CF /* login */,
-				59B5F72F1FA978E3008EE10C /* AppDelegate.swift */,
 			);
 			path = Celecare;
 			sourceTree = "<group>";

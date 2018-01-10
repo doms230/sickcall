@@ -237,7 +237,6 @@ class SummaryViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func questionVideoAction(_ sender: UIButton) {
-        
         let player = AVPlayer(url: pickedFile)
         let playerController = AVPlayerViewController()
         playerController.player = player
