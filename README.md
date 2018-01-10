@@ -65,13 +65,13 @@ func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMe
 func compressVideo(_ inputURL: URL, outputURL: URL, handler:@escaping (_ session: AVAssetExportSession)-> Void) {
     let urlAsset = AVURLAsset(url: inputURL, options: nil)
     if let exportSession = AVAssetExportSession(asset: urlAsset, presetName: AVAssetExportPresetMediumQuality) {
-    exportSession.outputURL = outputURL
-    exportSession.outputFileType = AVFileType.mov
-    exportSession.shouldOptimizeForNetworkUse = true
-    exportSession.exportAsynchronously { () -> Void in
-    handler(exportSession)
-            }
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = AVFileType.mov
+        exportSession.shouldOptimizeForNetworkUse = true
+        exportSession.exportAsynchronously { () -> Void in
+        handler(exportSession)
         }
+    }
 }
 
 //generate screenshot from video
@@ -83,12 +83,12 @@ func videoPreviewImage() -> UIImage? {
     do {
         let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
         return UIImage(cgImage: imageRef)
-        }
+    }
 
     catch{
         self.image = UIImage(named: "appy")
         return nil
-        }
+    }
 }
 ```
 
@@ -117,7 +117,7 @@ lazy var notificationsManager: BulletinManager = {
     page.isDismissable = true
     page.actionHandler = { (item: PageBulletinItem) in
         page.manager?.dismissBulletin()
-        show alert asking to enable notifications
+        //show alert asking to enable notifications
          UserDefaults.standard.set(true, forKey: "notifications")
          let current = UNUserNotificationCenter.current()
          current.getNotificationSettings(completionHandler: { (settings) in
@@ -139,6 +139,34 @@ External Libraries
 -
 External Libraries made Sickcall so much better. Thank you. Besides Google Search, I found many of these libraries from [iOS Cookies](http://www.ioscookies.com/). Check it out!
 
+### [Stripe](https://stripe.com/)
+* I used Stripe to process payments.
+
+Stripe provides a nice plugin UI that collects the user's payment information
+
+```swift
+
+func choosePaymentAction() {
+    let addCardViewController = STPAddCardViewController()
+    addCardViewController.delegate = self
+    // STPAddCardViewController must be shown inside a UINavigationController.
+    let navigationController = UINavigationController(rootViewController: addCardViewController)
+    self.present(navigationController, animated: true, completion: nil)
+}
+
+```
+Once the user updates their payment, Stripe encypts the data and creates a token with all the payment information. I update the UI with the user's payment info so they know that their information was capture. This includes the last 4 digits of the card and an image of the type of card such as Visa.
+
+```swift
+func addCardViewController(_ addCardViewController: STPAddCardViewController, didCreateToken token: STPToken, completion: @escaping STPErrorBlock) {
+    tokenId = token.tokenId;
+    creditCard = (token.card?.last4)!
+    ccImage = token.card?.image
+    addLabel = "Change"
+    self.tableView.reloadData()
+    self.dismiss(animated: true, completion: nil)
+}
+```
 ### [Alamofire](https://github.com/Alamofire/Alamofire) & [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 * Alamofire and SwiftyJSON made the process of securely sending and retrieving payments data up to Sickcall's Node.js server ALOT easier.
 
@@ -172,10 +200,7 @@ func loadPrice(){
         }
     }
 }
-
 ```
-
-
 
 The block of code below is a method that sent the payments data to server.
 ```swift
@@ -218,8 +243,7 @@ func createCharge(){
     }
 }
 ```
-
-The block below is using Alamofire to send the health concern objectId up to the server to where the user's nurse advisor will be determined. 
+The block below is using Alamofire to send the health concern objectId up to the server where the user's nurse advisor will be determined.
 ```swift
 var questionURL = "https://celecare.herokuapp.com/posts/assignQuestion"
 var objectId = abc123
