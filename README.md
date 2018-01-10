@@ -1,4 +1,4 @@
-# ![](https://github.com/doms230/sickcall/blob/master/Celecare/Assets.xcassets/appy.imageset/sickcall_logo-v4(2).png "Sickcall Logo") Sickcall
+# ![](https://github.com/doms230/sickcall/blob/master/Celecare/Assets.xcassets/AppIcon.appiconset/sickcall-logo_green-6.jpeg "Sickcall Logo") Sickcall
 ### Health answers from U.S. Registered Nurses
 
 Features
