@@ -12,6 +12,12 @@ Component Libraries
 
 Frameworks
 -
+#### Table of Contents
+#### [AVFoundation and AVKit](https://github.com/doms230/sickcall#AVFoundationandAVKit)
+#### [UserNotifications](https://github.com/doms230/sickcall#UserNotifications)
+#### [Facebook SDK](https://github.com/doms230/sickcall#FacebookSDK)
+#### [Parse](https://github.com/doms230/sickcall#Parse)
+
 ### AVFoundation and AVKit
  * Used to record and playback the video that you record for your health concern.
  
@@ -138,6 +144,14 @@ lazy var notificationsManager: BulletinManager = {
 External Libraries
 -
 External Libraries made Sickcall so much better. Thank you. Besides Google Search, I found many of these libraries from [iOS Cookies](http://www.ioscookies.com/). Check it out!
+
+#### Table of Contents
+#### [Stripe](https://github.com/doms230/sickcall#stripe)
+#### [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#Alamofire&SwiftyJSON)
+#### [Kingfisher](https://github.com/doms230/sickcall#Kingfisher)
+#### [SnapKit](https://github.com/doms230/sickcall#SnapKit)
+#### [SCLAlertView](https://github.com/doms230/sickcall#SCLAlertViewv)
+
 
 ### [Stripe](https://stripe.com/)
 * I used Stripe to process payments.
@@ -461,10 +475,10 @@ func loadData(){
 ### [SCLAlertView](https://github.com/vikmeup/SCLAlertView-Swift)
 * Custom animated Alertview
 
-###[BulletinBoard](https://github.com/alexaubry/BulletinBoard)
+### [BulletinBoard](https://github.com/alexaubry/BulletinBoard)
 * General-purpose contextual cards for iOS
 
-###[NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView)
+### [NVActivityIndicatorView](https://github.com/ninjaprox/NVActivityIndicatorView)
 * A collection of awesome loading animations
 
 
