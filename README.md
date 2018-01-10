@@ -13,7 +13,7 @@ Component Libraries
 Frameworks
 -
 ##### Table of Contents
- [AVFoundation and AVKit](https://github.com/doms230/sickcall#avfoundationandavkit)
+ [AVFoundation and AVKit](https://github.com/doms230/sickcall#avfoundation)
  
  [UserNotifications](https://github.com/doms230/sickcall#usernotifications)
 
@@ -149,7 +149,7 @@ External Libraries made Sickcall so much better. Thank you. Besides Google Searc
  
  [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#alamofire)
  
- [SnapKit](https://github.com/doms230/sickcall#snapKit)
+ [SnapKit](https://github.com/doms230/sickcall#snapkit)
  
  [Parse](https://github.com/doms230/sickcall#parse)
  
@@ -161,7 +161,7 @@ External Libraries made Sickcall so much better. Thank you. Besides Google Searc
  
  [BulletinBoard](https://github.com/doms230/sickcall#bulletinboard)
  
- [NVActivityIndicatorView](https://github.com/doms230/sickcall#nvactivityIndicatorview)
+ [NVActivityIndicatorView](https://github.com/doms230/sickcall#nvactivityindicatorview)
  
 ### [Stripe](https://stripe.com/)
 * I used Stripe to process payments.
