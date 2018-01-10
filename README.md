@@ -1,4 +1,4 @@
-# ![](https://github.com/doms230/sickcall/blob/master/Celecare/Assets.xcassets/AppIcon.appiconset/sickcall-logo_green-6.jpeg "Sickcall Logo") Sickcall
+# Sickcall
 ### Health answers from U.S. Registered Nurses
 
 Features
@@ -6,6 +6,11 @@ Features
 * Use video to explain your health concern in detail
 * Get a reply from a U.S. registered nurse with a low, medium, or high serious level
 * Get additional info based off of your symptoms
+
+Check out a the video explanation of Sickcall: 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=m6YOx5oYY0o
+" target="_blank"><img src="http://img.youtube.com/vi/m6YOx5oYY0o/0.jpg" 
+alt="Sickcall run through" width="240" height="180" border="10" /></a>
 
 Component Libraries
 ======
