@@ -13,7 +13,7 @@ Component Libraries
 Frameworks
 -
 
-* AVFoundation and AVKit
+### AVFoundation and AVKit
  * Used to record and playback the video that you record for your health concern.
  
  ```swift
@@ -92,4 +92,49 @@ func videoPreviewImage() -> UIImage? {
         }
 }
 ```
+
+### UserNotifications
+* Used to register push notifications to the user's phone
+
+```swift
+
+//Sickcall show a custom alert detailing why they show enable notifications.
+//It would be really annoying to get this message everytime you open the app so a UserDefault
+//is set to record when the is shown the alert
+if UserDefaults.standard.object(forKey: "notifications") == nil{
+    //prepare the custom external framework BulletinBoard alert
+    //self.notificationsManager.prepare()
+    //self.notificationsManager.presentBulletin(above: self)
+}
+
+//show custom BulletinBoard alert
+//lazy var notificationsManager: BulletinManager = {
+    //let page = PageBulletinItem(title: "Notifications")
+    //page.image = UIImage(named: "bell")
+    //page.descriptionText = "Sickcall uses notifications to let you know when you nurse advisor replies to //your health concern."
+    //page.actionButtonTitle = "Okay"
+    //page.interfaceFactory.tintColor = color.sickcallGreen()
+    //page.interfaceFactory.actionButtonTitleColor = .white
+    //page.isDismissable = true
+    //page.actionHandler = { (item: PageBulletinItem) in
+        //page.manager?.dismissBulletin()
+        //show alert asking to enable notifications
+         UserDefaults.standard.set(true, forKey: "notifications")
+         let current = UNUserNotificationCenter.current()
+         current.getNotificationSettings(completionHandler: { (settings) in
+             if settings.authorizationStatus == .notDetermined {
+                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
+                 (granted, error) in
+
+                 UIApplication.shared.registerForRemoteNotifications()
+                 }
+             }
+         })
+     //}
+     return BulletinManager(rootItem: page)
+
+}()
+
+```
+
 
