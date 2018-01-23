@@ -106,11 +106,9 @@ func videoPreviewImage() -> UIImage? {
 ### UserNotifications
 * Used to register push notifications to the user's phone
 
-```swift
+Sickcall shows a custom alert detailing why they show enable notifications. It would be really annoying to get this message everytime you open the app so a UserDefault is set to record when the user is shown the alert for the first time.
 
-//Sickcall show a custom alert detailing why they show enable notifications.
-//It would be really annoying to get this message everytime you open the app so a UserDefault
-//is set to record when the is shown the alert
+```swift
 if UserDefaults.standard.object(forKey: "notifications") == nil{
     //prepare the custom external framework BulletinBoard alert
     self.notificationsManager.prepare()
@@ -151,23 +149,15 @@ External Libraries
 External Libraries made Sickcall so much better. Thank you. Besides Google Search, I found many of these libraries from [iOS Cookies](http://www.ioscookies.com/). Check it out!
 
 ##### Table of Contents
- [Stripe](https://github.com/doms230/sickcall#stripe)
- 
- [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#alamofire)
- 
- [SnapKit](https://github.com/doms230/sickcall#snapkit)
- 
- [Parse](https://github.com/doms230/sickcall#parse)
- 
- [Facebook SDK](https://github.com/doms230/sickcall#facebooksdk)
- 
- [Kingfisher](https://github.com/doms230/sickcall#kingfisher)
- 
- [SCLAlertView](https://github.com/doms230/sickcall#sclalertview)
- 
- [BulletinBoard](https://github.com/doms230/sickcall#bulletinboard)
- 
- [NVActivityIndicatorView](https://github.com/doms230/sickcall#nvactivityindicatorview)
+ * [Stripe](https://github.com/doms230/sickcall#stripe)
+ * [Alamofire & Swifty JSON](https://github.com/doms230/sickcall#alamofire)
+ * [SnapKit](https://github.com/doms230/sickcall#snapkit)
+ * [Parse](https://github.com/doms230/sickcall#parse)
+ * [Facebook SDK](https://github.com/doms230/sickcall#facebooksdk)
+ * [Kingfisher](https://github.com/doms230/sickcall#kingfisher)
+ * [SCLAlertView](https://github.com/doms230/sickcall#sclalertview)
+ * [BulletinBoard](https://github.com/doms230/sickcall#bulletinboard)
+ * [NVActivityIndicatorView](https://github.com/doms230/sickcall#nvactivityindicatorview)
  
 ### [Stripe](https://stripe.com/)
 * I used Stripe to process payments.
@@ -293,7 +283,7 @@ func assignQuestion(objectId: String){
 
 *  SnapKit is A Swift Autolayout DSL for iOS & OS X
 
-SnapKit is one of my favorite libraries. I'm not a fan of dragging and dropping elements because it never works well accross different devices. Without SnapKit you end spending a lot of time trying to get the layout right.
+SnapKit is one of my favorite libraries. I'm not a fan of dragging and dropping elements because it never works well accross different devices. Without SnapKit you end up spending a lot of time trying to get the layout right.
 
 Here's a code snippet of SnapKit in action in Sickcall from the  [loginViewController](https://github.com/doms230/sickcall/blob/master/Celecare/LoginViewController.swift)
 
@@ -476,8 +466,8 @@ func loadData(){
 }
 
 ```
-### [Kingfisher](https://github.com/onevcat/Kingfisher)
 
+### [Kingfisher](https://github.com/onevcat/Kingfisher)
 * Kingfisher handles downloading and caching images for you.
 
 ### [SCLAlertView](https://github.com/vikmeup/SCLAlertView-Swift)
