@@ -86,7 +86,6 @@ class MainSidebarViewController: UIViewController, UITableViewDataSource, UITabl
             return 1
             
         } else {
-            
             return 0
         }
     }
