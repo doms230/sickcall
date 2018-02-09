@@ -1,5 +1,12 @@
 # Sickcall
 ### Health answers from U.S. Registered Nurses
+Sickcall emerged out of a bad experience I had at the E.R. I took my gf there for something we thought was serious, but ended up being nothing and she was charged a $1k E.R. bill. From this, I thought it would be great for people to know whether or not their health concern is serious enough for the emergency room or doctor's office before they go.
+
+On Sickcall people record their question through video and a U.S. registered nurse replies with a low, medium, or high serious level along with some information based off your symtoms. All nurses were vetted and onboarded through the seperated nurse advisor app. 
+
+### Difficulties 
+#### Video 
+The issue I had with video was that it was taking way too long to compress & upload to the database. I solved this by figuring out how low the quality of video could go before it was not clear enough for the nurse advisors to cleary see the person or their affected area.
 
 Features
 ======
