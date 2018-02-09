@@ -101,15 +101,13 @@ func videoPreviewImage() -> UIImage? {
     do {
         let imageRef = try generator.copyCGImage(at: timestamp, actualTime: nil)
         return UIImage(cgImage: imageRef)
-    }
-
-    catch{
+        
+    } catch{
         self.image = UIImage(named: "appy")
         return nil
     }
 }
 ```
-
 ### UserNotifications
 * Used to register push notifications to the user's phone
 
